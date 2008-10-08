@@ -83,7 +83,12 @@ namespace VorlonSeq
                     Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
                     Brush niceBrush = new LinearGradientBrush(rect, Color.SkyBlue, Color.White, 90.0f);
                     g.FillRectangle(niceBrush, rect);
-                    g.DrawRectangle(selectedClips.Contains(clip) ? Pens.Red : Pens.Black, rect);
+                    g.DrawRectangle(Pens.Black, rect);
+                    if (selectedClips.Contains(clip))
+                    {
+                        rect.Inflate(new Size(-1, -1));
+                        g.DrawRectangle(Pens.Black, rect);
+                    }
                     niceBrush.Dispose();
                 }
             }
@@ -99,7 +104,8 @@ namespace VorlonSeq
                     int x1 = ((clip.StartTime + m.X) * pixelsPerBar) / (4 * 16);
                     int x2 = ((clip.EndTime + m.X) * pixelsPerBar) / (4 * 16);
                     Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
-                    g.DrawRectangle(Pens.Black, rect);
+                    rect.Inflate(new Size(-1, -1));
+                    g.DrawRectangle(Pens.DarkSlateGray, rect);
                 }
             }
         }
@@ -249,6 +255,26 @@ namespace VorlonSeq
             }
 
             return new Point(bars * 64, channels);
+        }
+
+        private void ChannelTimeline_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Clip clicked = GetClipAt(e.Location);
+            if (clicked != null)
+            {
+                OnClipEditRequested(clicked);
+            }
+        }
+
+        public delegate void ClipEditRequest(Clip clip);
+        public event ClipEditRequest ClipEditRequested;
+
+        private void OnClipEditRequested(Clip clicked)
+        {
+            if (ClipEditRequested != null)
+            {
+                ClipEditRequested(clicked);
+            }
         }
     }
 }

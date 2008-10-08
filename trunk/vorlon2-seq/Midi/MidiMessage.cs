@@ -50,7 +50,7 @@ namespace Midi
             Param2 = param2;
         }
 
-        public uint getAsUInt()
+        public uint GetAsUInt()
         {
             return Channel | ((uint)Command << 4) | (Param1 << 8) | (Param2 << 16);
         }

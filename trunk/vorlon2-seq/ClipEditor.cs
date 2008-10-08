@@ -11,6 +11,8 @@ namespace VorlonSeq
 {
     public partial class ClipEditor : UserControl
     {
+        public Seq.Clip Clip { set { pianoRoll1.Clip = value; } }
+
         public ClipEditor()
         {
             InitializeComponent();

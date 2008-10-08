@@ -41,7 +41,7 @@ namespace Midi
         public void Open(MidiInHandler callback)
         {
             WinMM.MidiInProc proc = new WinMM.MidiInProc((int h, uint msg, uint instance, uint param1, uint param2) => callback(this, new MidiMessage(param1, param2)));
-            WinMM.midiInOpen(ref handle, 0, proc, 0, WinMM.CALLBACK_FUNCTION);
+            WinMM.midiInOpen(ref handle, Id, proc, 0, WinMM.CALLBACK_FUNCTION);
             opened = true;
         }
 

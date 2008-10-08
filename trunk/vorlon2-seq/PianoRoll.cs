@@ -14,9 +14,15 @@ namespace VorlonSeq
     public partial class PianoRoll : UserControl
     {        
         const int numKeys = 127;
-        int keyHeight = 6;
+        int keyHeight = 7;
         int pixelsPerTick = 10;
         public Clip Clip;
+        byte tryingKey = 128;
+        private Clip.NoteEvent paintedNote = null;
+        private bool moving = false;
+        private List<Clip.NoteEvent> selected = new List<Clip.NoteEvent>();
+        static Point mouseDownPos;
+        static Point mousePos;
 
         public PianoRoll()
         {
@@ -28,6 +34,11 @@ namespace VorlonSeq
                 ControlStyles.DoubleBuffer, true);
             
             Refresh();
+
+            // TEMP TEST
+            Clip = new Clip();
+            Clip.NoteEvents.Add(new Clip.NoteEvent(50, 100, 4, 8));
+            Clip.NoteEvents.Add(new Clip.NoteEvent(52, 100, 10, 8));
         }
 
         private void PianoRoll_Paint(object sender, PaintEventArgs e)
@@ -61,20 +72,210 @@ namespace VorlonSeq
             {                
                 foreach(Clip.NoteEvent note in Clip.NoteEvents)
                 {
-                    int i = numKeys - note.Note - 1;
-                    int y = i * keyHeight;
-                    int h = keyHeight;
-                    int x = note.StartTime * pixelsPerTick;
-                    int w = note.Length * pixelsPerTick;
-                    g.FillRectangle(Brushes.RosyBrown, new Rectangle(x, y, w, h));
-                    g.DrawRectangle(Pens.Black, new Rectangle(x, y, w, h));
+                    Rectangle r = NoteToRect(note);
+                    g.FillRectangle(Brushes.RosyBrown, r);
+                    g.DrawRectangle(Pens.Black, r);
+                    if (selected.Contains(note))
+                    {
+                        r.Inflate(new Size(-1, -1));
+                        g.DrawRectangle(Pens.Black, r);
+                    }
+                }
+
+                if (moving)
+                {
+                    int timeDelta = GetTimeMovement();
+                    int keyDelta = GetKeyMovement();
+                    foreach (Clip.NoteEvent n in selected)
+                    {
+                        Clip.NoteEvent moved = new Clip.NoteEvent((byte)(n.Note + keyDelta), n.Velocity, n.StartTime + timeDelta, n.Length);
+                        Rectangle r = NoteToRect(moved);
+                        r.Inflate(new Size(-1, -1));
+                        g.DrawRectangle(Pens.Black, r);
+                    }
                 }
             }
+
+            if (paintedNote != null)
+            {
+                Rectangle r = NoteToRect(paintedNote);
+                g.DrawRectangle(Pens.Black, r);
+            }
+        }
+
+        Rectangle NoteToRect(Clip.NoteEvent note)
+        {
+            int i = numKeys - note.Note - 1;
+            int y = i * keyHeight - 1;
+            int h = keyHeight;
+            int x = note.StartTime * pixelsPerTick;
+            int w = note.Length * pixelsPerTick - 1;
+            return new Rectangle(x, y, w, h);
+        }
+
+        byte ConvertYToKey(int y)
+        {
+            return (byte)Math.Min(Math.Max((Height - y - 1) / keyHeight, 0), 127);
+        }
+
+        int ConvertXToTime(int x)
+        {
+            return x / pixelsPerTick;
+        }
+
+        int GetTimeMovement()
+        {
+            int delta = (mousePos.X - mouseDownPos.X) / pixelsPerTick;
+            foreach(Clip.NoteEvent n in selected)
+            {
+                if (n.StartTime + delta < 0)
+                {
+                    delta = -n.StartTime;
+                }
+            }
+            return delta;
+        }
+
+        int GetKeyMovement()
+        {
+            int delta = (int)ConvertYToKey(mousePos.Y) - (int)ConvertYToKey(mouseDownPos.Y);
+            foreach (Clip.NoteEvent n in selected)
+            {
+                if (n.Note + delta < 0)
+                {
+                    delta = -n.Note;
+                }
+
+                if (n.Note + delta > 127)
+                {
+                    delta = 127 - n.Note;
+                }
+            }
+            return delta;
+        }
+
+        Clip.NoteEvent GetNoteAt(Point loc)
+        {
+            foreach (Clip.NoteEvent n in Clip.NoteEvents)
+            {
+                if (NoteToRect(n).Contains(loc))
+                {
+                    return n;
+                }
+            }
+            return null;
         }
 
         private void PianoRoll_Layout(object sender, LayoutEventArgs e)
         {
             Size = new Size(Width, numKeys * keyHeight);
+        }
+
+        private void UpdatePaintedNote(int x)
+        {
+            if (paintedNote != null)
+            {
+                paintedNote.EndTime = ConvertXToTime(x);
+                paintedNote.Length = Math.Max(paintedNote.Length, 1);
+            }
+        }
+
+        private void PianoRoll_MouseDown(object sender, MouseEventArgs e)
+        {
+            mousePos = e.Location;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                tryingKey = ConvertYToKey(e.Y);
+                uint channel = 0; //(uint)Clip.Channel.Number;
+                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOn, tryingKey, 110));
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                Clip.NoteEvent clickedNote = GetNoteAt(e.Location);
+                if (clickedNote == null)
+                {
+                    byte key = ConvertYToKey(e.Y);
+                    int time = ConvertXToTime(e.X);
+                    paintedNote = new Clip.NoteEvent(key, 110, time, 1);
+                    Refresh();
+                }
+                else
+                {
+                    mouseDownPos = e.Location;
+                    selected.Clear();
+                    selected.Add(clickedNote);
+                    moving = true;
+                    Refresh();
+                }
+            }
+        }
+
+        private void PianoRoll_MouseUp(object sender, MouseEventArgs e)
+        {
+            mousePos = e.Location;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                uint channel = 0; //(uint)Clip.Channel.Number;
+                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOff, tryingKey, 0));
+                tryingKey = 128;
+            }            
+
+            if (e.Button == MouseButtons.Left && paintedNote != null)
+            {
+                UpdatePaintedNote(e.X);
+                Clip.NoteEvents.Add(paintedNote);
+                paintedNote = null;
+                Refresh();
+            }
+
+            if (e.Button == MouseButtons.Left && moving)
+            {
+                int timeDelta = GetTimeMovement();
+                int keyDelta = GetKeyMovement();
+                foreach (Clip.NoteEvent n in selected)
+                {
+                    n.StartTime += timeDelta;
+                    n.Note = (byte)(n.Note + keyDelta);
+                }
+                moving = false;
+                Refresh();
+            }
+        }
+
+        private void PianoRoll_MouseMove(object sender, MouseEventArgs e)
+        {
+            mousePos = e.Location;
+
+            if (e.Button == MouseButtons.Left && paintedNote != null)
+            {
+                int l = paintedNote.Length;
+                UpdatePaintedNote(e.X);
+                if (l != paintedNote.Length)
+                {
+                    Refresh();
+                }
+            }
+
+            if (e.Button == MouseButtons.Left && moving)
+            {
+                Refresh();
+            }
+        }
+
+        private void PianoRoll_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach(Clip.NoteEvent n in selected)
+                {
+                    Clip.NoteEvents.Remove(n);
+                }
+                selected.Clear();
+                Refresh();
+            }
         }
     }
 }

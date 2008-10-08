@@ -39,6 +39,10 @@
             this.Size = new System.Drawing.Size(911, 612);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PianoRoll_Paint);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.PianoRoll_Layout);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PianoRoll_KeyDown);
             this.ResumeLayout(false);
 
         }

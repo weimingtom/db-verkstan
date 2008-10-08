@@ -13,6 +13,7 @@ namespace VorlonSeq
         [STAThread]
         static void Main()
         {
+            Seq.Sequencer.StartVorlon();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new mainWindow());

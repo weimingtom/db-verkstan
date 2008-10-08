@@ -15,8 +15,8 @@ namespace VorlonSeq.Seq
         {
             public Event(MidiMessage message, int time)
             {
-                message = Message;
-                time = Time;
+                Message = message;
+                Time = time;
             }
 
             public MidiMessage Message;
@@ -30,7 +30,15 @@ namespace VorlonSeq.Seq
             public int StartTime;
             public int Length;
 
-            public int EndTime { get { return StartTime + Length; } set { Length = EndTime - StartTime; } }
+            public NoteEvent(byte note, byte velocity, int startTime, int length)
+            {
+                Note = note;
+                Velocity = velocity;
+                StartTime = startTime;
+                Length = length;
+            }
+
+            public int EndTime { get { return StartTime + Length; } set { Length = value - StartTime; } }
 
             public Event ToEvent(MidiMessage.Commands command)
             {
@@ -126,7 +134,8 @@ namespace VorlonSeq.Seq
 
             foreach (MidiMessage m in result)
             {
-                m.Channel = (uint)Number;
+                uint n = (uint)Number;
+                m.Channel = n;
             }
 
             return result;
@@ -165,8 +174,14 @@ namespace VorlonSeq.Seq
     {
         public static Song Song = new Song();
         static public int FramesPerTick = 5;
-
         public static VorlonSynth Synth = new VorlonSynth();
+
+        private static List<MidiMessage> toBePlayed = new List<MidiMessage>();
+        private static bool running = false;
+
+        public static bool IsPlaying = false;
+        public static int PlayPosition = 0;
+        private static int frameCounter = 0;
 
         public static int BPM 
         { 
@@ -176,6 +191,77 @@ namespace VorlonSeq.Seq
                 double beatsPerSecond = Synth.SampleRate / samplesPerBeat;
                 return (int)(beatsPerSecond * 60.0f);                
             } 
+        }
+
+        public static void PlayMidiEvent(MidiMessage midiMessage)
+        {
+            lock (toBePlayed)
+            {
+                toBePlayed.Add(midiMessage);
+            }
+        }
+
+        private static void SendPendingMidiToVorlon()
+        {
+            lock (toBePlayed)
+            {
+                foreach (MidiMessage m in toBePlayed)
+                {
+                    Synth.MidiInput(m.GetAsUInt());
+                }
+                toBePlayed.Clear();
+            }
+        }
+
+        public static void StartVorlon()
+        {
+            if (running)
+            {
+                return;
+            }
+
+            running = true;
+            new System.Threading.Thread(VorlonLoop).Start();
+        }
+
+        public static void StopVorlon()
+        {
+            running = false;
+        }
+
+        private static void StepSequencer()
+        {
+            if (!IsPlaying)
+            {
+                return;
+            }
+
+            frameCounter++;
+
+            if (frameCounter >= FramesPerTick)
+            {
+                frameCounter = 0;
+                for (int i = 0; i < Song.NumChannels; i++)
+                {
+                    Channel channel = Song.Channels[i];
+                    IList<MidiMessage> events = channel.GetAllEventsBetween(PlayPosition, PlayPosition + 1);
+                    foreach (MidiMessage m in events)
+                    {
+                        PlayMidiEvent(m);
+                    }
+                }
+                PlayPosition++;
+            }
+        }
+
+        private static void VorlonLoop()
+        {
+            while (running)
+            {
+                StepSequencer();
+                SendPendingMidiToVorlon();
+                Synth.PlayFrame();
+            }
         }
     }
 }

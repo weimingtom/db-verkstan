@@ -40,6 +40,7 @@
             this.Size = new System.Drawing.Size(680, 460);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ChannelTimeline_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseMove);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseUp);
             this.SizeChanged += new System.EventHandler(this.ChannelTimeline_SizeChanged);
