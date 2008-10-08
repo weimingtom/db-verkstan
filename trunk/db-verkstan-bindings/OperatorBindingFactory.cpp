@@ -80,4 +80,10 @@ categories[category]->Add(name);
 #include "operators.hpp"
         return ob;
      }
+
+    void OperatorBindingFactory::Delete(OperatorBinding^ operatorBinding)
+    {
+        delete operators[operatorBinding->Id];
+        operators[operatorBinding->Id] = 0;
+    }
 }

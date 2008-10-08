@@ -8,7 +8,8 @@ TextOperator::TextOperator()
 
 TextOperator::~TextOperator()
 {
-   d3d9RenderTargetTexture->Release();
+	if (d3d9RenderTargetTexture != 0)
+		d3d9RenderTargetTexture->Release();
 }
 
 void TextOperator::deviceLost()

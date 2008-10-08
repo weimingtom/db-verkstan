@@ -13,7 +13,9 @@ void PixelsOperator::process()
 
     texture->lock();
     srand(seed);
+    DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
+    int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
     for (int i = 0; i < count; i++)
-        texture->putPixel(rand()%256, rand()%256, color);    
+        pixels[pitch * (rand()%256) + (rand()%256)] = color; 
     texture->unlock();
 }

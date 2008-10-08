@@ -81,6 +81,19 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(numericUpDown);
                    OperatorPropertyTable.SetCellPosition(numericUpDown, new TableLayoutPanelCellPosition(1, row));
                }
+               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Float)
+               {
+                   NumericUpDown numericUpDown = new NumericUpDown();
+                   numericUpDown.Increment = Convert.ToDecimal(0.01);
+                   numericUpDown.Minimum = decimal.MinValue;
+                   numericUpDown.Maximum = decimal.MaxValue;
+                   numericUpDown.Value = Convert.ToDecimal(op.Binding.GetFloatProperty(property.Index));
+                   numericUpDown.Width = 100;
+                   int index = property.Index;
+                   numericUpDown.ValueChanged += new EventHandler((object o, EventArgs e) => op.Binding.SetFloatProperty(index, Convert.ToSingle(numericUpDown.Value)));
+                   OperatorPropertyTable.Controls.Add(numericUpDown);
+                   OperatorPropertyTable.SetCellPosition(numericUpDown, new TableLayoutPanelCellPosition(1, row));
+               }
                else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.String)
                {
                    TextBox textBox = new TextBox();

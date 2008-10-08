@@ -15,6 +15,7 @@ namespace VerkstanBindings
         static ICollection<String^>^ GetCategories();
         static ICollection<String^>^ GetNamesInCategory(String^ category);
         static OperatorBinding^ Create(String^ name);
+        static void Delete(OperatorBinding^ operatorBinding);
      
     private:
         static void CreateCategories();

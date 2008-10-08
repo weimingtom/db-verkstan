@@ -290,10 +290,11 @@ namespace VerkstanEditor.Gui
 
         private void OperatorPage_ParentChanged(object sender, EventArgs e)
         {
-            Parent.Resize += new System.EventHandler(this.OperatorPage_ParentResized);
+            Parent.Resize += new System.EventHandler(this.operatorPage_ParentResized);
+            Parent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.operatorPage_ParentKeyDown);
         }
 
-        private void OperatorPage_ParentResized(object sender, EventArgs e)
+        private void operatorPage_ParentResized(object sender, EventArgs e)
         {
             CheckSize();
         }
@@ -301,6 +302,15 @@ namespace VerkstanEditor.Gui
         private void operatorsMenu_Opened(object sender, EventArgs e)
         {
             AddLocation = MouseLocation;
+        }
+
+        private void operatorPage_ParentKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                Operators.DeleteSelectedOperatorsInPage("First");
+                Refresh();
+            }
         }
     }
 }

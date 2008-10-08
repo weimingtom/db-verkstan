@@ -85,11 +85,6 @@ namespace VerkstanEditor
             return result;
         }
 
-        public static void DeleteOperator(Operator op)
-        {
-            operators.Remove(op);
-        }
-
         public static void SetOperatorsSelectedInPage(String pageName, Rectangle rectangle)
         {
             List<Operator> ops = GetOperatorsInPage(pageName);
@@ -203,6 +198,21 @@ namespace VerkstanEditor
 
             foreach (Operator op in operators)
                 op.Selected = false;
+        }
+
+        public static void DeleteSelectedOperatorsInPage(String pageName)
+        {
+            List<Operator> operators = GetSelectedOperatorsInPage(pageName);
+
+            foreach (Operator op in operators)
+                DeleteOperator(op);
+        }
+
+        public static void DeleteOperator(Operator op)
+        {
+            op.Binding.Disconnect();
+            VerkstanBindings.OperatorBindingFactory.Delete(op.Binding);
+            operators.Remove(op);
         }
     }
 }

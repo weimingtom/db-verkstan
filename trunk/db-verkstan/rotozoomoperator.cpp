@@ -19,6 +19,11 @@ void RotozoomOperator::process()
     float fzoom = zoom;
     float co = cos(frotate);
     float si = sin(frotate);
+    
+    DWORD* srcPixels = (DWORD*)source->d3d9LockedRect.pBits;
+    DWORD* dstPixels = (DWORD*)texture->d3d9LockedRect.pBits;
+    int srcPitch = source->d3d9LockedRect.Pitch / sizeof(DWORD);
+    int dstPitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
 
     for (int y = 0; y < 256; y++)
     {
@@ -33,8 +38,8 @@ void RotozoomOperator::process()
             v += 256.0f * 10.0f;
             u = ((int)u % 256) + (u - floor(u));
             v = ((int)v % 256) + (v - floor(v)); 
-            
-            texture->putPixel(x, y, source->getPixel(u, v));
+
+            dstPixels[dstPitch * y + x] = srcPixels[srcPitch * (int)v + (int)u];
         }
     }
 
