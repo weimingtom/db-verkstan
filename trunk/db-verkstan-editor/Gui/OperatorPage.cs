@@ -59,6 +59,15 @@ namespace VerkstanEditor.Gui
                 OperatorSelected(op);
         }
 
+        public delegate void OperatorPreviewHandler(Operator op);
+        public event OperatorPreviewHandler OperatorPreview;
+
+        public void OnOperatorPreview(Operator op)
+        {
+            if (OperatorPreview != null)
+                OperatorPreview(op);
+        }
+
         private void OperatorPanel_Paint(object sender, PaintEventArgs e)
         {
             
@@ -146,16 +155,13 @@ namespace VerkstanEditor.Gui
                     InSelect = true;
                     Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
                 }
-                else if (op.Selected)
-                {
-                    op.Selected = true;
+                else
+                { 
+                    if (!op.Selected)
+                        Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
+
                     InMove = true;
                     OnOperatorSelected(op);
-                }
-                else
-                {
-                    InMove = true;
-                    Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -167,6 +173,16 @@ namespace VerkstanEditor.Gui
 
             Parent.Focus();
             Refresh();
+        }
+
+        private void operatorPage_DoubleClick(object sender, EventArgs e)
+        {
+            Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
+
+            if (op != null)
+            {
+                OnOperatorPreview(op);
+            }
         }
 
         private void OperatorPage_MouseUp(object sender, MouseEventArgs e)

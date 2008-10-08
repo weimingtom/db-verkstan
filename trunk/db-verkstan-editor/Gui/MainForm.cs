@@ -19,7 +19,8 @@ namespace VerkstanEditor.Gui
         {
             InitializeComponent();
 
-            operatorPage.OperatorSelected += new operatorPage.OperatorSelectedHandler(this.OperatorPage_OperatorSelected); 
+            operatorPage.OperatorSelected += new operatorPage.OperatorSelectedHandler(this.OperatorPage_OperatorSelected);
+            operatorPage.OperatorPreview += new operatorPage.OperatorPreviewHandler(this.OperatorPage_OperatorPreview); 
             operatorsPropertiesSplitContainer.Panel1.Controls.Add(operatorPage);
             operatorsPropertiesSplitContainer.Panel2.Controls.Add(operatorProperty);
             operatorProperty.Dock = DockStyle.Fill;
@@ -84,8 +85,12 @@ namespace VerkstanEditor.Gui
 
         private void OperatorPage_OperatorSelected(Operator op)
         {
-            VerkstanBindings.CoreBinding.SetPreview(op.Binding);
             operatorProperty.Operator = op;
+        }
+
+        private void OperatorPage_OperatorPreview(Operator op)
+        {
+            VerkstanBindings.CoreBinding.SetPreview(op.Binding);
         }
     }
 }

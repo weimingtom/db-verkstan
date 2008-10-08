@@ -17,9 +17,12 @@ namespace VerkstanEditor.Gui
         {
             set
             {
-                op = value;
-                Deinitialize();
-                Initialize();
+                if (op != value)
+                {
+                    op = value;
+                    Deinitialize();
+                    Initialize();
+                }
             }
             get
             {

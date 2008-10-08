@@ -35,13 +35,14 @@
             // operatorsMenu
             // 
             this.operatorsMenu.Name = "OperatorsMenu";
-            this.operatorsMenu.Size = new System.Drawing.Size(153, 26);
+            this.operatorsMenu.Size = new System.Drawing.Size(61, 4);
             this.operatorsMenu.Opened += new System.EventHandler(this.operatorsMenu_Opened);
             // 
             // operatorPage
             // 
             this.ContextMenuStrip = this.operatorsMenu;
             this.Name = "operatorPage";
+            this.DoubleClick += new System.EventHandler(this.operatorPage_DoubleClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.OperatorPanel_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseMove);
             this.ParentChanged += new System.EventHandler(this.OperatorPage_ParentChanged);
