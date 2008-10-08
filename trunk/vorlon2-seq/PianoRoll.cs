@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using VorlonSeq.Seq;
+
 namespace VorlonSeq
 {
     public partial class PianoRoll : UserControl
@@ -14,6 +16,7 @@ namespace VorlonSeq
         const int numKeys = 127;
         int keyHeight = 6;
         int pixelsPerTick = 10;
+        public Clip Clip;
 
         public PianoRoll()
         {
@@ -51,6 +54,20 @@ namespace VorlonSeq
                 if ((x / pixelsPerTick) % 16 == 0)
                 {
                     g.DrawLine(Pens.White, new Point(x + 1, 0), new Point(x + 1, Height));
+                }
+            }
+
+            if (Clip != null)
+            {                
+                foreach(Clip.NoteEvent note in Clip.NoteEvents)
+                {
+                    int i = numKeys - note.Note - 1;
+                    int y = i * keyHeight;
+                    int h = keyHeight;
+                    int x = note.StartTime * pixelsPerTick;
+                    int w = note.Length * pixelsPerTick;
+                    g.FillRectangle(Brushes.RosyBrown, new Rectangle(x, y, w, h));
+                    g.DrawRectangle(Pens.Black, new Rectangle(x, y, w, h));
                 }
             }
         }

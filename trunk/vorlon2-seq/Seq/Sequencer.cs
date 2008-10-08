@@ -174,7 +174,7 @@ namespace VorlonSeq.Seq
             {
                 double samplesPerBeat = FramesPerTick * Synth.FrameSize * 4;
                 double beatsPerSecond = Synth.SampleRate / samplesPerBeat;
-                return (int)(beatsPerSecond * 60.0f);
+                return (int)(beatsPerSecond * 60.0f);                
             } 
         }
     }
