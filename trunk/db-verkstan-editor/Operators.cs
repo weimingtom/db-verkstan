@@ -10,7 +10,6 @@ namespace VerkstanEditor
     public class Operators
     {
         static List<Operator> operators = new List<Operator>();
-        static Dictionary<int, Operator> operatorsIdLookup = new Dictionary<int, Operator>();
 
         public static void AddOperatorInPage(String pageName, Point location, String name)
         {
@@ -21,18 +20,25 @@ namespace VerkstanEditor
 
             Operator op = new Operator(pageName, location, OperatorBindingFactory.Create(name));
             operators.Add(op);
-            operatorsIdLookup.Add(op.Binding.Id, op);  
+            MoveOperatorInPage(pageName, new Point(0, 0), op);
         }
 
         public static void MoveOperatorInPage(String pageName, Point point, Operator op)
         {
+            op.Binding.Disconnect();
             op.Location = new Point(op.Location.X + point.X,
                                     op.Location.Y + point.Y);
 
-            List<Operator> inOperators = GetOperatorsInPageIn(pageName, op.GetAreaForInConnections());
-            foreach (Operator inOperator in inOperators)
+            List<Operator> inConnections = GetOperatorsInPageIn(pageName, op.GetAreaForInConnections());
+            foreach (Operator inOperator in inConnections)
             {
                 op.Binding.ConnectInWith(inOperator.Binding);
+            }
+
+            List<Operator> outConnections = GetOperatorsInPageIn(pageName, op.GetAreaForOutConnections());
+            foreach (Operator outOperator in outConnections)
+            {
+                op.Binding.ConnectOutWith(outOperator.Binding);
             }
         }
 

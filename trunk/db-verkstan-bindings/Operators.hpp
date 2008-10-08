@@ -37,7 +37,7 @@ ADD_PROP("Center X", Byte,  128);
 ADD_PROP("Center Y", Byte,  128);
 ADD_PROP("Rotation", Byte,  0);
 ADD_PROP("Zoom",     Float, 1.0f);
-ADD_IN(Texture);
+ADD_INPUT(Texture);
 END_OP();
 
 #endif

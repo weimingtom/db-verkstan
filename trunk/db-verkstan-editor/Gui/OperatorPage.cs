@@ -106,15 +106,27 @@ namespace VerkstanEditor.Gui
             Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
                                         rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
 
-            if (op.Selected)
+            if (op.Selected && op.Binding.IsProcessable())
             {
                 e.Graphics.FillRectangle(Brushes.LightCyan, rect);
                 e.Graphics.DrawRectangle(Pens.Black, rect);
                 e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
             }
-            else
+            else if (op.Selected && !op.Binding.IsProcessable())
+            {
+                e.Graphics.FillRectangle(Brushes.LightGray, rect);
+                e.Graphics.DrawRectangle(Pens.Black, rect);
+                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
+            }
+            else if (op.Binding.IsProcessable())
             {
                 e.Graphics.FillRectangle(Brushes.Cyan, rect);
+                e.Graphics.DrawRectangle(Pens.Black, rect);
+                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
+            }
+            else
+            {
+                e.Graphics.FillRectangle(Brushes.Gray, rect);
                 e.Graphics.DrawRectangle(Pens.Black, rect);
                 e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
             }

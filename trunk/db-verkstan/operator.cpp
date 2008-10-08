@@ -98,7 +98,7 @@ void Operator::setDirty(bool dirty)
 
 Operator* Operator::getInConnectedOperator(int index)
 {
-    return operators[index];
+    return operators[inConnections[index]];
 }
 
 void Operator::deviceLost()

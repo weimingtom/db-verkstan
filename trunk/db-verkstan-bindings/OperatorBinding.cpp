@@ -21,16 +21,28 @@ namespace VerkstanBindings
         Index = index;
     }
 
+    OperatorBindingInput::OperatorBindingInput(int index,
+                                               Constants::OperatorTypes type,
+                                               bool infinite)
+    {
+        Index = index;
+        Type = type;
+        Infinite = infinite;
+    }
+
     OperatorBinding::OperatorBinding(String^ name,
                                      int operatorId,
                                      Constants::OperatorTypes type,
                                      List<OperatorBindingProperty^>^ properties,
-                                     List<Constants::OperatorTypes>^ inConnectionTypes)
+                                     List<OperatorBindingInput^>^ inputs)
     {
         this->name = name;
         this->id = operatorId;
         this->properties = properties;
-        this->inConnectionTypes = inConnectionTypes;
+        this->inputs = inputs;
+
+        inputConnections = gcnew List<OperatorBinding^>();
+        outputConnections = gcnew List<OperatorBinding^>();
     }
 
     OperatorBinding::~OperatorBinding()
@@ -119,89 +131,144 @@ namespace VerkstanBindings
         return type;
     }
 
+    void OperatorBinding::flushInputConnections()
+    {
+        for (int i = 0; i < operators[id]->numberOfInConnections; i++)
+            operators[id]->inConnections[i] = -1;
+
+        for (int i = 0; i < inputConnections->Count; i++)
+        {
+            OperatorBinding^ ob = inputConnections[i];
+            bool accepted = false;
+            int j = 0;
+            for (j; j < inputs->Count; j++)
+            {
+                if (inputs[j]->Type == ob->Type
+                    && operators[id]->inConnections[j] == -1)
+                {
+                    operators[id]->inConnections[j] = ob->id;
+                    accepted = true;
+                    break;
+                }
+            }
+
+			j--;
+
+            if (!accepted 
+                && inputs[j]->Infinite
+                && inputs[j]->Type == ob->Type)
+            {
+                for (j; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
+                {
+                    if (operators[id]->inConnections[j] == -1)
+                    {
+                        operators[id]->inConnections[j] = ob->id;
+                        accepted = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        operators[id]->numberOfInConnections = inputConnections->Count;
+        operators[id]->setDirty(true);
+    }
+
+    void OperatorBinding::flushOutputConnections()
+    {
+        for (int i = 0; i < operators[id]->numberOfOutConnections; i++)
+            operators[id]->outConnections[i] = -1;
+
+        for (int i = 0; i < outputConnections->Count; i++)
+            operators[id]->outConnections[i] = outputConnections[i]->Id;
+       
+        operators[id]->numberOfOutConnections = outputConnections->Count;
+    }
+
     void OperatorBinding::ConnectInWith(OperatorBinding^ operatorBinding)
     {
-        /*
-        bool connectionAccepted = false;
-        for (int i = 0; i < inConnectionTypes->Count; i++)
+        if (inputs->Count == 0)
+            return;
+
+        bool accepted = false;
+        int i = 0;
+        for (i; i < inputs->Count; i++)
         {
-            if (inConnectionTypes[i] == operatorBinding->Type
-                operators[id]->inConnections[i] == -1)
+            if (inputs[i]->Type == operatorBinding->Type
+                && operators[id]->inConnections[i] == -1)
             {
-                operators[id]->inConnections[i] = operatorBinding->id;
-                connectionAccepted = true;
+                inputConnections->Add(operatorBinding);
+                accepted = true;
                 break;
             }
         }
 
-        if (!connectionAccepted)
+        i--;
+
+        if (!accepted 
+            && inputs[i]->Infinite
+            && inputs[i]->Type == operatorBinding->Type)
+        {
+            for (i; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
+            {
+                if (operators[id]->inConnections[i] == -1)
+                {
+                    inputConnections->Add(operatorBinding);
+                    accepted = true;
+                    break;
+                }
+            }
+        }
+             
+        if (!accepted)
             return;
 
-        operators[id]->numberOfInConnections++;
-        */
+        flushInputConnections();
+
+        operatorBinding->ConnectOutWith(this);
     }
 
     void OperatorBinding::ConnectOutWith(OperatorBinding^ operatorBinding)
     {
-        /*
-        bool connectionAccepted = fasle;
-        for (int i = 0; i < operatorBinding->InConnectionTypes->Count; i++)
-        {
-            if (type == operatorBinding->InConnectionTypes[i]
-            {
-                connectionAccepted = true;
-                break;
-            }
-        }
+        outputConnections->Add(operatorBinding);
+        
+        flushOutputConnections();
 
-        if (!connectionAccepted)
-            return;
+        operatorBinding->ConnectInWith(this);
+    }
 
-        operators[i]->outConnections[operators[id]->numberOfOutConnections] = operatorBinding->Id;
-        operators[id]->numberOfOutConnections++;
-        */
+    void OperatorBinding::DisconnectInFrom(OperatorBinding^ operatorBinding)
+    {
+        inputConnections->Remove(operatorBinding);
+        flushInputConnections();
     }
 
     void OperatorBinding::DisconnectOutFrom(OperatorBinding^ operatorBinding)
     {
-        /*
-        int id = operatorBinding->Id;
+        outputConnections->Remove(operatorBinding);
+        flushOutputConnections();
+    }
 
-        for (int i = 0; i < operators[id]->numberOfOutConnections; i++)
-        {
-            if (id == operators[id]->outConnections[i])
-            {
-                operators[id]->outConnections[i] = -1;
-            }
-        }
-*/
+    void OperatorBinding::Disconnect()
+    {
+        for (int i = 0; i < inputConnections->Count; i++)
+            inputConnections[i]->DisconnectOutFrom(this);
+        inputConnections->Clear();
+        flushInputConnections();
 
+        for (int i = 0; i < outputConnections->Count; i++)
+            outputConnections[i]->DisconnectInFrom(this);
+        outputConnections->Clear();
+        flushOutputConnections();
     }
 
     bool OperatorBinding::IsProcessable()
     {
-      // return inConnectionTypes->Count == operators[id]->numberOfInConnections;
-        return false;
-    }
+        bool result = inputs->Count == operators[id]->numberOfInConnections;
 
-    List<Constants::OperatorTypes>^ OperatorBinding::InConnectionTypes::get() 
-    { 
-        return inConnectionTypes;
-    }
+        for (int i = 0; i < inputConnections->Count; i++)
+            result &= inputConnections[i]->IsProcessable();
 
-    List<int>^ OperatorBinding::InConnectionIds::get()
-    { 
-        List<int>^ result = gcnew List<int>();
-      //  for (int i = 0; i < operators[id]->numberOfInConnections; i++)
-       //     result->Add(operators[id]->inConnections[i]);
-        return result;
-    }
-
-    List<int>^ OperatorBinding::OutConnectionIds::get()
-    { 
-         List<int>^ result = gcnew List<int>();
-        // for (int i = 0; i < operators[id]->numberOfOutConnections; i++)
-        //    result->Add(operators[id]->outConnections[i]);
         return result;
     }
 }

@@ -21,6 +21,17 @@ namespace VerkstanBindings
         property int Index;
     };
 
+    public ref class OperatorBindingInput
+    {
+    public:
+        OperatorBindingInput(int index,
+                             Constants::OperatorTypes type,
+                             bool infinite);
+        property bool Infinite;
+        property Constants::OperatorTypes Type;
+        property int Index;
+    };
+
 	public ref class OperatorBinding
 	{
     public:
@@ -28,7 +39,7 @@ namespace VerkstanBindings
                         int operatorId,
                         Constants::OperatorTypes type,
                         List<OperatorBindingProperty^>^ properties,
-                        List<Constants::OperatorTypes>^ inConnectionTypes);
+                        List<OperatorBindingInput^>^ inputs);
         ~OperatorBinding();
         
         unsigned char GetByteProperty(int index);
@@ -47,27 +58,24 @@ namespace VerkstanBindings
         { 
             List<OperatorBindingProperty^>^ get(); 
         }
-        property List<int>^ InConnectionIds 
-        { 
-           List<int>^ get(); 
-        }
-        property List<int>^ OutConnectionIds 
-        { 
-           List<int>^ get(); 
-        }
-        property List<Constants::OperatorTypes>^ InConnectionTypes 
-        { 
-            List<Constants::OperatorTypes>^ get(); 
-        }
         
         void ConnectInWith(OperatorBinding^ operatorBinding);
         void ConnectOutWith(OperatorBinding^ operatorBinding);
-        void DisconnectOutFrom(OperatorBinding^ operatorBinding);
+        void Disconnect();
         bool IsProcessable();
 
+    protected:
+        void DisconnectInFrom(OperatorBinding^ operatorBinding);
+        void DisconnectOutFrom(OperatorBinding^ operatorBinding);
+
     private:
+        void flushInputConnections();
+        void flushOutputConnections();
+
         List<OperatorBindingProperty^>^ properties;
-        List<Constants::OperatorTypes>^ inConnectionTypes;
+        List<OperatorBindingInput^>^ inputs;
+        List<OperatorBinding^>^ inputConnections;
+        List<OperatorBinding^>^ outputConnections;
         int id;
         Constants::OperatorTypes type;
         String^ name;
