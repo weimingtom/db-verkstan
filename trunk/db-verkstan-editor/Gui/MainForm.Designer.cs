@@ -74,8 +74,8 @@
             // previewComposeSplitContainer.Panel2
             // 
             this.previewComposeSplitContainer.Panel2.Controls.Add(this.composeTransportSplitContainer);
-            this.previewComposeSplitContainer.Size = new System.Drawing.Size(643, 255);
-            this.previewComposeSplitContainer.SplitterDistance = 89;
+            this.previewComposeSplitContainer.Size = new System.Drawing.Size(643, 230);
+            this.previewComposeSplitContainer.SplitterDistance = 80;
             this.previewComposeSplitContainer.TabIndex = 0;
             // 
             // previewPanel
@@ -84,7 +84,7 @@
             this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPanel.Location = new System.Drawing.Point(0, 0);
             this.previewPanel.Name = "previewPanel";
-            this.previewPanel.Size = new System.Drawing.Size(643, 89);
+            this.previewPanel.Size = new System.Drawing.Size(643, 80);
             this.previewPanel.TabIndex = 0;
             this.previewPanel.SizeChanged += new System.EventHandler(this.PreviewPanel_SizeChanged);
             // 
@@ -104,8 +104,8 @@
             // composeTransportSplitContainer.Panel2
             // 
             this.composeTransportSplitContainer.Panel2.Controls.Add(this.transportPanel);
-            this.composeTransportSplitContainer.Size = new System.Drawing.Size(643, 162);
-            this.composeTransportSplitContainer.SplitterDistance = 104;
+            this.composeTransportSplitContainer.Size = new System.Drawing.Size(643, 146);
+            this.composeTransportSplitContainer.SplitterDistance = 88;
             this.composeTransportSplitContainer.TabIndex = 0;
             // 
             // operatorPanel
@@ -114,7 +114,7 @@
             this.operatorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorPanel.Location = new System.Drawing.Point(0, 0);
             this.operatorPanel.Name = "operatorPanel";
-            this.operatorPanel.Size = new System.Drawing.Size(643, 104);
+            this.operatorPanel.Size = new System.Drawing.Size(643, 88);
             this.operatorPanel.TabIndex = 0;
             // 
             // operatorsPropertiesSplitContainer
@@ -128,12 +128,12 @@
             // operatorsPropertiesSplitContainer.Panel1
             // 
             this.operatorsPropertiesSplitContainer.Panel1.AutoScroll = true;
-            this.operatorsPropertiesSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.operatorsPropertiesSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             // 
             // operatorsPropertiesSplitContainer.Panel2
             // 
             this.operatorsPropertiesSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.operatorsPropertiesSplitContainer.Size = new System.Drawing.Size(643, 104);
+            this.operatorsPropertiesSplitContainer.Size = new System.Drawing.Size(643, 88);
             this.operatorsPropertiesSplitContainer.SplitterDistance = 474;
             this.operatorsPropertiesSplitContainer.TabIndex = 0;
             // 
@@ -189,19 +189,19 @@
             // mainMenuFileNew
             // 
             this.mainMenuFileNew.Name = "mainMenuFileNew";
-            this.mainMenuFileNew.Size = new System.Drawing.Size(152, 22);
+            this.mainMenuFileNew.Size = new System.Drawing.Size(100, 22);
             this.mainMenuFileNew.Text = "New";
             // 
             // mainMenuFileOpen
             // 
             this.mainMenuFileOpen.Name = "mainMenuFileOpen";
-            this.mainMenuFileOpen.Size = new System.Drawing.Size(152, 22);
+            this.mainMenuFileOpen.Size = new System.Drawing.Size(100, 22);
             this.mainMenuFileOpen.Text = "Open";
             // 
             // mainMenuFileExit
             // 
             this.mainMenuFileExit.Name = "mainMenuFileExit";
-            this.mainMenuFileExit.Size = new System.Drawing.Size(152, 22);
+            this.mainMenuFileExit.Size = new System.Drawing.Size(100, 22);
             this.mainMenuFileExit.Text = "Exit";
             // 
             // mainMenuHelp
@@ -215,7 +215,7 @@
             // mainMenuHelpAbout
             // 
             this.mainMenuHelpAbout.Name = "mainMenuHelpAbout";
-            this.mainMenuHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.mainMenuHelpAbout.Size = new System.Drawing.Size(103, 22);
             this.mainMenuHelpAbout.Text = "About";
             // 
             // toolStripContainer1
@@ -224,7 +224,7 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.previewComposeSplitContainer);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(643, 255);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(643, 230);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer1.Name = "toolStripContainer1";

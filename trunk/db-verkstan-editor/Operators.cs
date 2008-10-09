@@ -135,7 +135,7 @@ namespace VerkstanEditor
         public static void MoveSelectedOperatorsInPage(String pageName, Point point)
         {
             List<Operator> selectedOperators = GetSelectedOperatorsInPage(pageName);
-            List<Operator> nonSelecteOperators = GetNonSelectedOperatorsInPage(pageName);
+            List<Operator> nonSelectedOperators = GetNonSelectedOperatorsInPage(pageName);
 
             foreach (Operator selectedOp in selectedOperators)
             {
@@ -144,7 +144,7 @@ namespace VerkstanEditor
                                                         selectedOp.Size.Width,
                                                         selectedOp.Size.Height);
 
-                foreach (Operator nonSelectedOp in nonSelecteOperators)
+                foreach (Operator nonSelectedOp in nonSelectedOperators)
                 {
                     if (nonSelectedOp.Dimension.IntersectsWith(selectedOpDim))
                     {
@@ -213,6 +213,35 @@ namespace VerkstanEditor
             op.Binding.Disconnect();
             VerkstanBindings.OperatorBindingFactory.Delete(op.Binding);
             operators.Remove(op);
+        }
+
+        internal static void ResizeSelectedOperatorsInPage(string pageName, int additionalWidth)
+        {
+            List<Operator> selectedOperators = GetSelectedOperatorsInPage(pageName);
+            List<Operator> nonSelectedOperators = GetNonSelectedOperatorsInPage(pageName);
+
+            foreach (Operator selectedOp in selectedOperators)
+            {
+                Rectangle selectedOpDim = new Rectangle(selectedOp.Location.X,
+                                                        selectedOp.Location.Y,
+                                                        selectedOp.Size.Width + additionalWidth,
+                                                        selectedOp.Size.Height);
+
+                foreach (Operator nonSelectedOp in nonSelectedOperators)
+                {
+                    if (nonSelectedOp.Dimension.IntersectsWith(selectedOpDim))
+                    {
+                        // Cannot peform resize due to a collision.
+                        return;
+                    }
+                }
+            }
+
+            foreach (Operator op in selectedOperators)
+            {
+                op.Size = new Size(op.Size.Width + additionalWidth, op.Size.Height);
+                MoveOperatorInPage(pageName, new Point(0, 0), op);
+            }
         }
     }
 }

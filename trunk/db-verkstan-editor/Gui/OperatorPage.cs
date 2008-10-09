@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using VerkstanEditor.Util;
 
 namespace VerkstanEditor.Gui
 {
     public partial class operatorPage : UserControl
     {
-        private Boolean InSelect = false;
-        private Boolean InMove = false;
+        private bool InSelect = false;
+        private bool InMove = false;
+        private bool InResize = false;
         private Point SelectMarkLocation;
-        private Point MoveMarkLocation;
+        private Point MarkLocation;
         private Point MouseLocation;
         private Point AddLocation;
 
@@ -87,6 +89,15 @@ namespace VerkstanEditor.Gui
                 }
             }
 
+            if (InResize)
+            {
+                List<Operator> selectedOperators = Operators.GetSelectedOperatorsInPage("First");
+                foreach (Operator op in selectedOperators)
+                {
+                    PaintResizingOperator(op, e);
+                }
+            }
+
             if (InSelect)
             {
                 Pen p = new Pen(Color.Black, 1);
@@ -108,6 +119,15 @@ namespace VerkstanEditor.Gui
             pen.Dispose();
         }
 
+        private void PaintResizingOperator(Operator op, PaintEventArgs e)
+        {
+            Size size = Operator.QuantizeSize(new Size(op.Size.Width + GetResizeWidth(),
+                                                       op.Size.Height));
+            Pen pen = new Pen(Color.Black, 2);
+            e.Graphics.DrawRectangle(pen, op.Location.X, op.Location.Y, size.Width, size.Height);
+            pen.Dispose();
+        }
+
         private void PaintOperator(Operator op, PaintEventArgs e)
         {
             Rectangle rect = new Rectangle(op.Location, op.Size);
@@ -115,29 +135,66 @@ namespace VerkstanEditor.Gui
             Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
                                         rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
 
-            if (op.Selected && op.Binding.IsProcessable())
+            int selectedLum = 0;
+            if (op.Selected)
+                selectedLum = 60;
+            int processableSat = 0;
+            if (op.Binding.IsProcessable())
+                processableSat = 255;
+
+            HSLColor HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
+            HSLColor.Saturation = processableSat;
+            HSLColor.Luminosity += selectedLum;
+            Color color = HSLColor;
+            HSLColor lightHSLColor = new HSLColor(HSLColor);
+            lightHSLColor.Luminosity += 35;
+            Color lightColor = lightHSLColor;
+            HSLColor darkHSLColor = new HSLColor(HSLColor);
+            darkHSLColor.Luminosity -= 60;
+            Color darkColor = darkHSLColor;
+            Brush brush = new SolidBrush(color);
+            Pen lightPen = new Pen(lightColor);
+            Pen darkPen = new Pen(darkColor);
+
+            e.Graphics.FillRectangle(brush, rect);
+            e.Graphics.DrawLine(lightPen,
+                                op.Location.X,
+                                op.Location.Y + op.Size.Height - 1,
+                                op.Location.X,
+                                op.Location.Y);
+            e.Graphics.DrawLine(lightPen,
+                                op.Location.X,
+                                op.Location.Y,
+                                op.Location.X + op.Size.Width - 1,
+                                op.Location.Y);
+            e.Graphics.DrawLine(darkPen,
+                                op.Location.X + op.Size.Width - 1,
+                                op.Location.Y,
+                                op.Location.X + op.Size.Width - 1,
+                                op.Location.Y + op.Size.Height - 1);
+            e.Graphics.DrawLine(darkPen,
+                                op.Location.X,
+                                op.Location.Y + op.Size.Height - 1,
+                                op.Location.X + op.Size.Width - 1,
+                                op.Location.Y + op.Size.Height - 1);
+            e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
+
+            int x1 = op.GetAreaForResize().Left;
+            int y1 = op.Location.Y + 3;
+            int y2 = op.Location.Y + op.Size.Height - 4;
+
+            for (int i = 0; i < 4; i++)
             {
-                e.Graphics.FillRectangle(Brushes.LightCyan, rect);
-                e.Graphics.DrawRectangle(Pens.Black, rect);
-                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
-            }
-            else if (op.Selected && !op.Binding.IsProcessable())
-            {
-                e.Graphics.FillRectangle(Brushes.LightGray, rect);
-                e.Graphics.DrawRectangle(Pens.Black, rect);
-                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
-            }
-            else if (op.Binding.IsProcessable())
-            {
-                e.Graphics.FillRectangle(Brushes.Cyan, rect);
-                e.Graphics.DrawRectangle(Pens.Black, rect);
-                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
-            }
-            else
-            {
-                e.Graphics.FillRectangle(Brushes.Gray, rect);
-                e.Graphics.DrawRectangle(Pens.Black, rect);
-                e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
+                e.Graphics.DrawLine(lightPen,
+                                    x1 + i * 3,
+                                    y1,
+                                    x1 + i * 3,
+                                    y2);
+                e.Graphics.DrawLine(darkPen,
+                                    x1 + 1 + i * 3,
+                                    y1,
+                                    x1 + 1 + i * 3,
+                                    y2);
             }
         }
 
@@ -147,7 +204,7 @@ namespace VerkstanEditor.Gui
             {
                 MouseLocation = new Point(e.X, e.Y);
                 SelectMarkLocation = MouseLocation;
-                MoveMarkLocation = SelectMarkLocation;
+                MarkLocation = SelectMarkLocation;
                 Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
 
                 if (op == null)
@@ -156,11 +213,19 @@ namespace VerkstanEditor.Gui
                     Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
                 }
                 else
-                { 
-                    if (!op.Selected)
+                {                   
+                    if (op.GetAreaForResize().IntersectsWith(new Rectangle(MouseLocation.X, MouseLocation.Y, 1, 1)))
+                    {
+                        InResize = true;
                         Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
+                    }
+                    else
+                    {
+                        InMove = true;
+                        if (!op.Selected)
+                            Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
+                    }
 
-                    InMove = true;
                     OnOperatorSelected(op);
                 }
             }
@@ -193,8 +258,15 @@ namespace VerkstanEditor.Gui
                 CheckSize();
             }
 
+            if (InResize)
+            {
+                Operators.ResizeSelectedOperatorsInPage("First", GetResizeWidth());
+                CheckSize();
+            }
+
             InSelect = false;
             InMove = false;
+            InResize = false;
             Refresh();
         }
 
@@ -211,9 +283,14 @@ namespace VerkstanEditor.Gui
         private Point GetMovePoint()
         {
             Point mouseLocation = Operator.QuantizeLocation(MouseLocation);
-            Point moveMarkerLocation = Operator.QuantizeLocation(MoveMarkLocation);
+            Point moveMarkerLocation = Operator.QuantizeLocation(MarkLocation);
             return new Point(mouseLocation.X - moveMarkerLocation.X,
                              mouseLocation.Y - moveMarkerLocation.Y);
+        }
+
+        private int GetResizeWidth()
+        {
+            return MouseLocation.X - MarkLocation.X;
         }
 
         private Rectangle GetSelectionRectangle()

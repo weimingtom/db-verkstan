@@ -52,8 +52,15 @@ namespace VerkstanEditor
 
         public static Size QuantizeSize(Size size)
         {
-            return new Size(size.Width + size.Width % 100,
-                            size.Height - size.Height % 20);
+            Size quantizedSize = new Size(size.Width - size.Width % 100,
+                                          size.Height - size.Height % 20);
+
+            if (quantizedSize.Width < 100)
+                quantizedSize.Width = 100;
+            if (quantizedSize.Height < 20)
+                quantizedSize.Height = 20;
+           
+            return quantizedSize;
         }
 
         public Operator(String page, Point location, OperatorBinding binding)
@@ -66,12 +73,21 @@ namespace VerkstanEditor
 
         public Rectangle GetAreaForInConnections()
         {
-            return new Rectangle(location.X, location.Y - 1, size.Width, 1);
+            return new Rectangle(location.X, location.Y - 1, size.Width - 1, 1);
         }
 
         public Rectangle GetAreaForOutConnections()
         {
-            return new Rectangle(location.X, location.Y + size.Height, size.Width, 1);
+            return new Rectangle(location.X, location.Y + size.Height, size.Width - 1, 1);
         }
+
+        public Rectangle GetAreaForResize()
+        {
+            return new Rectangle(location.X + size.Width - 15, 
+                                 location.Y, 
+                                 15,
+                                 20);
+        }
+
     }
 }
