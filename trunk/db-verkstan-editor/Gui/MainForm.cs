@@ -18,7 +18,7 @@ namespace VerkstanEditor.Gui
         public mainForm()
         {
             InitializeComponent();
-
+            VerkstanBindings.CoreBinding.ClearColor = Color.DarkCyan.ToArgb();
             Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.OperatorPage_ViewedOperatorChanged); 
             Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.OperatorPage_ViewedOperatorPropertiesChanged);
             operatorsPropertiesSplitContainer.Panel1.Controls.Add(operatorPage);
@@ -32,34 +32,6 @@ namespace VerkstanEditor.Gui
                 VerkstanBindings.CoreBinding.Boot(previewPanel.Handle.ToPointer());
             }
 
-
-            
-            /*
-            OperatorBinding o = new OperatorBinding(OperatorBinding.Names.Text);
-       
-        o.SetProperty(0, 0xffffffff);
-        o.SetProperty(1, (char)50);
-        o.SetProperty(2, (char)0);
-        o.SetProperty(3, (char)0);
-        o.SetProperty(4, "Verdana");
-        o.SetProperty(5, "Darkbits!");*/
-           
-
-          
-         /*
-            OperatorDelegate o = new OperatorDelegate(OperatorDelegate.Id.PIXELS);
-
-            
-            o.SetProperty(0, 255);
-            o.SetProperty(1, 255);
-            o.SetProperty(2, 255);
-            o.SetProperty(3, 255);
-            o.SetProperty(4, 512);
-            o.SetProperty(5, 10);*/
-
-            //VerkstanBindings.CoreBinding.SetPreview(o);
-   
-           
             renderTimer.Enabled = true;
         }
 

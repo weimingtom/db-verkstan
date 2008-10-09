@@ -116,7 +116,7 @@ namespace VerkstanBindings
             globalDirect3DDevice->Clear(0, 
                                        NULL, 
                                        D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
-                                       D3DCOLOR_RGBA(45, 45, 45, 255), 
+                                       clearColor, 
                                        1.0f, 
                                        0);
             
@@ -136,9 +136,10 @@ namespace VerkstanBindings
 
     void CoreBinding::RenderTexture()
     {
+        viewedOperatorBinding->CascadeProcess();
+
         Operator* op = operators[viewedOperatorBinding->Id];
 
-        op->cascadeProcess();
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
                                    D3DXToRadian(45.0f), 
@@ -191,5 +192,15 @@ namespace VerkstanBindings
     void CoreBinding::ViewedOperatorBinding::set(OperatorBinding^ viewedOperatorBinding)
     {
         CoreBinding::viewedOperatorBinding = viewedOperatorBinding;
+    }
+
+    int CoreBinding::ClearColor::get()
+    {
+        return clearColor;
+    }
+
+    void CoreBinding::ClearColor::set(int clearColor)
+    {
+        CoreBinding::clearColor = clearColor;
     }
 }

@@ -266,6 +266,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CoreOperatorBinding.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\CoreOperatorBinding.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NameOperatorBinding.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NameOperatorBinding.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\OperatorBinding.cpp"
 				>
 			</File>
@@ -283,6 +299,14 @@
 			</File>
 			<File
 				RelativePath=".\Operators.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ReferenceOperatorBinding.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\ReferenceOperatorBinding.hpp"
 				>
 			</File>
 		</Filter>

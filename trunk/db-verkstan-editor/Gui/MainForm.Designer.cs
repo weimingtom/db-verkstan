@@ -46,6 +46,7 @@
             this.mainMenuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.previewComposeSplitContainer.Panel1.SuspendLayout();
             this.previewComposeSplitContainer.Panel2.SuspendLayout();
             this.previewComposeSplitContainer.SuspendLayout();
@@ -74,8 +75,8 @@
             // previewComposeSplitContainer.Panel2
             // 
             this.previewComposeSplitContainer.Panel2.Controls.Add(this.composeTransportSplitContainer);
-            this.previewComposeSplitContainer.Size = new System.Drawing.Size(643, 230);
-            this.previewComposeSplitContainer.SplitterDistance = 80;
+            this.previewComposeSplitContainer.Size = new System.Drawing.Size(643, 208);
+            this.previewComposeSplitContainer.SplitterDistance = 72;
             this.previewComposeSplitContainer.TabIndex = 0;
             // 
             // previewPanel
@@ -84,7 +85,7 @@
             this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPanel.Location = new System.Drawing.Point(0, 0);
             this.previewPanel.Name = "previewPanel";
-            this.previewPanel.Size = new System.Drawing.Size(643, 80);
+            this.previewPanel.Size = new System.Drawing.Size(643, 72);
             this.previewPanel.TabIndex = 0;
             this.previewPanel.SizeChanged += new System.EventHandler(this.PreviewPanel_SizeChanged);
             // 
@@ -104,8 +105,8 @@
             // composeTransportSplitContainer.Panel2
             // 
             this.composeTransportSplitContainer.Panel2.Controls.Add(this.transportPanel);
-            this.composeTransportSplitContainer.Size = new System.Drawing.Size(643, 146);
-            this.composeTransportSplitContainer.SplitterDistance = 88;
+            this.composeTransportSplitContainer.Size = new System.Drawing.Size(643, 132);
+            this.composeTransportSplitContainer.SplitterDistance = 74;
             this.composeTransportSplitContainer.TabIndex = 0;
             // 
             // operatorPanel
@@ -114,7 +115,7 @@
             this.operatorPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorPanel.Location = new System.Drawing.Point(0, 0);
             this.operatorPanel.Name = "operatorPanel";
-            this.operatorPanel.Size = new System.Drawing.Size(643, 88);
+            this.operatorPanel.Size = new System.Drawing.Size(643, 74);
             this.operatorPanel.TabIndex = 0;
             // 
             // operatorsPropertiesSplitContainer
@@ -132,8 +133,8 @@
             // 
             // operatorsPropertiesSplitContainer.Panel2
             // 
-            this.operatorsPropertiesSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.operatorsPropertiesSplitContainer.Size = new System.Drawing.Size(643, 88);
+            this.operatorsPropertiesSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.operatorsPropertiesSplitContainer.Size = new System.Drawing.Size(643, 74);
             this.operatorsPropertiesSplitContainer.SplitterDistance = 474;
             this.operatorsPropertiesSplitContainer.TabIndex = 0;
             // 
@@ -224,13 +225,21 @@
             // toolStripContainer1.ContentPanel
             // 
             this.toolStripContainer1.ContentPanel.Controls.Add(this.previewComposeSplitContainer);
-            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(643, 230);
+            this.toolStripContainer1.ContentPanel.Size = new System.Drawing.Size(643, 208);
             this.toolStripContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripContainer1.Location = new System.Drawing.Point(0, 24);
             this.toolStripContainer1.Name = "toolStripContainer1";
-            this.toolStripContainer1.Size = new System.Drawing.Size(643, 255);
+            this.toolStripContainer1.Size = new System.Drawing.Size(643, 233);
             this.toolStripContainer1.TabIndex = 0;
             this.toolStripContainer1.Text = "toolStripContainer1";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 257);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(643, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // mainForm
             // 
@@ -240,6 +249,7 @@
             this.ClientSize = new System.Drawing.Size(643, 279);
             this.Controls.Add(this.toolStripContainer1);
             this.Controls.Add(this.mainMenu);
+            this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenu;
             this.Name = "mainForm";
@@ -284,6 +294,7 @@
         private System.Windows.Forms.ToolStripMenuItem mainMenuHelp;
         private System.Windows.Forms.ToolStripMenuItem mainMenuHelpAbout;
         private System.Windows.Forms.ToolStripContainer toolStripContainer1;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 

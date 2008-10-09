@@ -1,9 +1,11 @@
 #include "core.hpp"
 
 #define OPERATOR_HEADERS 1
-#include "operators.hpp"
+#include "Operators.hpp"
 
 #include "OperatorBindingFactory.hpp"
+#include "CoreOperatorBinding.hpp"
+#include "NameOperatorBinding.hpp"
 
 namespace VerkstanBindings
 {
@@ -16,7 +18,11 @@ categories[category]->Add(name);
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
-#include "operators.hpp"
+#include "Operators.hpp"
+        
+        if (!categories->ContainsKey("Misc"))
+            categories["Misc"] = gcnew List<String^>();
+        categories["Misc"]->Add("Name");
     }
 
     ICollection<String^>^ OperatorBindingFactory::GetCategories()
@@ -54,11 +60,11 @@ categories[category]->Add(name);
         }                                           \
         List<OperatorBindingProperty^>^ properties = gcnew List<OperatorBindingProperty^>();\
         List<OperatorBindingInput^>^ inputs = gcnew List<OperatorBindingInput^>();\
-        ob = gcnew OperatorBinding(opName,  \
-                                   id,      \
-                                   Constants::OperatorTypes::Texture,   \
-                                   properties,  \
-                                   inputs);                                              
+        ob = gcnew CoreOperatorBinding(opName,  \
+                                       id,      \
+                                       Constants::OperatorTypes::Texture,   \
+                                       properties,  \
+                                       inputs);                                              
        
 #define ADD_PROP(propName, propType, defaultValue)    \
     properties->Add(gcnew OperatorBindingProperty(properties->Count, propName, Constants::OperatorPropertyTypes::##propType));  \
@@ -77,7 +83,14 @@ categories[category]->Add(name);
     {
         OperatorBinding^ ob;
 #define OPERATOR_DEFINES 1
-#include "operators.hpp"
+#include "Operators.hpp"
+
+        if (name == "Name")
+        {
+            List<OperatorBindingProperty^>^ properties = gcnew List<OperatorBindingProperty^>();\
+            ob = gcnew NameOperatorBinding(properties);
+        }
+
         return ob;
      }
 

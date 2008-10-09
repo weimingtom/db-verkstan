@@ -7,22 +7,15 @@ namespace VerkstanBindings
     public ref class Constants
     {
     public:
-        enum class OperatorCategories
-        {
-            Texture,
-            Mesh,
-            Model,
-            Scene,
-            Misc
-        };
-
         enum class OperatorTypes
         {
             Texture,
             Mesh,
             Model,
             Camera,
-            Scene
+            Scene,
+            Reference,
+            Name
         };
 
        enum class OperatorPropertyTypes

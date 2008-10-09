@@ -28,11 +28,16 @@ namespace VerkstanBindings
             OperatorBinding^ get();
             void set(OperatorBinding^ viewedOperatorBinding);
         }
-
+        static property int ClearColor
+        {
+            int get();
+            void set(int clearColor);
+        }
     private:
         static void Reset();
         static void RenderTexture();
         static OperatorBinding^ viewedOperatorBinding;
         static bool resetDevice = false;
+        static int clearColor;
 	};
 }

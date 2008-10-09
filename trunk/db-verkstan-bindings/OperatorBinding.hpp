@@ -32,24 +32,23 @@ namespace VerkstanBindings
         property int Index;
     };
 
-	public ref class OperatorBinding
+	public ref class OperatorBinding abstract 
 	{
     public:
         OperatorBinding(String^ name,
                         int operatorId,
                         Constants::OperatorTypes type,
-                        List<OperatorBindingProperty^>^ properties,
-                        List<OperatorBindingInput^>^ inputs);
-        ~OperatorBinding();
+                        List<OperatorBindingProperty^>^ properties);
+        virtual ~OperatorBinding();
         
-        unsigned char GetByteProperty(int index);
-        void SetByteProperty(int index, unsigned char byteValue);
-        int GetIntProperty(int index);
-        void SetIntProperty(int index, int intValue);
-        float GetFloatProperty(int index);
-        void SetFloatProperty(int index, float floatValue);
-        String^ GetStringProperty(int index);
-        void SetStringProperty(int index, String ^string);
+        virtual unsigned char GetByteProperty(int index) = 0;
+        virtual void SetByteProperty(int index, unsigned char byteValue) = 0;
+        virtual int GetIntProperty(int index) = 0;
+        virtual void SetIntProperty(int index, int intValue) = 0;
+        virtual float GetFloatProperty(int index) = 0;
+        virtual void SetFloatProperty(int index, float floatValue) = 0;
+        virtual String^ GetStringProperty(int index) = 0;
+        virtual void SetStringProperty(int index, String ^string) = 0;
         
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
@@ -59,25 +58,19 @@ namespace VerkstanBindings
             List<OperatorBindingProperty^>^ get(); 
         }
         
-        void ConnectInWith(OperatorBinding^ operatorBinding);
-        void ConnectOutWith(OperatorBinding^ operatorBinding);
-        void Disconnect();
-        bool IsProcessable();
+        virtual void CascadeProcess() = 0;
 
-    protected:
-        void DisconnectInFrom(OperatorBinding^ operatorBinding);
-        void DisconnectOutFrom(OperatorBinding^ operatorBinding);
+        virtual void ConnectInWith(OperatorBinding^ operatorBinding) = 0;
+        virtual void ConnectOutWith(OperatorBinding^ operatorBinding) = 0;
+        virtual void Disconnect() = 0;
+        virtual bool IsProcessable() = 0;
+        virtual void DisconnectInFrom(OperatorBinding^ operatorBinding) = 0;
+        virtual void DisconnectOutFrom(OperatorBinding^ operatorBinding) = 0;      
 
     private:
-        void flushInputConnections();
-        void flushOutputConnections();
-
-        List<OperatorBindingProperty^>^ properties;
-        List<OperatorBindingInput^>^ inputs;
-        List<OperatorBinding^>^ inputConnections;
-        List<OperatorBinding^>^ outputConnections;
         int id;
         Constants::OperatorTypes type;
         String^ name;
+        List<OperatorBindingProperty^>^ properties;
 	};
 }
