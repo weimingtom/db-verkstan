@@ -120,9 +120,9 @@ namespace VerkstanBindings
                                        1.0f, 
                                        0);
             
-            if (previewOperator 
-                && previewOperator->IsProcessable()
-                && previewOperator->Type == Constants::OperatorTypes::Texture)
+            if (viewedOperatorBinding 
+                && viewedOperatorBinding->IsProcessable()
+                && viewedOperatorBinding->Type == Constants::OperatorTypes::Texture)
             {
                 RenderTexture();
             }
@@ -136,7 +136,7 @@ namespace VerkstanBindings
 
     void CoreBinding::RenderTexture()
     {
-        Operator* op = operators[previewOperator->Id];
+        Operator* op = operators[viewedOperatorBinding->Id];
 
         op->cascadeProcess();
         D3DXMATRIX projection;
@@ -183,8 +183,13 @@ namespace VerkstanBindings
         globalDirect3DDevice->EndScene();
     }
 
-    void CoreBinding::SetPreview(OperatorBinding^ previewOperator_)
+    OperatorBinding^ CoreBinding::ViewedOperatorBinding::get()
     {
-        previewOperator = previewOperator_;
+        return viewedOperatorBinding;
+    }
+
+    void CoreBinding::ViewedOperatorBinding::set(OperatorBinding^ viewedOperatorBinding)
+    {
+        CoreBinding::viewedOperatorBinding = viewedOperatorBinding;
     }
 }

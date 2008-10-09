@@ -23,11 +23,16 @@ namespace VerkstanBindings
         static void Shutdown();
         static void Render();
         static void Resize();
-        static void SetPreview(OperatorBinding^ previewOperator);
+        static property OperatorBinding^ ViewedOperatorBinding
+        {
+            OperatorBinding^ get();
+            void set(OperatorBinding^ viewedOperatorBinding);
+        }
+
     private:
         static void Reset();
         static void RenderTexture();
-        static OperatorBinding^ previewOperator;
+        static OperatorBinding^ viewedOperatorBinding;
         static bool resetDevice = false;
 	};
 }

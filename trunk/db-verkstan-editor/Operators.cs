@@ -9,7 +9,51 @@ namespace VerkstanEditor
 {
     public class Operators
     {
+        private static Operator viewedOperator;
+        public static Operator ViewedOperator
+        {
+            set
+            {
+                viewedOperator = value;
+                OnViewedOperatorChanged(value);
+            }
+            get
+            {
+                return viewedOperator;
+            }
+        }
+        private static Operator viewedOperatorProperties;
+        public static Operator ViewedOperatorProperties
+        {
+            set
+            {
+                viewedOperatorProperties = value;
+                OnViewedOperatorPropertiesChanged(value);
+            }
+            get
+            {
+                return viewedOperatorProperties;
+            }
+        }
         static List<Operator> operators = new List<Operator>();
+
+        public delegate void ViewedOperatorChangedHandler(Operator op);
+        public static event ViewedOperatorChangedHandler ViewedOperatorChanged;
+
+        public static void OnViewedOperatorChanged(Operator op)
+        {
+            if (ViewedOperatorChanged != null)
+                ViewedOperatorChanged(op);
+        }
+
+        public delegate void ViewedOperatorPropertiesChangedHandler(Operator op);
+        public static event ViewedOperatorPropertiesChangedHandler ViewedOperatorPropertiesChanged;
+
+        public static void OnViewedOperatorPropertiesChanged(Operator op)
+        {
+            if (ViewedOperatorPropertiesChanged != null)
+                ViewedOperatorPropertiesChanged(op);
+        }
 
         public static void AddOperatorInPage(String pageName, Point location, String name)
         {
@@ -211,6 +255,12 @@ namespace VerkstanEditor
         public static void DeleteOperator(Operator op)
         {
             op.Binding.Disconnect();
+
+            if (op == viewedOperator)
+                ViewedOperator = null;
+            if (op == viewedOperatorProperties)
+                ViewedOperatorProperties = null;
+
             VerkstanBindings.OperatorBindingFactory.Delete(op.Binding);
             operators.Remove(op);
         }

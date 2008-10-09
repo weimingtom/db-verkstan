@@ -21,7 +21,9 @@ namespace VerkstanEditor.Gui
                 {
                     op = value;
                     Deinitialize();
-                    Initialize();
+
+                    if (value != null)
+                        Initialize();
                 }
             }
             get

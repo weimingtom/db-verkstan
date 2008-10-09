@@ -27,8 +27,6 @@ namespace VerkstanEditor.Gui
             this.DoubleBuffered = true;
             InitializeComponent();
 
-            //Operators.AddOperatorInPage("First", 100, 100, VerkstanBindings.OperatorBinding.Names.Text);
-            //Operators.AddOperatorInPage("First", 100, 150, VerkstanBindings.OperatorBinding.Names.Pixels);
             CheckSize();
 
             foreach (String category in VerkstanBindings.OperatorBindingFactory.GetCategories())
@@ -52,27 +50,8 @@ namespace VerkstanEditor.Gui
             }
         }
 
-        public delegate void OperatorSelectedHandler(Operator op);
-        public event OperatorSelectedHandler OperatorSelected;
-       
-        public void OnOperatorSelected(Operator op)
-        {
-            if (OperatorSelected != null)
-                OperatorSelected(op);
-        }
-
-        public delegate void OperatorPreviewHandler(Operator op);
-        public event OperatorPreviewHandler OperatorPreview;
-
-        public void OnOperatorPreview(Operator op)
-        {
-            if (OperatorPreview != null)
-                OperatorPreview(op);
-        }
-
         private void OperatorPanel_Paint(object sender, PaintEventArgs e)
         {
-            
             List<Operator> ops = Operators.GetOperatorsInPage("First");
 
             foreach (Operator op in ops)
@@ -196,6 +175,9 @@ namespace VerkstanEditor.Gui
                                     x1 + 1 + i * 3,
                                     y2);
             }
+
+            if (op == Operators.ViewedOperator)
+                e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.eye_icon, op.Location.X + 1, op.Location.Y + 1);
         }
 
         private void OperatorPage_MouseDown(object sender, MouseEventArgs e)
@@ -226,7 +208,7 @@ namespace VerkstanEditor.Gui
                             Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
                     }
 
-                    OnOperatorSelected(op);
+                    Operators.ViewedOperatorProperties = op;
                 }
             }
             else if (e.Button == MouseButtons.Right)
@@ -245,9 +227,7 @@ namespace VerkstanEditor.Gui
             Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
 
             if (op != null)
-            {
-                OnOperatorPreview(op);
-            }
+                Operators.ViewedOperator = op;
         }
 
         private void OperatorPage_MouseUp(object sender, MouseEventArgs e)

@@ -19,8 +19,8 @@ namespace VerkstanEditor.Gui
         {
             InitializeComponent();
 
-            operatorPage.OperatorSelected += new operatorPage.OperatorSelectedHandler(this.OperatorPage_OperatorSelected);
-            operatorPage.OperatorPreview += new operatorPage.OperatorPreviewHandler(this.OperatorPage_OperatorPreview); 
+            Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.OperatorPage_ViewedOperatorChanged); 
+            Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.OperatorPage_ViewedOperatorPropertiesChanged);
             operatorsPropertiesSplitContainer.Panel1.Controls.Add(operatorPage);
             operatorsPropertiesSplitContainer.Panel2.Controls.Add(operatorProperty);
             operatorProperty.Dock = DockStyle.Fill;
@@ -83,14 +83,17 @@ namespace VerkstanEditor.Gui
             transportTimeLabel.Location = new Point(transportPanel.Width / 2 - transportTimeLabel.Width / 2, 0);        
         }
 
-        private void OperatorPage_OperatorSelected(Operator op)
+        private void OperatorPage_ViewedOperatorPropertiesChanged(Operator op)
         {
             operatorProperty.Operator = op;
         }
 
-        private void OperatorPage_OperatorPreview(Operator op)
+        private void OperatorPage_ViewedOperatorChanged(Operator op)
         {
-            VerkstanBindings.CoreBinding.SetPreview(op.Binding);
+            if (op == null)
+                VerkstanBindings.CoreBinding.ViewedOperatorBinding = null;
+            else
+                VerkstanBindings.CoreBinding.ViewedOperatorBinding = op.Binding;
         }
     }
 }
