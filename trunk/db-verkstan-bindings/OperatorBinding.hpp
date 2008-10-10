@@ -59,13 +59,18 @@ namespace VerkstanBindings
         }
         
         virtual void CascadeProcess() = 0;
+        virtual void Process() = 0;
+        virtual bool IsProcessable() = 0;
 
         virtual void ConnectInWith(OperatorBinding^ operatorBinding) = 0;
         virtual void ConnectOutWith(OperatorBinding^ operatorBinding) = 0;
         virtual void Disconnect() = 0;
-        virtual bool IsProcessable() = 0;
+        
         virtual void DisconnectInFrom(OperatorBinding^ operatorBinding) = 0;
         virtual void DisconnectOutFrom(OperatorBinding^ operatorBinding) = 0;      
+
+        virtual void SetDirty(bool dirty) = 0;
+        virtual bool IsDirty() = 0;
 
     private:
         int id;

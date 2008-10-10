@@ -15,6 +15,7 @@ namespace VerkstanBindings
                                              List<OperatorBindingInput^>^ inputs)
                                              : OperatorBinding(name, operatorId, type, properties)
     {
+        this->dirty = true;
         this->inputs = inputs;
 
         inputConnections = gcnew List<OperatorBinding^>();
@@ -29,7 +30,35 @@ namespace VerkstanBindings
 
     void CoreOperatorBinding::CascadeProcess()
     {
-        operators[Id]->cascadeProcess();
+        if (!dirty)
+            return;
+
+        for (int i = 0; i < inputConnections->Count; i++)
+            inputConnections[i]->CascadeProcess();
+        
+        if (IsProcessable())
+        {
+            Process();
+            dirty = false;
+        }
+    }
+
+    void CoreOperatorBinding::Process()
+    {
+        operators[Id]->process();
+    }
+
+    void CoreOperatorBinding::SetDirty(bool dirty)
+    {
+        this->dirty = dirty;
+
+        for (int i = 0; i < outputConnections->Count; i++)
+            outputConnections[i]->SetDirty(dirty);
+    }
+
+    bool CoreOperatorBinding::IsDirty()
+    {
+        return dirty;
     }
 
     unsigned char CoreOperatorBinding::GetByteProperty(int index)
@@ -39,6 +68,7 @@ namespace VerkstanBindings
 
     void CoreOperatorBinding::SetByteProperty(int index, unsigned char byteValue)
     {
+        SetDirty(true);
         operators[Id]->setByteProperty(index, byteValue); 
     }
 
@@ -49,6 +79,7 @@ namespace VerkstanBindings
 
     void CoreOperatorBinding::SetIntProperty(int index, int intValue)
     {
+        SetDirty(true);
         operators[Id]->setIntProperty(index, intValue); 
     }
 
@@ -59,6 +90,7 @@ namespace VerkstanBindings
 
     void CoreOperatorBinding::SetFloatProperty(int index, float floatValue)
     {
+        SetDirty(true);
         operators[Id]->setFloatProperty(index, floatValue); 
     }
 
@@ -69,6 +101,8 @@ namespace VerkstanBindings
 
     void CoreOperatorBinding::SetStringProperty(int index, String^ string)
     {
+        SetDirty(true);
+
         // Pin memory so GC can't move it while native function is called
         pin_ptr<const wchar_t> wch = PtrToStringChars(string);
      
@@ -132,7 +166,7 @@ namespace VerkstanBindings
         }
 
         operators[Id]->numberOfInConnections = inputConnections->Count;
-        operators[Id]->setDirty(true);
+        SetDirty(true);
     }
 
     void CoreOperatorBinding::flushOutputConnections()

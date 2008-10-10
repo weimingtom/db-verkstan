@@ -15,7 +15,23 @@ namespace VerkstanBindings
         
     void NameOperatorBinding::CascadeProcess()
     {
+        if (input != nullptr)
+            input->CascadeProcess();
+    }
 
+    void NameOperatorBinding::Process()
+    {
+
+    }
+
+    void NameOperatorBinding::SetDirty(bool dirty)
+    {
+
+    }
+
+    bool NameOperatorBinding::IsDirty()
+    {
+        return false;
     }
 
     unsigned char NameOperatorBinding::GetByteProperty(int index)
@@ -63,7 +79,10 @@ namespace VerkstanBindings
         if (input == nullptr 
             && operatorBinding->Type != Constants::OperatorTypes::Name
             && operatorBinding->Type != Constants::OperatorTypes::Reference)
+        {
             input = operatorBinding;
+            operatorBinding->ConnectOutWith(this);
+        }
     }
 
     void NameOperatorBinding::ConnectOutWith(OperatorBinding^ operatorBinding)
@@ -73,6 +92,9 @@ namespace VerkstanBindings
 
     void NameOperatorBinding::Disconnect()
     {
+        if (input != nullptr)
+            input->DisconnectOutFrom(this);
+
         input = nullptr;
     }
 

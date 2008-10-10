@@ -120,11 +120,12 @@ namespace VerkstanBindings
                                        1.0f, 
                                        0);
             
-            if (viewedOperatorBinding 
-                && viewedOperatorBinding->IsProcessable()
-                && viewedOperatorBinding->Type == Constants::OperatorTypes::Texture)
+            if (viewedOperatorBinding != nullptr)
             {
-                RenderTexture();
+                viewedOperatorBinding->CascadeProcess();
+
+                if (viewedOperatorBinding->Type == Constants::OperatorTypes::Texture)
+                    RenderTexture();
             }
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
@@ -136,8 +137,6 @@ namespace VerkstanBindings
 
     void CoreBinding::RenderTexture()
     {
-        viewedOperatorBinding->CascadeProcess();
-
         Operator* op = operators[viewedOperatorBinding->Id];
 
         D3DXMATRIX projection;

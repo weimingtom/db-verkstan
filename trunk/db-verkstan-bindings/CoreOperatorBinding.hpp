@@ -22,6 +22,10 @@ namespace VerkstanBindings
         virtual void SetStringProperty(int index, String ^string) override;
         
         virtual void CascadeProcess() override;
+        virtual void Process() override;
+        
+        virtual void SetDirty(bool dirty) override;
+        virtual bool IsDirty() override;
 
         virtual void ConnectInWith(OperatorBinding^ operatorBinding) override;
         virtual void ConnectOutWith(OperatorBinding^ operatorBinding) override;
@@ -34,6 +38,7 @@ namespace VerkstanBindings
         void flushInputConnections();
         void flushOutputConnections();
 
+        bool dirty;
         List<OperatorBindingInput^>^ inputs;
         List<OperatorBinding^>^ inputConnections;
         List<OperatorBinding^>^ outputConnections;

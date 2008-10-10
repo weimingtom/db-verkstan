@@ -70,10 +70,7 @@ void Operator::setStringProperty(int index, const char *stringValue)
 
 bool Operator::isDirty()
 {
-    bool result = dirty;
-    for (int i = 0; i < numberOfInConnections; i++)
-        result |= operators[inConnections[i]]->dirty;
-    return result;
+    return dirty;
 }
 
 void Operator::cascadeProcess()
