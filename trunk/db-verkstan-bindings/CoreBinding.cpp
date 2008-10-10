@@ -4,6 +4,7 @@
 #include "CoreBinding.hpp"
 
 #include "Constants.hpp"
+#include "Renderer.hpp"
 
 namespace VerkstanBindings
 {
@@ -80,6 +81,9 @@ namespace VerkstanBindings
             }
         }
 
+        if (viewedOperatorBinding != nullptr)
+            viewedOperatorBinding->SetDirty(true);
+
         HRESULT result = globalDirect3DDevice->Reset(&d3dPresentParameters);
         
         if (result == D3DERR_INVALIDCALL)
@@ -123,9 +127,7 @@ namespace VerkstanBindings
             if (viewedOperatorBinding != nullptr)
             {
                 viewedOperatorBinding->CascadeProcess();
-
-                if (viewedOperatorBinding->Type == Constants::OperatorTypes::Texture)
-                    RenderTexture();
+                Renderer::RenderOperator(viewedOperatorBinding);
             }
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
@@ -133,54 +135,6 @@ namespace VerkstanBindings
             if (result == D3DERR_DEVICELOST)
 			    resetDevice = true;     
         }
-    }
-
-    void CoreBinding::RenderTexture()
-    {
-        Operator* op = operators[viewedOperatorBinding->Id];
-
-        D3DXMATRIX projection;
-        D3DXMatrixPerspectiveFovLH(&projection, 
-                                   D3DXToRadian(45.0f), 
-                                   WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
-                                   1.0f, 
-                                   100.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
-
-        D3DXMATRIX world;
-        D3DXMATRIX view;
-        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-       
-        D3DXMatrixLookAtLH(&view,
-                           &D3DXVECTOR3(0.0f, 0.0f, -2.5f),
-                           &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-                           &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
-
-        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-        globalDirect3DDevice->BeginScene();
-
-        VertexWithTexture vertices[]=
-        {
-           { -1.0f, -1.0f, 0.0f, 0xFFFFFFFF, 0.0f, 1.0f },
-           { -1.0f,  1.0f, 0.0f, 0xFFFFFFFF, 0.0f, 0.0f },
-           {  1.0f, -1.0f, 0.0f, 0xFFFFFFFF, 1.0f, 1.0f },
-           {  1.0f,  1.0f, 0.0f, 0xFFFFFFFF, 1.0f, 0.0f },
-        };
-
-        if (op->texture != 0)
-            globalDirect3DDevice->SetTexture(0, op->texture->getD3D9Texture());		
-        globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1);
-        globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
-                                              2,
-                                              &vertices, 
-                                              sizeof(VertexWithTexture));
-        globalDirect3DDevice->SetTexture(0, 0);	
-        globalDirect3DDevice->EndScene();
     }
 
     OperatorBinding^ CoreBinding::ViewedOperatorBinding::get()

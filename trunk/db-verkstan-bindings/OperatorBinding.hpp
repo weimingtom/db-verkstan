@@ -42,14 +42,19 @@ namespace VerkstanBindings
         virtual ~OperatorBinding();
         
         virtual unsigned char GetByteProperty(int index) = 0;
-        virtual void SetByteProperty(int index, unsigned char byteValue) = 0;
+        virtual void SetByteProperty(int index, unsigned char value) = 0;
         virtual int GetIntProperty(int index) = 0;
-        virtual void SetIntProperty(int index, int intValue) = 0;
+        virtual void SetIntProperty(int index, int value) = 0;
         virtual float GetFloatProperty(int index) = 0;
-        virtual void SetFloatProperty(int index, float floatValue) = 0;
+        virtual void SetFloatProperty(int index, float value) = 0;
         virtual String^ GetStringProperty(int index) = 0;
-        virtual void SetStringProperty(int index, String ^string) = 0;
-        
+        virtual void SetStringProperty(int index, String^ value) = 0;
+     
+        int GetColorProperty(int index);
+        void SetColorProperty(int index, int value);
+        String^ GetTextProperty(int index);
+        void SetTextProperty(int index, String^ value);
+
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ Name { String^ get(); }
@@ -71,6 +76,8 @@ namespace VerkstanBindings
 
         virtual void SetDirty(bool dirty) = 0;
         virtual bool IsDirty() = 0;
+
+        virtual Operator* getOperator() = 0;
 
     private:
         int id;

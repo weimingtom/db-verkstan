@@ -12,7 +12,12 @@ namespace VerkstanBindings
     {
 
     }
-        
+
+    OperatorBinding^ NameOperatorBinding::Input::get()
+    {
+        return input;
+    }
+     
     void NameOperatorBinding::CascadeProcess()
     {
         if (input != nullptr)
@@ -39,7 +44,7 @@ namespace VerkstanBindings
         return 0;
     }
 
-    void NameOperatorBinding::SetByteProperty(int index, unsigned char byteValue)
+    void NameOperatorBinding::SetByteProperty(int index, unsigned char value)
     {
 
     }
@@ -49,7 +54,7 @@ namespace VerkstanBindings
         return 0;
     }
 
-    void NameOperatorBinding::SetIntProperty(int index, int intValue)
+    void NameOperatorBinding::SetIntProperty(int index, int value)
     {
 
     }
@@ -59,7 +64,7 @@ namespace VerkstanBindings
         return 0;
     }
 
-    void NameOperatorBinding::SetFloatProperty(int index, float floatValue)
+    void NameOperatorBinding::SetFloatProperty(int index, float value)
     {
         
     }
@@ -69,7 +74,7 @@ namespace VerkstanBindings
         return gcnew String("");
     }
 
-    void NameOperatorBinding::SetStringProperty(int index, String ^string)
+    void NameOperatorBinding::SetStringProperty(int index, String^ value)
     {
 
     }
@@ -112,5 +117,10 @@ namespace VerkstanBindings
     void NameOperatorBinding::DisconnectOutFrom(OperatorBinding^ operatorBinding)
     {
 
+    }
+
+    Operator* NameOperatorBinding::getOperator()
+    {
+        return 0;
     }
 }

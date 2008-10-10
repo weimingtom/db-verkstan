@@ -59,4 +59,24 @@ namespace VerkstanBindings
     {
         return type;
     }
+
+    int OperatorBinding::GetColorProperty(int index)
+    {
+         return GetIntProperty(index);
+    }
+
+    void OperatorBinding::SetColorProperty(int index, int value)
+    {
+        SetIntProperty(index, value);
+    }
+
+    String^ OperatorBinding::GetTextProperty(int index)
+    {   
+        return GetStringProperty(index);   
+    }
+
+    void OperatorBinding::SetTextProperty(int index, String^ value)
+    {
+        SetStringProperty(index, value);
+    }
 }

@@ -68,7 +68,7 @@ categories[category]->Add(name);
        
 #define ADD_PROP(propName, propType, defaultValue)    \
     properties->Add(gcnew OperatorBindingProperty(properties->Count, propName, Constants::OperatorPropertyTypes::##propType));  \
-    op->set##propType##Property(properties->Count - 1, defaultValue);
+    ob->Set##propType##Property(properties->Count - 1, defaultValue);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && !inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \

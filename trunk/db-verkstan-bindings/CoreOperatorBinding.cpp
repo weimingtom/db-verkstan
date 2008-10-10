@@ -66,10 +66,10 @@ namespace VerkstanBindings
         return operators[Id]->getByteProperty(index);
     }
 
-    void CoreOperatorBinding::SetByteProperty(int index, unsigned char byteValue)
+    void CoreOperatorBinding::SetByteProperty(int index, unsigned char value)
     {
         SetDirty(true);
-        operators[Id]->setByteProperty(index, byteValue); 
+        operators[Id]->setByteProperty(index, value); 
     }
 
     int CoreOperatorBinding::GetIntProperty(int index)
@@ -77,10 +77,10 @@ namespace VerkstanBindings
          return operators[Id]->getIntProperty(index);
     }
 
-    void CoreOperatorBinding::SetIntProperty(int index, int intValue)
+    void CoreOperatorBinding::SetIntProperty(int index, int value)
     {
         SetDirty(true);
-        operators[Id]->setIntProperty(index, intValue); 
+        operators[Id]->setIntProperty(index, value); 
     }
 
     float CoreOperatorBinding::GetFloatProperty(int index)
@@ -88,15 +88,15 @@ namespace VerkstanBindings
         return operators[Id]->getFloatProperty(index);
     }
 
-    void CoreOperatorBinding::SetFloatProperty(int index, float floatValue)
+    void CoreOperatorBinding::SetFloatProperty(int index, float value)
     {
         SetDirty(true);
-        operators[Id]->setFloatProperty(index, floatValue); 
+        operators[Id]->setFloatProperty(index, value); 
     }
 
     String^ CoreOperatorBinding::GetStringProperty(int index)
     {   
-        return gcnew String(operators[Id]->getTextProperty(index));   
+        return gcnew String(operators[Id]->getStringProperty(index));   
     }
 
     void CoreOperatorBinding::SetStringProperty(int index, String^ string)
@@ -123,13 +123,13 @@ namespace VerkstanBindings
                          wch, 
                          sizeInBytes);
 
-        operators[Id]->setTextProperty(index, ch); 
+        operators[Id]->setStringProperty(index, ch); 
     }
 
     void CoreOperatorBinding::flushInputConnections()
     {
-        for (int i = 0; i < operators[Id]->numberOfInConnections; i++)
-            operators[Id]->inConnections[i] = -1;
+        for (int i = 0; i < operators[Id]->numberOfInputs; i++)
+            operators[Id]->inputs[i] = -1;
 
         for (int i = 0; i < inputConnections->Count; i++)
         {
@@ -139,9 +139,9 @@ namespace VerkstanBindings
             for (j; j < inputs->Count; j++)
             {
                 if (inputs[j]->Type == ob->Type
-                    && operators[Id]->inConnections[j] == -1)
+                    && operators[Id]->inputs[j] == -1)
                 {
-                    operators[Id]->inConnections[j] = ob->Id;
+                    operators[Id]->inputs[j] = ob->Id;
                     accepted = true;
                     break;
                 }
@@ -155,9 +155,9 @@ namespace VerkstanBindings
             {
                 for (j; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
                 {
-                    if (operators[Id]->inConnections[j] == -1)
+                    if (operators[Id]->inputs[j] == -1)
                     {
-                        operators[Id]->inConnections[j] = ob->Id;
+                        operators[Id]->inputs[j] = ob->Id;
                         accepted = true;
                         break;
                     }
@@ -165,19 +165,19 @@ namespace VerkstanBindings
             }
         }
 
-        operators[Id]->numberOfInConnections = inputConnections->Count;
+        operators[Id]->numberOfInputs= inputConnections->Count;
         SetDirty(true);
     }
 
     void CoreOperatorBinding::flushOutputConnections()
     {
-        for (int i = 0; i < operators[Id]->numberOfOutConnections; i++)
-            operators[Id]->outConnections[i] = -1;
+        for (int i = 0; i < operators[Id]->numberOfOutputs; i++)
+            operators[Id]->outputs[i] = -1;
 
         for (int i = 0; i < outputConnections->Count; i++)
-            operators[Id]->outConnections[i] = outputConnections[i]->Id;
+            operators[Id]->outputs[i] = outputConnections[i]->Id;
        
-        operators[Id]->numberOfOutConnections = outputConnections->Count;
+        operators[Id]->numberOfOutputs = outputConnections->Count;
     }
 
     void CoreOperatorBinding::ConnectInWith(OperatorBinding^ operatorBinding)
@@ -190,7 +190,7 @@ namespace VerkstanBindings
         for (i; i < inputs->Count; i++)
         {
             if (inputs[i]->Type == operatorBinding->Type
-                && operators[Id]->inConnections[i] == -1)
+                && operators[Id]->inputs[i] == -1)
             {
                 inputConnections->Add(operatorBinding);
                 accepted = true;
@@ -206,7 +206,7 @@ namespace VerkstanBindings
         {
             for (i; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
             {
-                if (operators[Id]->inConnections[i] == -1)
+                if (operators[Id]->inputs[i] == -1)
                 {
                     inputConnections->Add(operatorBinding);
                     accepted = true;
@@ -259,11 +259,16 @@ namespace VerkstanBindings
 
     bool CoreOperatorBinding::IsProcessable()
     {
-        bool result = inputs->Count == operators[Id]->numberOfInConnections;
+        bool result = inputs->Count == operators[Id]->numberOfInputs;
 
         for (int i = 0; i < inputConnections->Count; i++)
             result &= inputConnections[i]->IsProcessable();
 
         return result;
+    }
+
+    Operator* CoreOperatorBinding::getOperator()
+    {
+        return operators[Id];
     }
 }

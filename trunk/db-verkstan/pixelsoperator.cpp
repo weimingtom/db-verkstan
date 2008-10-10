@@ -1,5 +1,10 @@
 #include "pixelsoperator.hpp"
 
+void PixelsOperator::render()
+{
+
+}
+
 void PixelsOperator::process()
 {
     if (texture == 0)

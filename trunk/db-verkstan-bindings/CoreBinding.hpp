@@ -9,13 +9,6 @@
 
 namespace VerkstanBindings 
 {
-    struct VertexWithTexture
-    {
-        float x, y, z;
-        DWORD color;
-        float u, v;
-    };
-
 	public ref class CoreBinding
 	{
     public:
@@ -35,7 +28,6 @@ namespace VerkstanBindings
         }
     private:
         static void Reset();
-        static void RenderTexture();
         static OperatorBinding^ viewedOperatorBinding;
         static bool resetDevice = false;
         static int clearColor;

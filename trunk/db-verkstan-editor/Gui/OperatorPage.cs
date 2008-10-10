@@ -121,7 +121,17 @@ namespace VerkstanEditor.Gui
             if (op.Binding.IsProcessable())
                 processableSat = 255;
 
-            HSLColor HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
+            HSLColor HSLColor;
+            
+            if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Texture)
+                HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
+            else if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Name)
+                HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
+            else if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Reference)
+                HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
+            else
+                HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
+
             HSLColor.Saturation = processableSat;
             HSLColor.Luminosity += selectedLum;
             Color color = HSLColor;

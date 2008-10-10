@@ -7,14 +7,14 @@
 Operator::Operator()
 :mesh(0),
 texture(0),
-numberOfInConnections(0),
-numberOfOutConnections(0),
+numberOfInputs(0),
+numberOfOutputs(0),
 dirty(true)
 {
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
-        inConnections[i] = -1;
+        inputs[i] = -1;
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
-        outConnections[i] = -1;
+        outputs[i] = -1;
 }
 
 void Operator::process()
@@ -27,10 +27,9 @@ unsigned char Operator::getByteProperty(int index)
     return properties[index].byteValue;
 }
 
-void Operator::setByteProperty(int index, unsigned char byteValue)
+void Operator::setByteProperty(int index, unsigned char value)
 {
-    setDirty(properties[index].byteValue != byteValue || dirty);
-    properties[index].byteValue = byteValue;
+    properties[index].byteValue = value;
 }
 
 int Operator::getIntProperty(int index)
@@ -38,10 +37,9 @@ int Operator::getIntProperty(int index)
     return properties[index].intValue;
 }
 
-void Operator::setIntProperty(int index, int intValue)
+void Operator::setIntProperty(int index, int value)
 {
-    setDirty(properties[index].intValue != intValue || dirty);
-    properties[index].intValue = intValue;
+    properties[index].intValue = value;
 }
 
 float Operator::getFloatProperty(int index)
@@ -49,10 +47,9 @@ float Operator::getFloatProperty(int index)
     return properties[index].floatValue;
 }
 
-void Operator::setFloatProperty(int index, float floatValue)
+void Operator::setFloatProperty(int index, float value)
 {
-    setDirty(properties[index].floatValue != floatValue || dirty);
-    properties[index].floatValue = floatValue;
+    properties[index].floatValue = value;
 }
 
 const char* Operator::getStringProperty(int index)
@@ -60,11 +57,11 @@ const char* Operator::getStringProperty(int index)
     return properties[index].stringValue;
 }
 
-void Operator::setStringProperty(int index, const char *stringValue)
+void Operator::setStringProperty(int index, const char *value)
 {
     // TODO Should strcpy really be used here? Perhaps there is a better solution.
     // Perhaps strcpy requires a runtime library that we cannot relay on (like Microsoft runtime libraries).
-    strcpy(properties[index].stringValue, stringValue);
+    strcpy(properties[index].stringValue, value);
     setDirty(true);
 }
 
@@ -78,8 +75,8 @@ void Operator::cascadeProcess()
     if (!isDirty())
         return;
 
-    for (int i = 0; i < numberOfInConnections; i++)
-        operators[inConnections[i]]->cascadeProcess();
+    for (int i = 0; i < numberOfInputs; i++)
+        operators[inputs[i]]->cascadeProcess();
 
     process();
     dirty = false;
@@ -87,15 +84,15 @@ void Operator::cascadeProcess()
 
 void Operator::setDirty(bool dirty)
 {
-    for (int i = 0; i < numberOfOutConnections; i++)
-        operators[outConnections[i]]->setDirty(dirty);
+    for (int i = 0; i < numberOfOutputs; i++)
+        operators[outputs[i]]->setDirty(dirty);
 
     this->dirty = dirty;
 }
 
-Operator* Operator::getInConnectedOperator(int index)
+Operator* Operator::getInput(int index)
 {
-    return operators[inConnections[index]];
+    return operators[inputs[index]];
 }
 
 void Operator::deviceLost()

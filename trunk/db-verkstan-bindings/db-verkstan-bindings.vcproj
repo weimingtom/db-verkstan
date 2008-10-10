@@ -309,6 +309,14 @@
 				RelativePath=".\ReferenceOperatorBinding.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Renderer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Renderer.hpp"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

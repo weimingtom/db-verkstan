@@ -1,11 +1,16 @@
 #include "rotozoomoperator.hpp"
 
+void RotozoomOperator::render()
+{
+
+}
+
 void RotozoomOperator::process()
 {    
     if (texture == 0)
         texture = new Texture();
 
-    Texture* source = getInConnectedOperator(0)->texture;
+    Texture* source = getInput(0)->texture;
 
     unsigned char centerx = getByteProperty(0);
     unsigned char centery = getByteProperty(1);

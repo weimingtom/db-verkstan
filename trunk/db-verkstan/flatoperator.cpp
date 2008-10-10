@@ -1,5 +1,10 @@
 #include "flatoperator.hpp"
 
+void FlatOperator::render()
+{
+
+}
+
 void FlatOperator::process()
 {
     if (texture == 0)

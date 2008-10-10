@@ -19,38 +19,25 @@ class Operator
 public:
     Operator();
     virtual ~Operator() {};
-    virtual void process() = 0;
-    virtual void deviceLost();
+    
     void cascadeProcess();
-    Operator* getInConnectedOperator(int index);
+    virtual void process() = 0;
+    virtual void render() = 0;
+
+    virtual void deviceLost();
+
+    Operator* getInput(int index);
     unsigned char getByteProperty(int index);
-    void setByteProperty(int index, unsigned char byteValue);
+    void setByteProperty(int index, unsigned char value);
     int getIntProperty(int index);
-    void setIntProperty(int index, int intValue);
-    int getColorProperty(int index)
-    {
-        return getIntProperty(index);
-    }
-    void setColorProperty(int index, int intValue)
-    {
-        setIntProperty(index, intValue);
-    }
+    void setIntProperty(int index, int value);
     float getFloatProperty(int index);
-    void setFloatProperty(int index, float floatValue);
+    void setFloatProperty(int index, float value);
     const char* getStringProperty(int index);
-    void setStringProperty(int index, const char *stringValue);
-    const char* getTextProperty(int index)
-    {
-        return getStringProperty(index);
-    }
-    void setTextProperty(int index, const char *textValue)
-    {
-         return setStringProperty(index, textValue);
-    }
+    void setStringProperty(int index, const char *value);
     bool isDirty();
     void setDirty(bool dirty);
   
-
     Mesh* mesh;
     Texture* texture;
 
@@ -63,10 +50,9 @@ public:
     };
 
     Property properties[DB_MAX_OPERATOR_PROPERTIES];
-    int inConnections[DB_MAX_OPERATOR_CONNECTIONS];
-    int outConnections[DB_MAX_OPERATOR_CONNECTIONS];
-    int numberOfInConnections;
-    int numberOfOutConnections;
-protected:
+    int inputs[DB_MAX_OPERATOR_CONNECTIONS];
+    int outputs[DB_MAX_OPERATOR_CONNECTIONS];
+    int numberOfInputs;
+    int numberOfOutputs;
     bool dirty;
 };

@@ -22,6 +22,11 @@ void TextOperator::deviceLost()
     }
 }
 
+void TextOperator::render()
+{
+
+}
+
 void TextOperator::process()
 {   
     if (d3d9RenderTargetTexture == 0)
