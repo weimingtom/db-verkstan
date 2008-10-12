@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using Midi;
+
 namespace VorlonSeq
 {
     public partial class ChannelEditor : UserControl
@@ -31,6 +33,11 @@ namespace VorlonSeq
             {
                 ClipEditRequested(clicked);
             }
+        }
+
+        public void OnMidiInput(MidiMessage message)
+        {
+            channelTimeline1.OnMidiInput(message);
         }
     }
 }

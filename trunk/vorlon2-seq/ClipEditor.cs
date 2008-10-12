@@ -17,5 +17,10 @@ namespace VorlonSeq
         {
             InitializeComponent();
         }
+
+        public void OnMidiInput(Midi.MidiMessage message)
+        {
+            pianoRoll1.OnMidiInput(message);
+        }
     }
 }

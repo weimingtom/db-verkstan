@@ -12,6 +12,7 @@ namespace Midi
         private int handle = -1;
         private bool opened = false;
         private bool started = false;
+        WinMM.MidiInProc proc; // Member, since it must not be GCed
 
         public string Name { get { return caps.Name; } }
 
@@ -30,6 +31,7 @@ namespace Midi
             for (int i = 0; i < numInputDevices; i++)
             {
                 WinMM.MidiInCaps inCaps = new WinMM.MidiInCaps();
+                WinMM.midiInGetDevCaps(i, ref inCaps, System.Runtime.InteropServices.Marshal.SizeOf(typeof(WinMM.MidiInCaps)));
                 devices.Add(new MidiInDevice(i, inCaps));
             }
 
@@ -40,7 +42,7 @@ namespace Midi
 
         public void Open(MidiInHandler callback)
         {
-            WinMM.MidiInProc proc = new WinMM.MidiInProc((int h, uint msg, uint instance, uint param1, uint param2) => callback(this, new MidiMessage(param1, param2)));
+            proc = new WinMM.MidiInProc((int h, uint msg, uint instance, uint param1, uint param2) => callback(this, new MidiMessage(param1, param2)));
             WinMM.midiInOpen(ref handle, Id, proc, 0, WinMM.CALLBACK_FUNCTION);
             opened = true;
         }

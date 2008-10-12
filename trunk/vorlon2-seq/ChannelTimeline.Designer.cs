@@ -44,6 +44,7 @@
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseUp);
             this.SizeChanged += new System.EventHandler(this.ChannelTimeline_SizeChanged);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ChannelTimeline_KeyDown);
             this.ResumeLayout(false);
 
         }

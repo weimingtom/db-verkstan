@@ -9,19 +9,23 @@ using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
 using VorlonSeq.Seq;
+using Midi;
 
 namespace VorlonSeq
 {
     public partial class ChannelTimeline : UserControl
     {
-        static int topMargin = 16;
-        static int channelHeight = 32;
-        static int channelPadding = 3;
-        static int pixelsPerBar = 12;
-        static bool moving = false;
-        static bool selecting = false;
-        static Point mouseDownPos;
-        static Point mousePos;
+        int topMargin = 16;
+        int channelHeight = 32;
+        int channelPadding = 3;
+        int pixelsPerBar = 12;
+        bool moving = false;
+        bool selecting = false;
+        bool creating = false;
+        Point mouseDownPos;
+        Point mousePos;
+        Channel selectedChannel = null;
+        Clip createdClip = null;
 
         static List<Clip> selectedClips = new List<Clip>();
 
@@ -33,18 +37,6 @@ namespace VorlonSeq
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint |
                 ControlStyles.DoubleBuffer, true);
-
-
-            // TEMP!
-            Clip clip = new Clip();
-            clip.StartTime = 4 * 16 * 5;
-            clip.Length = 4 * 16 * 4;
-            Sequencer.Song.Channels[2].AddClip(clip);
-
-            Clip clip2 = new Clip();
-            clip2.StartTime = 4 * 16 * 2;
-            clip2.Length = 4 * 16 * 8;
-            Sequencer.Song.Channels[5].AddClip(clip2);
         }
 
         private void ChannelTimeline_Paint(object sender, PaintEventArgs e)
@@ -59,7 +51,7 @@ namespace VorlonSeq
                 int y2 = i * channelHeight + topMargin + channelHeight - channelPadding;
                 g.DrawLine(Pens.DarkGray, new Point(0, y1), new Point(Width, y1));
                 g.DrawLine(Pens.DarkGray, new Point(0, y2), new Point(Width, y2));
-                g.FillRectangle(Brushes.WhiteSmoke, new Rectangle(0, y1 + 1, Width, y2 - y1 - 1));
+                g.FillRectangle(song.Channels[i] == selectedChannel ? Brushes.LemonChiffon : Brushes.WhiteSmoke, new Rectangle(0, y1 + 1, Width, y2 - y1 - 1));
 
                 for (int x = 0; x < Width; x += pixelsPerBar)
                 {
@@ -81,15 +73,15 @@ namespace VorlonSeq
                     int x1 = (clip.StartTime * pixelsPerBar) / (4 * 16);
                     int x2 = (clip.EndTime * pixelsPerBar) / (4 * 16);
                     Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
-                    Brush niceBrush = new LinearGradientBrush(rect, Color.SkyBlue, Color.White, 90.0f);
-                    g.FillRectangle(niceBrush, rect);
+                    //Brush niceBrush = new LinearGradientBrush(rect, Color.SkyBlue, Color.White, 90.0f);
+                    g.FillRectangle(Brushes.LightSteelBlue, rect);
                     g.DrawRectangle(Pens.Black, rect);
                     if (selectedClips.Contains(clip))
                     {
                         rect.Inflate(new Size(-1, -1));
                         g.DrawRectangle(Pens.Black, rect);
                     }
-                    niceBrush.Dispose();
+                    //niceBrush.Dispose();
                 }
             }
 
@@ -107,6 +99,18 @@ namespace VorlonSeq
                     rect.Inflate(new Size(-1, -1));
                     g.DrawRectangle(Pens.DarkSlateGray, rect);
                 }
+            }
+
+            if (creating)
+            {
+                int i = createdClip.Channel.Number;
+                int y1 = i * channelHeight + topMargin;
+                int y2 = i * channelHeight + topMargin + channelHeight - channelPadding;
+                int x1 = ((createdClip.StartTime) * pixelsPerBar) / (4 * 16);
+                int x2 = ((createdClip.EndTime) * pixelsPerBar) / (4 * 16);
+                Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
+                rect.Inflate(new Size(-1, -1));
+                g.DrawRectangle(Pens.DarkSlateGray, rect);
             }
         }
 
@@ -141,6 +145,15 @@ namespace VorlonSeq
             return Sequencer.Song.Channels[channelNo];
         }
 
+        private Channel GetChannelClosestTo(int y)
+        {
+            y -= topMargin;
+            int channelNo = y / channelHeight;
+            if (channelNo < 0) channelNo = 0;
+            if (channelNo >= Song.NumChannels) channelNo = Song.NumChannels - 1;
+            return Sequencer.Song.Channels[channelNo];
+        }
+
         private int ConvertXToTime(int x)
         {
             return (x * (16 * 4)) / pixelsPerBar;
@@ -161,7 +174,7 @@ namespace VorlonSeq
 
         private void ChannelTimeline_MouseDown(object sender, MouseEventArgs e)
         {
-            
+            selectedChannel = GetChannelClosestTo(e.Y);
             Clip clickedClip = GetClipAt(e.Location);
 
             if (!selectedClips.Contains(clickedClip))
@@ -180,7 +193,12 @@ namespace VorlonSeq
             }
             else
             {
-                selecting = true;
+                creating = true;
+                createdClip = new Clip();
+                createdClip.Channel = selectedChannel;
+                int t = ConvertXToTime(e.X);
+                createdClip.StartTime = t - t % (16 * 4);
+                createdClip.Length = 16 * 4;
             }
 
             mouseDownPos = e.Location;
@@ -191,6 +209,12 @@ namespace VorlonSeq
 
         private void ChannelTimeline_MouseUp(object sender, MouseEventArgs e)
         {
+            if (moving || selecting)
+            {
+                selectedChannel = GetChannelClosestTo(e.Y);
+                Refresh();
+            }
+
             mousePos = e.Location;
 
             if (moving)
@@ -209,16 +233,41 @@ namespace VorlonSeq
                     }
                 }
             }
+
+            if (creating)
+            {
+                UpdateCreatedClip();
+                createdClip.Channel.AddClip(createdClip);
+                selectedClips.Clear();
+                selectedClips.Add(createdClip);
+                createdClip = null;
+            }
             
             moving = false;
             selecting = false;
+            creating = false;
             Refresh();
         }
 
         private void ChannelTimeline_MouseMove(object sender, MouseEventArgs e)
         {
+            if (moving || selecting)
+            {
+                selectedChannel = GetChannelClosestTo(e.Y);
+                Refresh();
+            }
+
             mousePos = e.Location;
-            Refresh();
+
+            if (creating)
+            {
+                UpdateCreatedClip();
+            }
+
+            if (creating || moving || selecting)
+            {
+                Refresh();
+            }
         }
 
         private int GetMouseMovementBars()
@@ -228,7 +277,7 @@ namespace VorlonSeq
 
         private int GetMouseMovementChannels()
         {
-            return (mousePos.Y - mouseDownPos.Y) / channelHeight;
+            return GetChannelClosestTo(mousePos.Y).Number - GetChannelClosestTo(mouseDownPos.Y).Number;
         }
 
         private Point GetSelectedClipsMovement()
@@ -275,6 +324,34 @@ namespace VorlonSeq
             {
                 ClipEditRequested(clicked);
             }
+        }
+
+        public void OnMidiInput(MidiMessage message)
+        {
+            message.Channel = 0; // TODO: = selectedChannel.Number
+            Sequencer.PlayMidiEvent(message);
+        }
+
+        void UpdateCreatedClip()
+        {
+            if (createdClip == null)
+            {
+                return;
+            }
+
+            createdClip.EndTime = ConvertXToTime(mousePos.X);
+            createdClip.Length -= createdClip.Length % (4 * 16);
+            createdClip.Length = Math.Max(createdClip.Length, (4 * 16));
+        }
+
+        private void ChannelTimeline_KeyDown(object sender, KeyEventArgs e)
+        {
+            foreach (Clip c in selectedClips)
+            {
+                c.Channel.RemoveClip(c);
+            }
+            selectedClips.Clear();
+            Refresh();
         }
     }
 }

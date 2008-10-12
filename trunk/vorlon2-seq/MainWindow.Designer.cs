@@ -33,9 +33,7 @@
             this.mainSplit = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.arrangeTab = new System.Windows.Forms.TabPage();
-            this.channelEditor1 = new VorlonSeq.ChannelEditor();
             this.composeTab = new System.Windows.Forms.TabPage();
-            this.clipEditor1 = new VorlonSeq.ClipEditor();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.timeLabel = new System.Windows.Forms.Label();
             this.framesPerTickUpDown = new System.Windows.Forms.NumericUpDown();
@@ -53,6 +51,11 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.midiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.disabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.channelEditor1 = new VorlonSeq.ChannelEditor();
+            this.clipEditor1 = new VorlonSeq.ClipEditor();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -131,6 +134,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(943, 430);
             this.tabControl1.TabIndex = 1;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // arrangeTab
             // 
@@ -144,14 +148,6 @@
             this.arrangeTab.Text = "Arrange";
             this.arrangeTab.UseVisualStyleBackColor = true;
             // 
-            // channelEditor1
-            // 
-            this.channelEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.channelEditor1.Location = new System.Drawing.Point(3, 3);
-            this.channelEditor1.Name = "channelEditor1";
-            this.channelEditor1.Size = new System.Drawing.Size(929, 395);
-            this.channelEditor1.TabIndex = 0;
-            // 
             // composeTab
             // 
             this.composeTab.AutoScroll = true;
@@ -164,23 +160,14 @@
             this.composeTab.Text = "Compose";
             this.composeTab.UseVisualStyleBackColor = true;
             // 
-            // clipEditor1
-            // 
-            this.clipEditor1.AutoScroll = true;
-            this.clipEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.clipEditor1.Location = new System.Drawing.Point(3, 3);
-            this.clipEditor1.Name = "clipEditor1";
-            this.clipEditor1.Size = new System.Drawing.Size(929, 395);
-            this.clipEditor1.TabIndex = 0;
-            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 5;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 67.72908F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 32.27092F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.85149F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.14851F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 155F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 168F));
             this.tableLayoutPanel2.Controls.Add(this.timeLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.framesPerTickUpDown, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label1, 1, 0);
@@ -203,7 +190,7 @@
             this.timeLabel.ForeColor = System.Drawing.Color.White;
             this.timeLabel.Location = new System.Drawing.Point(3, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(140, 45);
+            this.timeLabel.Size = new System.Drawing.Size(125, 45);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "1.00.00";
             this.timeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -211,7 +198,7 @@
             // framesPerTickUpDown
             // 
             this.framesPerTickUpDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.framesPerTickUpDown.Location = new System.Drawing.Point(218, 12);
+            this.framesPerTickUpDown.Location = new System.Drawing.Point(205, 12);
             this.framesPerTickUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -238,7 +225,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(151, 8);
+            this.label1.Location = new System.Drawing.Point(138, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 28);
             this.label1.TabIndex = 2;
@@ -250,7 +237,7 @@
             this.bpmLabel.AutoSize = true;
             this.bpmLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bpmLabel.ForeColor = System.Drawing.Color.White;
-            this.bpmLabel.Location = new System.Drawing.Point(287, 15);
+            this.bpmLabel.Location = new System.Drawing.Point(274, 15);
             this.bpmLabel.Name = "bpmLabel";
             this.bpmLabel.Size = new System.Drawing.Size(81, 14);
             this.bpmLabel.TabIndex = 2;
@@ -327,7 +314,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.midiToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(947, 24);
@@ -381,6 +369,46 @@
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // midiToolStripMenuItem
+            // 
+            this.midiToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.disabledToolStripMenuItem});
+            this.midiToolStripMenuItem.Name = "midiToolStripMenuItem";
+            this.midiToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.midiToolStripMenuItem.Text = "Midi";
+            this.midiToolStripMenuItem.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.midiToolStripMenuItem_DropDownItemClicked);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(111, 6);
+            // 
+            // disabledToolStripMenuItem
+            // 
+            this.disabledToolStripMenuItem.Checked = true;
+            this.disabledToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.disabledToolStripMenuItem.Name = "disabledToolStripMenuItem";
+            this.disabledToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+            this.disabledToolStripMenuItem.Text = "Disabled";
+            // 
+            // channelEditor1
+            // 
+            this.channelEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.channelEditor1.Location = new System.Drawing.Point(3, 3);
+            this.channelEditor1.Name = "channelEditor1";
+            this.channelEditor1.Size = new System.Drawing.Size(929, 395);
+            this.channelEditor1.TabIndex = 0;
+            // 
+            // clipEditor1
+            // 
+            this.clipEditor1.AutoScroll = true;
+            this.clipEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clipEditor1.Location = new System.Drawing.Point(3, 3);
+            this.clipEditor1.Name = "clipEditor1";
+            this.clipEditor1.Size = new System.Drawing.Size(929, 395);
+            this.clipEditor1.TabIndex = 0;
             // 
             // mainWindow
             // 
@@ -443,6 +471,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label bpmLabel;
         private ClipEditor clipEditor1;
+        private System.Windows.Forms.ToolStripMenuItem midiToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem disabledToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
     }
 }
 

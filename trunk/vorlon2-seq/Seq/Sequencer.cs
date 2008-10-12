@@ -60,7 +60,7 @@ namespace VorlonSeq.Seq
         public readonly List<NoteEvent> NoteEvents = new List<NoteEvent>();
         public int StartTime = 0;
         public int Length = 64;
-        public int EndTime { get { return StartTime + Length; } set { Length = EndTime - StartTime; } }
+        public int EndTime { get { return StartTime + Length; } set { Length = value - StartTime; } }
 
         public List<MidiMessage> GetAllEventsBetween(int start, int end)
         {
@@ -132,10 +132,11 @@ namespace VorlonSeq.Seq
                 result.AddRange(c.GetAllEventsBetween(start - c.StartTime, end - c.StartTime));
             }
 
-            foreach (MidiMessage m in result)
+            for (int i = 0; i < result.Count; i++)
             {
-                uint n = (uint)Number;
-                m.Channel = n;
+                MidiMessage m = result[i];
+                m.Channel = (uint)Number;
+                result[i] = m;
             }
 
             return result;

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Midi
 {
-    public class MidiMessage
+    public struct MidiMessage
     {
         public enum Commands
         {

@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using VorlonSeq.Seq;
+using Midi;
 
 namespace VorlonSeq
 {
@@ -49,7 +50,7 @@ namespace VorlonSeq
             {
                 int key = numKeys - i - 1;
                 int y = i * keyHeight;
-                bool blackKey = (key % 12 == 2 || key % 12 == 4 || key % 12 == 7 || key % 12 == 9 || key % 12 == 11);
+                bool blackKey = (key % 12 == 1 || key % 12 == 3 || key % 12 == 6 || key % 12 == 8 || key % 12 == 10);
                 g.FillRectangle(blackKey ? Brushes.Silver : Brushes.LightGray, new Rectangle(0, y, Width, keyHeight - 1));
             }
 
@@ -187,7 +188,7 @@ namespace VorlonSeq
             if (e.Button == MouseButtons.Right)
             {
                 tryingKey = ConvertYToKey(e.Y);
-                uint channel = 0; //(uint)Clip.Channel.Number;
+                uint channel = (uint)Clip.Channel.Number;
                 Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOn, tryingKey, 110));
             }
 
@@ -218,7 +219,7 @@ namespace VorlonSeq
 
             if (e.Button == MouseButtons.Right)
             {
-                uint channel = 0; //(uint)Clip.Channel.Number;
+                uint channel = (uint)Clip.Channel.Number;
                 Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOff, tryingKey, 0));
                 tryingKey = 128;
             }            
@@ -276,6 +277,12 @@ namespace VorlonSeq
                 selected.Clear();
                 Refresh();
             }
+        }
+
+        public void OnMidiInput(MidiMessage message)
+        {
+            message.Channel = (uint)Clip.Channel.Number;
+            Sequencer.PlayMidiEvent(message);
         }
     }
 }
