@@ -41,11 +41,11 @@ namespace VerkstanEditor.Gui
 
         private void Initialize()
         {
-            List<VerkstanBindings.OperatorProperty> properties = op.Binding.Properties;
+            List<Verkstan.OperatorProperty> properties = op.Binding.Properties;
 
            OperatorPropertyTable.RowCount = properties.Count;
            int row = 0;
-           foreach (VerkstanBindings.OperatorProperty property in properties)
+           foreach (Verkstan.OperatorProperty property in properties)
            {
                Label label = new Label();
                label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorProperty_LabelMouseDown);
@@ -57,7 +57,7 @@ namespace VerkstanEditor.Gui
                OperatorPropertyTable.Controls.Add(label);
                OperatorPropertyTable.SetCellPosition(label, new TableLayoutPanelCellPosition(0, row));
 
-               if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Byte)
+               if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
                {
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = 1;
@@ -70,7 +70,7 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(numericUpDown);
                    OperatorPropertyTable.SetCellPosition(numericUpDown, new TableLayoutPanelCellPosition(1, row));
                }
-               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Int)
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Int)
                {
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = 1;
@@ -83,7 +83,7 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(numericUpDown);
                    OperatorPropertyTable.SetCellPosition(numericUpDown, new TableLayoutPanelCellPosition(1, row));
                }
-               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Float)
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Float)
                {
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = Convert.ToDecimal(0.01);
@@ -96,7 +96,7 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(numericUpDown);
                    OperatorPropertyTable.SetCellPosition(numericUpDown, new TableLayoutPanelCellPosition(1, row));
                }
-               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.String)
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.String)
                {
                    TextBox textBox = new TextBox();
                    textBox.Dock = DockStyle.Fill;
@@ -106,7 +106,7 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(textBox);
                    OperatorPropertyTable.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
                }
-               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Text)
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Text)
                {
                    TextBox textBox = new TextBox();
                    textBox.AcceptsReturn = true;
@@ -121,7 +121,7 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(textBox);
                    OperatorPropertyTable.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
                }
-               else if (property.Type == VerkstanBindings.Constants.OperatorPropertyTypes.Color)
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Color)
                {
                    ColorProperty colorProperty = new ColorProperty();
                    colorProperty.Color = Color.FromArgb(op.Binding.GetIntProperty(property.Index));

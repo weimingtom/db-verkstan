@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
 using System.Linq;
-using VerkstanBindings;
 
 namespace VerkstanEditor
 {
@@ -62,7 +61,7 @@ namespace VerkstanEditor
             if (other != null)
                 return;
 
-            Operator op = new Operator(pageName, location, OperatorFactory.Create(name));
+            Operator op = new Operator(pageName, location, Verkstan.OperatorFactory.Create(name));
             operators.Add(op);
             MoveOperatorInPage(pageName, new Point(0, 0), op);
         }
@@ -261,7 +260,7 @@ namespace VerkstanEditor
             if (op == viewedOperatorProperties)
                 ViewedOperatorProperties = null;
 
-            VerkstanBindings.OperatorFactory.Delete(op.Binding);
+            Verkstan.OperatorFactory.Delete(op.Binding);
             operators.Remove(op);
         }
 

@@ -29,14 +29,14 @@ namespace VerkstanEditor.Gui
 
             CheckSize();
 
-            foreach (String category in VerkstanBindings.OperatorFactory.GetCategories())
+            foreach (String category in Verkstan.OperatorFactory.GetCategories())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem();
                 item.AutoSize = true;
                 item.Name = category;
                 item.Text = item.Name;
                 operatorsMenu.Items.Add(item);
-                ICollection<String> names = VerkstanBindings.OperatorFactory.GetNamesInCategory(category);
+                ICollection<String> names = Verkstan.OperatorFactory.GetNamesInCategory(category);
                 foreach (String name in names)
                 {
                     ToolStripMenuItem nestedItem = new ToolStripMenuItem();
@@ -122,12 +122,12 @@ namespace VerkstanEditor.Gui
                 processableSat = 255;
 
             HSLColor HSLColor;
-            
-            if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Texture)
+
+            if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Texture)
                 HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
-            else if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Name)
+            else if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Name)
                 HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
-            else if (op.Binding.Type == VerkstanBindings.Constants.OperatorTypes.Reference)
+            else if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Reference)
                 HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
             else
                 HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));

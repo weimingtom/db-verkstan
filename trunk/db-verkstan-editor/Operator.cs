@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-using VerkstanBindings;
 
 namespace VerkstanEditor
 {
     public class Operator
     {
-        public VerkstanBindings.Operator Binding;
+        public Verkstan.Operator Binding;
         public String Page;
         public Point location;
         public Point Location
@@ -63,7 +62,7 @@ namespace VerkstanEditor
             return quantizedSize;
         }
 
-        public Operator(String page, Point location, VerkstanBindings.Operator binding)
+        public Operator(String page, Point location, Verkstan.Operator binding)
         {
             Page = page;
             Binding = binding;
