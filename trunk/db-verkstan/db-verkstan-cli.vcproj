@@ -190,6 +190,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Exporter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Exporter.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Operator.cli.cpp"
 				>
 			</File>
@@ -322,6 +330,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\pixelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rectangleoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rectangleoperator.hpp"
 					>
 				</File>
 				<File

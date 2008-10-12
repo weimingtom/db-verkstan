@@ -9,6 +9,7 @@ namespace Verkstan
     {
         outputConnections = gcnew List<Operator^>();
         NameAndReferenceOperatorManager::AddReferenceOperator(this);
+        dirty = false;
     }
 
     ReferenceOperator::~ReferenceOperator()
@@ -30,20 +31,20 @@ namespace Verkstan
 
     void ReferenceOperator::Process()
     {
-
+        dirty = false;
     }
 
     void ReferenceOperator::SetDirty(bool dirty)
     {
+        this->dirty = dirty;
+
         for (int i = 0; i < outputConnections->Count; i++)
             outputConnections[i]->SetDirty(dirty);
     }
 
     bool ReferenceOperator::IsDirty()
     {
-        if (nameReference == nullptr)
-            return false;
-        return nameReference->IsDirty();
+        return dirty;
     }
 
     unsigned char ReferenceOperator::GetByteProperty(int index)
@@ -185,6 +186,7 @@ namespace Verkstan
 
     void ReferenceOperator::NameOperatorDirty(NameOperator^ nameOperator)
     {
-        SetDirty(nameOperator == nameReference);
+        if (nameOperator == nameReference)
+            SetDirty(true);
     }
 }

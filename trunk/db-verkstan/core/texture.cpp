@@ -86,9 +86,11 @@ void Texture::fillRectangle(int x,
                             DWORD c)
 {
     lock();
+    DWORD* pixels = (DWORD*)d3d9LockedRect.pBits;
+    int pitch = d3d9LockedRect.Pitch / sizeof(DWORD);
     for (int j = y; j < y + height; j++)
         for (int i = x; i < x + width; i++)
-            putPixel(i, j, c);
+            pixels[pitch * j + i] =  c;
     unlock();
 }
 

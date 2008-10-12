@@ -50,5 +50,6 @@ namespace Verkstan
         Operator^ reference;
         NameOperator^ nameReference;
         List<Operator^>^ outputConnections;
+        bool dirty;
     };
 }

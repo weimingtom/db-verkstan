@@ -44,7 +44,11 @@ namespace VerkstanEditor.Gui
                     nestedItem.Name = name;
                     nestedItem.Text = nestedItem.Name;
                     String clickedName = name;
-                    nestedItem.Click += new EventHandler((object o, EventArgs e) => Operators.AddOperatorInPage("First", AddLocation, clickedName));
+                    nestedItem.Click += delegate (object o, EventArgs e)
+                        {
+                            Operators.AddOperatorInPage("First", AddLocation, clickedName);
+                            Refresh();
+                        };
                     item.DropDownItems.Add(nestedItem);
                 }            
             }
@@ -238,6 +242,8 @@ namespace VerkstanEditor.Gui
 
             if (op != null)
                 Operators.ViewedOperator = op;
+
+            Refresh();
         }
 
         private void OperatorPage_MouseUp(object sender, MouseEventArgs e)
@@ -263,11 +269,16 @@ namespace VerkstanEditor.Gui
         private void OperatorPage_MouseMove(object sender, MouseEventArgs e)
         {
             MouseLocation = new Point(e.X, e.Y);
-           
-            if (InSelect)
-                Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
 
-            Refresh();
+            if (InSelect)
+            {
+                Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
+                Refresh();
+            }
+
+            if (InMove)
+                Refresh();
+         
         }
 
         private Point GetMovePoint()

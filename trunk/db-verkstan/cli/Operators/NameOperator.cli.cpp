@@ -35,8 +35,10 @@ namespace Verkstan
 
     void NameOperator::SetDirty(bool dirty)
     {
+        this->dirty = dirty;
+
         if (dirty && input != nullptr)
-            NameAndReferenceOperatorManager::NameOperatorDirty(this);
+            NameAndReferenceOperatorManager::NameOperatorDirty(this);       
     }
 
     bool NameOperator::IsDirty()
