@@ -30,6 +30,7 @@ namespace Verkstan
                        List<OperatorProperty^>^ properties)
     {
         this->name = name;
+        DisplayName = name;
         this->id = operatorId;
         this->type = type;
         this->properties = properties;

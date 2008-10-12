@@ -190,14 +190,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Core.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Core.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\Operator.cli.cpp"
 				>
 			</File>
@@ -214,19 +206,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Operators.hpp"
+				RelativePath=".\cli\Window.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Renderer.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Renderer.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\VerkstanCore.hpp"
+				RelativePath=".\cli\Window.hpp"
 				>
 			</File>
 			<Filter
@@ -254,6 +238,34 @@
 				</File>
 				<File
 					RelativePath=".\cli\Operators\ReferenceOperator.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Internal"
+				>
+				<File
+					RelativePath=".\cli\Internal\NameAndReferenceOperatorManager.cli.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\NameAndReferenceOperatorManager.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Operators.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Renderer.cli.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Renderer.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\VerkstanCore.hpp"
 					>
 				</File>
 			</Filter>

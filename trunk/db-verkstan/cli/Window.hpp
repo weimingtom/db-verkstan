@@ -9,7 +9,7 @@
 
 namespace Verkstan 
 {
-	public ref class Core
+	public ref class Window
 	{
     public:
         static void Boot(void* windowPtr);

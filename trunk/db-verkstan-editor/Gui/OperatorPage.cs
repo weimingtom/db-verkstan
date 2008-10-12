@@ -166,7 +166,7 @@ namespace VerkstanEditor.Gui
                                 op.Location.Y + op.Size.Height - 1,
                                 op.Location.X + op.Size.Width - 1,
                                 op.Location.Y + op.Size.Height - 1);
-            e.Graphics.DrawString(op.Binding.Name, Font, Brushes.Black, namePoint);
+            e.Graphics.DrawString(op.Binding.DisplayName, Font, Brushes.Black, namePoint);
 
             int x1 = op.GetAreaForResize().Left;
             int y1 = op.Location.Y + 3;

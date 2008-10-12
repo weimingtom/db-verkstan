@@ -33,8 +33,9 @@ namespace Verkstan
         virtual bool IsProcessable() override;
         virtual void DisconnectInFrom(Operator^ operatorBinding) override;
         virtual void DisconnectOutFrom(Operator^ operatorBinding) override;
+        virtual void DisconnectIns() override;
 
-        virtual VerkstanCore::Operator* getOperator() override;
+        virtual Core::Operator* getOperator() override;
 
     private:
         void flushInputConnections();

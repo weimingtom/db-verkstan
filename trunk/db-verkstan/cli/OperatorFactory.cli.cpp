@@ -1,10 +1,11 @@
 #define OPERATOR_HEADERS 1
-#include "cli/Operators.hpp"
+#include "cli/Internal/Operators.hpp"
 #undef OPERATOR_HEADERS
 
 #include "cli/OperatorFactory.hpp"
 #include "cli/Operators/CoreOperator.hpp"
 #include "cli/Operators/NameOperator.hpp"
+#include "cli/Operators/ReferenceOperator.hpp"
 
 namespace Verkstan
 {
@@ -17,12 +18,13 @@ categories[category]->Add(name);
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
-#include "cli/Operators.hpp"
+#include "cli/Internal/Operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
         
         if (!categories->ContainsKey("Misc"))
             categories["Misc"] = gcnew List<String^>();
         categories["Misc"]->Add("Name");
+        categories["Misc"]->Add("Reference");
     }
 
     ICollection<String^>^ OperatorFactory::GetCategories()
@@ -47,7 +49,7 @@ categories[category]->Add(name);
 #define DEF_OP(opName, opClass, opType)             \
     if (name == opName)                             \
     {                                               \
-        VerkstanCore::Operator* op = new opClass##();\
+        Core::Operator* op = new opClass##();\
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
@@ -83,21 +85,23 @@ categories[category]->Add(name);
     {
         Operator^ ob;
 #define OPERATOR_DEFINES 1
-#include "cli/Operators.hpp"
+#include "cli/Internal/Operators.hpp"
 #undef OPERATOR_DEFINES
 
         if (name == "Name")
         {
-            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();\
+            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
+            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
             ob = gcnew NameOperator(properties);
+        }
+
+        if (name == "Reference")
+        {
+            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
+            properties->Add(gcnew OperatorProperty(0, "Reference", Constants::OperatorPropertyTypes::String));
+            ob = gcnew ReferenceOperator(properties);
         }
 
         return ob;
      }
-
-    void OperatorFactory::Delete(Operator^ op)
-    {
-        //delete operators[operatorBinding->Id];
-        //operators[operatorBinding->Id] = 0;
-    }
 }

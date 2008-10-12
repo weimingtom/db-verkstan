@@ -1,16 +1,20 @@
 #include "cli/Operators/NameOperator.hpp"
 
+#include "cli/Internal/NameAndReferenceOperatorManager.hpp"
+
 namespace Verkstan
 {
     NameOperator::NameOperator(List<OperatorProperty^>^ properties)
         : Operator("Name", -1, Constants::OperatorTypes::Name, properties)
     {
-
+        NameAndReferenceOperatorManager::AddNameOperator(this);
+        dirty = true;
     }
 
     NameOperator::~NameOperator()
     {
-
+        Disconnect();
+        NameAndReferenceOperatorManager::RemoveNameOperator(this);
     }
 
     Operator^ NameOperator::Input::get()
@@ -26,17 +30,18 @@ namespace Verkstan
 
     void NameOperator::Process()
     {
-
+        dirty = false;
     }
 
     void NameOperator::SetDirty(bool dirty)
     {
-
+        if (dirty && input != nullptr)
+            NameAndReferenceOperatorManager::NameOperatorDirty(this);
     }
 
     bool NameOperator::IsDirty()
     {
-        return false;
+        return dirty;
     }
 
     unsigned char NameOperator::GetByteProperty(int index)
@@ -71,12 +76,19 @@ namespace Verkstan
 
     String^ NameOperator::GetStringProperty(int index)
     {
-        return gcnew String("");
+        if (index == 0)
+            return gcnew String(DisplayName);
+        else
+            return gcnew String("");
     }
 
     void NameOperator::SetStringProperty(int index, String^ value)
     {
-
+        if (index == 0)
+        {
+            DisplayName = value;
+            NameAndReferenceOperatorManager::RefreshReferenceOperators();
+        }
     }
 
     void NameOperator::ConnectInWith(Operator^ op)
@@ -86,7 +98,8 @@ namespace Verkstan
             && op->Type != Constants::OperatorTypes::Reference)
         {
             input = op;
-            op->ConnectOutWith(this);
+            op->ConnectOutWith(this); 
+            NameAndReferenceOperatorManager::RefreshReferenceOperators();
         }
     }
 
@@ -101,6 +114,8 @@ namespace Verkstan
             input->DisconnectOutFrom(this);
 
         input = nullptr;
+
+        NameAndReferenceOperatorManager::RefreshReferenceOperators();
     }
 
     bool NameOperator::IsProcessable()
@@ -112,6 +127,12 @@ namespace Verkstan
     {
         if (input == op)
             input = nullptr;
+
+         NameAndReferenceOperatorManager::RefreshReferenceOperators();
+    }
+
+    void NameOperator::DisconnectIns()
+    {
     }
 
     void NameOperator::DisconnectOutFrom(Operator^ op)
@@ -119,7 +140,7 @@ namespace Verkstan
 
     }
 
-    VerkstanCore::Operator* NameOperator::getOperator()
+    Core::Operator* NameOperator::getOperator()
     {
         return 0;
     }

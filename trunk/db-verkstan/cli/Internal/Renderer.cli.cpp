@@ -1,11 +1,15 @@
-#include "cli/Renderer.hpp"
+#include "cli/Internal/Renderer.hpp"
 
 #include "cli/Operators/NameOperator.hpp"
+#include "cli/Operators/ReferenceOperator.hpp"
 
 namespace Verkstan
 {
     void Renderer::RenderOperator(Operator^ op)
     {
+        if (!op->IsProcessable())
+            return;
+
         switch (op->Type)
         {
         case Constants::OperatorTypes::Texture:
@@ -13,6 +17,9 @@ namespace Verkstan
             break;
         case Constants::OperatorTypes::Name:
             RenderNameOperator(op);
+            break;
+        case Constants::OperatorTypes::Reference:
+            RenderReferenceOperator(op);
             break;
         default:
             RenderUnknownOperator(op);
@@ -22,7 +29,7 @@ namespace Verkstan
 
     void Renderer::RenderTextureOperator(Operator^ op)
     {
-        VerkstanCore::Operator* coreOp = op->getOperator();
+        Core::Operator* coreOp = op->getOperator();
 
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
@@ -74,6 +81,14 @@ namespace Verkstan
 
         if (nameOp->Input != nullptr)
             RenderOperator(nameOp->Input);
+    }
+
+    void Renderer::RenderReferenceOperator(Operator^ op)
+    {
+        ReferenceOperator^ referenceOp = (ReferenceOperator^)op;
+
+        if (referenceOp->Reference != nullptr)
+            RenderOperator(referenceOp->Reference);
     }
 
     void Renderer::RenderUnknownOperator(Operator^ op)

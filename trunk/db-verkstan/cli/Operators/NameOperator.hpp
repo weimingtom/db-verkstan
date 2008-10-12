@@ -38,10 +38,12 @@ namespace Verkstan
         virtual bool IsProcessable() override;
         virtual void DisconnectInFrom(Operator^ op) override;
         virtual void DisconnectOutFrom(Operator^ op) override;
-        
-        virtual VerkstanCore::Operator* getOperator() override;
+        virtual void DisconnectIns() override;
+
+        virtual Core::Operator* getOperator() override;
 
     private:
         Operator^ input;
+        bool dirty;
     };
 }

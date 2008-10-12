@@ -63,25 +63,37 @@ namespace VerkstanEditor
 
             Operator op = new Operator(pageName, location, Verkstan.OperatorFactory.Create(name));
             operators.Add(op);
-            MoveOperatorInPage(pageName, new Point(0, 0), op);
+            ConnectOperatorInPageWithNeighbours(pageName, op);
         }
 
         public static void MoveOperatorInPage(String pageName, Point point, Operator op)
         {
-            op.Binding.Disconnect();
-            op.Location = new Point(op.Location.X + point.X,
-                                    op.Location.Y + point.Y);
+            Point opLocation = Operator.QuantizeLocation(new Point(op.Location.X + point.X,
+                                                         op.Location.Y + point.Y));
 
+            // Don't move the operator if it hasn't been moved.
+            if (opLocation == op.Location)
+                return;
+
+            op.Location = opLocation;
+            op.Binding.Disconnect();
+            ConnectOperatorInPageWithNeighbours(pageName, op);
+        }
+
+        public static void ConnectOperatorInPageWithNeighbours(String pageName, Operator op)
+        {
             List<Operator> inConnections = GetOperatorsInPageIn(pageName, op.GetAreaForInConnections());
             foreach (Operator inOperator in inConnections)
             {
                 op.Binding.ConnectInWith(inOperator.Binding);
+                inOperator.Binding.ConnectOutWith(op.Binding);
             }
 
             List<Operator> outConnections = GetOperatorsInPageIn(pageName, op.GetAreaForOutConnections());
             foreach (Operator outOperator in outConnections)
             {
                 op.Binding.ConnectOutWith(outOperator.Binding);
+                outOperator.Binding.ConnectInWith(op.Binding);
             }
         }
 
@@ -198,9 +210,7 @@ namespace VerkstanEditor
             }
 
             foreach (Operator selectedOp in selectedOperators)
-            {
                 MoveOperatorInPage(pageName, point, selectedOp);
-            }
         }
 
         public static Rectangle GetOperatorsDimensionInPage(String pageName)
@@ -253,14 +263,13 @@ namespace VerkstanEditor
 
         public static void DeleteOperator(Operator op)
         {
-            op.Binding.Disconnect();
+            op.Binding.Dispose();
 
             if (op == viewedOperator)
                 ViewedOperator = null;
             if (op == viewedOperatorProperties)
                 ViewedOperatorProperties = null;
 
-            Verkstan.OperatorFactory.Delete(op.Binding);
             operators.Remove(op);
         }
 
@@ -289,7 +298,8 @@ namespace VerkstanEditor
             foreach (Operator op in selectedOperators)
             {
                 op.Size = new Size(op.Size.Width + additionalWidth, op.Size.Height);
-                MoveOperatorInPage(pageName, new Point(0, 0), op);
+                op.Binding.Disconnect();
+                ConnectOperatorInPageWithNeighbours(pageName, op);
             }
         }
     }

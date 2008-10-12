@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cli/VerkstanCore.hpp"
+#include "cli/Internal/VerkstanCore.hpp"
 
 #include "cli/Constants.hpp"
 
@@ -41,6 +41,15 @@ namespace Verkstan
                         List<OperatorProperty^>^ properties);
         virtual ~Operator();
         
+        String^ DisplayName;
+        property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
+        property int Id { int get(); }
+        property String^ Name { String^ get(); }
+        property List<OperatorProperty^>^ Properties 
+        { 
+            List<OperatorProperty^>^ get(); 
+        }
+
         virtual unsigned char GetByteProperty(int index) = 0;
         virtual void SetByteProperty(int index, unsigned char value) = 0;
         virtual int GetIntProperty(int index) = 0;
@@ -54,14 +63,6 @@ namespace Verkstan
         void SetColorProperty(int index, int value);
         String^ GetTextProperty(int index);
         void SetTextProperty(int index, String^ value);
-
-        property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
-        property int Id { int get(); }
-        property String^ Name { String^ get(); }
-        property List<OperatorProperty^>^ Properties 
-        { 
-            List<OperatorProperty^>^ get(); 
-        }
         
         virtual void CascadeProcess() = 0;
         virtual void Process() = 0;
@@ -70,14 +71,14 @@ namespace Verkstan
         virtual void ConnectInWith(Operator^ op) = 0;
         virtual void ConnectOutWith(Operator^ op) = 0;
         virtual void Disconnect() = 0;
-        
         virtual void DisconnectInFrom(Operator^ op) = 0;
-        virtual void DisconnectOutFrom(Operator^ op) = 0;      
+        virtual void DisconnectOutFrom(Operator^ op) = 0; 
+        virtual void DisconnectIns() = 0;
 
         virtual void SetDirty(bool dirty) = 0;
         virtual bool IsDirty() = 0;
 
-        virtual VerkstanCore::Operator* getOperator() = 0;
+        virtual Core::Operator* getOperator() = 0;
 
     private:
         int id;

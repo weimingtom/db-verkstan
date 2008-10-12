@@ -1,11 +1,11 @@
-#include "cli/Core.hpp"
+#include "cli/Window.hpp"
 
 #include "cli/Constants.hpp"
-#include "cli/Renderer.hpp"
+#include "cli/Internal/Renderer.hpp"
 
 namespace Verkstan
 {
-    void Core::Boot(void* windowPtr)
+    void Window::Boot(void* windowPtr)
     {
         globalWindow = (HWND)windowPtr;
         RECT rect;
@@ -43,12 +43,12 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
     }
 
-    void Core::Resize()
+    void Window::Resize()
     {
         resetDevice = true;
     }
 
-    void Core::Reset()
+    void Window::Reset()
     {
         RECT rect;
         GetWindowRect(globalWindow, &rect);
@@ -72,9 +72,9 @@ namespace Verkstan
         
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {
-            if (VerkstanCore::operators[i] != 0)
+            if (Core::operators[i] != 0)
             {
-                VerkstanCore::operators[i]->deviceLost();
+                Core::operators[i]->deviceLost();
             }
         }
 
@@ -100,17 +100,17 @@ namespace Verkstan
         resetDevice = false;
     }
 
-    void Core::Shutdown()
+    void Window::Shutdown()
     {
         globalDirect3DDevice->Release();
         globalDirect3D->Release();
     }
     
-    void Core::Render()
+    void Window::Render()
     {
         if (resetDevice)
         {
-            Core::Reset();
+            Window::Reset();
         }
         else
         {
@@ -134,23 +134,23 @@ namespace Verkstan
         }
     }
 
-    Operator^ Core::ViewedOperator::get()
+    Operator^ Window::ViewedOperator::get()
     {
         return viewedOperator;
     }
 
-    void Core::ViewedOperator::set(Operator^ op)
+    void Window::ViewedOperator::set(Operator^ op)
     {
-        Core::viewedOperator = op;
+        Window::viewedOperator = op;
     }
 
-    int Core::ClearColor::get()
+    int Window::ClearColor::get()
     {
         return clearColor;
     }
 
-    void Core::ClearColor::set(int color)
+    void Window::ClearColor::set(int color)
     {
-        Core::clearColor = color;
+        Window::clearColor = color;
     }
 }

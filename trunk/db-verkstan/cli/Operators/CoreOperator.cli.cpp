@@ -22,8 +22,10 @@ namespace Verkstan
 
     CoreOperator::~CoreOperator()
     {
-        delete VerkstanCore::operators[Id];
-        VerkstanCore::operators[Id] = 0;
+        Disconnect();
+
+        delete Core::operators[Id];
+        Core::operators[Id] = 0;
     }
 
     void CoreOperator::CascadeProcess()
@@ -43,7 +45,7 @@ namespace Verkstan
 
     void CoreOperator::Process()
     {
-        VerkstanCore::operators[Id]->process();
+        getOperator()->process();
     }
 
     void CoreOperator::SetDirty(bool dirty)
@@ -61,40 +63,40 @@ namespace Verkstan
 
     unsigned char CoreOperator::GetByteProperty(int index)
     {
-        return VerkstanCore::operators[Id]->getByteProperty(index);
+        return getOperator()->getByteProperty(index);
     }
 
     void CoreOperator::SetByteProperty(int index, unsigned char value)
     {
         SetDirty(true);
-        VerkstanCore::operators[Id]->setByteProperty(index, value); 
+        getOperator()->setByteProperty(index, value); 
     }
 
     int CoreOperator::GetIntProperty(int index)
     {
-         return VerkstanCore::operators[Id]->getIntProperty(index);
+         return getOperator()->getIntProperty(index);
     }
 
     void CoreOperator::SetIntProperty(int index, int value)
     {
         SetDirty(true);
-        VerkstanCore::operators[Id]->setIntProperty(index, value); 
+        getOperator()->setIntProperty(index, value); 
     }
 
     float CoreOperator::GetFloatProperty(int index)
     {
-        return VerkstanCore::operators[Id]->getFloatProperty(index);
+        return getOperator()->getFloatProperty(index);
     }
 
     void CoreOperator::SetFloatProperty(int index, float value)
     {
         SetDirty(true);
-        VerkstanCore::operators[Id]->setFloatProperty(index, value); 
+        getOperator()->setFloatProperty(index, value); 
     }
 
     String^ CoreOperator::GetStringProperty(int index)
     {   
-        return gcnew String(VerkstanCore::operators[Id]->getStringProperty(index));   
+        return gcnew String(getOperator()->getStringProperty(index));   
     }
 
     void CoreOperator::SetStringProperty(int index, String^ string)
@@ -121,13 +123,13 @@ namespace Verkstan
                          wch, 
                          sizeInBytes);
 
-        VerkstanCore::operators[Id]->setStringProperty(index, ch); 
+        getOperator()->setStringProperty(index, ch); 
     }
 
     void CoreOperator::flushInputConnections()
     {
-        for (int i = 0; i < VerkstanCore::operators[Id]->numberOfInputs; i++)
-            VerkstanCore::operators[Id]->inputs[i] = -1;
+        for (int i = 0; i < getOperator()->numberOfInputs; i++)
+            getOperator()->inputs[i] = -1;
 
         for (int i = 0; i < inputConnections->Count; i++)
         {
@@ -137,9 +139,9 @@ namespace Verkstan
             for (j; j < inputs->Count; j++)
             {
                 if (inputs[j]->Type == ob->Type
-                    && VerkstanCore::operators[Id]->inputs[j] == -1)
+                    && getOperator()->inputs[j] == -1)
                 {
-                    VerkstanCore::operators[Id]->inputs[j] = ob->Id;
+                    getOperator()->inputs[j] = ob->Id;
                     accepted = true;
                     break;
                 }
@@ -153,9 +155,9 @@ namespace Verkstan
             {
                 for (j; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
                 {
-                    if (VerkstanCore::operators[Id]->inputs[j] == -1)
+                    if (getOperator()->inputs[j] == -1)
                     {
-                        VerkstanCore::operators[Id]->inputs[j] = ob->Id;
+                        getOperator()->inputs[j] = ob->Id;
                         accepted = true;
                         break;
                     }
@@ -163,19 +165,19 @@ namespace Verkstan
             }
         }
 
-        VerkstanCore::operators[Id]->numberOfInputs= inputConnections->Count;
+        getOperator()->numberOfInputs= inputConnections->Count;
         SetDirty(true);
     }
 
     void CoreOperator::flushOutputConnections()
     {
-        for (int i = 0; i < VerkstanCore::operators[Id]->numberOfOutputs; i++)
-            VerkstanCore::operators[Id]->outputs[i] = -1;
+        for (int i = 0; i < getOperator()->numberOfOutputs; i++)
+            getOperator()->outputs[i] = -1;
 
         for (int i = 0; i < outputConnections->Count; i++)
-            VerkstanCore::operators[Id]->outputs[i] = outputConnections[i]->Id;
+            getOperator()->outputs[i] = outputConnections[i]->Id;
        
-        VerkstanCore::operators[Id]->numberOfOutputs = outputConnections->Count;
+        getOperator()->numberOfOutputs = outputConnections->Count;
     }
 
     void CoreOperator::ConnectInWith(Operator^ operatorBinding)
@@ -188,7 +190,7 @@ namespace Verkstan
         for (i; i < inputs->Count; i++)
         {
             if (inputs[i]->Type == operatorBinding->Type
-                && VerkstanCore::operators[Id]->inputs[i] == -1)
+                && getOperator()->inputs[i] == -1)
             {
                 inputConnections->Add(operatorBinding);
                 accepted = true;
@@ -204,7 +206,7 @@ namespace Verkstan
         {
             for (i; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
             {
-                if (VerkstanCore::operators[Id]->inputs[i] == -1)
+                if (getOperator()->inputs[i] == -1)
                 {
                     inputConnections->Add(operatorBinding);
                     accepted = true;
@@ -217,28 +219,30 @@ namespace Verkstan
             return;
 
         flushInputConnections();
-
-        operatorBinding->ConnectOutWith(this);
     }
 
-    void CoreOperator::ConnectOutWith(Operator^ operatorBinding)
+    void CoreOperator::ConnectOutWith(Operator^ op)
     {
-        outputConnections->Add(operatorBinding);
+        outputConnections->Add(op);
         
         flushOutputConnections();
-
-        operatorBinding->ConnectInWith(this);
     }
 
-    void CoreOperator::DisconnectInFrom(Operator^ operatorBinding)
+    void CoreOperator::DisconnectInFrom(Operator^ op)
     {
-        inputConnections->Remove(operatorBinding);
+        inputConnections->Remove(op);
         flushInputConnections();
     }
 
-    void CoreOperator::DisconnectOutFrom(Operator^ operatorBinding)
+    void CoreOperator::DisconnectIns()
     {
-        outputConnections->Remove(operatorBinding);
+        inputConnections->Clear();
+        flushInputConnections();
+    }
+
+    void CoreOperator::DisconnectOutFrom(Operator^ op)
+    {
+        outputConnections->Remove(op);
         flushOutputConnections();
     }
 
@@ -257,16 +261,18 @@ namespace Verkstan
 
     bool CoreOperator::IsProcessable()
     {
-        bool result = inputs->Count == VerkstanCore::operators[Id]->numberOfInputs;
+        if (!inputs->Count == inputConnections->Count)
+            return false;
 
         for (int i = 0; i < inputConnections->Count; i++)
-            result &= inputConnections[i]->IsProcessable();
+            if (!inputConnections[i]->IsProcessable())
+                return false;
 
-        return result;
+        return true;
     }
 
-    VerkstanCore::Operator* CoreOperator::getOperator()
+    Core::Operator* CoreOperator::getOperator()
     {
-        return VerkstanCore::operators[Id];
+        return Core::operators[Id];
     }
 }

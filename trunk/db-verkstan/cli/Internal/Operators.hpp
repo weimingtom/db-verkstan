@@ -4,12 +4,15 @@
 #include "core/operators/textoperator.hpp"
 #include "core/operators/rotozoomoperator.hpp"
 
-namespace VerkstanCore
+namespace Verkstan
 {
-    using ::FlatOperator;
-    using ::PixelsOperator;
-    using ::TextOperator;
-    using ::RotozoomOperator;
+    namespace Core
+    {
+        using ::FlatOperator;
+        using ::PixelsOperator;
+        using ::TextOperator;
+        using ::RotozoomOperator;
+    }
 }
 #endif
 

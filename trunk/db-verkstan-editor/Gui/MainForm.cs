@@ -17,7 +17,7 @@ namespace VerkstanEditor.Gui
         public mainForm()
         {
             InitializeComponent();
-            Verkstan.Core.ClearColor = Color.DarkCyan.ToArgb();
+            Verkstan.Window.ClearColor = Color.DarkCyan.ToArgb();
             Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.OperatorPage_ViewedOperatorChanged); 
             Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.OperatorPage_ViewedOperatorPropertiesChanged);
             operatorsPropertiesSplitContainer.Panel1.Controls.Add(operatorPage);
@@ -28,7 +28,7 @@ namespace VerkstanEditor.Gui
 
             unsafe
             {
-                Verkstan.Core.Boot(previewPanel.Handle.ToPointer());
+                Verkstan.Window.Boot(previewPanel.Handle.ToPointer());
             }
 
             renderTimer.Enabled = true;
@@ -41,12 +41,12 @@ namespace VerkstanEditor.Gui
 
         private void RenderTimer_Tick(object sender, EventArgs e)
         {
-            Verkstan.Core.Render();
+            Verkstan.Window.Render();
         }
 
         private void PreviewPanel_SizeChanged(object sender, EventArgs e)
         {
-            Verkstan.Core.Resize();
+            Verkstan.Window.Resize();
         }
 
         private void TransportPanel_SizeChanged(object sender, EventArgs e)
@@ -62,9 +62,9 @@ namespace VerkstanEditor.Gui
         private void OperatorPage_ViewedOperatorChanged(Operator op)
         {
             if (op == null)
-                Verkstan.Core.ViewedOperator = null;
+                Verkstan.Window.ViewedOperator = null;
             else
-                Verkstan.Core.ViewedOperator = op.Binding;
+                Verkstan.Window.ViewedOperator = op.Binding;
         }
     }
 }

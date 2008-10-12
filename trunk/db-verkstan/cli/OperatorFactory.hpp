@@ -15,7 +15,6 @@ namespace Verkstan
         static ICollection<String^>^ GetCategories();
         static ICollection<String^>^ GetNamesInCategory(String^ category);
         static Operator^ Create(String^ name);
-        static void Delete(Operator^ OP);
      
     private:
         static void CreateCategories();
