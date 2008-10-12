@@ -1,6 +1,6 @@
 #pragma once
 
-#include "operator.hpp"
+#include "VerkstanCore.hpp"
 
 #include "Constants.hpp"
 
@@ -10,10 +10,10 @@ using namespace System::Collections::Generic;
 
 namespace VerkstanBindings 
 {
-    public ref class OperatorBindingProperty
+    public ref class OperatorProperty
     {
     public:
-        OperatorBindingProperty(int index, 
+        OperatorProperty(int index, 
                                 String^ name, 
                                 Constants::OperatorPropertyTypes type);
         property String^ Name;
@@ -21,10 +21,10 @@ namespace VerkstanBindings
         property int Index;
     };
 
-    public ref class OperatorBindingInput
+    public ref class OperatorInput
     {
     public:
-        OperatorBindingInput(int index,
+        OperatorInput(int index,
                              Constants::OperatorTypes type,
                              bool infinite);
         property bool Infinite;
@@ -32,14 +32,14 @@ namespace VerkstanBindings
         property int Index;
     };
 
-	public ref class OperatorBinding abstract 
+	public ref class Operator abstract 
 	{
     public:
-        OperatorBinding(String^ name,
+        Operator(String^ name,
                         int operatorId,
                         Constants::OperatorTypes type,
-                        List<OperatorBindingProperty^>^ properties);
-        virtual ~OperatorBinding();
+                        List<OperatorProperty^>^ properties);
+        virtual ~Operator();
         
         virtual unsigned char GetByteProperty(int index) = 0;
         virtual void SetByteProperty(int index, unsigned char value) = 0;
@@ -58,31 +58,31 @@ namespace VerkstanBindings
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ Name { String^ get(); }
-        property List<OperatorBindingProperty^>^ Properties 
+        property List<OperatorProperty^>^ Properties 
         { 
-            List<OperatorBindingProperty^>^ get(); 
+            List<OperatorProperty^>^ get(); 
         }
         
         virtual void CascadeProcess() = 0;
         virtual void Process() = 0;
         virtual bool IsProcessable() = 0;
 
-        virtual void ConnectInWith(OperatorBinding^ operatorBinding) = 0;
-        virtual void ConnectOutWith(OperatorBinding^ operatorBinding) = 0;
+        virtual void ConnectInWith(Operator^ op) = 0;
+        virtual void ConnectOutWith(Operator^ op) = 0;
         virtual void Disconnect() = 0;
         
-        virtual void DisconnectInFrom(OperatorBinding^ operatorBinding) = 0;
-        virtual void DisconnectOutFrom(OperatorBinding^ operatorBinding) = 0;      
+        virtual void DisconnectInFrom(Operator^ op) = 0;
+        virtual void DisconnectOutFrom(Operator^ op) = 0;      
 
         virtual void SetDirty(bool dirty) = 0;
         virtual bool IsDirty() = 0;
 
-        virtual Operator* getOperator() = 0;
+        virtual VerkstanCore::Operator* getOperator() = 0;
 
     private:
         int id;
         Constants::OperatorTypes type;
         String^ name;
-        List<OperatorBindingProperty^>^ properties;
+        List<OperatorProperty^>^ properties;
 	};
 }

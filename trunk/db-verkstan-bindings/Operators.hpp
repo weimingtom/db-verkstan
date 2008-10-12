@@ -1,8 +1,16 @@
 #ifdef OPERATOR_HEADERS
-#include "flatoperator.hpp"
-#include "pixelsoperator.hpp"
-#include "textoperator.hpp"
-#include "rotozoomoperator.hpp"
+#include "core/flatoperator.hpp"
+#include "core/pixelsoperator.hpp"
+#include "core/textoperator.hpp"
+#include "core/rotozoomoperator.hpp"
+
+namespace VerkstanCore
+{
+    using ::FlatOperator;
+    using ::PixelsOperator;
+    using ::TextOperator;
+    using ::RotozoomOperator;
+}
 #endif
 
 #ifdef OPERATOR_CATEGORY_DEFINES

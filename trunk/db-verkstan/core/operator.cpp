@@ -1,6 +1,6 @@
-#include "operator.hpp"
+#include "core/operator.hpp"
 
-#include "core.hpp"
+#include "core/core.hpp"
 
 #include <string.h>
 

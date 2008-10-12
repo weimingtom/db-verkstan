@@ -1,20 +1,20 @@
 #pragma once
 
-#include "OperatorBinding.hpp"
+#include "Operator.hpp"
 
 using namespace System;
 
 namespace VerkstanBindings
 {
-    public ref class NameOperatorBinding: public OperatorBinding
+    public ref class NameOperator: public Operator
     {
     public:
-        NameOperatorBinding(List<OperatorBindingProperty^>^ properties);
-        virtual ~NameOperatorBinding();
+        NameOperator(List<OperatorProperty^>^ properties);
+        virtual ~NameOperator();
         
-        property OperatorBinding^ Input
+        property Operator^ Input
         {
-            OperatorBinding^ get();
+            Operator^ get();
         }
 
         virtual unsigned char GetByteProperty(int index) override;
@@ -32,16 +32,16 @@ namespace VerkstanBindings
         virtual void SetDirty(bool dirty) override;
         virtual bool IsDirty() override;
 
-        virtual void ConnectInWith(OperatorBinding^ operatorBinding) override;
-        virtual void ConnectOutWith(OperatorBinding^ operatorBinding) override;
+        virtual void ConnectInWith(Operator^ op) override;
+        virtual void ConnectOutWith(Operator^ op) override;
         virtual void Disconnect() override;
         virtual bool IsProcessable() override;
-        virtual void DisconnectInFrom(OperatorBinding^ operatorBinding) override;
-        virtual void DisconnectOutFrom(OperatorBinding^ operatorBinding) override;
+        virtual void DisconnectInFrom(Operator^ op) override;
+        virtual void DisconnectOutFrom(Operator^ op) override;
         
-        virtual Operator* getOperator() override;
+        virtual VerkstanCore::Operator* getOperator() override;
 
     private:
-        OperatorBinding^ input;
+        Operator^ input;
     };
 }

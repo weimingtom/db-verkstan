@@ -62,7 +62,7 @@ namespace VerkstanEditor
             if (other != null)
                 return;
 
-            Operator op = new Operator(pageName, location, OperatorBindingFactory.Create(name));
+            Operator op = new Operator(pageName, location, OperatorFactory.Create(name));
             operators.Add(op);
             MoveOperatorInPage(pageName, new Point(0, 0), op);
         }
@@ -261,7 +261,7 @@ namespace VerkstanEditor
             if (op == viewedOperatorProperties)
                 ViewedOperatorProperties = null;
 
-            VerkstanBindings.OperatorBindingFactory.Delete(op.Binding);
+            VerkstanBindings.OperatorFactory.Delete(op.Binding);
             operators.Remove(op);
         }
 

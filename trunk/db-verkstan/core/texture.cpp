@@ -1,6 +1,6 @@
-#include "texture.hpp"
+#include "core/texture.hpp"
 
-#include "globals.hpp"
+#include "core/globals.hpp"
 
 Texture::Texture()
 :d3d9Texture(0)

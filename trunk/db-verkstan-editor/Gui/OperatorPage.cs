@@ -29,14 +29,14 @@ namespace VerkstanEditor.Gui
 
             CheckSize();
 
-            foreach (String category in VerkstanBindings.OperatorBindingFactory.GetCategories())
+            foreach (String category in VerkstanBindings.OperatorFactory.GetCategories())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem();
                 item.AutoSize = true;
                 item.Name = category;
                 item.Text = item.Name;
                 operatorsMenu.Items.Add(item);
-                ICollection<String> names = VerkstanBindings.OperatorBindingFactory.GetNamesInCategory(category);
+                ICollection<String> names = VerkstanBindings.OperatorFactory.GetNamesInCategory(category);
                 foreach (String name in names)
                 {
                     ToolStripMenuItem nestedItem = new ToolStripMenuItem();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "operator.hpp"
+#include "core/operator.hpp"
 
 #define DB_MAX_OPERATORS 4096
 

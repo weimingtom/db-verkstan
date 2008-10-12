@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Constants.hpp"
-#include "OperatorBinding.hpp"
+#include "Operator.hpp"
 
 using namespace System;
 #using <mscorlib.dll>
@@ -9,13 +9,13 @@ using namespace System::Collections::Generic;
 
 namespace VerkstanBindings 
 {
-    public ref class OperatorBindingFactory
+    public ref class OperatorFactory
     {
     public:
         static ICollection<String^>^ GetCategories();
         static ICollection<String^>^ GetNamesInCategory(String^ category);
-        static OperatorBinding^ Create(String^ name);
-        static void Delete(OperatorBinding^ operatorBinding);
+        static Operator^ Create(String^ name);
+        static void Delete(Operator^ OP);
      
     private:
         static void CreateCategories();

@@ -9,7 +9,7 @@ namespace VerkstanEditor
 {
     public class Operator
     {
-        public OperatorBinding Binding;
+        public VerkstanBindings.Operator Binding;
         public String Page;
         public Point location;
         public Point Location
@@ -63,7 +63,7 @@ namespace VerkstanEditor
             return quantizedSize;
         }
 
-        public Operator(String page, Point location, OperatorBinding binding)
+        public Operator(String page, Point location, VerkstanBindings.Operator binding)
         {
             Page = page;
             Binding = binding;

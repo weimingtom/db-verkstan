@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OperatorBinding.hpp"
+#include "Operator.hpp"
 
 struct VertexWithTexture
 {
@@ -14,11 +14,11 @@ namespace VerkstanBindings
     public ref class Renderer
     {
     public:
-        static void RenderOperator(OperatorBinding^ op);
+        static void RenderOperator(Operator^ op);
 
     private:
-        static void RenderTextureOperator(OperatorBinding^ op);
-        static void RenderNameOperator(OperatorBinding^ op);
-        static void RenderUnknownOperator(OperatorBinding^ op);
+        static void RenderTextureOperator(Operator^ op);
+        static void RenderNameOperator(Operator^ op);
+        static void RenderUnknownOperator(Operator^ op);
     };
 }

@@ -5,21 +5,21 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "OperatorBinding.hpp"
+#include "Operator.hpp"
 
 namespace VerkstanBindings 
 {
-	public ref class CoreBinding
+	public ref class Core
 	{
     public:
         static void Boot(void* windowPtr);
         static void Shutdown();
         static void Render();
         static void Resize();
-        static property OperatorBinding^ ViewedOperatorBinding
+        static property Operator^ ViewedOperator
         {
-            OperatorBinding^ get();
-            void set(OperatorBinding^ viewedOperatorBinding);
+            Operator^ get();
+            void set(Operator^ viewedOperator);
         }
         static property int ClearColor
         {
@@ -28,7 +28,7 @@ namespace VerkstanBindings
         }
     private:
         static void Reset();
-        static OperatorBinding^ viewedOperatorBinding;
+        static Operator^ viewedOperator;
         static bool resetDevice = false;
         static int clearColor;
 	};

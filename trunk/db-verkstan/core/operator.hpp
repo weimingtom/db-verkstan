@@ -1,7 +1,7 @@
 #pragma once
 
-#include "globals.hpp"
-#include "texture.hpp"
+#include "core/globals.hpp"
+#include "core/texture.hpp"
 
 #include <d3d9.h>
 #include <d3dx9.h>

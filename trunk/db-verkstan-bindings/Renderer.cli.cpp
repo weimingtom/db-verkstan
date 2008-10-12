@@ -1,10 +1,10 @@
 #include "Renderer.hpp"
 
-#include "NameOperatorBinding.hpp"
+#include "NameOperator.hpp"
 
 namespace VerkstanBindings
 {
-    void Renderer::RenderOperator(OperatorBinding^ op)
+    void Renderer::RenderOperator(Operator^ op)
     {
         switch (op->Type)
         {
@@ -20,9 +20,9 @@ namespace VerkstanBindings
         }
     }
 
-    void Renderer::RenderTextureOperator(OperatorBinding^ op)
+    void Renderer::RenderTextureOperator(Operator^ op)
     {
-        Operator* coreOp = op->getOperator();
+        VerkstanCore::Operator* coreOp = op->getOperator();
 
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
@@ -68,15 +68,15 @@ namespace VerkstanBindings
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderNameOperator(OperatorBinding^ op)
+    void Renderer::RenderNameOperator(Operator^ op)
     {
-        NameOperatorBinding^ nameOp = (NameOperatorBinding^)op;
+        NameOperator^ nameOp = (NameOperator^)op;
 
         if (nameOp->Input != nullptr)
             RenderOperator(nameOp->Input);
     }
 
-    void Renderer::RenderUnknownOperator(OperatorBinding^ op)
+    void Renderer::RenderUnknownOperator(Operator^ op)
     {
 
     }

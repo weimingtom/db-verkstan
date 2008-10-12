@@ -1,4 +1,4 @@
-#include "pixelsoperator.hpp"
+#include "core/pixelsoperator.hpp"
 
 void PixelsOperator::render()
 {

@@ -41,11 +41,11 @@ namespace VerkstanEditor.Gui
 
         private void Initialize()
         {
-            List<VerkstanBindings.OperatorBindingProperty> properties = op.Binding.Properties;
+            List<VerkstanBindings.OperatorProperty> properties = op.Binding.Properties;
 
            OperatorPropertyTable.RowCount = properties.Count;
            int row = 0;
-           foreach (VerkstanBindings.OperatorBindingProperty property in properties)
+           foreach (VerkstanBindings.OperatorProperty property in properties)
            {
                Label label = new Label();
                label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorProperty_LabelMouseDown);

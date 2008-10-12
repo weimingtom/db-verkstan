@@ -1,16 +1,16 @@
-#include "OperatorBinding.hpp"
+#include "Operator.hpp"
 
 namespace VerkstanBindings
 {
-    public ref class CoreOperatorBinding: public OperatorBinding
+    public ref class CoreOperator: public Operator
 	{
     public:
-        CoreOperatorBinding(String^ name,
+        CoreOperator(String^ name,
                             int operatorId,
                             Constants::OperatorTypes type,
-                            List<OperatorBindingProperty^>^ properties,
-                            List<OperatorBindingInput^>^ inputs);
-        virtual ~CoreOperatorBinding();
+                            List<OperatorProperty^>^ properties,
+                            List<OperatorInput^>^ inputs);
+        virtual ~CoreOperator();
         
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;
@@ -27,22 +27,22 @@ namespace VerkstanBindings
         virtual void SetDirty(bool dirty) override;
         virtual bool IsDirty() override;
 
-        virtual void ConnectInWith(OperatorBinding^ operatorBinding) override;
-        virtual void ConnectOutWith(OperatorBinding^ operatorBinding) override;
+        virtual void ConnectInWith(Operator^ operatorBinding) override;
+        virtual void ConnectOutWith(Operator^ operatorBinding) override;
         virtual void Disconnect() override;
         virtual bool IsProcessable() override;
-        virtual void DisconnectInFrom(OperatorBinding^ operatorBinding) override;
-        virtual void DisconnectOutFrom(OperatorBinding^ operatorBinding) override;
+        virtual void DisconnectInFrom(Operator^ operatorBinding) override;
+        virtual void DisconnectOutFrom(Operator^ operatorBinding) override;
 
-        virtual Operator* getOperator() override;
+        virtual VerkstanCore::Operator* getOperator() override;
 
     private:
         void flushInputConnections();
         void flushOutputConnections();
 
         bool dirty;
-        List<OperatorBindingInput^>^ inputs;
-        List<OperatorBinding^>^ inputConnections;
-        List<OperatorBinding^>^ outputConnections;
+        List<OperatorInput^>^ inputs;
+        List<Operator^>^ inputConnections;
+        List<Operator^>^ outputConnections;
 	};
 }

@@ -1,14 +1,11 @@
-#include "core.hpp"
-#include "globals.hpp"
-
-#include "CoreBinding.hpp"
+#include "Core.hpp"
 
 #include "Constants.hpp"
 #include "Renderer.hpp"
 
 namespace VerkstanBindings
 {
-    void CoreBinding::Boot(void* windowPtr)
+    void Core::Boot(void* windowPtr)
     {
         globalWindow = (HWND)windowPtr;
         RECT rect;
@@ -46,12 +43,12 @@ namespace VerkstanBindings
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
     }
 
-    void CoreBinding::Resize()
+    void Core::Resize()
     {
         resetDevice = true;
     }
 
-    void CoreBinding::Reset()
+    void Core::Reset()
     {
         RECT rect;
         GetWindowRect(globalWindow, &rect);
@@ -75,14 +72,14 @@ namespace VerkstanBindings
         
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {
-            if (operators[i] != 0)
+            if (VerkstanCore::operators[i] != 0)
             {
-                operators[i]->deviceLost();
+                VerkstanCore::operators[i]->deviceLost();
             }
         }
 
-        if (viewedOperatorBinding != nullptr)
-            viewedOperatorBinding->SetDirty(true);
+        if (viewedOperator != nullptr)
+            viewedOperator->SetDirty(true);
 
         HRESULT result = globalDirect3DDevice->Reset(&d3dPresentParameters);
         
@@ -103,17 +100,17 @@ namespace VerkstanBindings
         resetDevice = false;
     }
 
-    void CoreBinding::Shutdown()
+    void Core::Shutdown()
     {
         globalDirect3DDevice->Release();
         globalDirect3D->Release();
     }
     
-    void CoreBinding::Render()
+    void Core::Render()
     {
         if (resetDevice)
         {
-            CoreBinding::Reset();
+            Core::Reset();
         }
         else
         {
@@ -124,10 +121,10 @@ namespace VerkstanBindings
                                        1.0f, 
                                        0);
             
-            if (viewedOperatorBinding != nullptr)
+            if (viewedOperator != nullptr)
             {
-                viewedOperatorBinding->CascadeProcess();
-                Renderer::RenderOperator(viewedOperatorBinding);
+                viewedOperator->CascadeProcess();
+                Renderer::RenderOperator(viewedOperator);
             }
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
@@ -137,23 +134,23 @@ namespace VerkstanBindings
         }
     }
 
-    OperatorBinding^ CoreBinding::ViewedOperatorBinding::get()
+    Operator^ Core::ViewedOperator::get()
     {
-        return viewedOperatorBinding;
+        return viewedOperator;
     }
 
-    void CoreBinding::ViewedOperatorBinding::set(OperatorBinding^ viewedOperatorBinding)
+    void Core::ViewedOperator::set(Operator^ op)
     {
-        CoreBinding::viewedOperatorBinding = viewedOperatorBinding;
+        Core::viewedOperator = op;
     }
 
-    int CoreBinding::ClearColor::get()
+    int Core::ClearColor::get()
     {
         return clearColor;
     }
 
-    void CoreBinding::ClearColor::set(int clearColor)
+    void Core::ClearColor::set(int color)
     {
-        CoreBinding::clearColor = clearColor;
+        Core::clearColor = color;
     }
 }

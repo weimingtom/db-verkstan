@@ -181,70 +181,74 @@
 		<Filter
 			Name="verkstan"
 			>
-			<File
-				RelativePath="..\db-verkstan\core.cpp"
+			<Filter
+				Name="core"
 				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\core.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\flatoperator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\flatoperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\globals.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\globals.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\operator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\operator.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\pixelsoperator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\pixelsoperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\rotozoomoperator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\rotozoomoperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\textoperator.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\textoperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\texture.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\db-verkstan\texture.hpp"
-				>
-			</File>
+				<File
+					RelativePath="..\db-verkstan\core\core.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\core.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\flatoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\flatoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\globals.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\globals.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\operator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\operator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\pixelsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\pixelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\rotozoomoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\rotozoomoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\textoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\textoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\texture.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\db-verkstan\core\texture.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="bindings"
@@ -258,43 +262,43 @@
 				>
 			</File>
 			<File
-				RelativePath=".\CoreBinding.cpp"
+				RelativePath=".\Core.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CoreBinding.hpp"
+				RelativePath=".\Core.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CoreOperatorBinding.cpp"
+				RelativePath=".\CoreOperator.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\CoreOperatorBinding.hpp"
+				RelativePath=".\CoreOperator.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\NameOperatorBinding.cpp"
+				RelativePath=".\NameOperator.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\NameOperatorBinding.hpp"
+				RelativePath=".\NameOperator.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\OperatorBinding.cpp"
+				RelativePath=".\Operator.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\OperatorBinding.hpp"
+				RelativePath=".\Operator.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\OperatorBindingFactory.cpp"
+				RelativePath=".\OperatorFactory.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\OperatorBindingFactory.hpp"
+				RelativePath=".\OperatorFactory.hpp"
 				>
 			</File>
 			<File
@@ -302,19 +306,23 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ReferenceOperatorBinding.cpp"
+				RelativePath=".\ReferenceOperator.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\ReferenceOperatorBinding.hpp"
+				RelativePath=".\ReferenceOperator.hpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Renderer.cpp"
+				RelativePath=".\Renderer.cli.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Renderer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\VerkstanCore.hpp"
 				>
 			</File>
 		</Filter>
