@@ -1,4 +1,4 @@
-#include "rotozoomoperator.hpp"
+#include "core/operators/rotozoomoperator.hpp"
 
 void RotozoomOperator::render()
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "operator.hpp"
+#include "core/operator.hpp"
 
 class PixelsOperator: public Operator
 {

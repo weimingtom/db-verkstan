@@ -1,4 +1,4 @@
-#include "core/textoperator.hpp"
+#include "core/operators/textoperator.hpp"
 
 TextOperator::TextOperator()
 :d3d9RenderTargetTexture(0)
