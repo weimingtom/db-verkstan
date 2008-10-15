@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
+using DB.Darkfile;
 
 using Vorlon2;
 
@@ -9,10 +11,16 @@ using Midi;
 
 namespace VorlonSeq.Seq
 {
-    public class Clip
+    public class Clip : IChunkReader
     {
         public class Event
         {
+            public Event(DarkInStream s)
+            {
+                s.Read(out Time);
+                Message = new MidiMessage(s.ReadUInt());
+            }
+
             public Event(MidiMessage message, int time)
             {
                 Message = message;
@@ -30,11 +38,19 @@ namespace VorlonSeq.Seq
             public int StartTime;
             public int Length;
 
+            public NoteEvent(DarkInStream s)
+            {
+                s.Read(out StartTime);
+                s.Read(out Note);
+                s.Read(out Velocity);
+                s.Read(out Length);
+            }
+
             public NoteEvent(byte note, byte velocity, int startTime, int length)
             {
-                Note = note;
-                Velocity = velocity;
                 StartTime = startTime;
+                Note = note;
+                Velocity = velocity;                
                 Length = length;
             }
 
@@ -89,9 +105,63 @@ namespace VorlonSeq.Seq
 
             return result;
         }
+
+        public void Write(DarkOutStream s)
+        {
+            s.Write(StartTime);
+            s.Write(Length);
+
+            s.OpenChunk("NOTE");
+            s.Write(NoteEvents.Count);            
+            foreach (NoteEvent e in NoteEvents)
+            {
+                s.Write(e.StartTime);
+                s.Write(e.Note);
+                s.Write(e.Velocity);
+                s.Write(e.Length);
+            }
+            s.CloseChunk();
+
+            s.OpenChunk("CTRL");
+            s.Write(ControllerEvents.Count);
+            foreach (Event e in ControllerEvents)
+            {
+                s.Write(e.Time);
+                s.Write(e.Message.GetAsUInt());
+            }
+            s.CloseChunk();
+        }
+
+        public void Read(DarkInStream s)
+        {
+            s.Read(out StartTime);
+            s.Read(out Length);
+            s.ReadAllChunks(this);
+        }
+
+        public void ReadChunk(string id, long length, DarkInStream s)
+        {
+            if (id.Equals("NOTE"))
+            {
+                int numNoteEvents = s.ReadInt();
+                for (int i = 0; i < numNoteEvents; i++)
+                {
+                    NoteEvents.Add(new NoteEvent(s));
+                }
+            }
+
+            if (id.Equals("CTRL"))
+            {
+                int numControllerEvents = s.ReadInt();
+                for (int i = 0; i < numControllerEvents; i++)
+                {
+                    ControllerEvents.Add(new Event(s));
+                }
+            }
+        }
     }
 
-    public class Channel
+    public class Channel : IChunkReader
     {
         public readonly int Number;
         public string Name;
@@ -154,9 +224,29 @@ namespace VorlonSeq.Seq
 
             return null;
         }
+
+        public void Write(DarkOutStream s)
+        {
+            foreach (Clip c in Clips)
+            {
+                s.OpenChunk("CLIP");
+                c.Write(s);
+                s.CloseChunk();
+            }         
+        }
+
+        public void ReadChunk(string id, long length, DarkInStream s)
+        {
+            if (id.Equals("CLIP"))
+            {
+                Clip c = new Clip();
+                c.Read(s);
+                AddClip(c);
+            }
+        }
     }
 
-    public class Song
+    public class Song : IChunkReader
     {
         public const int NumChannels = 16;
 
@@ -167,6 +257,27 @@ namespace VorlonSeq.Seq
             for (int i = 0; i < Channels.Length; i++)
             {
                 Channels[i] = new Channel(i);
+            }
+        }
+
+        public void Write(DarkOutStream s)
+        {            
+            for (int i = 0; i < Channels.Length; i++)
+            {
+                s.OpenChunk("CHAN");
+                s.Write(i);
+                Channels[i].Write(s);
+                s.CloseChunk();
+            }                
+        }
+
+        public void ReadChunk(string id, long length, DarkInStream s)
+        {
+            if (id.Equals("CHAN"))
+            {
+                int index;
+                s.Read(out index);
+                s.ReadAllChunks(Channels[index]);
             }
         }
     }
@@ -192,6 +303,40 @@ namespace VorlonSeq.Seq
                 double beatsPerSecond = Synth.SampleRate / samplesPerBeat;
                 return (int)(beatsPerSecond * 60.0f);                
             } 
+        }
+
+        public static void Load(string path)
+        {
+            DarkInStream dis = new DarkInStream(File.OpenRead(path));
+            Song = new Song();            
+            dis.ReadChunk(delegate(string id, long length, DarkInStream s)
+            {
+                if (id.Equals("VSEQ"))
+                {
+                    s.Read(out FramesPerTick);
+
+                    s.ReadChunk(delegate(string id2, long length2, DarkInStream s2)
+                    {
+                        if (id2.Equals("SONG"))
+                        {
+                            s2.ReadAllChunks(Song);
+                        }
+                    });
+                }
+            });
+            dis.Close();
+        }
+
+        public static void Save(string path)
+        {
+            DarkOutStream dos = new DarkOutStream(File.Create(path));
+            dos.OpenChunk("VSEQ");
+            dos.Write(FramesPerTick);
+            dos.OpenChunk("SONG");
+            Song.Write(dos);
+            dos.CloseChunk();
+            dos.CloseChunk();
+            dos.Close();
         }
 
         public static void PlayMidiEvent(MidiMessage midiMessage)

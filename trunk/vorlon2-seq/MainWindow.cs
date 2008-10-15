@@ -117,5 +117,16 @@ namespace VorlonSeq
         {
             selectedTab = tabControl1.SelectedIndex;
         }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Seq.Sequencer.Save("test.vrl");
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Seq.Sequencer.Load("test.vrl");
+            Refresh();
+        }
     }
 }

@@ -86,6 +86,7 @@
     <Compile Include="ClipEditor.Designer.cs">
       <DependentUpon>ClipEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="Darkfile\DarkStream.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
