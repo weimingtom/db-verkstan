@@ -5,7 +5,11 @@
 namespace Verkstan
 {
     ReferenceOperator::ReferenceOperator(List<OperatorProperty^>^ properties)
-        : Operator("Reference", -1, Constants::OperatorTypes::Reference, properties)
+        : Operator("Reference", 
+                   -1, 
+                   Constants::OperatorTypes::Reference,
+                   Constants::OperatorTypes::Reference,
+                   properties)
     {
         outputConnections = gcnew List<Operator^>();
         NameAndReferenceOperatorManager::AddReferenceOperator(this);
@@ -17,16 +21,11 @@ namespace Verkstan
         Disconnect();
         NameAndReferenceOperatorManager::RemoveReferenceOperator(this);
     }
-
-    Operator^ ReferenceOperator::Reference::get()
-    {
-        return reference;
-    }
      
     void ReferenceOperator::CascadeProcess()
     {
-        if (nameReference != nullptr)
-            nameReference->CascadeProcess();
+        if (nameOperator != nullptr)
+            nameOperator->CascadeProcess();
     }
 
     void ReferenceOperator::Process()
@@ -36,10 +35,11 @@ namespace Verkstan
 
     void ReferenceOperator::SetDirty(bool dirty)
     {
+        /*
         this->dirty = dirty;
 
         for (int i = 0; i < outputConnections->Count; i++)
-            outputConnections[i]->SetDirty(dirty);
+            outputConnections[i]->SetDirty(dirty);*/
     }
 
     bool ReferenceOperator::IsDirty()
@@ -90,20 +90,13 @@ namespace Verkstan
         if (index == 0)
         {
             DisplayName = value;
-            RefreshReference();
+            FindNameAndUpdateConnections();
         }
     }
 
     void ReferenceOperator::ConnectOutWith(Operator^ op)
     {
-        if (op->Type == Constants::OperatorTypes::Name
-            || op->Type == Constants::OperatorTypes::Reference)
-            return;
-        
         outputConnections->Add(op);
-
-        if (reference != nullptr)
-            op->ConnectInWith(reference);
     }
 
     void ReferenceOperator::ConnectInWith(Operator^ op)
@@ -113,6 +106,7 @@ namespace Verkstan
 
     void ReferenceOperator::Disconnect()
     {  
+        /*
         if (reference == nullptr)
         {
             outputConnections->Clear();
@@ -123,11 +117,12 @@ namespace Verkstan
             outputConnections[i]->DisconnectInFrom(reference);
          
         outputConnections->Clear();
+        */
     }
 
     bool ReferenceOperator::IsProcessable()
     {
-        return nameReference != nullptr && nameReference->IsProcessable();
+        return nameOperator != nullptr && nameOperator->IsProcessable();
     }
 
     void ReferenceOperator::DisconnectInFrom(Operator^ op)
@@ -135,58 +130,103 @@ namespace Verkstan
         
     }
 
-    void ReferenceOperator::DisconnectIns()
-    {
-    }
-
     void ReferenceOperator::DisconnectOutFrom(Operator^ op)
     {
-        if (reference != nullptr)
-            op->DisconnectInFrom(reference);
-
         outputConnections->Remove(op);
     }
 
     Core::Operator* ReferenceOperator::getOperator()
     {
+        if (nameOperator != nullptr)
+            return nameOperator->getOperator();
         return 0;
     }
 
-    void ReferenceOperator::RefreshReference()
+    void ReferenceOperator::FindNameAndUpdateConnections()
     {
-        nameReference = NameAndReferenceOperatorManager::FindNameOperator(DisplayName);
-        Operator^ newReference = nullptr;
+         NameOperator^ newNameOperator = NameAndReferenceOperatorManager::FindNameOperator(DisplayName);
 
-        if (nameReference != nullptr)
-            newReference = nameReference->Input;
-
-        System::Console::WriteLine(nameReference + " " + newReference);
-
-        if (newReference == nullptr && reference == nullptr)
-        {    
+         if (newNameOperator != nameOperator && nameOperator != nullptr && reference != nullptr)
+         {
             for (int i = 0; i < outputConnections->Count; i++)
-                outputConnections[i]->DisconnectIns();
-        }
-        else if (newReference == nullptr)
-        {
-            for (int i = 0; i < outputConnections->Count; i++)
-                outputConnections[i]->DisconnectIns();
-        }
+            {
+                reference->DisconnectOutFrom(outputConnections[i]);
+                outputConnections[i]->DisconnectInFrom(reference);
+                outputConnections[i]->UpdateRealInputConnections();
+            }
+            reference->UpdateRealOutputConnections();
+         }
+
+         nameOperator = newNameOperator;
+
+         FindReferenceAndUpdateConnections();
+    }
+
+    void ReferenceOperator::FindReferenceAndUpdateConnections()
+    {
+        Operator^ newReference;
+        if (nameOperator != nullptr)
+            newReference = nameOperator->getInput();
         else
+            newReference = nullptr;
+
+        if (newReference != reference && reference != nullptr)
         {
             for (int i = 0; i < outputConnections->Count; i++)
             {
+                reference->DisconnectOutFrom(outputConnections[i]);
                 outputConnections[i]->DisconnectInFrom(reference);
-                outputConnections[i]->ConnectInWith(newReference);
+                outputConnections[i]->UpdateRealInputConnections();
             }
+            reference->UpdateRealOutputConnections();
+        }
+        if (newReference != reference && newReference != nullptr)
+        {
+            for (int i = 0; i < outputConnections->Count; i++)
+            {
+                newReference->ConnectOutWith(outputConnections[i]);
+                outputConnections[i]->ConnectInWith(newReference);
+                outputConnections[i]->UpdateRealInputConnections();
+            }
+            newReference->UpdateRealOutputConnections();
         }
 
         reference = newReference;
     }
 
-    void ReferenceOperator::NameOperatorDirty(NameOperator^ nameOperator)
+    void ReferenceOperator::UpdateConnections()
     {
-        if (nameOperator == nameReference)
-            SetDirty(true);
+        /*
+        if (nameOperator == nullptr || reference == nullptr)
+            return;
+
+        for (int i = 0; i < outputConnections->Count; i++)
+        {
+            reference->ConnectOutWith(outputConnections[i]);
+            outputConnections[i]->DisconnectInFrom(reference);
+            outputConnections[i]->UpdateRealInputConnections();
+        }
+        reference->UpdateRealOutputConnections();
+        */
+    }
+
+    void ReferenceOperator::UpdateRealInputConnections()
+    {
+
+    }
+
+    void ReferenceOperator::UpdateRealOutputConnections()
+    {
+
+    }
+
+    void ReferenceOperator::UpdateRealConnections()
+    {
+
+    }
+
+    int ReferenceOperator::getOperatorId()
+    {
+        return -1;
     }
 }

@@ -186,6 +186,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Connector.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Connector.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Constants.hpp"
 				>
 			</File>
@@ -195,6 +203,22 @@
 			</File>
 			<File
 				RelativePath=".\cli\Exporter.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Joint.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Joint.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Joints.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Joints.hpp"
 				>
 			</File>
 			<File
@@ -218,7 +242,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Window.hpp"
+				RelativePath=".\cli\Window.cli.hpp"
 				>
 			</File>
 			<Filter
@@ -232,34 +256,10 @@
 					RelativePath=".\cli\Operators\CoreOperator.hpp"
 					>
 				</File>
-				<File
-					RelativePath=".\cli\Operators\NameOperator.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Operators\NameOperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Operators\ReferenceOperator.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Operators\ReferenceOperator.hpp"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="Internal"
 				>
-				<File
-					RelativePath=".\cli\Internal\NameAndReferenceOperatorManager.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\NameAndReferenceOperatorManager.hpp"
-					>
-				</File>
 				<File
 					RelativePath=".\cli\Internal\Operators.hpp"
 					>

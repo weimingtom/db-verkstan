@@ -1,4 +1,7 @@
+#pragma once
+
 #include "cli/Operator.hpp"
+#include "cli/Joint.hpp"
 
 namespace Verkstan
 {
@@ -11,7 +14,7 @@ namespace Verkstan
                             List<OperatorProperty^>^ properties,
                             List<OperatorInput^>^ inputs);
         virtual ~CoreOperator();
-        
+
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;
         virtual int GetIntProperty(int index) override;
@@ -21,29 +24,38 @@ namespace Verkstan
         virtual String^ GetStringProperty(int index) override;
         virtual void SetStringProperty(int index, String ^value) override;
         
-        virtual void CascadeProcess() override;
-        virtual void Process() override;
-        
-        virtual void SetDirty(bool dirty) override;
-        virtual bool IsDirty() override;
-
-        virtual void ConnectInWith(Operator^ operatorBinding) override;
-        virtual void ConnectOutWith(Operator^ operatorBinding) override;
-        virtual void Disconnect() override;
         virtual bool IsProcessable() override;
-        virtual void DisconnectInFrom(Operator^ operatorBinding) override;
-        virtual void DisconnectOutFrom(Operator^ operatorBinding) override;
-        virtual void DisconnectIns() override;
+
+        virtual Joint^ GetPrimaryJoint() override;
+        virtual void ConnectWithJointAsReceiver(Joint^ joint) override;
+        virtual void ConnectWithJointAsSender(Joint^ joint) override;
+        virtual void DisconnectFromAllJoints() override;
+        virtual void DisconnectFromJointAsReceiver(Joint^ joint) override;
+        virtual void DisconnectFromJointAsSender(Joint^ joint) override;
+        virtual void JointSenderChanged(Operator^ op) override;
+        virtual void JointReceiverAdded(Operator^ op) override;
+        virtual void JointReceiverRemoved(Operator^ op) override;
+
+        /*
+        virtual void ConnectInWith(Operator^ op) override;
+        virtual void ConnectOutWith(Operator^ op) override;
+        virtual void Disconnect() override;
+        virtual void DisconnectInFrom(Operator^ op) override;
+        virtual void DisconnectOutFrom(Operator^ op) override;
+        virtual void UpdateRealInputConnections() override;
+        virtual void UpdateRealOutputConnections() override;
+        virtual void UpdateRealConnections() override;
+        */
 
         virtual Core::Operator* getOperator() override;
 
     private:
-        void flushInputConnections();
-        void flushOutputConnections();
-
-        bool dirty;
+        void UpdateInputConnections();
+        void UpdateOutputConnections();
+        Joint^ primaryJoint;
+        List<Joint^>^ inputJoints;
+        List<Joint^>^ outputJoints;
         List<OperatorInput^>^ inputs;
-        List<Operator^>^ inputConnections;
-        List<Operator^>^ outputConnections;
+        bool processable;
 	};
 }

@@ -1,4 +1,4 @@
-#include "cli/Window.hpp"
+#include "cli/Window.cli.hpp"
 
 #include "cli/Constants.hpp"
 #include "cli/Internal/Renderer.hpp"
@@ -78,9 +78,6 @@ namespace Verkstan
             }
         }
 
-        if (viewedOperator != nullptr)
-            viewedOperator->SetDirty(true);
-
         HRESULT result = globalDirect3DDevice->Reset(&d3dPresentParameters);
         
         if (result == D3DERR_INVALIDCALL)
@@ -122,10 +119,7 @@ namespace Verkstan
                                        0);
             
             if (viewedOperator != nullptr)
-            {
-                viewedOperator->CascadeProcess();
                 Renderer::RenderOperator(viewedOperator);
-            }
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
 

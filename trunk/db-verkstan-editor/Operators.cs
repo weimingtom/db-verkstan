@@ -54,6 +54,16 @@ namespace VerkstanEditor
                 ViewedOperatorPropertiesChanged(op);
         }
 
+        public static ICollection<String> GetCategories()
+        {
+            return Verkstan.OperatorFactory.GetCategories().ToList<String>();
+        }
+
+        public static ICollection<String> GetNamesInCategory(String category)
+        {
+            return Verkstan.OperatorFactory.GetNamesInCategory(category).ToList<String>();
+        }
+
         public static void AddOperatorInPage(String pageName, Point location, String name)
         {
             Operator other = GetOperatorInPageAt(pageName, location);
@@ -76,25 +86,20 @@ namespace VerkstanEditor
                 return;
 
             op.Location = opLocation;
-            op.Binding.Disconnect();
             ConnectOperatorInPageWithNeighbours(pageName, op);
         }
 
         public static void ConnectOperatorInPageWithNeighbours(String pageName, Operator op)
         {
+            Verkstan.Connector.Disconnect(op.Binding);
+
             List<Operator> inConnections = GetOperatorsInPageIn(pageName, op.GetAreaForInConnections());
             foreach (Operator inOperator in inConnections)
-            {
-                op.Binding.ConnectInWith(inOperator.Binding);
-                inOperator.Binding.ConnectOutWith(op.Binding);
-            }
-
+                Verkstan.Connector.Connect(inOperator.Binding, op.Binding);
+          
             List<Operator> outConnections = GetOperatorsInPageIn(pageName, op.GetAreaForOutConnections());
             foreach (Operator outOperator in outConnections)
-            {
-                op.Binding.ConnectOutWith(outOperator.Binding);
-                outOperator.Binding.ConnectInWith(op.Binding);
-            }
+                Verkstan.Connector.Connect(op.Binding, outOperator.Binding);
         }
 
         public static List<Operator> GetOperatorsInPage(String pageName)
@@ -162,7 +167,6 @@ namespace VerkstanEditor
             foreach (Operator op in ops)
             {
                 Rectangle opRect = new Rectangle(op.Location, op.Size);
-
                 if (opRect.IntersectsWith(rectangle))
                     result.Add(op);
             }
@@ -273,7 +277,7 @@ namespace VerkstanEditor
             operators.Remove(op);
         }
 
-        internal static void ResizeSelectedOperatorsInPage(string pageName, int additionalWidth)
+        public static void ResizeSelectedOperatorsInPage(string pageName, int additionalWidth)
         {
             List<Operator> selectedOperators = GetSelectedOperatorsInPage(pageName);
             List<Operator> nonSelectedOperators = GetNonSelectedOperatorsInPage(pageName);
@@ -298,7 +302,6 @@ namespace VerkstanEditor
             foreach (Operator op in selectedOperators)
             {
                 op.Size = new Size(op.Size.Width + additionalWidth, op.Size.Height);
-                op.Binding.Disconnect();
                 ConnectOperatorInPageWithNeighbours(pageName, op);
             }
         }

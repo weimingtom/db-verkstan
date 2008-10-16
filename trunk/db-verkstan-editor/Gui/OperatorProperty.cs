@@ -41,7 +41,7 @@ namespace VerkstanEditor.Gui
 
         private void Initialize()
         {
-            List<Verkstan.OperatorProperty> properties = op.Binding.Properties;
+            List<Verkstan.OperatorProperty> properties = op.Properties;
 
            OperatorPropertyTable.RowCount = properties.Count;
            int row = 0;
@@ -86,7 +86,8 @@ namespace VerkstanEditor.Gui
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Float)
                {
                    NumericUpDown numericUpDown = new NumericUpDown();
-                   numericUpDown.Increment = Convert.ToDecimal(0.01);
+                   numericUpDown.Increment = 0.001M;
+                   numericUpDown.DecimalPlaces = 3;
                    numericUpDown.Minimum = decimal.MinValue;
                    numericUpDown.Maximum = decimal.MaxValue;
                    numericUpDown.Value = Convert.ToDecimal(op.Binding.GetFloatProperty(property.Index));

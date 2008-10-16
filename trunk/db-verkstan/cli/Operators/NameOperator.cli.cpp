@@ -5,10 +5,16 @@
 namespace Verkstan
 {
     NameOperator::NameOperator(List<OperatorProperty^>^ properties)
-        : Operator("Name", -1, Constants::OperatorTypes::Name, properties)
+        : Operator("Name", 
+                   -1, 
+                   Constants::OperatorTypes::Name,
+                   Constants::OperatorTypes::Name,
+                   properties)
     {
         NameAndReferenceOperatorManager::AddNameOperator(this);
         dirty = true;
+
+        inputConnections = gcnew List<Operator^>();
     }
 
     NameOperator::~NameOperator()
@@ -16,16 +22,11 @@ namespace Verkstan
         Disconnect();
         NameAndReferenceOperatorManager::RemoveNameOperator(this);
     }
-
-    Operator^ NameOperator::Input::get()
-    {
-        return input;
-    }
      
     void NameOperator::CascadeProcess()
     {
-        if (input != nullptr)
-            input->CascadeProcess();
+        if (inputConnections->Count > 0)
+            inputConnections[0]->CascadeProcess();
     }
 
     void NameOperator::Process()
@@ -35,10 +36,15 @@ namespace Verkstan
 
     void NameOperator::SetDirty(bool dirty)
     {
+        /*
         this->dirty = dirty;
 
         if (dirty && input != nullptr)
-            NameAndReferenceOperatorManager::NameOperatorDirty(this);       
+            NameAndReferenceOperatorManager::NameOperatorDirty(this);
+
+        for (int i = 0; i < outputConnections->Count; i++)
+            outputConnections[i]->SetDirty(dirty);
+        */
     }
 
     bool NameOperator::IsDirty()
@@ -89,20 +95,12 @@ namespace Verkstan
         if (index == 0)
         {
             DisplayName = value;
-            NameAndReferenceOperatorManager::RefreshReferenceOperators();
         }
     }
 
     void NameOperator::ConnectInWith(Operator^ op)
     {
-        if (input == nullptr 
-            && op->Type != Constants::OperatorTypes::Name
-            && op->Type != Constants::OperatorTypes::Reference)
-        {
-            input = op;
-            op->ConnectOutWith(this); 
-            NameAndReferenceOperatorManager::RefreshReferenceOperators();
-        }
+        inputConnections->Add(op);
     }
 
     void NameOperator::ConnectOutWith(Operator^ op)
@@ -112,29 +110,26 @@ namespace Verkstan
 
     void NameOperator::Disconnect()
     {
-        if (input != nullptr)
-            input->DisconnectOutFrom(this);
+        for (int i = 0; i < inputConnections->Count; i++)
+        {
+            Operator^ op = inputConnections[i];
+            op->DisconnectOutFrom(this);
+            op->UpdateRealOutputConnections();
+        }
+        inputConnections->Clear();
 
-        input = nullptr;
-
-        NameAndReferenceOperatorManager::RefreshReferenceOperators();
+        id = -1;
+        type = Constants::OperatorTypes::Name;
     }
 
     bool NameOperator::IsProcessable()
     {
-        return input != nullptr && input->IsProcessable();
+        return inputConnections->Count > 0 && inputConnections[0]->IsProcessable();
     }
 
     void NameOperator::DisconnectInFrom(Operator^ op)
     {
-        if (input == op)
-            input = nullptr;
-
-         NameAndReferenceOperatorManager::RefreshReferenceOperators();
-    }
-
-    void NameOperator::DisconnectIns()
-    {
+        inputConnections->Remove(op);
     }
 
     void NameOperator::DisconnectOutFrom(Operator^ op)
@@ -142,8 +137,41 @@ namespace Verkstan
 
     }
 
+    void NameOperator::UpdateRealInputConnections()
+    {
+        List<ReferenceOperator^>^ referenceOperators = NameAndReferenceOperatorManager::FindReferenceOperators(DisplayName);
+        for (int i = 0; i < referenceOperators->Count; i++)
+            referenceOperators[i]->FindReferenceAndUpdateConnections();
+    }
+
+    void NameOperator::UpdateRealOutputConnections()
+    {
+
+    }
+
+    void NameOperator::UpdateRealConnections()
+    {
+
+    }
+
     Core::Operator* NameOperator::getOperator()
     {
+        if (inputConnections->Count > 0)
+            return inputConnections[0]->getOperator();
         return 0;
+    }
+
+    int NameOperator::getOperatorId()
+    {
+        if (inputConnections->Count > 0)
+            return inputConnections[0]->Id;
+        return -1;
+    }
+
+    Operator^ NameOperator::getInput()
+    {
+         if (inputConnections->Count > 0)
+             return inputConnections[0];
+         return nullptr;
     }
 }

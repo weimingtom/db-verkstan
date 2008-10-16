@@ -15,7 +15,8 @@ namespace Verkstan
             Camera,
             Scene,
             Reference,
-            Name
+            Name,
+            Core
         };
 
        enum class OperatorPropertyTypes

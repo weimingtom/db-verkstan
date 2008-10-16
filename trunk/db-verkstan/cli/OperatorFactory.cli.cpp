@@ -4,8 +4,6 @@
 
 #include "cli/OperatorFactory.hpp"
 #include "cli/Operators/CoreOperator.hpp"
-#include "cli/Operators/NameOperator.hpp"
-#include "cli/Operators/ReferenceOperator.hpp"
 
 namespace Verkstan
 {
@@ -20,11 +18,6 @@ categories[category]->Add(name);
 #define OPERATOR_CATEGORY_DEFINES 1
 #include "cli/Internal/Operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
-        
-        if (!categories->ContainsKey("Misc"))
-            categories["Misc"] = gcnew List<String^>();
-        categories["Misc"]->Add("Name");
-        categories["Misc"]->Add("Reference");
     }
 
     ICollection<String^>^ OperatorFactory::GetCategories()
@@ -49,20 +42,20 @@ categories[category]->Add(name);
 #define DEF_OP(opName, opClass, opType)             \
     if (name == opName)                             \
     {                                               \
-        Core::Operator* op = new opClass##();\
+        Core::Operator* o = new opClass##();\
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
             if (operators[i] == 0)                  \
             {                                       \
-                operators[i] = op;                  \
+                operators[i] = o;                   \
                 id = i;                             \
                 break;                              \
             }                                       \
         }                                           \
         List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();\
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
-        ob = gcnew CoreOperator(opName,  \
+        op = gcnew CoreOperator(opName,  \
                                id,      \
                                Constants::OperatorTypes::Texture,   \
                                properties,  \
@@ -70,7 +63,7 @@ categories[category]->Add(name);
        
 #define ADD_PROP(propName, propType, defaultValue)    \
     properties->Add(gcnew OperatorProperty(properties->Count, propName, Constants::OperatorPropertyTypes::##propType));  \
-    ob->Set##propType##Property(properties->Count - 1, defaultValue);
+    op->Set##propType##Property(properties->Count - 1, defaultValue);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && !inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
@@ -83,25 +76,11 @@ categories[category]->Add(name);
 
     Operator^ OperatorFactory::Create(String^ name)
     {
-        Operator^ ob;
+        Operator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Internal/Operators.hpp"
 #undef OPERATOR_DEFINES
 
-        if (name == "Name")
-        {
-            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
-            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
-            ob = gcnew NameOperator(properties);
-        }
-
-        if (name == "Reference")
-        {
-            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
-            properties->Add(gcnew OperatorProperty(0, "Reference", Constants::OperatorPropertyTypes::String));
-            ob = gcnew ReferenceOperator(properties);
-        }
-
-        return ob;
+        return op;
      }
 }

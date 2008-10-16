@@ -10,6 +10,8 @@ namespace VerkstanEditor
     {
         public Verkstan.Operator Binding;
         public String Page;
+        public String Name;
+        public Color Color;
         public Point location;
         public Point Location
         {
@@ -42,7 +44,13 @@ namespace VerkstanEditor
                 return new Rectangle(Location.X, Location.Y, Size.Width, Size.Height);
             }
         }
-
+        public virtual List<Verkstan.OperatorProperty> Properties
+        {
+            get
+            {
+                return Binding.Properties;
+            }
+        }
         public static Point QuantizeLocation(Point location)
         {
             return new Point(location.X - location.X % 100,
@@ -62,12 +70,26 @@ namespace VerkstanEditor
             return quantizedSize;
         }
 
+        public Operator(String page, Point location)
+        {
+            Page = page;
+            Location = location;
+            Size = new Size(100, 20);
+        }
+
         public Operator(String page, Point location, Verkstan.Operator binding)
         {
             Page = page;
             Binding = binding;
             Location = location;
             Size = new Size(100, 20);
+
+            Name = binding.Name;
+
+            if (Binding.Type == Verkstan.Constants.OperatorTypes.Texture)
+                Color = Color.FromArgb(190, 110, 110);
+            else
+                Color = Color.FromArgb(190, 190, 110);
         }
 
         public Rectangle GetAreaForInConnections()
@@ -87,6 +109,5 @@ namespace VerkstanEditor
                                  15,
                                  20);
         }
-
     }
 }

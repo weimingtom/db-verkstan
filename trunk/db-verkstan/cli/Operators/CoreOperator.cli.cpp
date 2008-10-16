@@ -3,6 +3,7 @@
 #include <vcclr.h>
 
 #include "cli/Operators/CoreOperator.hpp"
+#include "cli/Joints.hpp"
 
 namespace Verkstan
 {
@@ -11,54 +12,31 @@ namespace Verkstan
                                  Constants::OperatorTypes type,
                                  List<OperatorProperty^>^ properties,
                                  List<OperatorInput^>^ inputs)
-                                 : Operator(name, operatorId, type, properties)
+                             : Operator(name, 
+                                        operatorId, 
+                                        type, 
+                                        Constants::OperatorTypes::Core,
+                                        properties)
     {
-        this->dirty = true;
+        this->processable = inputs->Count == 0;
         this->inputs = inputs;
 
-        inputConnections = gcnew List<Operator^>();
-        outputConnections = gcnew List<Operator^>();
+        inputJoints = gcnew List<Joint^>();
+        outputJoints = gcnew List<Joint^>();
+        primaryJoint = gcnew Joint();
+        primaryJoint->Sender = this;
+        Joints::Add(primaryJoint);
+        outputJoints->Add(primaryJoint);
     }
 
     CoreOperator::~CoreOperator()
     {
+        Joints::Remove(primaryJoint);
+        /*
         Disconnect();
-
+        */
         delete Core::operators[Id];
         Core::operators[Id] = 0;
-    }
-
-    void CoreOperator::CascadeProcess()
-    {
-        if (!dirty)
-            return;
-
-        for (int i = 0; i < inputConnections->Count; i++)
-            inputConnections[i]->CascadeProcess();
-        
-        if (IsProcessable())
-        {
-            Process();
-            dirty = false;
-        }
-    }
-
-    void CoreOperator::Process()
-    {
-        getOperator()->process();
-    }
-
-    void CoreOperator::SetDirty(bool dirty)
-    {
-        this->dirty = dirty;
-
-        for (int i = 0; i < outputConnections->Count; i++)
-            outputConnections[i]->SetDirty(dirty);
-    }
-
-    bool CoreOperator::IsDirty()
-    {
-        return dirty;
     }
 
     unsigned char CoreOperator::GetByteProperty(int index)
@@ -68,8 +46,8 @@ namespace Verkstan
 
     void CoreOperator::SetByteProperty(int index, unsigned char value)
     {
-        SetDirty(true);
         getOperator()->setByteProperty(index, value); 
+        getOperator()->setDirty(true);
     }
 
     int CoreOperator::GetIntProperty(int index)
@@ -79,8 +57,8 @@ namespace Verkstan
 
     void CoreOperator::SetIntProperty(int index, int value)
     {
-        SetDirty(true);
         getOperator()->setIntProperty(index, value); 
+        getOperator()->setDirty(true);
     }
 
     float CoreOperator::GetFloatProperty(int index)
@@ -90,8 +68,8 @@ namespace Verkstan
 
     void CoreOperator::SetFloatProperty(int index, float value)
     {
-        SetDirty(true);
         getOperator()->setFloatProperty(index, value); 
+        getOperator()->setDirty(true);
     }
 
     String^ CoreOperator::GetStringProperty(int index)
@@ -101,8 +79,6 @@ namespace Verkstan
 
     void CoreOperator::SetStringProperty(int index, String^ string)
     {
-        SetDirty(true);
-
         // Pin memory so GC can't move it while native function is called
         pin_ptr<const wchar_t> wch = PtrToStringChars(string);
      
@@ -123,26 +99,138 @@ namespace Verkstan
                          wch, 
                          sizeInBytes);
 
-        getOperator()->setStringProperty(index, ch); 
+        getOperator()->setStringProperty(index, ch);
+        getOperator()->setDirty(true);
     }
 
-    void CoreOperator::flushInputConnections()
+    bool CoreOperator::IsProcessable()
+    {
+        bool result = processable;
+
+        for (int i = 0; i < inputJoints->Count; i++)
+        {
+            Operator^ op = inputJoints[i]->Sender;
+            if (op != nullptr)
+                result &= op->IsProcessable();
+        }
+
+        return result;
+    }
+
+    Core::Operator* CoreOperator::getOperator()
+    {
+        return Core::operators[Id];
+    }
+
+    Joint^ CoreOperator::GetPrimaryJoint()
+    {
+        return primaryJoint;
+    }
+
+    void CoreOperator::DisconnectFromJointAsReceiver(Joint^ joint)
+    {
+        inputJoints->Remove(joint);
+        joint->RemoveReceiver(this);
+    }
+
+    void CoreOperator::DisconnectFromJointAsSender(Joint^ joint)
+    {
+        outputJoints->Remove(joint);
+        joint->Sender = nullptr;
+    }
+
+    void CoreOperator::JointReceiverAdded(Operator^ op)
+    {
+        UpdateOutputConnections();
+        op->getOperator()->setDirty(true);
+    }
+
+    void CoreOperator::JointReceiverRemoved(Operator^ op)
+    {
+        UpdateOutputConnections();
+    }
+
+    void CoreOperator::JointSenderChanged(Operator^ op)
+    {     
+        UpdateInputConnections();
+    }
+
+    void CoreOperator::DisconnectFromAllJoints()
+    {
+        for (int i = 0; i < inputJoints->Count; i++)
+        {
+            Joint^ joint = inputJoints[i];
+            joint->RemoveReceiver(this);
+        }
+
+        inputJoints->Clear();
+
+        for (int i = 0; i < outputJoints->Count; i++)
+        {
+            Joint^ joint = outputJoints[i];
+
+            if (joint == primaryJoint)
+                continue;
+
+            joint->Sender = nullptr;
+        }
+
+        outputJoints->Clear();
+        outputJoints->Add(primaryJoint);
+
+        // As this operator owns the primary joint it's this operator's
+        // responsibility to tell all receivers of the primary joint to
+        // disconnect.
+        for (int i = 0; i < primaryJoint->Receivers->Count; i++)
+        {
+            Operator^ op = primaryJoint->Receivers[i];
+            op->DisconnectFromJointAsReceiver(primaryJoint);
+        }
+
+        UpdateInputConnections();
+        UpdateOutputConnections();
+    }
+
+    void CoreOperator::ConnectWithJointAsReceiver(Joint^ joint)
+    {
+        inputJoints->Add(joint);    
+        joint->AddReceiver(this);
+    }
+
+    void CoreOperator::ConnectWithJointAsSender(Joint^ joint)
+    {
+        outputJoints->Add(joint);
+        joint->Sender = this;
+    }
+
+    void CoreOperator::UpdateInputConnections()
     {
         for (int i = 0; i < getOperator()->numberOfInputs; i++)
             getOperator()->inputs[i] = -1;
 
-        for (int i = 0; i < inputConnections->Count; i++)
+        List<Operator^>^ inputOperators = gcnew List<Operator^>();
+        for (int i = 0; i < inputJoints->Count; i++)
+            inputOperators->Add(inputJoints[i]->Sender);
+            
+        int numberOfInputs = 0;
+
+        for (int i = 0; i < inputOperators->Count; i++)
         {
-            Operator^ ob = inputConnections[i];
+            Operator^ op = inputOperators[i];
+     
+            if (op->Id == -1 || op->Id == Id)
+                continue;
+
             bool accepted = false;
             int j = 0;
             for (j; j < inputs->Count; j++)
             {
-                if (inputs[j]->Type == ob->Type
+                if (inputs[j]->Type == op->Type
                     && getOperator()->inputs[j] == -1)
                 {
-                    getOperator()->inputs[j] = ob->Id;
+                    getOperator()->inputs[j] = op->Id;
                     accepted = true;
+                    numberOfInputs++;
                     break;
                 }
             }
@@ -151,128 +239,60 @@ namespace Verkstan
 
             if (!accepted 
                 && inputs[j]->Infinite
-                && inputs[j]->Type == ob->Type)
+                && inputs[j]->Type == op->Type)
             {
                 for (j; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
                 {
                     if (getOperator()->inputs[j] == -1)
                     {
-                        getOperator()->inputs[j] = ob->Id;
+                        getOperator()->inputs[j] = op->Id;
                         accepted = true;
+                        numberOfInputs++;
                         break;
                     }
                 }
             }
         }
 
-        getOperator()->numberOfInputs= inputConnections->Count;
-        SetDirty(true);
+        getOperator()->numberOfInputs = numberOfInputs;
+        processable = inputs->Count == numberOfInputs;
     }
 
-    void CoreOperator::flushOutputConnections()
+    void CoreOperator::UpdateOutputConnections()
     {
+        System::Console::WriteLine("Updating outputs");
         for (int i = 0; i < getOperator()->numberOfOutputs; i++)
             getOperator()->outputs[i] = -1;
 
-        for (int i = 0; i < outputConnections->Count; i++)
-            getOperator()->outputs[i] = outputConnections[i]->Id;
-       
-        getOperator()->numberOfOutputs = outputConnections->Count;
-    }
+        System::Console::WriteLine("output joints =  " + outputJoints->Count);
 
-    void CoreOperator::ConnectInWith(Operator^ operatorBinding)
-    {
-        if (inputs->Count == 0)
-            return;
 
-        bool accepted = false;
-        int i = 0;
-        for (i; i < inputs->Count; i++)
+        List<Operator^>^ outputOperators = gcnew List<Operator^>();
+        for (int i = 0; i < outputJoints->Count; i++)
+            for (int j = 0; j < outputJoints[i]->Receivers->Count; j++)
+                outputOperators->Add(outputJoints[i]->Receivers[j]);
+
+        System::Console::WriteLine("outputs =  " + outputOperators->Count);
+
+        int numberOfOutputs= 0;
+        for (int i = 0; i < outputOperators->Count; i++)
         {
-            if (inputs[i]->Type == operatorBinding->Type
-                && getOperator()->inputs[i] == -1)
-            {
-                inputConnections->Add(operatorBinding);
-                accepted = true;
-                break;
-            }
-        }
+            Operator^ op = outputOperators[i];
 
-        i--;
+            if (op->Id == -1)
+                continue;
 
-        if (!accepted 
-            && inputs[i]->Infinite
-            && inputs[i]->Type == operatorBinding->Type)
-        {
-            for (i; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
+            for (int j = 0; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
             {
-                if (getOperator()->inputs[i] == -1)
+                if (getOperator()->outputs[j] == -1)
                 {
-                    inputConnections->Add(operatorBinding);
-                    accepted = true;
+                    getOperator()->outputs[j] = op->Id;
+                    numberOfOutputs++;
                     break;
                 }
             }
         }
-             
-        if (!accepted)
-            return;
 
-        flushInputConnections();
-    }
-
-    void CoreOperator::ConnectOutWith(Operator^ op)
-    {
-        outputConnections->Add(op);
-        
-        flushOutputConnections();
-    }
-
-    void CoreOperator::DisconnectInFrom(Operator^ op)
-    {
-        inputConnections->Remove(op);
-        flushInputConnections();
-    }
-
-    void CoreOperator::DisconnectIns()
-    {
-        inputConnections->Clear();
-        flushInputConnections();
-    }
-
-    void CoreOperator::DisconnectOutFrom(Operator^ op)
-    {
-        outputConnections->Remove(op);
-        flushOutputConnections();
-    }
-
-    void CoreOperator::Disconnect()
-    {
-        for (int i = 0; i < inputConnections->Count; i++)
-            inputConnections[i]->DisconnectOutFrom(this);
-        inputConnections->Clear();
-        flushInputConnections();
-
-        for (int i = 0; i < outputConnections->Count; i++)
-            outputConnections[i]->DisconnectInFrom(this);
-        outputConnections->Clear();
-        flushOutputConnections();
-    }
-
-    bool CoreOperator::IsProcessable()
-    {
-        if (!inputs->Count == inputConnections->Count)
-            return false;
-
-        for (int i = 0; i < inputConnections->Count; i++)
-            if (!inputConnections[i]->IsProcessable())
-                return false;
-
-        return true;
-    }
-
-    Core::Operator* CoreOperator::getOperator()
-    {
-        return Core::operators[Id];
+        getOperator()->numberOfOutputs = numberOfOutputs;
     }
 }

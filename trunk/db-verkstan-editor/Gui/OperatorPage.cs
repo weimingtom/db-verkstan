@@ -29,14 +29,14 @@ namespace VerkstanEditor.Gui
 
             CheckSize();
 
-            foreach (String category in Verkstan.OperatorFactory.GetCategories())
+            foreach (String category in Operators.GetCategories())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem();
                 item.AutoSize = true;
                 item.Name = category;
                 item.Text = item.Name;
                 operatorsMenu.Items.Add(item);
-                ICollection<String> names = Verkstan.OperatorFactory.GetNamesInCategory(category);
+                ICollection<String> names = Operators.GetNamesInCategory(category);
                 foreach (String name in names)
                 {
                     ToolStripMenuItem nestedItem = new ToolStripMenuItem();
@@ -45,10 +45,10 @@ namespace VerkstanEditor.Gui
                     nestedItem.Text = nestedItem.Name;
                     String clickedName = name;
                     nestedItem.Click += delegate (object o, EventArgs e)
-                        {
-                            Operators.AddOperatorInPage("First", AddLocation, clickedName);
-                            Refresh();
-                        };
+                    {
+                        Operators.AddOperatorInPage("First", AddLocation, clickedName);
+                        Refresh();
+                    };
                     item.DropDownItems.Add(nestedItem);
                 }            
             }
@@ -114,7 +114,7 @@ namespace VerkstanEditor.Gui
         private void PaintOperator(Operator op, PaintEventArgs e)
         {
             Rectangle rect = new Rectangle(op.Location, op.Size);
-            SizeF stringSize = e.Graphics.MeasureString(op.Binding.Name, Font);
+            SizeF stringSize = e.Graphics.MeasureString(op.Name, Font);
             Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
                                         rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
 
@@ -125,17 +125,7 @@ namespace VerkstanEditor.Gui
             if (op.Binding.IsProcessable())
                 processableSat = 255;
 
-            HSLColor HSLColor;
-
-            if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Texture)
-                HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
-            else if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Name)
-                HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
-            else if (op.Binding.Type == Verkstan.Constants.OperatorTypes.Reference)
-                HSLColor = new HSLColor(Color.FromArgb(190, 190, 110));
-            else
-                HSLColor = new HSLColor(Color.FromArgb(190, 110, 110));
-
+            HSLColor HSLColor = new HSLColor(op.Color);
             HSLColor.Saturation = processableSat;
             HSLColor.Luminosity += selectedLum;
             Color color = HSLColor;
@@ -170,7 +160,7 @@ namespace VerkstanEditor.Gui
                                 op.Location.Y + op.Size.Height - 1,
                                 op.Location.X + op.Size.Width - 1,
                                 op.Location.Y + op.Size.Height - 1);
-            e.Graphics.DrawString(op.Binding.DisplayName, Font, Brushes.Black, namePoint);
+            e.Graphics.DrawString(op.Name, Font, Brushes.Black, namePoint);
 
             int x1 = op.GetAreaForResize().Left;
             int y1 = op.Location.Y + 3;
@@ -271,12 +261,9 @@ namespace VerkstanEditor.Gui
             MouseLocation = new Point(e.X, e.Y);
 
             if (InSelect)
-            {
                 Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
-                Refresh();
-            }
 
-            if (InMove)
+            if (InMove || InSelect || InResize)
                 Refresh();
          
         }

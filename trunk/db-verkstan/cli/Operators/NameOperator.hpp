@@ -6,16 +6,13 @@ using namespace System;
 
 namespace Verkstan
 {
+    ref class ReferenceOperator;
+
     public ref class NameOperator: public Operator
     {
     public:
         NameOperator(List<OperatorProperty^>^ properties);
         virtual ~NameOperator();
-        
-        property Operator^ Input
-        {
-            Operator^ get();
-        }
 
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;
@@ -31,19 +28,25 @@ namespace Verkstan
         
         virtual void SetDirty(bool dirty) override;
         virtual bool IsDirty() override;
+        virtual bool IsProcessable() override;
 
         virtual void ConnectInWith(Operator^ op) override;
         virtual void ConnectOutWith(Operator^ op) override;
         virtual void Disconnect() override;
-        virtual bool IsProcessable() override;
         virtual void DisconnectInFrom(Operator^ op) override;
         virtual void DisconnectOutFrom(Operator^ op) override;
-        virtual void DisconnectIns() override;
+        virtual void UpdateRealInputConnections() override;
+        virtual void UpdateRealOutputConnections() override;
+        virtual void UpdateRealConnections() override;
 
         virtual Core::Operator* getOperator() override;
+        
+        int getOperatorId();
+        Operator^ getInput();
 
     private:
-        Operator^ input;
+        List<ReferenceOperator^>^ referenceOperators;
+        List<Operator^>^ inputConnections;
         bool dirty;
     };
 }

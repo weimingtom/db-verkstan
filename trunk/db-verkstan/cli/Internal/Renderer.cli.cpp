@@ -1,8 +1,5 @@
 #include "cli/Internal/Renderer.hpp"
 
-#include "cli/Operators/NameOperator.hpp"
-#include "cli/Operators/ReferenceOperator.hpp"
-
 namespace Verkstan
 {
     void Renderer::RenderOperator(Operator^ op)
@@ -10,16 +7,12 @@ namespace Verkstan
         if (!op->IsProcessable())
             return;
 
+        op->getOperator()->cascadeProcess();
+
         switch (op->Type)
         {
         case Constants::OperatorTypes::Texture:
             RenderTextureOperator(op);
-            break;
-        case Constants::OperatorTypes::Name:
-            RenderNameOperator(op);
-            break;
-        case Constants::OperatorTypes::Reference:
-            RenderReferenceOperator(op);
             break;
         default:
             RenderUnknownOperator(op);
@@ -73,22 +66,6 @@ namespace Verkstan
                                               sizeof(VertexWithTexture));
         globalDirect3DDevice->SetTexture(0, 0);	
         globalDirect3DDevice->EndScene();
-    }
-
-    void Renderer::RenderNameOperator(Operator^ op)
-    {
-        NameOperator^ nameOp = (NameOperator^)op;
-
-        if (nameOp->Input != nullptr)
-            RenderOperator(nameOp->Input);
-    }
-
-    void Renderer::RenderReferenceOperator(Operator^ op)
-    {
-        ReferenceOperator^ referenceOp = (ReferenceOperator^)op;
-
-        if (referenceOp->Reference != nullptr)
-            RenderOperator(referenceOp->Reference);
     }
 
     void Renderer::RenderUnknownOperator(Operator^ op)

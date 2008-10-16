@@ -1,25 +1,22 @@
 #pragma once
 
 #include "cli/Operator.hpp"
-#include "cli/Operators/NameOperator.hpp"
 
 using namespace System;
 
 namespace Verkstan
 {
+    ref class NameOperator;
+
     public ref class ReferenceOperator: public Operator
     {
     public:
         ReferenceOperator(List<OperatorProperty^>^ properties);
         virtual ~ReferenceOperator();
-        
-        property Operator^ Reference
-        {
-            Operator^ get();
-        }
 
-        void RefreshReference();
-        void NameOperatorDirty(NameOperator^ nameOperator);
+        void FindNameAndUpdateConnections();
+        void FindReferenceAndUpdateConnections();
+        void UpdateConnections();
 
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;
@@ -35,20 +32,24 @@ namespace Verkstan
         
         virtual void SetDirty(bool dirty) override;
         virtual bool IsDirty() override;
+        virtual bool IsProcessable() override;
 
         virtual void ConnectInWith(Operator^ op) override;
         virtual void ConnectOutWith(Operator^ op) override;
         virtual void Disconnect() override;
-        virtual bool IsProcessable() override;
         virtual void DisconnectInFrom(Operator^ op) override;
         virtual void DisconnectOutFrom(Operator^ op) override;
-        virtual void DisconnectIns() override;
+        virtual void UpdateRealInputConnections() override;
+        virtual void UpdateRealOutputConnections() override;
+        virtual void UpdateRealConnections() override;
         
         virtual Core::Operator* getOperator() override;
 
+        int getOperatorId();
+
     private:
         Operator^ reference;
-        NameOperator^ nameReference;
+        NameOperator^ nameOperator;
         List<Operator^>^ outputConnections;
         bool dirty;
     };

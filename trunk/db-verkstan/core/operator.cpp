@@ -17,11 +17,6 @@ dirty(true)
         outputs[i] = -1;
 }
 
-void Operator::process()
-{
-
-}
-
 unsigned char Operator::getByteProperty(int index)
 {
     return properties[index].byteValue;
@@ -62,7 +57,6 @@ void Operator::setStringProperty(int index, const char *value)
     // TODO Should strcpy really be used here? Perhaps there is a better solution.
     // Perhaps strcpy requires a runtime library that we cannot relay on (like Microsoft runtime libraries).
     strcpy(properties[index].stringValue, value);
-    setDirty(true);
 }
 
 bool Operator::isDirty()
