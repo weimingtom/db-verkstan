@@ -24,7 +24,7 @@ namespace Verkstan
         inputJoints = gcnew List<Joint^>();
         outputJoints = gcnew List<Joint^>();
         primaryJoint = gcnew Joint();
-        primaryJoint->Sender = this;
+        primaryJoint->ConnectSender(this);
         Joints::Add(primaryJoint);
         outputJoints->Add(primaryJoint);
     }
@@ -127,65 +127,62 @@ namespace Verkstan
         return primaryJoint;
     }
 
-    void CoreOperator::DisconnectFromJointAsReceiver(Joint^ joint)
+    void CoreOperator::JointReceiverConnected(Joint^ joint, Operator^ op)
     {
-        inputJoints->Remove(joint);
-        joint->RemoveReceiver(this);
-    }
+        if (op == this && joint != primaryJoint && !outputJoints->Contains(joint))
+            outputJoints->Add(joint);
 
-    void CoreOperator::DisconnectFromJointAsSender(Joint^ joint)
-    {
-        outputJoints->Remove(joint);
-        joint->Sender = nullptr;
-    }
-
-    void CoreOperator::JointReceiverAdded(Operator^ op)
-    {
         UpdateOutputConnections();
         op->getOperator()->setDirty(true);
     }
 
-    void CoreOperator::JointReceiverRemoved(Operator^ op)
+    void CoreOperator::JointReceiverDisconnected(Joint^ joint, Operator^ op)
     {
+        if (op == this && joint != primaryJoint && outputJoints->Contains(joint))
+            outputJoints->Remove(joint);
+
         UpdateOutputConnections();
     }
 
-    void CoreOperator::JointSenderChanged(Operator^ op)
+    void CoreOperator::JointSenderConnected(Joint^ joint, Operator^ op)
     {     
+        if (!inputJoints->Contains(joint))
+            inputJoints->Add(joint);
+
+        UpdateInputConnections();
+    }
+
+    void CoreOperator::JointSenderDisconnected(Joint^ joint, Operator^ op)
+    {  
+        if (inputJoints->Contains(joint))
+            inputJoints->Remove(joint);
+
         UpdateInputConnections();
     }
 
     void CoreOperator::DisconnectFromAllJoints()
     {
-        for (int i = 0; i < inputJoints->Count; i++)
+        List<Joint^>^ inputJointsCopy = gcnew List<Joint^>(inputJoints);
+        for (int i = 0; i < inputJointsCopy->Count; i++)
         {
-            Joint^ joint = inputJoints[i];
-            joint->RemoveReceiver(this);
+            Joint^ joint = inputJointsCopy[i];
+            joint->DisconnectReceiver(this);
         }
 
-        inputJoints->Clear();
-
-        for (int i = 0; i < outputJoints->Count; i++)
+        List<Joint^>^ outputJointsCopy = gcnew List<Joint^>(outputJoints);
+        for (int i = 0; i < outputJointsCopy->Count; i++)
         {
-            Joint^ joint = outputJoints[i];
+            Joint^ joint = outputJointsCopy[i];
 
             if (joint == primaryJoint)
                 continue;
 
-            joint->Sender = nullptr;
+            joint->DisconnectSender(this);
         }
-
-        outputJoints->Clear();
-        outputJoints->Add(primaryJoint);
 
         // As this operator owns the primary joint it's this operator's
-        // responsibility to tell all receivers of the primary joint to
-        // disconnect.
-        for (int i = 0; i < primaryJoint->Receivers->Count; i++)
-        {
-            Operator^ op = primaryJoint->Receivers[i];
-            op->DisconnectFromJointAsReceiver(primaryJoint);
-        }
+        // responsibility to disconnect all receivers of the primary joint.
+        primaryJoint->DisconnectAllReceivers();
 
         UpdateInputConnections();
         UpdateOutputConnections();
@@ -194,13 +191,13 @@ namespace Verkstan
     void CoreOperator::ConnectWithJointAsReceiver(Joint^ joint)
     {
         inputJoints->Add(joint);    
-        joint->AddReceiver(this);
+        joint->ConnectReceiver(this);
     }
 
     void CoreOperator::ConnectWithJointAsSender(Joint^ joint)
     {
         outputJoints->Add(joint);
-        joint->Sender = this;
+        joint->ConnectSender(this);
     }
 
     void CoreOperator::UpdateInputConnections()
@@ -210,7 +207,8 @@ namespace Verkstan
 
         List<Operator^>^ inputOperators = gcnew List<Operator^>();
         for (int i = 0; i < inputJoints->Count; i++)
-            inputOperators->Add(inputJoints[i]->Sender);
+            if (inputJoints[i]->Sender != nullptr)
+                inputOperators->Add(inputJoints[i]->Sender);
             
         int numberOfInputs = 0;
 
@@ -260,19 +258,13 @@ namespace Verkstan
 
     void CoreOperator::UpdateOutputConnections()
     {
-        System::Console::WriteLine("Updating outputs");
         for (int i = 0; i < getOperator()->numberOfOutputs; i++)
             getOperator()->outputs[i] = -1;
-
-        System::Console::WriteLine("output joints =  " + outputJoints->Count);
-
 
         List<Operator^>^ outputOperators = gcnew List<Operator^>();
         for (int i = 0; i < outputJoints->Count; i++)
             for (int j = 0; j < outputJoints[i]->Receivers->Count; j++)
                 outputOperators->Add(outputJoints[i]->Receivers[j]);
-
-        System::Console::WriteLine("outputs =  " + outputOperators->Count);
 
         int numberOfOutputs= 0;
         for (int i = 0; i < outputOperators->Count; i++)

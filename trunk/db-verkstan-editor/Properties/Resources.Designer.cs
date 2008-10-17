@@ -66,5 +66,12 @@ namespace VerkstanEditor.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap warning_icon {
+            get {
+                object obj = ResourceManager.GetObject("warning_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

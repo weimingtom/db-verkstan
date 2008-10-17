@@ -30,11 +30,11 @@ namespace Verkstan
         virtual void ConnectWithJointAsReceiver(Joint^ joint) override;
         virtual void ConnectWithJointAsSender(Joint^ joint) override;
         virtual void DisconnectFromAllJoints() override;
-        virtual void DisconnectFromJointAsReceiver(Joint^ joint) override;
-        virtual void DisconnectFromJointAsSender(Joint^ joint) override;
-        virtual void JointSenderChanged(Operator^ op) override;
-        virtual void JointReceiverAdded(Operator^ op) override;
-        virtual void JointReceiverRemoved(Operator^ op) override;
+      
+        virtual void JointSenderConnected(Joint^ joint, Operator^ op) override;
+        virtual void JointSenderDisconnected(Joint^ joint, Operator^ op) override;
+        virtual void JointReceiverConnected(Joint^ joint, Operator^ op) override;
+        virtual void JointReceiverDisconnected(Joint^ joint, Operator^ op) override;
 
         /*
         virtual void ConnectInWith(Operator^ op) override;

@@ -57,11 +57,11 @@ namespace Verkstan
         virtual void ConnectWithJointAsReceiver(Joint^ joint) = 0;
         virtual void ConnectWithJointAsSender(Joint^ joint) = 0;
         virtual void DisconnectFromAllJoints() = 0;
-        virtual void DisconnectFromJointAsReceiver(Joint^ joint) = 0;
-        virtual void DisconnectFromJointAsSender(Joint^ joint) = 0;
-        virtual void JointSenderChanged(Operator^ op) = 0;       
-        virtual void JointReceiverAdded(Operator^ op) = 0;
-        virtual void JointReceiverRemoved(Operator^ op) = 0;
+        
+        virtual void JointSenderConnected(Joint^ joint, Operator^ op) = 0;  
+        virtual void JointSenderDisconnected(Joint^ joint, Operator^ op) = 0;  
+        virtual void JointReceiverConnected(Joint^ joint, Operator^ op) = 0;
+        virtual void JointReceiverDisconnected(Joint^ joint, Operator^ op) = 0;
 
         virtual unsigned char GetByteProperty(int index) = 0;
         virtual void SetByteProperty(int index, unsigned char value) = 0;

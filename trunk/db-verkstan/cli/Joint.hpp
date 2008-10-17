@@ -12,19 +12,25 @@ namespace Verkstan
     {
     public:
         String^ Name;
+        Joint();
+
         property Operator^ Sender
         {
             Operator^ get();
-            void set(Operator^ sender);
         }
 
-        List<Operator^>^ Receivers;
+        property List<Operator^>^ Receivers
+        {
+            List<Operator^>^ get();
+        }
 
-        Joint();
-
-        void AddReceiver(Operator^ op);
-        void RemoveReceiver(Operator^ op);
+        void ConnectSender(Operator^ op);
+        void DisconnectSender(Operator^ op);
+        void ConnectReceiver(Operator^ op);
+        void DisconnectReceiver(Operator^ op);
+        void DisconnectAllReceivers();
     private:
         Operator^ sender;
+        List<Operator^>^ receivers;
     };
 }
