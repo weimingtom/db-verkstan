@@ -65,7 +65,10 @@ namespace Verkstan
     void StoreOperator::SetStringProperty(int index, String^ string)
     {
         if (index == 0)
+        {
             primaryJoint->Name = string;
+            DisplayName = "<"+string+">";
+        }
     }
 
     bool StoreOperator::IsProcessable()

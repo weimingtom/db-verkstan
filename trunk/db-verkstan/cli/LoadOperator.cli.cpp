@@ -67,7 +67,13 @@ namespace Verkstan
     {
         if (index == 0)
         {
-            UpdatePrimaryJoint(Joints::Find(string));
+            Joint^ joint = Joints::Find(string);
+            UpdatePrimaryJoint(joint);
+
+            if (joint != nullptr)
+                DisplayName = "<"+joint->Name+">";
+            else
+                DisplayName = Name;
         }
     }
 
@@ -116,8 +122,9 @@ namespace Verkstan
 
     void LoadOperator::DisconnectFromAllJoints()
     {
-        for (int i = 0; i < receivers->Count; i++)
-            primaryJoint->DisconnectReceiver(receivers[i]);
+        List<Operator^>^ receiversCopy = gcnew List<Operator^>(receivers);
+        for (int i = 0; i < receiversCopy->Count; i++)
+            primaryJoint->DisconnectReceiver(receiversCopy[i]);
     }
 
     void LoadOperator::ConnectWithJointAsReceiver(Joint^ joint)

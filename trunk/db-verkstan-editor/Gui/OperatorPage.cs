@@ -114,7 +114,7 @@ namespace VerkstanEditor.Gui
         private void PaintOperator(Operator op, PaintEventArgs e)
         {
             Rectangle rect = new Rectangle(op.Location, op.Size);
-            SizeF stringSize = e.Graphics.MeasureString(op.Name, Font);
+            SizeF stringSize = e.Graphics.MeasureString(op.Binding.DisplayName, Font);
             Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
                                         rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
 
@@ -160,7 +160,7 @@ namespace VerkstanEditor.Gui
                                 op.Location.Y + op.Size.Height - 1,
                                 op.Location.X + op.Size.Width - 1,
                                 op.Location.Y + op.Size.Height - 1);
-            e.Graphics.DrawString(op.Name, Font, Brushes.Black, namePoint);
+            e.Graphics.DrawString(op.Binding.DisplayName, Font, Brushes.Black, namePoint);
 
             int x1 = op.GetAreaForResize().Left;
             int y1 = op.Location.Y + 3;
