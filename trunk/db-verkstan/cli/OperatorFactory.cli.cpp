@@ -3,7 +3,10 @@
 #undef OPERATOR_HEADERS
 
 #include "cli/OperatorFactory.hpp"
-#include "cli/Operators/CoreOperator.hpp"
+#include "cli/Operator.hpp"
+#include "cli/CoreOperator.hpp"
+#include "cli/LoadOperator.hpp"
+#include "cli/StoreOperator.hpp"
 
 namespace Verkstan
 {
@@ -18,6 +21,15 @@ categories[category]->Add(name);
 #define OPERATOR_CATEGORY_DEFINES 1
 #include "cli/Internal/Operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
+
+        if (!categories->ContainsKey("Misc"))
+            categories->Add("Misc", gcnew List<String^>());
+        
+        if (!categories["Misc"]->Contains("Store"))
+            categories["Misc"]->Add("Store");
+
+        if (!categories["Misc"]->Contains("Load"))
+            categories["Misc"]->Add("Load");
     }
 
     ICollection<String^>^ OperatorFactory::GetCategories()
@@ -80,6 +92,20 @@ categories[category]->Add(name);
 #define OPERATOR_DEFINES 1
 #include "cli/Internal/Operators.hpp"
 #undef OPERATOR_DEFINES
+
+        if (name == "Store")
+        {
+            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
+            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
+            op = gcnew StoreOperator(properties);
+        }
+
+        if (name == "Load")
+        {
+            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
+            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
+            op = gcnew LoadOperator(properties);
+        }
 
         return op;
      }

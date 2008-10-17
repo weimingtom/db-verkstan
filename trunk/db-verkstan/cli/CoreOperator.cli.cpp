@@ -2,7 +2,8 @@
 #include <stdlib.h>
 #include <vcclr.h>
 
-#include "cli/Operators/CoreOperator.hpp"
+#include "cli/CoreOperator.hpp"
+#include "cli/Joint.hpp"
 #include "cli/Joints.hpp"
 
 namespace Verkstan
@@ -19,6 +20,7 @@ namespace Verkstan
                                         properties)
     {
         this->processable = inputs->Count == 0;
+        this->warningPresent = false;
         this->inputs = inputs;
 
         inputJoints = gcnew List<Joint^>();
@@ -117,6 +119,11 @@ namespace Verkstan
         return result;
     }
 
+    bool CoreOperator::IsWarningPresent()
+    {
+        return warningPresent;
+    }
+
     Core::Operator* CoreOperator::getOperator()
     {
         return Core::operators[Id];
@@ -150,6 +157,7 @@ namespace Verkstan
             inputJoints->Add(joint);
 
         UpdateInputConnections();
+        getOperator()->setDirty(true);
     }
 
     void CoreOperator::JointSenderDisconnected(Joint^ joint, Operator^ op)
@@ -158,6 +166,7 @@ namespace Verkstan
             inputJoints->Remove(joint);
 
         UpdateInputConnections();
+        getOperator()->setDirty(true);
     }
 
     void CoreOperator::DisconnectFromAllJoints()
@@ -212,6 +221,7 @@ namespace Verkstan
             
         int numberOfInputs = 0;
 
+        warningPresent = false;
         for (int i = 0; i < inputOperators->Count; i++)
         {
             Operator^ op = inputOperators[i];
@@ -250,6 +260,9 @@ namespace Verkstan
                     }
                 }
             }
+
+            if (!accepted)
+                warningPresent = true; 
         }
 
         getOperator()->numberOfInputs = numberOfInputs;

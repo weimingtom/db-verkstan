@@ -29,8 +29,14 @@ namespace Verkstan
         void ConnectReceiver(Operator^ op);
         void DisconnectReceiver(Operator^ op);
         void DisconnectAllReceivers();
+
+        void AddSenderListener(Operator^ op);
+        void RemoveSenderListener(Operator^ op);
+
     private:
         Operator^ sender;
         List<Operator^>^ receivers;
+        List<Operator^>^ receiverListeners;
+        List<Operator^>^ senderListeners;
     };
 }

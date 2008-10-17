@@ -14,10 +14,28 @@ namespace Verkstan
         case Constants::OperatorTypes::Texture:
             RenderTextureOperator(op);
             break;
+        case Constants::OperatorTypes::Store:
+            RenderStoreOperator(op);
+            break;
+         case Constants::OperatorTypes::Load:
+            RenderLoadOperator(op);
+            break;
         default:
             RenderUnknownOperator(op);
             break;
         }
+    }
+
+    void Renderer::RenderStoreOperator(Operator^ op)
+    {
+        if (op->GetPrimaryJoint()->Sender != nullptr)
+            RenderOperator(op->GetPrimaryJoint()->Sender);
+    }
+
+    void Renderer::RenderLoadOperator(Operator^ op)
+    {
+        if (op->GetPrimaryJoint()->Sender != nullptr)
+            RenderOperator(op->GetPrimaryJoint()->Sender);
     }
 
     void Renderer::RenderTextureOperator(Operator^ op)

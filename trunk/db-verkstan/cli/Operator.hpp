@@ -78,6 +78,7 @@ namespace Verkstan
         void SetTextProperty(int index, String^ value);
         
         virtual bool IsProcessable() = 0;
+        virtual bool IsWarningPresent() = 0;
 
         virtual Core::Operator* getOperator() = 0;
 

@@ -267,13 +267,13 @@ namespace VerkstanEditor
 
         public static void DeleteOperator(Operator op)
         {
-            op.Binding.Dispose();
-
             if (op == viewedOperator)
                 ViewedOperator = null;
             if (op == viewedOperatorProperties)
                 ViewedOperatorProperties = null;
-
+           
+            Verkstan.Connector.Disconnect(op.Binding);
+            op.Binding.Dispose();
             operators.Remove(op);
         }
 

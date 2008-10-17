@@ -180,9 +180,9 @@ namespace VerkstanEditor.Gui
                                     y2);
             }
 
-            if (!op.Binding.IsProcessable())
+            if (!op.Binding.IsProcessable() || op.Binding.IsWarningPresent())
                 e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.warning_icon, op.Location.X + 1, op.Location.Y + 1);
-            else if (op == Operators.ViewedOperator)
+            if (op == Operators.ViewedOperator)
                 e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.eye_icon, op.Location.X + 1, op.Location.Y + 1);
         }
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "cli/Constants.hpp"
-#include "cli/Operator.hpp"
 
 using namespace System;
 #using <mscorlib.dll>
@@ -9,6 +8,8 @@ using namespace System::Collections::Generic;
 
 namespace Verkstan 
 {
+    ref class Operator;
+
     public ref class OperatorFactory
     {
     public:

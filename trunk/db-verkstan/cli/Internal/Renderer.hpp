@@ -18,6 +18,8 @@ namespace Verkstan
 
     private:
         static void RenderTextureOperator(Operator^ op);
+        static void RenderStoreOperator(Operator^ op);
+        static void RenderLoadOperator(Operator^ op);
         static void RenderUnknownOperator(Operator^ op);
     };
 }

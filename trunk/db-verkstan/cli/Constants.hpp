@@ -14,8 +14,8 @@ namespace Verkstan
             Model,
             Camera,
             Scene,
-            Reference,
-            Name,
+            Load,
+            Store,
             Core
         };
 

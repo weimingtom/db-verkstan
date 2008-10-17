@@ -1,20 +1,18 @@
 #pragma once
 
 #include "cli/Operator.hpp"
-#include "cli/Joint.hpp"
 
 namespace Verkstan
 {
-    public ref class CoreOperator: public Operator
+    ref class Joint;
+
+    public ref class LoadOperator: public Operator
 	{
     public:
-        CoreOperator(String^ name,
-                            int operatorId,
-                            Constants::OperatorTypes type,
-                            List<OperatorProperty^>^ properties,
-                            List<OperatorInput^>^ inputs);
-        virtual ~CoreOperator();
+        LoadOperator(List<OperatorProperty^>^ properties);
+        virtual ~LoadOperator();
 
+        void AddReceiver(Operator^ op);
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;
         virtual int GetIntProperty(int index) override;
@@ -25,6 +23,7 @@ namespace Verkstan
         virtual void SetStringProperty(int index, String ^value) override;
         
         virtual bool IsProcessable() override;
+        virtual bool IsWarningPresent() override;
 
         virtual Joint^ GetPrimaryJoint() override;
         virtual void ConnectWithJointAsReceiver(Joint^ joint) override;
@@ -36,26 +35,13 @@ namespace Verkstan
         virtual void JointReceiverConnected(Joint^ joint, Operator^ op) override;
         virtual void JointReceiverDisconnected(Joint^ joint, Operator^ op) override;
 
-        /*
-        virtual void ConnectInWith(Operator^ op) override;
-        virtual void ConnectOutWith(Operator^ op) override;
-        virtual void Disconnect() override;
-        virtual void DisconnectInFrom(Operator^ op) override;
-        virtual void DisconnectOutFrom(Operator^ op) override;
-        virtual void UpdateRealInputConnections() override;
-        virtual void UpdateRealOutputConnections() override;
-        virtual void UpdateRealConnections() override;
-        */
-
         virtual Core::Operator* getOperator() override;
-
+        
     private:
-        void UpdateInputConnections();
-        void UpdateOutputConnections();
+        void UpdatePrimaryJoint(Joint^ primary);
+
         Joint^ primaryJoint;
-        List<Joint^>^ inputJoints;
-        List<Joint^>^ outputJoints;
-        List<OperatorInput^>^ inputs;
-        bool processable;
+        Joint^ loadJoint;
+        List<Operator^>^ receivers;
 	};
 }
