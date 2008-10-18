@@ -150,7 +150,7 @@ namespace Verkstan
         if (primaryJoint != nullptr 
             && primary != primaryJoint)
         {
-           primaryJoint->RemoveSenderListener(this);
+           primaryJoint->RemoveListener(this);
 
            for (int i = 0; i < receivers->Count; i++)
            {
@@ -158,7 +158,7 @@ namespace Verkstan
                 receivers[i]->ConnectWithJointAsReceiver(primary);
            }
 
-           primary->AddSenderListener(this);
+           primary->AddListener(this);
         }
 
         primaryJoint = primary;

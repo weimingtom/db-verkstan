@@ -30,13 +30,12 @@ namespace Verkstan
         void DisconnectReceiver(Operator^ op);
         void DisconnectAllReceivers();
 
-        void AddSenderListener(Operator^ op);
-        void RemoveSenderListener(Operator^ op);
+        void AddListener(Operator^ op);
+        void RemoveListener(Operator^ op);
 
     private:
         Operator^ sender;
         List<Operator^>^ receivers;
-        List<Operator^>^ receiverListeners;
-        List<Operator^>^ senderListeners;
+        List<Operator^>^ listeners;
     };
 }
