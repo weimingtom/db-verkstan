@@ -218,7 +218,7 @@ namespace Verkstan
         int numberOfInputs = 0;
 
         warningPresent = false;
-        for (int i = 0; i < inputOperators->Count; i++)
+        for (int i = 0; i < inputOperators->Count && inputs->Count > 0; i++)
         {
             Operator^ op = inputOperators[i];
      
@@ -240,7 +240,7 @@ namespace Verkstan
             }
 
 			j--;
-
+			
             if (!accepted 
                 && inputs[j]->Infinite
                 && inputs[j]->Type == op->Type)
