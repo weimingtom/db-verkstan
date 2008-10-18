@@ -87,6 +87,7 @@
             this.previewPanel.Name = "previewPanel";
             this.previewPanel.Size = new System.Drawing.Size(643, 72);
             this.previewPanel.TabIndex = 0;
+            this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
             this.previewPanel.SizeChanged += new System.EventHandler(this.PreviewPanel_SizeChanged);
             // 
             // composeTransportSplitContainer

@@ -20,6 +20,7 @@ namespace Verkstan
         static void RenderTextureOperator(Operator^ op);
         static void RenderStoreOperator(Operator^ op);
         static void RenderLoadOperator(Operator^ op);
+        static void RenderMeshOperator(Operator^ op);
         static void RenderUnknownOperator(Operator^ op);
     };
 }

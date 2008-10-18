@@ -310,6 +310,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\core\mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\mesh.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\core\operator.cpp"
 				>
 			</File>
@@ -328,6 +336,22 @@
 			<Filter
 				Name="operators"
 				>
+				<File
+					RelativePath=".\core\operators\boxoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\boxoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cylinderoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cylinderoperator.hpp"
+					>
+				</File>
 				<File
 					RelativePath=".\core\operators\flatoperator.cpp"
 					>
@@ -361,11 +385,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\sphereoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\sphereoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\textoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\textoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\torusoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\torusoperator.hpp"
 					>
 				</File>
 			</Filter>

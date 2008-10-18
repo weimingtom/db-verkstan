@@ -43,11 +43,13 @@ namespace Verkstan
     private:
         void UpdateInputConnections();
         void UpdateOutputConnections();
+
         Joint^ primaryJoint;
         List<Joint^>^ inputJoints;
         List<Joint^>^ outputJoints;
         List<OperatorInput^>^ inputs;
         bool processable;
         bool warningPresent;
+        int requiredInputs;
 	};
 }

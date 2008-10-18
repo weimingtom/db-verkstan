@@ -66,5 +66,11 @@ namespace VerkstanEditor.Gui
             else
                 Verkstan.Window.ViewedOperator = op.Binding;
         }
+
+        private void previewPanel_MouseDown(object sender, MouseEventArgs e)
+        {
+            Focus();
+            System.Console.WriteLine("Mouse Down!!");
+        }
     }
 }

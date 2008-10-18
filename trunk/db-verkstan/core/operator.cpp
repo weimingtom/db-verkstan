@@ -86,6 +86,8 @@ void Operator::setDirty(bool dirty)
 
 Operator* Operator::getInput(int index)
 {
+    if (inputs[index] == -1)
+        return 0;
     return operators[inputs[index]];
 }
 
@@ -95,6 +97,12 @@ void Operator::deviceLost()
     {
         delete texture;
         texture = 0;
+    }
+
+    if (mesh != 0)
+    {
+        delete mesh;
+        mesh = 0;
     }
 
     dirty = true;

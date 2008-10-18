@@ -69,7 +69,7 @@ categories[category]->Add(name);
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
         op = gcnew CoreOperator(opName,  \
                                id,      \
-                               Constants::OperatorTypes::Texture,   \
+                               Constants::OperatorTypes::##opType,   \
                                properties,  \
                                inputs);                                              
        
@@ -79,11 +79,15 @@ categories[category]->Add(name);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && !inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
-    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false));
+    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false, false));
 #define ADD_INFINITE_INPUT(inType) \
     if (inputs->Count > 0 && !inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
-    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, true));
+    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, true, false));
+#define ADD_OPTIONAL_INPUT(inType) \
+    if (inputs->Count > 0 && !inputs[inputs->Count - 1]->Infinite) \
+        throw gcnew System::Exception("Unable to add an optional input because last added input was infinite!"); \
+    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false, true));
 #define END_OP() }
 
     Operator^ OperatorFactory::Create(String^ name)

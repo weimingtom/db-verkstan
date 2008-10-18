@@ -19,9 +19,15 @@ namespace Verkstan
                                         Constants::OperatorTypes::Core,
                                         properties)
     {
-        this->processable = inputs->Count == 0;
         this->warningPresent = false;
         this->inputs = inputs;
+
+        requiredInputs = 0;
+        for (int i = 0; i < inputs->Count; i++)
+            if (!inputs[i]->Optional)
+                requiredInputs++;  
+
+        this->processable = requiredInputs == 0;
 
         inputJoints = gcnew List<Joint^>();
         outputJoints = gcnew List<Joint^>();
@@ -34,9 +40,6 @@ namespace Verkstan
     CoreOperator::~CoreOperator()
     {
         Joints::Remove(primaryJoint);
-        /*
-        Disconnect();
-        */
         delete Core::operators[Id];
         Core::operators[Id] = 0;
     }
@@ -266,7 +269,7 @@ namespace Verkstan
         }
 
         getOperator()->numberOfInputs = numberOfInputs;
-        processable = inputs->Count == numberOfInputs;
+        processable = requiredInputs <= numberOfInputs;
     }
 
     void CoreOperator::UpdateOutputConnections()

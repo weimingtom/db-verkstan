@@ -11,6 +11,9 @@ namespace Verkstan
 
         switch (op->Type)
         {
+        case Constants::OperatorTypes::Mesh:
+            RenderMeshOperator(op);
+            break;
         case Constants::OperatorTypes::Texture:
             RenderTextureOperator(op);
             break;
@@ -64,6 +67,8 @@ namespace Verkstan
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
         globalDirect3DDevice->BeginScene();
 
@@ -89,5 +94,40 @@ namespace Verkstan
     void Renderer::RenderUnknownOperator(Operator^ op)
     {
 
+    }
+
+    void Renderer::RenderMeshOperator(Operator^ op)
+    {
+        Core::Operator* coreOp = op->getOperator();
+        D3DXMATRIX projection;
+        D3DXMatrixPerspectiveFovLH(&projection, 
+                                   D3DXToRadian(45.0f), 
+                                   WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
+                                   1.0f, 
+                                   100.0f);
+        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
+
+        D3DXMATRIX world;
+        D3DXMATRIX view;
+        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
+       
+        D3DXMatrixLookAtLH(&view,
+                           &D3DXVECTOR3(0.0f, 0.0f, -5.0f),
+                           &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
+                           &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
+
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+        globalDirect3DDevice->BeginScene();
+
+
+        if (coreOp->mesh != 0)
+            coreOp->mesh->d3d9Mesh->DrawSubset(0);
+
+        globalDirect3DDevice->EndScene();
     }
 }

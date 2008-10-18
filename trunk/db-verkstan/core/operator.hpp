@@ -2,6 +2,7 @@
 
 #include "core/globals.hpp"
 #include "core/texture.hpp"
+#include "core/mesh.hpp"
 
 #include <d3d9.h>
 #include <d3dx9.h>
@@ -11,8 +12,6 @@
 #define DB_MAX_OPERATOR_CONNECTIONS 128
 #define DB_MAX_OPERATOR_PROPERTIES 32
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
-
-class Mesh;
 
 class Operator
 {

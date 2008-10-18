@@ -42,7 +42,8 @@ void TextOperator::process()
     if (texture == 0)
         texture = new Texture();
 
-   
+    Operator* input =  getInput(0);
+ 
     int color = getIntProperty(0);
     unsigned char height = getByteProperty(1);
     unsigned char x = getByteProperty(2);
@@ -69,12 +70,27 @@ void TextOperator::process()
     d3d9RenderTargetTexture->GetSurfaceLevel(0, &renderTargetSurface);
     globalDirect3DDevice->GetRenderTarget(0, &backbuffer);
     globalDirect3DDevice->SetRenderTarget(0, renderTargetSurface);
-    globalDirect3DDevice->Clear(0,
-                                NULL,
-                                D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-                                D3DCOLOR_XRGB(0,0,0),
-                                1.0f,
-                                0);
+    
+    if (input != 0)
+    {
+        D3DXLoadSurfaceFromSurface(renderTargetSurface, 
+                                   NULL, 
+                                   NULL, 
+                                   input->texture->d3d9Surface, 
+                                   NULL, 
+                                   NULL, 
+                                   D3DX_FILTER_NONE,
+                                   0);
+    }
+    else
+    {
+        globalDirect3DDevice->Clear(0,
+                                    NULL,
+                                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
+                                    D3DCOLOR_XRGB(0,0,0),
+                                    1.0f,
+                                    0);
+    }
     globalDirect3DDevice->BeginScene();
     RECT rect;
     rect.left = x;

@@ -27,8 +27,10 @@ namespace Verkstan
     public:
         OperatorInput(int index,
                              Constants::OperatorTypes type,
-                             bool infinite);
+                             bool infinite,
+                             bool optional);
         property bool Infinite;
+        property bool Optional;
         property Constants::OperatorTypes Type;
         property int Index;
     };
