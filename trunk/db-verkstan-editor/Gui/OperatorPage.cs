@@ -223,8 +223,6 @@ namespace VerkstanEditor.Gui
                 InMove = false;
                 Operators.DeselectAllOperatorsInPage("First");
             }
-
-            Parent.Focus();
             Refresh();
         }
 

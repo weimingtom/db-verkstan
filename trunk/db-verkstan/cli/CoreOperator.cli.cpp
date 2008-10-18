@@ -22,13 +22,6 @@ namespace Verkstan
         this->warningPresent = false;
         this->inputs = inputs;
 
-        requiredInputs = 0;
-        for (int i = 0; i < inputs->Count; i++)
-            if (!inputs[i]->Optional)
-                requiredInputs++;  
-
-        this->processable = requiredInputs == 0;
-
         inputJoints = gcnew List<Joint^>();
         outputJoints = gcnew List<Joint^>();
         primaryJoint = gcnew Joint();
@@ -269,6 +262,11 @@ namespace Verkstan
         }
 
         getOperator()->numberOfInputs = numberOfInputs;
+
+        int requiredInputs = 0;
+        for (int i = 0; i < inputs->Count; i++)
+            if (!inputs[i]->Optional)
+                requiredInputs++;  
         processable = requiredInputs <= numberOfInputs;
     }
 

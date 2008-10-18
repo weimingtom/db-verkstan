@@ -50,6 +50,5 @@ namespace Verkstan
         List<OperatorInput^>^ inputs;
         bool processable;
         bool warningPresent;
-        int requiredInputs;
 	};
 }
