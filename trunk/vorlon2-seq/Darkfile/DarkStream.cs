@@ -236,6 +236,7 @@ namespace DB.Darkfile
         public double ReadDouble() { double i; Read(out i); return i; }
         public bool ReadBool() { bool i; Read(out i); return i; }
         public string ReadString() { string i; Read(out i); return i; }
+
         #endregion
     }
 

@@ -346,12 +346,15 @@ namespace VorlonSeq
 
         private void ChannelTimeline_KeyDown(object sender, KeyEventArgs e)
         {
-            foreach (Clip c in selectedClips)
+            if (e.KeyCode == Keys.Delete)
             {
-                c.Channel.RemoveClip(c);
+                foreach (Clip c in selectedClips)
+                {
+                    c.Channel.RemoveClip(c);
+                }
+                selectedClips.Clear();
+                Refresh();
             }
-            selectedClips.Clear();
-            Refresh();
         }
     }
 }

@@ -16,12 +16,13 @@ namespace VorlonSeq
         MidiInDevice.MidiInHandler handlerKeepalive;
         MidiInDevice midiDevice = null;
         int selectedTab = 0;
+        string filename = null;
 
         public mainWindow()
         {
             handlerKeepalive = new MidiInDevice.MidiInHandler(OnMidiInput);
             InitializeComponent();
-            framesPerTickUpDown_ValueChanged(null, null);
+            framesPerTickUpDown.Value = Seq.Sequencer.FramesPerTick;
             channelEditor1.ClipEditRequested += new ChannelEditor.ClipEditRequest(channelEditor1_ClipEditRequested);
 
             int i = 0;
@@ -120,13 +121,48 @@ namespace VorlonSeq
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Seq.Sequencer.Save("test.vrl");
+            if (filename == null)
+            {
+                saveAsToolStripMenuItem_Click(null, null);
+            }
+            else
+            {
+                Seq.Sequencer.Save(filename);
+            }
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Seq.Sequencer.Load("test.vrl");
+            DialogResult res = openFileDialog1.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                filename = openFileDialog1.FileName;
+                Seq.Sequencer.Load(filename);
+                framesPerTickUpDown.Value = Seq.Sequencer.FramesPerTick;
+            }
             Refresh();
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult res = saveFileDialog1.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                filename = openFileDialog1.FileName;
+                Seq.Sequencer.Save(filename);
+            }
+        }
+
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Seq.Sequencer.Reset();
+            filename = null;
+            framesPerTickUpDown.Value = Seq.Sequencer.FramesPerTick;
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }

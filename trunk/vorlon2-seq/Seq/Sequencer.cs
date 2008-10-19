@@ -285,7 +285,7 @@ namespace VorlonSeq.Seq
     public class Sequencer
     {
         public static Song Song = new Song();
-        static public int FramesPerTick = 5;
+        static public int FramesPerTick = 21;
         public static VorlonSynth Synth = new VorlonSynth();
 
         private static List<MidiMessage> toBePlayed = new List<MidiMessage>();
@@ -325,6 +325,12 @@ namespace VorlonSeq.Seq
                 }
             });
             dis.Close();
+        }
+
+        public static void Reset()
+        {
+            FramesPerTick = 21;
+            Song = new Song();
         }
 
         public static void Save(string path)
