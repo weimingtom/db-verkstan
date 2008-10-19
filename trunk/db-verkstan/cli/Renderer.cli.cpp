@@ -63,6 +63,19 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
+        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+        D3DXMATRIX world;
+        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
+
+        camera->ApplyTransformations();
+
+          /*
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
                                    D3DXToRadian(45.0f), 
@@ -71,22 +84,20 @@ namespace Verkstan
                                    100.0f);
         globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
 
+      
+      
         D3DXMATRIX world;
         D3DXMATRIX view;
         D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
+       
        
         D3DXMatrixLookAtLH(&view,
                            &D3DXVECTOR3(0.0f, 0.0f, -2.5f),
                            &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
                            &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
         globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
-
-        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+         */
 
         globalDirect3DDevice->BeginScene();
 
@@ -117,15 +128,36 @@ namespace Verkstan
     void Renderer::RenderMeshOperator(Operator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
-        
-        camera->ApplyTransformations();
 
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-        globalDirect3DDevice->BeginScene();
+        if (coreOp->mesh != 0)
+        {
+            D3DXMATRIX scale;
+            D3DXMatrixScaling(&scale, 
+                              coreOp->mesh->scale.x,
+                              coreOp->mesh->scale.y,
+                              coreOp->mesh->scale.z);   
+            D3DXMATRIX rotationX;
+            D3DXMatrixRotationX(&rotationX, coreOp->mesh->rotation.x);
+            D3DXMATRIX rotationY;
+            D3DXMatrixRotationY(&rotationY, coreOp->mesh->rotation.y);
+            D3DXMATRIX rotationZ;
+            D3DXMatrixRotationZ(&rotationZ, coreOp->mesh->rotation.z);
+            D3DXMATRIX translation;
+            D3DXMatrixTranslation(&translation, 
+                                  coreOp->mesh->translation.x, 
+                                  coreOp->mesh->translation.y, 
+                                  coreOp->mesh->translation.z);     
+            D3DXMATRIX world = scale * rotationX * rotationY * rotationZ * translation;
+            globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
+        }
 
+        camera->ApplyTransformations();
+
+        globalDirect3DDevice->BeginScene();
 
         if (coreOp->mesh != 0)
             coreOp->mesh->d3d9Mesh->DrawSubset(0);

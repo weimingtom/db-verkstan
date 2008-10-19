@@ -11,7 +11,7 @@ namespace Verkstan
     CoreOperator::CoreOperator(String^ name,
                                  int operatorId,
                                  Constants::OperatorTypes type,
-                                 List<OperatorProperty^>^ properties,
+                                 OperatorProperties^ properties,
                                  List<OperatorInput^>^ inputs)
                              : Operator(name, 
                                         operatorId, 

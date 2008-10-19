@@ -25,7 +25,7 @@ namespace Verkstan
         D3DXMatrixPerspectiveFovLH(&projection, 
                                    D3DXToRadian(45.0f), 
                                    WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
-                                   1.0f, 
+                                   0.1f, 
                                    100.0f);
         globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
 
@@ -35,7 +35,9 @@ namespace Verkstan
         D3DXMatrixRotationX(&rotationX, xRotation);
         D3DXMATRIX rotationY;
         D3DXMatrixRotationY(&rotationY, yRotation);
-        D3DXMATRIX world = rotationX * rotationY * translation;
+        D3DXMATRIX world;
+        globalDirect3DDevice->GetTransform(D3DTS_WORLD, &world);
+        world *= rotationX * rotationY * translation;
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
        
         D3DXMATRIX view;

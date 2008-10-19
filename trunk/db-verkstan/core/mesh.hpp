@@ -15,4 +15,7 @@ public:
     void copy(Mesh* mesh);
     LPD3DXMESH d3d9Mesh;
     bool d3d9MeshDirty;
+    D3DXVECTOR3 scale; 
+    D3DXVECTOR3 rotation; 
+    D3DXVECTOR3 translation; 
 };

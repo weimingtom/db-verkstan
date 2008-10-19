@@ -65,17 +65,40 @@ categories[category]->Add(name);
                 break;                              \
             }                                       \
         }                                           \
-        List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();\
+        OperatorProperties^ properties = gcnew OperatorProperties();\
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
         op = gcnew CoreOperator(opName,  \
                                id,      \
                                Constants::OperatorTypes::##opType,   \
                                properties,  \
                                inputs);                                              
-       
-#define ADD_PROP(propName, propType, defaultValue)    \
-    properties->Add(gcnew OperatorProperty(properties->Count, propName, Constants::OperatorPropertyTypes::##propType));  \
-    op->Set##propType##Property(properties->Count - 1, defaultValue);
+
+  
+#define ADD_BYTE_PROP(name, value) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Byte, 1);  \
+    op->SetByteProperty(properties->CoreCount - 1, value);
+#define ADD_INT_PROP(name, value) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Int, 1);  \
+    op->SetIntProperty(properties->CoreCount - 1, value);
+#define ADD_FLOAT_PROP(name, value) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Float, 1);  \
+    op->SetFloatProperty(properties->CoreCount - 1, value);
+#define ADD_STRING_PROP(name, value) \
+    properties->Add(name, Constants::OperatorPropertyTypes::String, 1);  \
+    op->SetStringProperty(properties->CoreCount - 1, value);
+#define ADD_TEXT_PROP(name, value) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Text, 1);  \
+    op->SetStringProperty(properties->CoreCount - 1, value);
+#define ADD_COLOR_PROP(name, r, g, b) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Color, 3);  \
+    op->SetByteProperty(properties->CoreCount - 3, r);  \
+    op->SetByteProperty(properties->CoreCount - 2, g);  \
+    op->SetByteProperty(properties->CoreCount - 1, b);
+#define ADD_VECTOR_PROP(name, x, y, z) \
+    properties->Add(name, Constants::OperatorPropertyTypes::Vector, 3);  \
+    op->SetFloatProperty(properties->CoreCount - 3, x);  \
+    op->SetFloatProperty(properties->CoreCount - 2, y);  \
+    op->SetFloatProperty(properties->CoreCount - 1, z);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
@@ -99,15 +122,15 @@ categories[category]->Add(name);
 
         if (name == "Store")
         {
-            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
-            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
+            OperatorProperties^ properties = gcnew OperatorProperties();
+            properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
             op = gcnew StoreOperator(properties);
         }
 
         if (name == "Load")
         {
-            List<OperatorProperty^>^ properties = gcnew List<OperatorProperty^>();
-            properties->Add(gcnew OperatorProperty(0, "Name", Constants::OperatorPropertyTypes::String));
+            OperatorProperties^ properties = gcnew OperatorProperties();
+            properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
             op = gcnew LoadOperator(properties);
         }
 

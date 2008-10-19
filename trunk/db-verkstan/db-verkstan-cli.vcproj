@@ -262,6 +262,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\OperatorProperties.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\OperatorProperties.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\OperatorProperty.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\OperatorProperty.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Operators.hpp"
 				>
 			</File>
@@ -412,19 +428,15 @@
 					RelativePath=".\core\operators\torusoperator.hpp"
 					>
 				</File>
+				<File
+					RelativePath=".\core\operators\transformmeshoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\transformmeshoperator.hpp"
+					>
+				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="c++"
-			>
-			<File
-				RelativePath=".\c++\arcball.c++.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\c++\arcball.hpp"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

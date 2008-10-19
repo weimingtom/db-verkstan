@@ -26,7 +26,8 @@ namespace Verkstan
             Float,
             Color,
             String,
-            Text
+            Text,
+            Vector
        };
     };
 }

@@ -4,24 +4,10 @@
 
 #include "cli/Constants.hpp"
 #include "cli/Joint.hpp"
-
-using namespace System;
-#using <mscorlib.dll>
-using namespace System::Collections::Generic;
+#include "cli/OperatorProperties.hpp"
 
 namespace Verkstan 
 {
-    public ref class OperatorProperty
-    {
-    public:
-        OperatorProperty(int index, 
-                                String^ name, 
-                                Constants::OperatorPropertyTypes type);
-        property String^ Name;
-        property Constants::OperatorPropertyTypes Type;
-        property int Index;
-    };
-
     public ref class OperatorInput
     {
     public:
@@ -42,7 +28,7 @@ namespace Verkstan
                         int operatorId,
                         Constants::OperatorTypes type,
                         Constants::OperatorTypes internalType,
-                        List<OperatorProperty^>^ properties);
+                        OperatorProperties^ properties);
         virtual ~Operator();
 
         String^ DisplayName;
@@ -50,9 +36,9 @@ namespace Verkstan
         property Constants::OperatorTypes InternalType { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ Name { String^ get(); }
-        property List<OperatorProperty^>^ Properties 
+        property OperatorProperties^ Properties 
         { 
-            List<OperatorProperty^>^ get(); 
+            OperatorProperties^ get(); 
         }
 
         virtual Joint^ GetPrimaryJoint() = 0;
@@ -73,11 +59,6 @@ namespace Verkstan
         virtual void SetFloatProperty(int index, float value) = 0;
         virtual String^ GetStringProperty(int index) = 0;
         virtual void SetStringProperty(int index, String^ value) = 0;
-     
-        int GetColorProperty(int index);
-        void SetColorProperty(int index, int value);
-        String^ GetTextProperty(int index);
-        void SetTextProperty(int index, String^ value);
         
         virtual bool IsProcessable() = 0;
         virtual bool IsWarningPresent() = 0;
@@ -91,6 +72,6 @@ namespace Verkstan
     private:
         Constants::OperatorTypes internalType;
         String^ name;
-        List<OperatorProperty^>^ properties;
+        OperatorProperties^ properties;
 	};
 }

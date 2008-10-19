@@ -8,7 +8,7 @@
 
 namespace Verkstan
 {
-    StoreOperator::StoreOperator(List<OperatorProperty^>^ properties)
+    StoreOperator::StoreOperator(OperatorProperties^ properties)
                              : Operator("Store", 
                                         -1, 
                                         Constants::OperatorTypes::Store, 

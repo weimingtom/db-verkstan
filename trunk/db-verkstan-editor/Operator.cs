@@ -44,7 +44,7 @@ namespace VerkstanEditor
                 return new Rectangle(Location.X, Location.Y, Size.Width, Size.Height);
             }
         }
-        public virtual List<Verkstan.OperatorProperty> Properties
+        public virtual Verkstan.OperatorProperties Properties
         {
             get
             {

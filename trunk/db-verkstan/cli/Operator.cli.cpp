@@ -6,15 +6,6 @@
 
 namespace Verkstan
 {
-    OperatorProperty::OperatorProperty(int index, 
-                                       String^ name, 
-                                       Constants::OperatorPropertyTypes type)
-    {
-        Name = name;
-        Type = type;
-        Index = index;
-    }
-
     OperatorInput::OperatorInput(int index,
                                  Constants::OperatorTypes type,
                                  bool infinite,
@@ -30,7 +21,7 @@ namespace Verkstan
                        int operatorId,
                        Constants::OperatorTypes type,
                        Constants::OperatorTypes internalType,
-                       List<OperatorProperty^>^ properties)
+                       OperatorProperties^ properties)
     {
         this->name = name;
         DisplayName = name;
@@ -50,7 +41,7 @@ namespace Verkstan
         return id;
     }
 
-    List<OperatorProperty^>^ Operator::Properties::get() 
+    OperatorProperties^ Operator::Properties::get() 
     {
         return properties;
     }
@@ -68,25 +59,5 @@ namespace Verkstan
     Constants::OperatorTypes Operator::InternalType::get() 
     {
         return internalType;
-    }
-
-    int Operator::GetColorProperty(int index)
-    {
-         return GetIntProperty(index);
-    }
-
-    void Operator::SetColorProperty(int index, int value)
-    {
-        SetIntProperty(index, value);
-    }
-
-    String^ Operator::GetTextProperty(int index)
-    {   
-        return GetStringProperty(index);   
-    }
-
-    void Operator::SetTextProperty(int index, String^ value)
-    {
-        SetStringProperty(index, value);
     }
 }

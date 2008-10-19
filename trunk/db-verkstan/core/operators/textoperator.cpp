@@ -44,12 +44,14 @@ void TextOperator::process()
 
     Operator* input =  getInput(0);
  
-    int color = getIntProperty(0);
-    unsigned char height = getByteProperty(1);
-    unsigned char x = getByteProperty(2);
-    unsigned char y = getByteProperty(3);
-    const char *font = getStringProperty(4);
-    const char *text = getStringProperty(5);
+    unsigned char r = getByteProperty(0);
+    unsigned char g = getByteProperty(1);
+    unsigned char b = getByteProperty(2);
+    unsigned char height = getByteProperty(3);
+    unsigned char x = getByteProperty(4);
+    unsigned char y = getByteProperty(5);
+    const char *font = getStringProperty(6);
+    const char *text = getStringProperty(7);
 
     LPD3DXFONT d3d9Font;
     D3DXCreateFontA(globalDirect3DDevice,
@@ -97,7 +99,7 @@ void TextOperator::process()
     rect.right= 256;
     rect.top = y;
     rect.bottom = 256;
-    d3d9Font->DrawTextA(NULL, text, -1, &rect, DT_LEFT, color);
+    d3d9Font->DrawTextA(NULL, text, -1, &rect, DT_LEFT, D3DCOLOR_XRGB(r, g, b));
     globalDirect3DDevice->EndScene();
 
     globalDirect3DDevice->SetRenderTarget(0, backbuffer);

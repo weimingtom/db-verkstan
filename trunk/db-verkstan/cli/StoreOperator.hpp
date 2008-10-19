@@ -9,7 +9,7 @@ namespace Verkstan
     public ref class StoreOperator: public Operator
 	{
     public:
-        StoreOperator(List<OperatorProperty^>^ properties);
+        StoreOperator(OperatorProperties^ properties);
         virtual ~StoreOperator();
 
         virtual unsigned char GetByteProperty(int index) override;

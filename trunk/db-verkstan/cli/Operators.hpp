@@ -8,6 +8,7 @@
 #include "core/operators/sphereoperator.hpp"
 #include "core/operators/cylinderoperator.hpp"
 #include "core/operators/boxoperator.hpp"
+#include "core/operators/transformmeshoperator.hpp"
 
 namespace Verkstan
 {
@@ -22,6 +23,7 @@ namespace Verkstan
         using ::SphereOperator;
         using ::CylinderOperator;
         using ::BoxOperator;
+        using ::TransformMeshOperator;
     }
 }
 #endif
@@ -36,73 +38,82 @@ ADD_OP_TO_CAT("Torus",     "Mesh");
 ADD_OP_TO_CAT("Sphere",    "Mesh");
 ADD_OP_TO_CAT("Cylinder",  "Mesh");
 ADD_OP_TO_CAT("Box",  "Mesh");
+ADD_OP_TO_CAT("Transform",  "Mesh");
 #endif
 
 #ifdef OPERATOR_DEFINES
 DEF_OP("Pixels", PixelsOperator, Texture);
-ADD_PROP("Color 1", Color, 0xffffffff);
-ADD_PROP("Color 2", Color, 0xffffffff);
-ADD_PROP("Count", Int,   255);
-ADD_PROP("Seed",  Int,   0);
+ADD_COLOR_PROP("Color 1", 255, 255, 255);
+ADD_COLOR_PROP("Color 2", 255, 255, 255);
+ADD_INT_PROP("Count", 255);
+ADD_INT_PROP("Seed",  0);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
 DEF_OP("Flat", FlatOperator, Texture);
-ADD_PROP("Color", Color, 0xffffffff);
+ADD_COLOR_PROP("Color", 255, 255, 255);
 END_OP();
 
 DEF_OP("Text", TextOperator, Texture);
-ADD_PROP("Color",  Color,  0xffffffff);
-ADD_PROP("Height", Byte,   30);
-ADD_PROP("X",      Byte,   10);
-ADD_PROP("Y",      Byte,   5);
-ADD_PROP("Font",   String, "");
-ADD_PROP("Text",   Text,   "Text!");
+ADD_COLOR_PROP("Color", 255, 255, 255);
+ADD_BYTE_PROP("Height", 30);
+ADD_BYTE_PROP("X", 10);
+ADD_BYTE_PROP("Y", 5);
+ADD_STRING_PROP("Font", "");
+ADD_TEXT_PROP("Text", "Text!");
 ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
 DEF_OP("Rectangle", RectangleOperator, Texture);
-ADD_PROP("Color",  Color,  0xffff00);
-ADD_PROP("X",      Byte,  10);
-ADD_PROP("Y",      Byte,  10);
-ADD_PROP("Width",  Byte,  100);
-ADD_PROP("Height", Byte,  100);
+ADD_COLOR_PROP("Color", 255, 255, 0);
+ADD_BYTE_PROP("X",      10);
+ADD_BYTE_PROP("Y",      10);
+ADD_BYTE_PROP("Width",  100);
+ADD_BYTE_PROP("Height", 100);
 ADD_INPUT(Texture);
 END_OP();
 
 DEF_OP("Rotozoom", RotozoomOperator, Texture);
-ADD_PROP("Center X", Byte,  128);
-ADD_PROP("Center Y", Byte,  128);
-ADD_PROP("Rotation", Byte,  0);
-ADD_PROP("Zoom",     Float, 1.0f);
+ADD_BYTE_PROP("Center X", 128);
+ADD_BYTE_PROP("Center Y", 128);
+ADD_BYTE_PROP("Rotation", 0);
+ADD_FLOAT_PROP("Zoom",    1.0f);
 ADD_INPUT(Texture);
 END_OP();
 
 DEF_OP("Torus", TorusOperator, Mesh);
-ADD_PROP("Inner radius", Float, 0.3f);
-ADD_PROP("Outer radius", Float, 0.7f);
-ADD_PROP("Sides",        Byte,  5);
-ADD_PROP("Rings",        Byte,  10);
+ADD_FLOAT_PROP("Inner radius", 0.3f);
+ADD_FLOAT_PROP("Outer radius", 0.7f);
+ADD_BYTE_PROP("Sides",         5);
+ADD_BYTE_PROP("Rings",         10);
 END_OP();
 
 DEF_OP("Sphere", SphereOperator, Mesh);
-ADD_PROP("Radius", Float, 1.0f);
-ADD_PROP("Slices", Byte,  10);
-ADD_PROP("Stacks", Byte,  10);
+ADD_FLOAT_PROP("Radius", 1.0f);
+ADD_BYTE_PROP("Slices",  10);
+ADD_BYTE_PROP("Stacks",  10);
 END_OP();
 
 DEF_OP("Cylinder", CylinderOperator, Mesh);
-ADD_PROP("Radius 1", Float, 1.0f);
-ADD_PROP("Radius 2", Float, 1.0f);
-ADD_PROP("Length", Float, 5.0f);
-ADD_PROP("Slices", Byte,  10);
-ADD_PROP("Stacks", Byte,  3);
+ADD_FLOAT_PROP("Radius 1", 1.0f);
+ADD_FLOAT_PROP("Radius 2", 1.0f);
+ADD_FLOAT_PROP("Length",   5.0f);
+ADD_BYTE_PROP("Slices",    10);
+ADD_BYTE_PROP("Stacks",    3);
 END_OP();
 
 DEF_OP("Box", BoxOperator, Mesh);
-ADD_PROP("Width", Float, 1.0f);
-ADD_PROP("Height", Float, 1.0f);
-ADD_PROP("Depth", Float, 1.0f);
+ADD_FLOAT_PROP("Width",  1.0f);
+ADD_FLOAT_PROP("Height", 1.0f);
+ADD_FLOAT_PROP("Depth",  1.0f);
 END_OP();
+
+DEF_OP("Transform", TransformMeshOperator, Mesh);
+ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Mesh);
+END_OP();
+
 
 #endif

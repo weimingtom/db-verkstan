@@ -66,6 +66,12 @@
     <Compile Include="Gui\OperatorProperty.Designer.cs">
       <DependentUpon>OperatorProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\VectorProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\VectorProperty.Designer.cs">
+      <DependentUpon>VectorProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Operator.cs" />
     <Compile Include="Operators.cs" />
     <Compile Include="Gui\MainForm.cs">
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorProperty.resx">
       <DependentUpon>OperatorProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\VectorProperty.resx">
+      <DependentUpon>VectorProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

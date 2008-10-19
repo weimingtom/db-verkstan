@@ -17,11 +17,16 @@ void PixelsOperator::process()
     else
         texture->fillRectangle(0, 0, 256, 256, 0xff000000);
 
-    int color1 = getIntProperty(0);
-    int color2 = getIntProperty(1);
-    int count = getIntProperty(2);
-    int seed = getIntProperty(3);
-
+    unsigned char r1 = getIntProperty(0);
+    unsigned char g1 = getIntProperty(1);
+    unsigned char b1 = getIntProperty(2);
+    unsigned char r2 = getIntProperty(3);
+    unsigned char g2 = getIntProperty(4);
+    unsigned char b2 = getIntProperty(5);
+    int count = getIntProperty(6);
+    int seed = getIntProperty(7);
+    int color1 = D3DCOLOR_XRGB(r1, g1, b1);
+    int color2 = D3DCOLOR_XRGB(r2, g2, b2);
     texture->lock();
     srand(seed);
     DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
