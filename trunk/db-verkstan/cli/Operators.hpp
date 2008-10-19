@@ -94,9 +94,9 @@ END_OP();
 DEF_OP("Cylinder", CylinderOperator, Mesh);
 ADD_PROP("Radius 1", Float, 1.0f);
 ADD_PROP("Radius 2", Float, 1.0f);
-ADD_PROP("Length", Float, 1.0f);
+ADD_PROP("Length", Float, 5.0f);
 ADD_PROP("Slices", Byte,  10);
-ADD_PROP("Stacks", Byte,  10);
+ADD_PROP("Stacks", Byte,  3);
 END_OP();
 
 DEF_OP("Box", BoxOperator, Mesh);

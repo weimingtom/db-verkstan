@@ -1,10 +1,22 @@
+#define WINDOWS_LEAN_AND_MEAN
+#include <windows.h>
+#include <d3d9.h>
+#include <d3dx9.h>
+
 #include "cli/Window.cli.hpp"
 
 #include "cli/Constants.hpp"
-#include "cli/Internal/Renderer.hpp"
+#include "cli/Operator.hpp"
+#include "cli/Renderer.hpp"
 
 namespace Verkstan
 {
+    Window::Window()
+    {
+        resetDevice = false;
+        renderer = gcnew Renderer();
+    }
+
     void Window::Boot(void* windowPtr)
     {
         globalWindow = (HWND)windowPtr;
@@ -41,6 +53,8 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+
+        renderer->SetViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     void Window::Resize()
@@ -95,6 +109,8 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
         resetDevice = false;
+
+        renderer->SetViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     void Window::Shutdown()
@@ -107,7 +123,7 @@ namespace Verkstan
     {
         if (resetDevice)
         {
-            Window::Reset();
+            Reset();
         }
         else
         {
@@ -119,7 +135,7 @@ namespace Verkstan
                                        0);
             
             if (viewedOperator != nullptr)
-                Renderer::RenderOperator(viewedOperator);
+                renderer->RenderOperator(viewedOperator);
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
 
@@ -146,5 +162,20 @@ namespace Verkstan
     void Window::ClearColor::set(int color)
     {
         Window::clearColor = color;
+    }
+
+    void Window::MouseDown(int button, int x, int y)
+    {
+        renderer->MouseDown(button, x, y);
+    }
+
+    void Window::MouseMove(int x, int y)
+    {
+        renderer->MouseMove(x, y);
+    }
+
+    void Window::MouseUp(int button, int x, int y)
+    {
+        renderer->MouseUp(button, x, y);
     }
 }

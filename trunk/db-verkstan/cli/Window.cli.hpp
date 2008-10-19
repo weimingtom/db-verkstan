@@ -1,35 +1,39 @@
 #pragma once
 
-#define WINDOWS_LEAN_AND_MEAN
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-
-#include "cli/Operator.hpp"
-
 namespace Verkstan 
 {
+    ref class Operator;
+    ref class Renderer;
+    
 	public ref class Window
 	{
     public:
-        static void Boot(void* windowPtr);
-        static void Shutdown();
-        static void Render();
-        static void Resize();
-        static property Operator^ ViewedOperator
+        Window();
+        
+        property Operator^ ViewedOperator
         {
             Operator^ get();
             void set(Operator^ viewedOperator);
         }
-        static property int ClearColor
+        property int ClearColor
         {
             int get();
             void set(int clearColor);
         }
+
+        void Boot(void* windowPtr);
+        void Shutdown();
+        void Render();
+        void Resize();
+        void MouseDown(int button, int x, int y);
+        void MouseMove(int x, int y);
+        void MouseUp(int button, int x, int y);
+
     private:
-        static void Reset();
-        static Operator^ viewedOperator;
-        static bool resetDevice = false;
-        static int clearColor;
+        void Reset();
+        Operator^ viewedOperator;
+        bool resetDevice;
+        int clearColor;
+        Renderer^ renderer;
 	};
 }

@@ -1,5 +1,5 @@
 #define OPERATOR_HEADERS 1
-#include "cli/Internal/Operators.hpp"
+#include "cli/Operators.hpp"
 #undef OPERATOR_HEADERS
 
 #include "cli/OperatorFactory.hpp"
@@ -19,7 +19,7 @@ categories[category]->Add(name);
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
-#include "cli/Internal/Operators.hpp"
+#include "cli/Operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
 
         if (!categories->ContainsKey("Misc"))
@@ -94,7 +94,7 @@ categories[category]->Add(name);
     {
         Operator^ op;
 #define OPERATOR_DEFINES 1
-#include "cli/Internal/Operators.hpp"
+#include "cli/Operators.hpp"
 #undef OPERATOR_DEFINES
 
         if (name == "Store")

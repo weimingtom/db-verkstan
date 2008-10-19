@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cli/Internal/VerkstanCore.hpp"
+#include "cli/VerkstanCore.hpp"
 
 #include "cli/Constants.hpp"
 #include "cli/Joint.hpp"

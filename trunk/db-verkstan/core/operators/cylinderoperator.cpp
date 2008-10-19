@@ -16,7 +16,7 @@ void CylinderOperator::process()
     float radius2 = getFloatProperty(1);
     float length = getFloatProperty(2);
     unsigned char slices = getByteProperty(3);
-    unsigned char stacks = getByteProperty(3);
+    unsigned char stacks = getByteProperty(4);
 
     D3DXCreateCylinder(globalDirect3DDevice, 
                        radius1,

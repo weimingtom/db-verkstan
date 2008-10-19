@@ -1,7 +1,25 @@
-#include "cli/Internal/Renderer.hpp"
+#include "cli/Renderer.hpp"
+
+#include "cli/Camera.hpp"
+#include "cli/Operator.hpp"
 
 namespace Verkstan
 {
+    Renderer::Renderer()
+    {
+        camera = gcnew Camera();
+    }
+
+    Renderer::~Renderer()
+    {
+
+    }
+
+    void Renderer::SetViewport(int width, int height)
+    {
+        
+    }
+
     void Renderer::RenderOperator(Operator^ op)
     {
         if (!op->IsProcessable())
@@ -99,24 +117,8 @@ namespace Verkstan
     void Renderer::RenderMeshOperator(Operator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
-        D3DXMATRIX projection;
-        D3DXMatrixPerspectiveFovLH(&projection, 
-                                   D3DXToRadian(45.0f), 
-                                   WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
-                                   1.0f, 
-                                   100.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
-
-        D3DXMATRIX world;
-        D3DXMATRIX view;
-        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-       
-        D3DXMatrixLookAtLH(&view,
-                           &D3DXVECTOR3(0.0f, 0.0f, -5.0f),
-                           &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-                           &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
+        
+        camera->ApplyTransformations();
 
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
@@ -129,5 +131,20 @@ namespace Verkstan
             coreOp->mesh->d3d9Mesh->DrawSubset(0);
 
         globalDirect3DDevice->EndScene();
+    }
+
+    void Renderer::MouseDown(int button, int x, int y)
+    {
+        camera->MouseDown(button, x, y);
+    }
+
+    void Renderer::MouseMove(int x, int y)
+    {
+         camera->MouseMove(x, y);
+    }
+
+    void Renderer::MouseUp(int button, int x, int y)
+    {
+         camera->MouseUp(button, x, y);
     }
 }
