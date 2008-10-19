@@ -87,11 +87,11 @@ namespace VerkstanEditor
             Name = binding.Name;
 
             if (Binding.Type == Verkstan.Constants.OperatorTypes.Texture)
-                Color = Color.FromArgb(190, 110, 110);
+                Color = Color.FromArgb(190, 110, 150);
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Mesh)
                 Color = Color.FromArgb(110, 190, 150);
             else
-                Color = Color.FromArgb(190, 190, 110);
+                Color = Color.FromArgb(190, 190, 150);
         }
 
         public Rectangle GetAreaForInConnections()

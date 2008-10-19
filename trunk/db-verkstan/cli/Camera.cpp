@@ -85,10 +85,7 @@ namespace Verkstan
     void Camera::MouseUp(int button, int x, int y)
     {
         mouseDrag = false;
-
-        if (button == 1)
-            leftMouseButtonHeld = false;
-        else if (button == 3)
-            rightMouseButtonHeld = false;
+        leftMouseButtonHeld = false;
+        rightMouseButtonHeld = false;
     }
 }
