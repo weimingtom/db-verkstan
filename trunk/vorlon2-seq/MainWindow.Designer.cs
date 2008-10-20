@@ -34,7 +34,9 @@
             this.mainSplit = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.arrangeTab = new System.Windows.Forms.TabPage();
+            this.channelEditor1 = new VorlonSeq.ChannelEditor();
             this.composeTab = new System.Windows.Forms.TabPage();
+            this.clipEditor1 = new VorlonSeq.ClipEditor();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.timeLabel = new System.Windows.Forms.Label();
             this.framesPerTickUpDown = new System.Windows.Forms.NumericUpDown();
@@ -59,8 +61,6 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.refreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.channelEditor1 = new VorlonSeq.ChannelEditor();
-            this.clipEditor1 = new VorlonSeq.ClipEditor();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -153,6 +153,14 @@
             this.arrangeTab.Text = "Arrange";
             this.arrangeTab.UseVisualStyleBackColor = true;
             // 
+            // channelEditor1
+            // 
+            this.channelEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.channelEditor1.Location = new System.Drawing.Point(3, 3);
+            this.channelEditor1.Name = "channelEditor1";
+            this.channelEditor1.Size = new System.Drawing.Size(791, 379);
+            this.channelEditor1.TabIndex = 0;
+            // 
             // composeTab
             // 
             this.composeTab.AutoScroll = true;
@@ -165,6 +173,15 @@
             this.composeTab.Text = "Compose";
             this.composeTab.UseVisualStyleBackColor = true;
             // 
+            // clipEditor1
+            // 
+            this.clipEditor1.AutoScroll = true;
+            this.clipEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.clipEditor1.Location = new System.Drawing.Point(3, 3);
+            this.clipEditor1.Name = "clipEditor1";
+            this.clipEditor1.Size = new System.Drawing.Size(791, 379);
+            this.clipEditor1.TabIndex = 0;
+            // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 5;
@@ -172,7 +189,7 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.14851F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 218F));
             this.tableLayoutPanel2.Controls.Add(this.timeLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.framesPerTickUpDown, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label1, 1, 0);
@@ -203,7 +220,7 @@
             // framesPerTickUpDown
             // 
             this.framesPerTickUpDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.framesPerTickUpDown.Location = new System.Drawing.Point(202, 12);
+            this.framesPerTickUpDown.Location = new System.Drawing.Point(201, 12);
             this.framesPerTickUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -230,7 +247,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(135, 8);
+            this.label1.Location = new System.Drawing.Point(134, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 28);
             this.label1.TabIndex = 2;
@@ -242,7 +259,7 @@
             this.bpmLabel.AutoSize = true;
             this.bpmLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bpmLabel.ForeColor = System.Drawing.Color.White;
-            this.bpmLabel.Location = new System.Drawing.Point(263, 15);
+            this.bpmLabel.Location = new System.Drawing.Point(262, 15);
             this.bpmLabel.Name = "bpmLabel";
             this.bpmLabel.Size = new System.Drawing.Size(81, 14);
             this.bpmLabel.TabIndex = 2;
@@ -413,34 +430,16 @@
             // 
             // openFileDialog1
             // 
-            this.openFileDialog1.FileName = "*.vrl";
-            this.openFileDialog1.Filter = "Vorlon2 Seq files (*.vrl)|*.vrl|All files|*.*";
+            this.openFileDialog1.Filter = "Vorlon2 song files (*.vrl)|*.vrl|All files (*.*)|*.*";
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Vorlon2 Seq files (*.vrl)|*.vrl|All files|*.*";
+            this.saveFileDialog1.Filter = "Vorlon2 song files (*.vrl)|*.vrl|All files (*.*)|*.*";
             // 
             // refreshTimer
             // 
             this.refreshTimer.Enabled = true;
             this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
-            // 
-            // channelEditor1
-            // 
-            this.channelEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.channelEditor1.Location = new System.Drawing.Point(3, 3);
-            this.channelEditor1.Name = "channelEditor1";
-            this.channelEditor1.Size = new System.Drawing.Size(791, 379);
-            this.channelEditor1.TabIndex = 0;
-            // 
-            // clipEditor1
-            // 
-            this.clipEditor1.AutoScroll = true;
-            this.clipEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.clipEditor1.Location = new System.Drawing.Point(3, 3);
-            this.clipEditor1.Name = "clipEditor1";
-            this.clipEditor1.Size = new System.Drawing.Size(791, 379);
-            this.clipEditor1.TabIndex = 0;
             // 
             // mainWindow
             // 

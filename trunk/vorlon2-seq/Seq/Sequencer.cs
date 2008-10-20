@@ -468,6 +468,14 @@ namespace VorlonSeq.Seq
                 }
             });
             dis.Close();
+
+            foreach (Channel c in Song.Channels)
+            {
+                foreach (MidiMessage m in c.Patches[0].Get())
+                {
+                    PlayMidiEvent(m, false);
+                }
+            }
         }
 
         public static void Reset()

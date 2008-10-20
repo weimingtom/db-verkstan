@@ -42,14 +42,15 @@ namespace VorlonSeq
                 ControlStyles.DoubleBuffer, true);
 
             selectedChannel = Seq.Sequencer.Song.Channels[0];
-
-            RefreshPatches();
         }
 
         void RefreshPatches()
         {
             loadPatchToolStripMenuItem.DropDownItems.Clear();
-            RefreshPatches(patchesDir, loadPatchToolStripMenuItem);
+            if (Directory.Exists(patchesDir))
+            {
+                RefreshPatches(patchesDir, loadPatchToolStripMenuItem);
+            }
         }
 
         bool RefreshPatches(string path, ToolStripMenuItem parent)
@@ -457,6 +458,11 @@ namespace VorlonSeq
                 dos.CloseChunk();
                 dos.Close();
             }
+            RefreshPatches();
+        }
+
+        private void ChannelTimeline_Load(object sender, EventArgs e)
+        {
             RefreshPatches();
         }
     }

@@ -166,11 +166,18 @@ namespace VorlonSeq
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult res = saveFileDialog1.ShowDialog();
-            if (res == DialogResult.OK)
+            try
             {
-                filename = openFileDialog1.FileName;
-                Seq.Sequencer.Save(filename);
+                DialogResult res = saveFileDialog1.ShowDialog();
+                if (res == DialogResult.OK)
+                {
+                    filename = saveFileDialog1.FileName;
+                    Seq.Sequencer.Save(filename);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Save error");
             }
         }
 

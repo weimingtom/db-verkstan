@@ -41,7 +41,7 @@
             // 
             // saveFileDialog1
             // 
-            this.saveFileDialog1.Filter = "Vorlon Patches (*.vpa)|*.vpa|All files (*.*)|*.*";
+            this.saveFileDialog1.Filter = "Vorlon 2 patch files (*.vpa)|*.vpa|All files (*.*)|*.*";
             // 
             // contextMenuStrip1
             // 
@@ -77,6 +77,7 @@
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.Name = "ChannelTimeline";
             this.Size = new System.Drawing.Size(680, 460);
+            this.Load += new System.EventHandler(this.ChannelTimeline_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.ChannelTimeline_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseMove);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ChannelTimeline_MouseDoubleClick);
