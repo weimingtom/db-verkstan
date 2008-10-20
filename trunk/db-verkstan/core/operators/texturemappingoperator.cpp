@@ -13,6 +13,7 @@ void TextureMappingOperator::process()
     Operator* input = getInput(0);
     mesh = input->mesh->clone();
 
+    D3DXComputeNormals(mesh->d3d9Mesh, NULL);
     Vertex* vertices;
     mesh->d3d9Mesh->LockVertexBuffer(0,(void**)&vertices);
 
@@ -28,16 +29,30 @@ void TextureMappingOperator::process()
     D3DXVECTOR3 center;
     center = (max + min) * 0.5f;
 
-    System::Console::WriteLine("Numer of vertices = " + numberOfVertices);
-
     for (int i = 0; i < numberOfVertices; i++) 
     {
+        /*
         D3DXVECTOR3 v;
         v = vertices->position - center;
         D3DXVec3Normalize(&v, &v);
+        */
 
+        float x = vertices->position.x;
+        float y = vertices->position.y;
+        float z = vertices->position.z;
+        vertices->u = x / sqrtf(x*x + y*y + z*z);
+        vertices->v = y / sqrtf(x*x + y*y + z*z);
+
+        //vertices->u=asinf(vertices->normal.x) / D3DX_PI + 0.5f;
+        //vertices->v=asinf(vertices->normal.y) / D3DX_PI + 0.5f;
+
+        /*
         vertices->u = asinf(v.x) / D3DX_PI + 0.5f;
         vertices->v = asinf(v.y) / D3DX_PI + 0.5f;
+        */
+
+        //vertices->u = acos((X/(R + r*cos(2 pv))]2p
+        //vertices->v = acos(Y/R)/2p
 
         vertices++;
     }
