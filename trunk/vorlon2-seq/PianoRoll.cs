@@ -189,7 +189,7 @@ namespace VorlonSeq
             {
                 tryingKey = ConvertYToKey(e.Y);
                 uint channel = (uint)Clip.Channel.Number;
-                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOn, tryingKey, 110));
+                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOn, tryingKey, 110), false);
             }
 
             if (e.Button == MouseButtons.Left)
@@ -220,7 +220,7 @@ namespace VorlonSeq
             if (e.Button == MouseButtons.Right)
             {
                 uint channel = (uint)Clip.Channel.Number;
-                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOff, tryingKey, 0));
+                Sequencer.PlayMidiEvent(new Midi.MidiMessage(channel, Midi.MidiMessage.Commands.NoteOff, tryingKey, 0), true);
                 tryingKey = 128;
             }            
 
@@ -282,7 +282,7 @@ namespace VorlonSeq
         public void OnMidiInput(MidiMessage message)
         {
             message.Channel = (uint)Clip.Channel.Number;
-            Sequencer.PlayMidiEvent(message);
+            Sequencer.PlayMidiEvent(message, true);
         }
     }
 }

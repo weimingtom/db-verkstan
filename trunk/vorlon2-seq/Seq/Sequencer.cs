@@ -27,6 +27,11 @@ namespace VorlonSeq.Seq
                 Time = time;
             }
 
+            public Event Clone()
+            {
+                return new Event(Message, Time);
+            }
+
             public MidiMessage Message;
             public int Time;
         }
@@ -69,6 +74,11 @@ namespace VorlonSeq.Seq
 
                 throw new Exception("Command must be NoteOn or NoteOff");
             }
+
+            public NoteEvent Clone()
+            {
+                return new NoteEvent(Note, Velocity, StartTime, Length);
+            }
         }
 
         public Channel Channel;
@@ -104,6 +114,24 @@ namespace VorlonSeq.Seq
             }
 
             return result;
+        }
+
+        public Clip Clone()
+        {
+            Clip c = new Clip();
+            c.Channel = Channel;
+            c.StartTime = StartTime;
+            c.Length = Length;
+            foreach (Event e in ControllerEvents)
+            {
+                c.ControllerEvents.Add(e.Clone());
+            }
+
+            foreach (NoteEvent e in NoteEvents)
+            {
+                c.NoteEvents.Add(e.Clone());
+            }
+            return c;
         }
 
         public void Write(DarkOutStream s)
@@ -161,13 +189,67 @@ namespace VorlonSeq.Seq
         }
     }
 
+    public class Patch
+    {
+        public const int NumControllers = 127;
+        private byte[] controllers = new byte[NumControllers];
+        private const byte notSet = 255;
+        public Channel Channel = null;
+        public int Time = 0;
+
+        public Patch()
+        {
+            for (int i = 0; i < controllers.Length; i++)
+            {
+                controllers[i] = notSet;
+            }
+        }
+
+        public Patch(DarkInStream s) : this()
+        {
+            s.Read(out Time);
+            s.ReadByteArray(controllers);
+        }
+
+        public void Set(MidiMessage m)
+        {
+            if (m.Command == MidiMessage.Commands.Controller)
+            {
+                controllers[m.Param1] = (byte)m.Param2;
+            }
+        }
+
+        public IList<MidiMessage> Get()
+        {
+            List<MidiMessage> res = new List<MidiMessage>();
+            for (int i = 0; i < controllers.Length; i++)
+            {
+                if (controllers[i] == notSet)
+                {
+                    continue;
+                }
+
+                res.Add(new MidiMessage((uint)Channel.Number, MidiMessage.Commands.Controller, (uint)i, controllers[i]));
+            }
+            return res;
+        }
+
+        public void Write(DarkOutStream s)
+        {
+            s.Write(Time);
+            s.WriteByteArray(controllers);
+        }
+    }
+
     public class Channel : IChunkReader
     {
         public readonly int Number;
         public string Name;
         public readonly List<Clip> clips = new List<Clip>();
+        public readonly List<Patch> patches = new List<Patch>();
 
         public IList<Clip> Clips { get { return clips.AsReadOnly(); } }
+        public IList<Patch> Patches { get { return patches.AsReadOnly(); } }
 
         public void AddClip(Clip c)
         {
@@ -180,6 +262,20 @@ namespace VorlonSeq.Seq
             if (clips.Remove(c))
             {
                 c.Channel = null;
+            }
+        }
+
+        public void AddPatch(Patch p)
+        {
+            patches.Add(p);
+            p.Channel = this;
+        }
+
+        public void RemovePatch(Patch p)
+        {
+            if (patches.Remove(p))
+            {
+                p.Channel = null;
             }
         }
 
@@ -200,6 +296,16 @@ namespace VorlonSeq.Seq
                 }
 
                 result.AddRange(c.GetAllEventsBetween(start - c.StartTime, end - c.StartTime));
+            }
+
+            foreach (Patch p in Patches)
+            {
+                if (end <= p.Time || start > p.Time)
+                {
+                    continue;
+                }
+
+                result.AddRange(p.Get());
             }
 
             for (int i = 0; i < result.Count; i++)
@@ -232,7 +338,14 @@ namespace VorlonSeq.Seq
                 s.OpenChunk("CLIP");
                 c.Write(s);
                 s.CloseChunk();
-            }         
+            }
+
+            foreach (Patch p in Patches)
+            {
+                s.OpenChunk("PTCH");
+                p.Write(s);
+                s.CloseChunk();
+            }
         }
 
         public void ReadChunk(string id, long length, DarkInStream s)
@@ -243,6 +356,11 @@ namespace VorlonSeq.Seq
                 c.Read(s);
                 AddClip(c);
             }
+            else if (id.Equals("PTCH"))
+            {
+                Patch p = new Patch(s);
+                AddPatch(p);
+            }
         }
     }
 
@@ -252,11 +370,16 @@ namespace VorlonSeq.Seq
 
         public Channel[] Channels = new Channel[NumChannels];
 
+        public readonly int TicksPerBeat = 4;
+        public readonly int BeatsPerBar = 4;
+        public int TicksPerBar { get { return TicksPerBeat * BeatsPerBar; } }
+
         public Song()
         {
             for (int i = 0; i < Channels.Length; i++)
             {
                 Channels[i] = new Channel(i);
+                Channels[i].AddPatch(new Patch());
             }
         }
 
@@ -277,6 +400,7 @@ namespace VorlonSeq.Seq
             {
                 int index;
                 s.Read(out index);
+                Channels[index] = new Channel(index);
                 s.ReadAllChunks(Channels[index]);
             }
         }
@@ -292,8 +416,27 @@ namespace VorlonSeq.Seq
         private static bool running = false;
 
         public static bool IsPlaying = false;
-        public static int PlayPosition = 0;
+        static int playPosition = 0;
         private static int frameCounter = 0;
+
+        public delegate void PlayCursorMovedHandler(int pos);
+        public static event PlayCursorMovedHandler PlayCursorMoved;
+
+        public static int PlayPosition
+        {
+            get { return playPosition; }
+            set
+            {
+                if (playPosition != value)
+                {
+                    playPosition = value;
+                    if (PlayCursorMoved != null)
+                    {
+                        PlayCursorMoved(playPosition);
+                    }
+                }
+            }
+        }
 
         public static int BPM 
         { 
@@ -345,8 +488,16 @@ namespace VorlonSeq.Seq
             dos.Close();
         }
 
-        public static void PlayMidiEvent(MidiMessage midiMessage)
+        public static void PlayMidiEvent(MidiMessage midiMessage, bool fromKeyboard)
         {
+            if (fromKeyboard)
+            {
+                // TODO: Fix this hax
+                Channel c = Song.Channels[midiMessage.Channel];
+                Patch p = c.Patches[0];
+                p.Set(midiMessage);
+            }
+
             lock (toBePlayed)
             {
                 toBePlayed.Add(midiMessage);
@@ -399,7 +550,7 @@ namespace VorlonSeq.Seq
                     IList<MidiMessage> events = channel.GetAllEventsBetween(PlayPosition, PlayPosition + 1);
                     foreach (MidiMessage m in events)
                     {
-                        PlayMidiEvent(m);
+                        PlayMidiEvent(m, false);
                     }
                 }
                 PlayPosition++;

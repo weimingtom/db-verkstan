@@ -17,6 +17,8 @@ namespace VorlonSeq
         MidiInDevice midiDevice = null;
         int selectedTab = 0;
         string filename = null;
+        bool needsRefresh = false;
+        bool enableUF6Hack = false;
 
         public mainWindow()
         {
@@ -42,6 +44,15 @@ namespace VorlonSeq
             {
                 SwitchToMidiDevice(firstDevice);
             }
+
+            Seq.Sequencer.PlayCursorMoved += new VorlonSeq.Seq.Sequencer.PlayCursorMovedHandler(Sequencer_PlayCursorMoved);
+        }
+
+        delegate void VoidDelegate();
+
+        void Sequencer_PlayCursorMoved(int pos)
+        {
+            needsRefresh = true;
         }
   
         void channelEditor1_ClipEditRequested(VorlonSeq.Seq.Clip clip)
@@ -97,6 +108,8 @@ namespace VorlonSeq
 
             if (midiDevice != null)
             {
+                enableUF6Hack = midiDevice.Name.Equals("UF MIDI IN");
+
                 midiDevice.Open(handlerKeepalive);
                 midiDevice.Start();
             }
@@ -104,6 +117,14 @@ namespace VorlonSeq
 
         void OnMidiInput(MidiInDevice sender, MidiMessage message)
         {
+            if (enableUF6Hack)
+            {
+                if (message.Command == MidiMessage.Commands.Controller && message.Param1 == 7)
+                {
+                    message.Param1 = message.Channel + 11;
+                }
+            }
+
             if (selectedTab == 0)
             {
                 channelEditor1.OnMidiInput(message);                
@@ -163,6 +184,15 @@ namespace VorlonSeq
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
+        }
+
+        private void refreshTimer_Tick(object sender, EventArgs e)
+        {
+            if (needsRefresh)
+            {
+                needsRefresh = false;
+                tabControl1.Refresh();
+            }
         }
     }
 }

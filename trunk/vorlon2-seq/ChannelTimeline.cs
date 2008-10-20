@@ -5,11 +5,13 @@ using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
 
 using VorlonSeq.Seq;
 using Midi;
+using DB.Darkfile;
 
 namespace VorlonSeq
 {
@@ -26,6 +28,7 @@ namespace VorlonSeq
         Point mousePos;
         Channel selectedChannel = null;
         Clip createdClip = null;
+        readonly string patchesDir = Directory.GetCurrentDirectory() + "\\patches";
 
         static List<Clip> selectedClips = new List<Clip>();
 
@@ -37,6 +40,70 @@ namespace VorlonSeq
                 ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.UserPaint |
                 ControlStyles.DoubleBuffer, true);
+
+            selectedChannel = Seq.Sequencer.Song.Channels[0];
+
+            RefreshPatches();
+        }
+
+        void RefreshPatches()
+        {
+            loadPatchToolStripMenuItem.DropDownItems.Clear();
+            RefreshPatches(patchesDir, loadPatchToolStripMenuItem);
+        }
+
+        bool RefreshPatches(string path, ToolStripMenuItem parent)
+        {
+            string[] subDirs = Directory.GetDirectories(path);
+
+            foreach (string dir in subDirs)
+            {
+                ToolStripMenuItem child = new ToolStripMenuItem(new DirectoryInfo(dir).Name);
+                if (RefreshPatches(dir, child))
+                {
+                    parent.DropDownItems.Add(child);
+                }
+            }
+
+            string[] files = Directory.GetFiles(path, "*.vpa");
+
+            foreach (string file in files)
+            {
+                string name = new FileInfo(file).Name;
+                name = name.Substring(0, name.Length - 4);
+                ToolStripMenuItem item = new ToolStripMenuItem(name);
+                item.Tag = file;
+                parent.DropDownItemClicked += new ToolStripItemClickedEventHandler(patchItem_DropDownItemClicked);                
+                parent.DropDownItems.Add(item);
+            }
+
+            parent.DropDownItemClicked += new ToolStripItemClickedEventHandler(patchItem_DropDownItemClicked);
+
+            return files.Length > 0;
+        }
+
+        void patchItem_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            string file = (string)e.ClickedItem.Tag;
+            if (file == null)
+            {
+                return;
+            }
+            DarkInStream s = new DarkInStream(File.OpenRead(file));
+            s.ReadChunk(delegate(string id, long length, DarkInStream s1)
+            {
+                if (id.Equals("PTCH"))
+                {
+                    Patch p = new Patch(s);
+                    p.Channel = selectedChannel;
+                    foreach (MidiMessage m in p.Get())
+                    {
+                        MidiMessage m2 = m;                        
+                        Sequencer.PlayMidiEvent(m2, true);
+                    }
+                }
+            });
+            s.Close();
         }
 
         private void ChannelTimeline_Paint(object sender, PaintEventArgs e)
@@ -70,8 +137,8 @@ namespace VorlonSeq
 
                 foreach (Clip clip in song.Channels[i].Clips)
                 {
-                    int x1 = (clip.StartTime * pixelsPerBar) / (4 * 16);
-                    int x2 = (clip.EndTime * pixelsPerBar) / (4 * 16);
+                    int x1 = (clip.StartTime * pixelsPerBar) / (song.TicksPerBar);
+                    int x2 = (clip.EndTime * pixelsPerBar) / (song.TicksPerBar);
                     Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
                     //Brush niceBrush = new LinearGradientBrush(rect, Color.SkyBlue, Color.White, 90.0f);
                     g.FillRectangle(Brushes.LightSteelBlue, rect);
@@ -83,6 +150,17 @@ namespace VorlonSeq
                     }
                     //niceBrush.Dispose();
                 }
+
+                foreach (Patch patch in song.Channels[i].Patches)
+                {
+                    int x = (patch.Time * pixelsPerBar) / (song.TicksPerBar);
+                    Size s = g.MeasureString("p", Font).ToSize();
+                    s.Width -= 2;
+                    s.Height -= 1;
+                    Rectangle rect = new Rectangle(new Point(x + 2, y1 + 2), s);
+                    g.FillRectangle(Brushes.RosyBrown, rect);
+                    g.DrawString("p", Font, Brushes.White, x, y1 - 1);
+                }
             }
 
             if (moving)
@@ -93,8 +171,8 @@ namespace VorlonSeq
                     int i = clip.Channel.Number + m.Y;
                     int y1 = i * channelHeight + topMargin;
                     int y2 = i * channelHeight + topMargin + channelHeight - channelPadding;
-                    int x1 = ((clip.StartTime + m.X) * pixelsPerBar) / (4 * 16);
-                    int x2 = ((clip.EndTime + m.X) * pixelsPerBar) / (4 * 16);
+                    int x1 = ((clip.StartTime + m.X) * pixelsPerBar) / (song.TicksPerBar);
+                    int x2 = ((clip.EndTime + m.X) * pixelsPerBar) / (song.TicksPerBar);
                     Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
                     rect.Inflate(new Size(-1, -1));
                     g.DrawRectangle(Pens.DarkSlateGray, rect);
@@ -106,11 +184,16 @@ namespace VorlonSeq
                 int i = createdClip.Channel.Number;
                 int y1 = i * channelHeight + topMargin;
                 int y2 = i * channelHeight + topMargin + channelHeight - channelPadding;
-                int x1 = ((createdClip.StartTime) * pixelsPerBar) / (4 * 16);
-                int x2 = ((createdClip.EndTime) * pixelsPerBar) / (4 * 16);
+                int x1 = ((createdClip.StartTime) * pixelsPerBar) / (song.TicksPerBar);
+                int x2 = ((createdClip.EndTime) * pixelsPerBar) / (song.TicksPerBar);
                 Rectangle rect = new Rectangle(x1, y1, x2 - x1, y2 - y1 - (channelPadding == 0 ? 1 : 0));
                 rect.Inflate(new Size(-1, -1));
                 g.DrawRectangle(Pens.DarkSlateGray, rect);
+            }
+
+            {
+                int x = (Seq.Sequencer.PlayPosition * pixelsPerBar) / (song.TicksPerBar);
+                g.DrawLine(Pens.Black, new Point(x, 0), new Point(x, Height));
             }
         }
 
@@ -156,7 +239,7 @@ namespace VorlonSeq
 
         private int ConvertXToTime(int x)
         {
-            return (x * (16 * 4)) / pixelsPerBar;
+            return (x * (Sequencer.Song.TicksPerBar)) / pixelsPerBar;
         }
 
         Clip GetClipAt(Point p)
@@ -174,34 +257,39 @@ namespace VorlonSeq
 
         private void ChannelTimeline_MouseDown(object sender, MouseEventArgs e)
         {
+            Channel lastSelected = selectedChannel;
             selectedChannel = GetChannelClosestTo(e.Y);
             Clip clickedClip = GetClipAt(e.Location);
 
-            if (!selectedClips.Contains(clickedClip))
+            if (e.Button == MouseButtons.Left)
             {
-                selectedClips.Clear();
+                if (!selectedClips.Contains(clickedClip))
+                {
+                    selectedClips.Clear();
+
+                    if (clickedClip != null)
+                    {
+                        selectedClips.Add(clickedClip);
+                    }
+                }
 
                 if (clickedClip != null)
                 {
-                    selectedClips.Add(clickedClip);
+                    moving = true;
                 }
+                else if (selectedChannel == lastSelected)
+                {
+                    creating = true;
+                    createdClip = new Clip();
+                    createdClip.Channel = selectedChannel;
+                    int t = ConvertXToTime(e.X);
+                    createdClip.StartTime = t - t % (Sequencer.Song.TicksPerBar);
+                    createdClip.Length = Sequencer.Song.TicksPerBar;
+                }
+
+                mouseDownPos = e.Location;
             }
 
-            if (clickedClip != null)
-            {
-                moving = true;
-            }
-            else
-            {
-                creating = true;
-                createdClip = new Clip();
-                createdClip.Channel = selectedChannel;
-                int t = ConvertXToTime(e.X);
-                createdClip.StartTime = t - t % (16 * 4);
-                createdClip.Length = 16 * 4;
-            }
-
-            mouseDownPos = e.Location;
             mousePos = e.Location;
             
             Refresh();
@@ -327,9 +415,9 @@ namespace VorlonSeq
         }
 
         public void OnMidiInput(MidiMessage message)
-        {
-            message.Channel = 0; // TODO: = selectedChannel.Number
-            Sequencer.PlayMidiEvent(message);
+        {            
+            message.Channel = selectedChannel == null ? 0 : (uint)selectedChannel.Number;
+            Sequencer.PlayMidiEvent(message, true);
         }
 
         void UpdateCreatedClip()
@@ -340,8 +428,8 @@ namespace VorlonSeq
             }
 
             createdClip.EndTime = ConvertXToTime(mousePos.X);
-            createdClip.Length -= createdClip.Length % (4 * 16);
-            createdClip.Length = Math.Max(createdClip.Length, (4 * 16));
+            createdClip.Length -= createdClip.Length % (Sequencer.Song.TicksPerBar);
+            createdClip.Length = Math.Max(createdClip.Length, (Sequencer.Song.TicksPerBar));
         }
 
         private void ChannelTimeline_KeyDown(object sender, KeyEventArgs e)
@@ -355,6 +443,21 @@ namespace VorlonSeq
                 selectedClips.Clear();
                 Refresh();
             }
+        }
+
+        private void savePatchToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveFileDialog1.InitialDirectory = patchesDir;
+            DialogResult res = saveFileDialog1.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                DarkOutStream dos = new DarkOutStream(File.Create(saveFileDialog1.FileName));
+                dos.OpenChunk("PTCH");
+                selectedChannel.Patches[0].Write(dos);
+                dos.CloseChunk();
+                dos.Close();
+            }
+            RefreshPatches();
         }
     }
 }

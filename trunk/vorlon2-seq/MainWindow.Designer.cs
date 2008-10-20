@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.mainSplit = new System.Windows.Forms.SplitContainer();
@@ -57,6 +58,7 @@
             this.disabledToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.channelEditor1 = new VorlonSeq.ChannelEditor();
             this.clipEditor1 = new VorlonSeq.ClipEditor();
             this.toolStripContainer1.BottomToolStripPanel.SuspendLayout();
@@ -158,7 +160,7 @@
             this.composeTab.Location = new System.Drawing.Point(4, 25);
             this.composeTab.Name = "composeTab";
             this.composeTab.Padding = new System.Windows.Forms.Padding(3);
-            this.composeTab.Size = new System.Drawing.Size(935, 401);
+            this.composeTab.Size = new System.Drawing.Size(797, 385);
             this.composeTab.TabIndex = 1;
             this.composeTab.Text = "Compose";
             this.composeTab.UseVisualStyleBackColor = true;
@@ -168,9 +170,9 @@
             this.tableLayoutPanel2.ColumnCount = 5;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.85149F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.14851F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 69F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 131F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 177F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 61F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 93F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 217F));
             this.tableLayoutPanel2.Controls.Add(this.timeLabel, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.framesPerTickUpDown, 2, 0);
             this.tableLayoutPanel2.Controls.Add(this.label1, 1, 0);
@@ -193,7 +195,7 @@
             this.timeLabel.ForeColor = System.Drawing.Color.White;
             this.timeLabel.Location = new System.Drawing.Point(3, 0);
             this.timeLabel.Name = "timeLabel";
-            this.timeLabel.Size = new System.Drawing.Size(119, 45);
+            this.timeLabel.Size = new System.Drawing.Size(123, 45);
             this.timeLabel.TabIndex = 0;
             this.timeLabel.Text = "1.00.00";
             this.timeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -201,7 +203,7 @@
             // framesPerTickUpDown
             // 
             this.framesPerTickUpDown.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.framesPerTickUpDown.Location = new System.Drawing.Point(196, 12);
+            this.framesPerTickUpDown.Location = new System.Drawing.Point(202, 12);
             this.framesPerTickUpDown.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -213,7 +215,7 @@
             0,
             0});
             this.framesPerTickUpDown.Name = "framesPerTickUpDown";
-            this.framesPerTickUpDown.Size = new System.Drawing.Size(63, 20);
+            this.framesPerTickUpDown.Size = new System.Drawing.Size(55, 20);
             this.framesPerTickUpDown.TabIndex = 1;
             this.framesPerTickUpDown.Value = new decimal(new int[] {
             1,
@@ -228,7 +230,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(129, 8);
+            this.label1.Location = new System.Drawing.Point(135, 8);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 28);
             this.label1.TabIndex = 2;
@@ -240,7 +242,7 @@
             this.bpmLabel.AutoSize = true;
             this.bpmLabel.Font = new System.Drawing.Font("Verdana", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.bpmLabel.ForeColor = System.Drawing.Color.White;
-            this.bpmLabel.Location = new System.Drawing.Point(265, 15);
+            this.bpmLabel.Location = new System.Drawing.Point(263, 15);
             this.bpmLabel.Name = "bpmLabel";
             this.bpmLabel.Size = new System.Drawing.Size(81, 14);
             this.bpmLabel.TabIndex = 2;
@@ -399,14 +401,14 @@
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(111, 6);
             // 
             // disabledToolStripMenuItem
             // 
             this.disabledToolStripMenuItem.Checked = true;
             this.disabledToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.disabledToolStripMenuItem.Name = "disabledToolStripMenuItem";
-            this.disabledToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.disabledToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.disabledToolStripMenuItem.Text = "Disabled";
             // 
             // openFileDialog1
@@ -417,6 +419,11 @@
             // saveFileDialog1
             // 
             this.saveFileDialog1.Filter = "Vorlon2 Seq files (*.vrl)|*.vrl|All files|*.*";
+            // 
+            // refreshTimer
+            // 
+            this.refreshTimer.Enabled = true;
+            this.refreshTimer.Tick += new System.EventHandler(this.refreshTimer_Tick);
             // 
             // channelEditor1
             // 
@@ -432,7 +439,7 @@
             this.clipEditor1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clipEditor1.Location = new System.Drawing.Point(3, 3);
             this.clipEditor1.Name = "clipEditor1";
-            this.clipEditor1.Size = new System.Drawing.Size(929, 395);
+            this.clipEditor1.Size = new System.Drawing.Size(791, 379);
             this.clipEditor1.TabIndex = 0;
             // 
             // mainWindow
@@ -502,6 +509,7 @@
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.Timer refreshTimer;
     }
 }
 

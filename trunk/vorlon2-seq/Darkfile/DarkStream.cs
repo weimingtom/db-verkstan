@@ -56,7 +56,7 @@ namespace DB.Darkfile
 
         public void ReadChunk(IChunkReader reader)
         {
-            byte[] idBytes = ReadBytes(4);
+            byte[] idBytes = ReadByteArray(4);
 
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < 4; i++)
@@ -113,7 +113,7 @@ namespace DB.Darkfile
             }
         }
 
-        private byte[] ReadBytes(int size)
+        public byte[] ReadByteArray(int size)
         {
             byte[] b = new byte[size];
             int bytesRead = stream.Read(b, 0, b.Length);
@@ -121,21 +121,17 @@ namespace DB.Darkfile
             {
                 throw new Exception("Unexpected end of file");
             }
-            /*
-            StringBuilder hex = new StringBuilder();
-            StringBuilder text = new StringBuilder();
-
-            foreach (byte x in b)
-            {
-                hex.Append(x.ToString("x2") + " ");
-                text.Append((char)x);
-            }
-            
-            System.Console.WriteLine("Read::: " + hex.ToString());// + text.ToString());
-            System.Console.Out.Flush();
-            */
 
             return b;
+        }
+
+        public void ReadByteArray(byte[] b)
+        {
+            int bytesRead = stream.Read(b, 0, b.Length);
+            if (bytesRead != b.Length)
+            {
+                throw new Exception("Unexpected end of file");
+            }
         }
 
         public void Close()
@@ -151,62 +147,62 @@ namespace DB.Darkfile
         #region Primitive read functions
         public void Read(out long i)
         {
-            i = BitConverter.ToInt64(ReadBytes(sizeof(long)), 0);
+            i = BitConverter.ToInt64(ReadByteArray(sizeof(long)), 0);
         }
 
         public void Read(out ulong i)
         {
-            i = BitConverter.ToUInt64(ReadBytes(sizeof(ulong)), 0);
+            i = BitConverter.ToUInt64(ReadByteArray(sizeof(ulong)), 0);
         }
 
         public void Read(out int i)
         {
-            i = BitConverter.ToInt32(ReadBytes(sizeof(int)), 0);
+            i = BitConverter.ToInt32(ReadByteArray(sizeof(int)), 0);
         }
 
         public void Read(out uint i)
         {
-            i = BitConverter.ToUInt32(ReadBytes(sizeof(uint)), 0);
+            i = BitConverter.ToUInt32(ReadByteArray(sizeof(uint)), 0);
         }
 
         public void Read(out short i)
         {
-            i = BitConverter.ToInt16(ReadBytes(sizeof(short)), 0);
+            i = BitConverter.ToInt16(ReadByteArray(sizeof(short)), 0);
         }
 
         public void Read(out ushort i)
         {
-            i = BitConverter.ToUInt16(ReadBytes(sizeof(ushort)), 0);
+            i = BitConverter.ToUInt16(ReadByteArray(sizeof(ushort)), 0);
         }
 
         public void Read(out char i)
         {
-            i = BitConverter.ToChar(ReadBytes(sizeof(char)), 0);
+            i = BitConverter.ToChar(ReadByteArray(sizeof(char)), 0);
         }
 
         public void Read(out byte i)
         {
-            i = ReadBytes(sizeof(byte))[0];
+            i = ReadByteArray(sizeof(byte))[0];
         }
 
         public void Read(out sbyte i)
         {
-            i = (sbyte)ReadBytes(sizeof(sbyte))[0];
+            i = (sbyte)ReadByteArray(sizeof(sbyte))[0];
         }
 
         public void Read(out float i)
         {
-            i = BitConverter.ToSingle(ReadBytes(sizeof(float)), 0);
+            i = BitConverter.ToSingle(ReadByteArray(sizeof(float)), 0);
         }
 
         public void Read(out double i)
         {
-            i = BitConverter.ToDouble(ReadBytes(sizeof(double)), 0);
+            i = BitConverter.ToDouble(ReadByteArray(sizeof(double)), 0);
         }
 
         public void Read(out bool i)
         {
-            i = BitConverter.ToBoolean(ReadBytes(sizeof(bool)), 0);
+            i = BitConverter.ToBoolean(ReadByteArray(sizeof(bool)), 0);
         }
 
         public void Read(out string i)
@@ -390,6 +386,16 @@ namespace DB.Darkfile
             {
                 Write(c);
             }
+        }
+
+        public void WriteByteArray(byte[] b)
+        {
+            stream.Write(b, 0, b.Length);
+        }
+
+        public void WriteByteArray(byte[] b, int offset, int length)
+        {
+            stream.Write(b, offset, length);
         }
         #endregion
     }
