@@ -207,7 +207,7 @@ namespace Verkstan
 
     void CoreOperator::UpdateInputConnections()
     {
-        for (int i = 0; i < getOperator()->numberOfInputs; i++)
+        for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
             getOperator()->inputs[i] = -1;
 
         List<Operator^>^ inputOperators = gcnew List<Operator^>();
@@ -221,7 +221,6 @@ namespace Verkstan
         for (int i = 0; i < inputOperators->Count && inputs->Count > 0; i++)
         {
             Operator^ op = inputOperators[i];
-     
             if (op->Id == -1 || op->Id == Id)
                 continue;
 
@@ -251,6 +250,7 @@ namespace Verkstan
                     {
                         getOperator()->inputs[j] = op->Id;
                         accepted = true;
+                        System::Console::WriteLine("Input " + op->Id + " accepted at position " + j);
                         numberOfInputs++;
                         break;
                     }
@@ -272,7 +272,7 @@ namespace Verkstan
 
     void CoreOperator::UpdateOutputConnections()
     {
-        for (int i = 0; i < getOperator()->numberOfOutputs; i++)
+        for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
             getOperator()->outputs[i] = -1;
 
         List<Operator^>^ outputOperators = gcnew List<Operator^>();

@@ -33,7 +33,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3212.35733, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3214.41612, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
     </Reference>

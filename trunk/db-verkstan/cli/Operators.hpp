@@ -9,6 +9,8 @@
 #include "core/operators/cylinderoperator.hpp"
 #include "core/operators/boxoperator.hpp"
 #include "core/operators/transformmeshoperator.hpp"
+#include "core/operators/texturemappingoperator.hpp"
+#include "core/operators/materialoperator.hpp"
 
 namespace Verkstan
 {
@@ -24,21 +26,25 @@ namespace Verkstan
         using ::CylinderOperator;
         using ::BoxOperator;
         using ::TransformMeshOperator;
+        using ::TextureMappingOperator;
+        using ::MaterialOperator;
     }
 }
 #endif
 
 #ifdef OPERATOR_CATEGORY_DEFINES
-ADD_OP_TO_CAT("Pixels",    "Texture");
-ADD_OP_TO_CAT("Flat",      "Texture");
-ADD_OP_TO_CAT("Text",      "Texture");
-ADD_OP_TO_CAT("Rectangle", "Texture");
-ADD_OP_TO_CAT("Rotozoom",  "Texture");
-ADD_OP_TO_CAT("Torus",     "Mesh");
-ADD_OP_TO_CAT("Sphere",    "Mesh");
-ADD_OP_TO_CAT("Cylinder",  "Mesh");
-ADD_OP_TO_CAT("Box",  "Mesh");
-ADD_OP_TO_CAT("Transform",  "Mesh");
+ADD_OP_TO_CAT("Pixels",          "Texture");
+ADD_OP_TO_CAT("Flat",            "Texture");
+ADD_OP_TO_CAT("Text",            "Texture");
+ADD_OP_TO_CAT("Rectangle",       "Texture");
+ADD_OP_TO_CAT("Rotozoom",        "Texture");
+ADD_OP_TO_CAT("Torus",           "Mesh");
+ADD_OP_TO_CAT("Sphere",          "Mesh");
+ADD_OP_TO_CAT("Cylinder",        "Mesh");
+ADD_OP_TO_CAT("Box",             "Mesh");
+ADD_OP_TO_CAT("Transform",       "Mesh");
+ADD_OP_TO_CAT("Texture Mapping", "Mesh");
+ADD_OP_TO_CAT("Material",        "Model");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -113,6 +119,15 @@ ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Texture Mapping", TextureMappingOperator, Mesh);
+ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Material", MaterialOperator, Model);
+ADD_INPUT(Mesh);
+ADD_INPUT(Texture);
 END_OP();
 
 

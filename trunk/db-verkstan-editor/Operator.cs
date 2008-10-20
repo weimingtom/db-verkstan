@@ -90,6 +90,8 @@ namespace VerkstanEditor
                 Color = Color.FromArgb(190, 110, 150);
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Mesh)
                 Color = Color.FromArgb(110, 190, 150);
+            else if (Binding.Type == Verkstan.Constants.OperatorTypes.Model)
+                Color = Color.FromArgb(110, 150, 190);
             else
                 Color = Color.FromArgb(190, 190, 150);
         }

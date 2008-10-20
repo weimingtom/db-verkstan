@@ -16,10 +16,17 @@ void BoxOperator::process()
     float height = getFloatProperty(1);
     float depth = getFloatProperty(2);
 
+    LPD3DXMESH tmpMesh;
     D3DXCreateBox(globalDirect3DDevice,
                   width,
                   height,
                   depth,
-                  &mesh->d3d9Mesh, 
+                  &tmpMesh, 
                   NULL);
+    tmpMesh->CloneMeshFVF(NULL, 
+                          FVF_VERTEX,
+                          globalDirect3DDevice,
+                          &mesh->d3d9Mesh);
+    tmpMesh->Release();
+
 }

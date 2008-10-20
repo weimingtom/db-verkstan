@@ -18,12 +18,18 @@ void CylinderOperator::process()
     unsigned char slices = getByteProperty(3);
     unsigned char stacks = getByteProperty(4);
 
+    LPD3DXMESH tmpMesh;
     D3DXCreateCylinder(globalDirect3DDevice, 
                        radius1,
                        radius2,
                        length,
                        slices,
                        stacks,
-                       &mesh->d3d9Mesh, 
+                       &tmpMesh, 
                        NULL);
+    tmpMesh->CloneMeshFVF(NULL, 
+                          FVF_VERTEX,
+                          globalDirect3DDevice,
+                          &mesh->d3d9Mesh);
+    tmpMesh->Release();
 }

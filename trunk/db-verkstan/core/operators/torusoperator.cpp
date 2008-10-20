@@ -17,11 +17,17 @@ void TorusOperator::process()
     unsigned char sides = getByteProperty(2);
     unsigned char rings = getByteProperty(3);
 
+    LPD3DXMESH tmpMesh;
     D3DXCreateTorus(globalDirect3DDevice, 
                     innerRadius, 
                     outerRadius, 
                     (int)sides, 
                     (int)rings, 
-                    &mesh->d3d9Mesh, 
+                    &tmpMesh, 
                     NULL);
+    tmpMesh->CloneMeshFVF(NULL, 
+                          FVF_VERTEX,
+                          globalDirect3DDevice,
+                          &mesh->d3d9Mesh);
+    tmpMesh->Release();
 }

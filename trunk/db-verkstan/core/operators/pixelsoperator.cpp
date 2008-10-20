@@ -25,15 +25,16 @@ void PixelsOperator::process()
     unsigned char b2 = getIntProperty(5);
     int count = getIntProperty(6);
     int seed = getIntProperty(7);
-    int color1 = D3DCOLOR_XRGB(r1, g1, b1);
-    int color2 = D3DCOLOR_XRGB(r2, g2, b2);
+    D3DXCOLOR color1 = D3DXCOLOR(D3DCOLOR_XRGB(r1, g1, b1));
+    D3DXCOLOR color2 = D3DXCOLOR(D3DCOLOR_XRGB(r2, g2, b2));
     texture->lock();
     srand(seed);
     DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
     int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
+    D3DXCOLOR color;
     for (int i = 0; i < count; i++)
     {
-        int color = rand() % 2 == 0? color1 : color2;
+        D3DXColorLerp(&color, &color1, &color2, rand() / (float)RAND_MAX);
         pixels[pitch * (rand()%256) + (rand()%256)] = color; 
     }
     texture->unlock();

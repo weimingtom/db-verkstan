@@ -3,6 +3,15 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+struct Vertex
+{
+    D3DXVECTOR3 position; 
+    D3DXVECTOR3 normal;
+    float u, v;
+};
+
+#define FVF_VERTEX D3DFVF_XYZ|D3DFVF_NORMAL|D3DFVF_TEX1
+
 /**
  * Helper class that wraps a D3D9 mesh.
  */

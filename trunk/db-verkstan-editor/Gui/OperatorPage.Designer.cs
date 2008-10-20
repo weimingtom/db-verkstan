@@ -48,6 +48,7 @@
             this.ParentChanged += new System.EventHandler(this.OperatorPage_ParentChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.operatorPage_KeyDown);
             this.ResumeLayout(false);
 
         }

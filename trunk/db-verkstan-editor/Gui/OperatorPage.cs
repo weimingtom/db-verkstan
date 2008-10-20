@@ -356,7 +356,6 @@ namespace VerkstanEditor.Gui
         private void OperatorPage_ParentChanged(object sender, EventArgs e)
         {
             Parent.Resize += new System.EventHandler(this.operatorPage_ParentResized);
-            Parent.KeyDown += new System.Windows.Forms.KeyEventHandler(this.operatorPage_ParentKeyDown);
         }
 
         private void operatorPage_ParentResized(object sender, EventArgs e)
@@ -369,7 +368,7 @@ namespace VerkstanEditor.Gui
             AddLocation = MouseLocation;
         }
 
-        private void operatorPage_ParentKeyDown(object sender, KeyEventArgs e)
+        private void operatorPage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
