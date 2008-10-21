@@ -33,7 +33,6 @@ namespace Verkstan
         void Reset();
         Operator^ viewedOperator;
         bool resetDevice;
-        int clearColor;
         Renderer^ renderer;
 	};
 }

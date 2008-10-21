@@ -12,6 +12,7 @@ namespace VerkstanEditor
         public String Page;
         public String Name;
         public Color Color;
+        public Color TextColor;
         public Point location;
         public Point Location
         {
@@ -86,12 +87,18 @@ namespace VerkstanEditor
 
             Name = binding.Name;
 
+            TextColor = Color.Black;
             if (Binding.Type == Verkstan.Constants.OperatorTypes.Texture)
-                Color = Color.FromArgb(190, 110, 150);
+                Color = Color.FromArgb(250, 40, 50);
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Mesh)
-                Color = Color.FromArgb(110, 190, 150);
+                Color = Color.FromArgb(70, 245, 90);
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Model)
-                Color = Color.FromArgb(110, 150, 190);
+                Color = Color.FromArgb(70, 90, 255);
+            else if (Binding.Type == Verkstan.Constants.OperatorTypes.Scene)
+            {
+                Color = Color.FromArgb(255, 0, 255);
+                TextColor = Color.White;
+            }
             else
                 Color = Color.FromArgb(190, 190, 150);
         }

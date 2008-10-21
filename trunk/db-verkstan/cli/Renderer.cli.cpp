@@ -15,13 +15,19 @@ namespace Verkstan
 
     }
 
-    void Renderer::SetViewport(int width, int height)
-    {
-        
-    }
-
     void Renderer::RenderOperator(Operator^ op)
     {
+        if (op == nullptr)
+        {
+            globalDirect3DDevice->Clear(0, 
+                   NULL, 
+                   D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                   ClearColor, 
+                   1.0f, 
+                   0);
+            return;
+        }
+
         if (!op->IsProcessable())
             return;
 
@@ -41,8 +47,11 @@ namespace Verkstan
         case Constants::OperatorTypes::Store:
             RenderStoreOperator(op);
             break;
-         case Constants::OperatorTypes::Load:
+        case Constants::OperatorTypes::Load:
             RenderLoadOperator(op);
+            break;
+        case Constants::OperatorTypes::Scene:
+            RenderSceneOperator(op);
             break;
         default:
             RenderUnknownOperator(op);
@@ -66,41 +75,26 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
+        if (coreOp->texture == 0)
+            return;
+
+        globalDirect3DDevice->Clear(0, 
+                   NULL, 
+                   D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                   ClearColor, 
+                   1.0f, 
+                   0);
+
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-        D3DXMATRIX world;
-        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-
+        globalWorldMatrixStack->LoadIdentity();
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
+       
         camera->ApplyTransformations();
-
-          /*
-        D3DXMATRIX projection;
-        D3DXMatrixPerspectiveFovLH(&projection, 
-                                   D3DXToRadian(45.0f), 
-                                   WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
-                                   1.0f, 
-                                   100.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
-
-      
-      
-        D3DXMATRIX world;
-        D3DXMATRIX view;
-        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-       
-       
-        D3DXMatrixLookAtLH(&view,
-                           &D3DXVECTOR3(0.0f, 0.0f, -2.5f),
-                           &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-                           &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
-         */
 
         globalDirect3DDevice->BeginScene();
 
@@ -112,8 +106,7 @@ namespace Verkstan
            {  1.0f,  1.0f, 0.0f, 0xFFFFFFFF, 1.0f, 0.0f },
         };
 
-        if (coreOp->texture != 0)
-            globalDirect3DDevice->SetTexture(0, coreOp->texture->getD3D9Texture());		
+        globalDirect3DDevice->SetTexture(0, coreOp->texture->getD3D9Texture());		
         globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1);
         globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
                                               2,
@@ -125,46 +118,56 @@ namespace Verkstan
 
     void Renderer::RenderUnknownOperator(Operator^ op)
     {
-
+        globalDirect3DDevice->Clear(0, 
+                   NULL, 
+                   D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                   ClearColor, 
+                   1.0f, 
+                   0);
     }
 
     void Renderer::RenderMeshOperator(Operator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 
+        if (coreOp->mesh == 0)
+            return;
+
+        globalDirect3DDevice->Clear(0, 
+                           NULL, 
+                           D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                           ClearColor, 
+                           1.0f, 
+                           0);
+
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-        if (coreOp->mesh != 0)
-        {
-            D3DXMATRIX scale;
-            D3DXMatrixScaling(&scale, 
-                              coreOp->mesh->scale.x,
-                              coreOp->mesh->scale.y,
-                              coreOp->mesh->scale.z);   
-            D3DXMATRIX rotationX;
-            D3DXMatrixRotationX(&rotationX, coreOp->mesh->rotation.x);
-            D3DXMATRIX rotationY;
-            D3DXMatrixRotationY(&rotationY, coreOp->mesh->rotation.y);
-            D3DXMATRIX rotationZ;
-            D3DXMatrixRotationZ(&rotationZ, coreOp->mesh->rotation.z);
-            D3DXMATRIX translation;
-            D3DXMatrixTranslation(&translation, 
-                                  coreOp->mesh->translation.x, 
-                                  coreOp->mesh->translation.y, 
-                                  coreOp->mesh->translation.z);     
-            D3DXMATRIX world = scale * rotationX * rotationY * rotationZ * translation;
-            globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-        }
+        globalWorldMatrixStack->LoadIdentity();
+        globalViewMatrixStack->LoadIdentity();
+        globalProjectionMatrixStack->LoadIdentity();
 
         camera->ApplyTransformations();
-
+        globalWorldMatrixStack->LoadIdentity();            
         globalDirect3DDevice->BeginScene();
 
-        if (coreOp->mesh != 0)
-            coreOp->mesh->d3d9Mesh->DrawSubset(0);
-
+        globalWorldMatrixStack->Push();
+        globalWorldMatrixStack->Scale(coreOp->mesh->scale.x,
+                                      coreOp->mesh->scale.y,
+                                      coreOp->mesh->scale.z);
+        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(1.0f, 0.0f, 0.0f),
+                                           coreOp->mesh->rotation.x);
+        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 1.0f, 0.0f),
+                                           coreOp->mesh->rotation.y);
+        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 0.0f, 1.0f),
+                                           coreOp->mesh->rotation.z);
+        globalWorldMatrixStack->Translate(coreOp->mesh->translation.x,
+                                          coreOp->mesh->translation.y,
+                                          coreOp->mesh->translation.z); 
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
+        coreOp->mesh->d3d9Mesh->DrawSubset(0);
+        globalWorldMatrixStack->Pop();
         globalDirect3DDevice->EndScene();
     }
 
@@ -172,11 +175,20 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        //globalDirect3DDevice->LightEnable(0, FALSE); 
+
+        globalDirect3DDevice->Clear(0, 
+                                   NULL, 
+                                   D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                                   ClearColor, 
+                                   1.0f, 
+                                   0);
+
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(50, 50, 50));
+        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
         globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
 	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
@@ -196,17 +208,77 @@ namespace Verkstan
         globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
         globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
 
-        D3DXMATRIX world;
-        D3DXMatrixTranslation(&world, 0.0f,0.0f,0.0f);
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-
         camera->ApplyTransformations();
+        globalWorldMatrixStack->LoadIdentity();
 
         globalDirect3DDevice->BeginScene();
-
-        coreOp->cascadeRender();
-
+        coreOp->render();
         globalDirect3DDevice->EndScene();
+    }
+
+    void Renderer::RenderSceneOperator(Operator^ op)
+    {
+        Core::Operator* coreOp = op->getOperator();
+
+           globalDirect3DDevice->Clear(0, 
+                   NULL, 
+                   D3DCLEAR_TARGET, 
+                   D3DCOLOR_XRGB(0, 0, 0), 
+                   1.0f, 
+                   0);
+
+      
+        int height = WINDOW_HEIGHT;
+        int width = (int)height / 3.0f * 4.0;
+        D3DVIEWPORT9 viewport;
+        viewport.X = WINDOW_WIDTH / 2 - width / 2;
+        viewport.Y = 0;
+        viewport.Width = width;
+        viewport.Height = height;
+        viewport.MinZ   = 0.0f;
+        viewport.MaxZ   = 1.0f;
+        globalDirect3DDevice->SetViewport(&viewport);
+     
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
+        globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
+	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
+        /*
+	    globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,  D3DBLEND_ONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);*/
+
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
+
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_MIRROR);
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_MIRROR);
+	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_MIRROR);
+
+	    globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
+        globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
+        globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
+
+        globalWorldMatrixStack->LoadIdentity();
+
+        globalDirect3DDevice->BeginScene();
+        coreOp->render();
+        globalDirect3DDevice->EndScene();
+
+       
+        viewport;
+        viewport.X = 0;
+        viewport.Y = 0;
+        viewport.Width = WINDOW_WIDTH;
+        viewport.Height = WINDOW_HEIGHT;
+        viewport.MinZ   = 0.0f;
+        viewport.MaxZ   = 1.0f;
+        globalDirect3DDevice->SetViewport(&viewport);
+    
     }
 
     void Renderer::MouseDown(int button, int x, int y)
@@ -222,5 +294,10 @@ namespace Verkstan
     void Renderer::MouseUp(int button, int x, int y)
     {
          camera->MouseUp(button, x, y);
+    }
+
+    void Renderer::ResetCamera()
+    {
+        camera->Reset();
     }
 }

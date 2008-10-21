@@ -11,6 +11,10 @@
 #include "core/operators/transformmeshoperator.hpp"
 #include "core/operators/texturemappingoperator.hpp"
 #include "core/operators/materialoperator.hpp"
+#include "core/operators/modeloperator.hpp"
+#include "core/operators/addmodelsoperator.hpp"
+#include "core/operators/lightoperator.hpp"
+#include "core/operators/cameraoperator.hpp"
 
 namespace Verkstan
 {
@@ -28,6 +32,10 @@ namespace Verkstan
         using ::TransformMeshOperator;
         using ::TextureMappingOperator;
         using ::MaterialOperator;
+        using ::ModelOperator;
+        using ::AddModelsOperator;
+        using ::LightOperator;
+        using ::CameraOperator;
     }
 }
 #endif
@@ -44,7 +52,11 @@ ADD_OP_TO_CAT("Cylinder",        "Mesh");
 ADD_OP_TO_CAT("Box",             "Mesh");
 ADD_OP_TO_CAT("Transform",       "Mesh");
 ADD_OP_TO_CAT("Texture Mapping", "Mesh");
+ADD_OP_TO_CAT("Model",           "Model");
+ADD_OP_TO_CAT("Light",           "Model");
+ADD_OP_TO_CAT("Add",             "Model");
 ADD_OP_TO_CAT("Material",        "Model");
+ADD_OP_TO_CAT("Camera",          "Scene");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -125,10 +137,33 @@ DEF_OP("Texture Mapping", TextureMappingOperator, Mesh);
 ADD_INPUT(Mesh);
 END_OP();
 
+DEF_OP("Model", ModelOperator, Model);
+ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Add", AddModelsOperator, Model);
+ADD_INFINITE_INPUT(Model);
+END_OP();
+
+DEF_OP("Light", LightOperator, Model);
+ADD_COLOR_PROP("Color", 255, 255, 0);
+ADD_VECTOR_PROP("Position", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Direction", 1.0f, 0.0f, 0.0f);
+END_OP();
+
 DEF_OP("Material", MaterialOperator, Model);
 ADD_INPUT(Mesh);
 ADD_INPUT(Texture);
 END_OP();
 
+DEF_OP("Camera", CameraOperator, Scene);
+ADD_BYTE_PROP("Angle", 32);
+ADD_INT_PROP("Aspect width", 1024);
+ADD_INT_PROP("Aspect height", 768);
+ADD_COLOR_PROP("Clear color", 255, 0, 255);
+ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
+ADD_INFINITE_INPUT(Model);
+END_OP();
 
 #endif

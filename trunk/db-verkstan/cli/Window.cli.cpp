@@ -54,7 +54,9 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        renderer->SetViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
+        D3DXCreateMatrixStack(0, &globalProjectionMatrixStack);
+        D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
+        D3DXCreateMatrixStack(0, &globalViewMatrixStack);
     }
 
     void Window::Resize()
@@ -109,14 +111,15 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
         resetDevice = false;
-
-        renderer->SetViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 
     void Window::Shutdown()
     {
         globalDirect3DDevice->Release();
         globalDirect3D->Release();
+        globalProjectionMatrixStack->Release();
+        globalWorldMatrixStack->Release();
+        globalViewMatrixStack->Release();
     }
     
     void Window::Render()
@@ -127,15 +130,8 @@ namespace Verkstan
         }
         else
         {
-            globalDirect3DDevice->Clear(0, 
-                                       NULL, 
-                                       D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
-                                       clearColor, 
-                                       1.0f, 
-                                       0);
-            
-            if (viewedOperator != nullptr)
-                renderer->RenderOperator(viewedOperator);
+
+            renderer->RenderOperator(viewedOperator);
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
 
@@ -151,17 +147,18 @@ namespace Verkstan
 
     void Window::ViewedOperator::set(Operator^ op)
     {
-        Window::viewedOperator = op;
+        viewedOperator = op;
+        renderer->ResetCamera();
     }
 
     int Window::ClearColor::get()
     {
-        return clearColor;
+        return renderer->ClearColor;
     }
 
     void Window::ClearColor::set(int color)
     {
-        Window::clearColor = color;
+         renderer->ClearColor = color;
     }
 
     void Window::MouseDown(int button, int x, int y)

@@ -76,13 +76,6 @@ void Operator::cascadeProcess()
     dirty = false;
 }
 
-void Operator::cascadeRender()
-{
-    render();
-    for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->cascadeRender();
-}
-
 void Operator::setDirty(bool dirty)
 {
     for (int i = 0; i < numberOfOutputs; i++)

@@ -118,23 +118,17 @@ namespace VerkstanEditor.Gui
             Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
                                         rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
 
-            int selectedLum = 0;
+            double brightness = 1.0;
             if (op.Selected)
-                selectedLum = 60;
-            int processableSat = 0;
+                brightness = 1.3;
+            double saturation = 0.0;
             if (op.Binding.IsProcessable())
-                processableSat = 255;
+                saturation = 1.0;
 
-            HSLColor HSLColor = new HSLColor(op.Color);
-            HSLColor.Saturation = processableSat;
-            HSLColor.Luminosity += selectedLum;
-            Color color = HSLColor;
-            HSLColor lightHSLColor = new HSLColor(HSLColor);
-            lightHSLColor.Luminosity += 35;
-            Color lightColor = lightHSLColor;
-            HSLColor darkHSLColor = new HSLColor(HSLColor);
-            darkHSLColor.Luminosity -= 60;
-            Color darkColor = darkHSLColor;
+            Color color = RGBHSL.ModifyBrightness(op.Color, brightness);
+            color = RGBHSL.ModifySaturation(color, saturation);
+            Color lightColor = RGBHSL.ModifyBrightness(color, 1.3);
+            Color darkColor = RGBHSL.ModifyBrightness(color, 0.7);
             Brush brush = new SolidBrush(color);
             Pen lightPen = new Pen(lightColor);
             Pen darkPen = new Pen(darkColor);
@@ -160,7 +154,8 @@ namespace VerkstanEditor.Gui
                                 op.Location.Y + op.Size.Height - 1,
                                 op.Location.X + op.Size.Width - 1,
                                 op.Location.Y + op.Size.Height - 1);
-            e.Graphics.DrawString(op.Binding.DisplayName, Font, Brushes.Black, namePoint);
+            Brush textBrush = new SolidBrush(op.TextColor);
+            e.Graphics.DrawString(op.Binding.DisplayName, Font, textBrush, namePoint);
 
             int x1 = op.GetAreaForResize().Left;
             int y1 = op.Location.Y + 3;

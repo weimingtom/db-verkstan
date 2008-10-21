@@ -21,7 +21,6 @@ public:
     
     void cascadeProcess();
     virtual void process() = 0;
-    void cascadeRender();
     virtual void render() = 0;
 
     virtual void deviceLost();

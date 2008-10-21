@@ -357,11 +357,27 @@
 				Name="operators"
 				>
 				<File
+					RelativePath=".\core\operators\addmodelsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\addmodelsoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\boxoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\boxoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cameraoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cameraoperator.hpp"
 					>
 				</File>
 				<File
@@ -381,11 +397,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\lightoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\lightoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\materialoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\materialoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\modeloperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\modeloperator.hpp"
 					>
 				</File>
 				<File
