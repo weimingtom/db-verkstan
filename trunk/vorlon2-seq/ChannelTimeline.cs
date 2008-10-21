@@ -376,9 +376,9 @@ namespace VorlonSeq
 
             foreach (Clip c in selectedClips)
             {
-                if (c.StartTime + bars * 64 < 0)
+                if (c.StartTime + bars * Sequencer.Song.TicksPerBar < 0)
                 {
-                    bars = -c.StartTime / 64;
+                    bars = -c.StartTime / Sequencer.Song.TicksPerBar;
                 }
 
                 if (c.Channel.Number + channels < 0)
@@ -392,7 +392,7 @@ namespace VorlonSeq
                 }
             }
 
-            return new Point(bars * 64, channels);
+            return new Point(bars * Sequencer.Song.TicksPerBar, channels);
         }
 
         private void ChannelTimeline_MouseDoubleClick(object sender, MouseEventArgs e)
