@@ -43,7 +43,7 @@
             1,
             0,
             0,
-            196608});
+            131072});
             this.z.Location = new System.Drawing.Point(123, 3);
             this.z.Maximum = new decimal(new int[] {
             255,
@@ -67,7 +67,7 @@
             1,
             0,
             0,
-            196608});
+            131072});
             this.y.Location = new System.Drawing.Point(61, 3);
             this.y.Maximum = new decimal(new int[] {
             255,
@@ -91,7 +91,7 @@
             1,
             0,
             0,
-            196608});
+            131072});
             this.x.Location = new System.Drawing.Point(0, 3);
             this.x.Maximum = new decimal(new int[] {
             255,
