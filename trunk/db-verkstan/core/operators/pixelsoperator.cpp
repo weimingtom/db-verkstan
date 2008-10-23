@@ -17,12 +17,12 @@ void PixelsOperator::process()
     else
         texture->fillRectangle(0, 0, 256, 256, 0xff000000);
 
-    unsigned char r1 = getIntProperty(0);
-    unsigned char g1 = getIntProperty(1);
-    unsigned char b1 = getIntProperty(2);
-    unsigned char r2 = getIntProperty(3);
-    unsigned char g2 = getIntProperty(4);
-    unsigned char b2 = getIntProperty(5);
+    unsigned char r1 = getByteProperty(0);
+    unsigned char g1 = getByteProperty(1);
+    unsigned char b1 = getByteProperty(2);
+    unsigned char r2 = getByteProperty(3);
+    unsigned char g2 = getByteProperty(4);
+    unsigned char b2 = getByteProperty(5);
     int count = getIntProperty(6);
     int seed = getIntProperty(7);
     D3DXCOLOR color1 = D3DXCOLOR(D3DCOLOR_XRGB(r1, g1, b1));

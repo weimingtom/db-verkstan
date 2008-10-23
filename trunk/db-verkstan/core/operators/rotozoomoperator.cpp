@@ -20,7 +20,7 @@ void RotozoomOperator::process()
     source->lock();
     texture->lock();
 
-    float frotate = rotation / 256.0f * M_PI * 2.0f;
+    float frotate = rotation / 256.0f * D3DX_PI * 2.0f;
     float fzoom = zoom;
     float co = cos(frotate);
     float si = sin(frotate);

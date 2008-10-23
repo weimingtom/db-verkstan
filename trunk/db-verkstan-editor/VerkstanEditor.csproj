@@ -33,9 +33,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3215.26152, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3217.32360, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
+      <HintPath>..\db-verkstan\db.Verkstan.Cli-Release\db.Verkstan.Cli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -125,13 +125,13 @@
     <Compile Include="Util\RGBHSL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="eye_icon.png" />
+    <EmbeddedResource Include="eye_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="play_icon.png" />
+    <EmbeddedResource Include="play_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="warning_icon.png" />
+    <EmbeddedResource Include="warning_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

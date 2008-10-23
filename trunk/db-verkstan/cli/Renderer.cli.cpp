@@ -185,10 +185,10 @@ namespace Verkstan
                                    0);
 
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
+        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));
         globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
 	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);

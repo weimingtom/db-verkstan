@@ -8,13 +8,14 @@
 #include "core/operators/sphereoperator.hpp"
 #include "core/operators/cylinderoperator.hpp"
 #include "core/operators/boxoperator.hpp"
-#include "core/operators/transformmeshoperator.hpp"
+#include "core/operators/transformmodeloperator.hpp"
 #include "core/operators/texturemappingoperator.hpp"
 #include "core/operators/materialoperator.hpp"
 #include "core/operators/modeloperator.hpp"
 #include "core/operators/addmodelsoperator.hpp"
 #include "core/operators/lightoperator.hpp"
 #include "core/operators/cameraoperator.hpp"
+#include "core/operators/clonemodeloperator.hpp"
 
 namespace Verkstan
 {
@@ -29,13 +30,14 @@ namespace Verkstan
         using ::SphereOperator;
         using ::CylinderOperator;
         using ::BoxOperator;
-        using ::TransformMeshOperator;
+        using ::TransformModelOperator;
         using ::TextureMappingOperator;
         using ::MaterialOperator;
         using ::ModelOperator;
         using ::AddModelsOperator;
         using ::LightOperator;
         using ::CameraOperator;
+        using ::CloneModelOperator;
     }
 }
 #endif
@@ -50,12 +52,13 @@ ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
 ADD_OP_TO_CAT("Box",             "Mesh");
-ADD_OP_TO_CAT("Transform",       "Mesh");
 ADD_OP_TO_CAT("Texture Mapping", "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
+ADD_OP_TO_CAT("Transform",       "Model");
 ADD_OP_TO_CAT("Light",           "Model");
 ADD_OP_TO_CAT("Add",             "Model");
 ADD_OP_TO_CAT("Material",        "Model");
+ADD_OP_TO_CAT("Clone",           "Model");
 ADD_OP_TO_CAT("Camera",          "Scene");
 #endif
 
@@ -126,19 +129,19 @@ ADD_FLOAT_PROP("Height", 1.0f);
 ADD_FLOAT_PROP("Depth",  1.0f);
 END_OP();
 
-DEF_OP("Transform", TransformMeshOperator, Mesh);
-ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
-ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
-ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
-ADD_INPUT(Mesh);
-END_OP();
-
 DEF_OP("Texture Mapping", TextureMappingOperator, Mesh);
 ADD_INPUT(Mesh);
 END_OP();
 
 DEF_OP("Model", ModelOperator, Model);
 ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Transform", TransformModelOperator, Model);
+ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Model);
 END_OP();
 
 DEF_OP("Add", AddModelsOperator, Model);
@@ -154,6 +157,14 @@ END_OP();
 DEF_OP("Material", MaterialOperator, Model);
 ADD_INPUT(Mesh);
 ADD_INPUT(Texture);
+END_OP();
+
+DEF_OP("Clone", CloneModelOperator, Model);
+ADD_BYTE_PROP("Clones",      2);
+ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Model);
 END_OP();
 
 DEF_OP("Camera", CameraOperator, Scene);

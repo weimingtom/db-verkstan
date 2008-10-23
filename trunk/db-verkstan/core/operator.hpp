@@ -6,10 +6,9 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#define _USE_MATH_DEFINES
 #include <math.h>
 
-#define DB_MAX_OPERATOR_CONNECTIONS 128
+#define DB_MAX_OPERATOR_CONNECTIONS 64
 #define DB_MAX_OPERATOR_PROPERTIES 32
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
 
@@ -36,16 +35,25 @@ public:
     void setStringProperty(int index, const char *value);
     bool isDirty();
     void setDirty(bool dirty);
-  
+    
+    void broadcastChannelValue(int channel, float value);
+
     Mesh* mesh;
     Texture* texture;
 
-    union Property
+    union PropertyValue
     {
         unsigned char byteValue;
         float floatValue;
         int intValue;
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
+    };
+
+    struct Property
+    {
+        PropertyValue value;
+        int channel;
+        float amplify;
     };
 
     Property properties[DB_MAX_OPERATOR_PROPERTIES];

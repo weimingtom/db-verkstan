@@ -2,7 +2,7 @@
 
 #include "core/operator.hpp"
 
-class TransformMeshOperator: public Operator
+class TransformModelOperator: public Operator
 {
 public:
     void process();

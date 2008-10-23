@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			>
@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -89,8 +90,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(ProjectDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ProjectDir)$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -114,6 +115,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -132,6 +134,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="d3d9.lib d3dx9.lib user32.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -165,6 +168,186 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="core"
+			>
+			<File
+				RelativePath=".\core\core.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\core.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\globals.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\globals.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\mesh.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\operator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\operator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\texture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\texture.hpp"
+				>
+			</File>
+			<Filter
+				Name="operators"
+				>
+				<File
+					RelativePath=".\core\operators\addmodelsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\addmodelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\boxoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\boxoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cameraoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cameraoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cylinderoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cylinderoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\flatoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\flatoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\lightoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\lightoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\materialoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\materialoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\modeloperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\modeloperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\pixelsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\pixelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rectangleoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rectangleoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rotozoomoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rotozoomoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\sphereoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\sphereoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\textoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\textoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\texturemappingoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\texturemappingoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\torusoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\torusoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\transformmeshoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\transformmeshoperator.hpp"
+					>
+				</File>
+			</Filter>
+		</Filter>
+		<File
+			RelativePath=".\64k\main.cpp"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

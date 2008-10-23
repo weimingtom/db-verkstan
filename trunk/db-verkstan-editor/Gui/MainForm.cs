@@ -22,11 +22,9 @@ namespace VerkstanEditor.Gui
             verkstanWindow.ClearColor = Color.DarkCyan.ToArgb();
             Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.OperatorPage_ViewedOperatorChanged); 
             Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.OperatorPage_ViewedOperatorPropertiesChanged);
-            operatorsPropertiesSplitContainer.Panel1.Controls.Add(operatorPage);
-            operatorsPropertiesSplitContainer.Panel2.Controls.Add(operatorProperty);
+            splitContainer3.Panel2.Controls.Add(operatorPage);
+            splitContainer4.Panel1.Controls.Add(operatorProperty);
             operatorProperty.Dock = DockStyle.Fill;
-            operatorsPropertiesSplitContainer.Panel1.VerticalScroll.SmallChange = 40;
-            operatorsPropertiesSplitContainer.Panel1.VerticalScroll.LargeChange = 40;
 
             unsafe
             {

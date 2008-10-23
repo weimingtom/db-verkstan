@@ -15,48 +15,50 @@ dirty(true)
         inputs[i] = -1;
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
         outputs[i] = -1;
+    for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+        properties[i].channel = -1;
 }
 
 unsigned char Operator::getByteProperty(int index)
 {
-    return properties[index].byteValue;
+    return properties[index].value.byteValue;
 }
 
 void Operator::setByteProperty(int index, unsigned char value)
 {
-    properties[index].byteValue = value;
+    properties[index].value.byteValue = value;
 }
 
 int Operator::getIntProperty(int index)
 {
-    return properties[index].intValue;
+    return properties[index].value.intValue;
 }
 
 void Operator::setIntProperty(int index, int value)
 {
-    properties[index].intValue = value;
+    properties[index].value.intValue = value;
 }
 
 float Operator::getFloatProperty(int index)
 {
-    return properties[index].floatValue;
+    return properties[index].value.floatValue;
 }
 
 void Operator::setFloatProperty(int index, float value)
 {
-    properties[index].floatValue = value;
+    properties[index].value.floatValue = value;
 }
 
 const char* Operator::getStringProperty(int index)
 {
-    return properties[index].stringValue;
+    return properties[index].value.stringValue;
 }
 
 void Operator::setStringProperty(int index, const char *value)
 {
     // TODO Should strcpy really be used here? Perhaps there is a better solution.
     // Perhaps strcpy requires a runtime library that we cannot relay on (like Microsoft runtime libraries).
-    strcpy(properties[index].stringValue, value);
+    strcpy(properties[index].value.stringValue, value);
 }
 
 bool Operator::isDirty()
@@ -74,6 +76,24 @@ void Operator::cascadeProcess()
 
     process();
     dirty = false;
+}
+
+void Operator::broadcastChannelValue(int channel, float value)
+{
+    for (int i = 0; i < numberOfInputs; i++)
+        operators[inputs[i]]->broadcastChannelValue(channel, value);
+
+    for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+    {
+        if (properties[i].channel == channel)
+        {
+            float v = properties[i].amplify * value;
+            properties[i].value.byteValue = (unsigned char)(v);
+            properties[i].value.intValue = (int)(v);
+            properties[i].value.floatValue = v;
+            setDirty(true);
+        }
+    }
 }
 
 void Operator::setDirty(bool dirty)
