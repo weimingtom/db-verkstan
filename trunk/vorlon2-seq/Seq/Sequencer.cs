@@ -102,14 +102,17 @@ namespace VorlonSeq.Seq
 
             foreach (NoteEvent e in NoteEvents)
             {
-                if (e.StartTime >= start && e.StartTime < end)
-                {
-                    result.Add(e.ToEvent(MidiMessage.Commands.NoteOn).Message);
-                }
-
                 if (e.EndTime >= start && e.EndTime < end)
                 {
                     result.Add(e.ToEvent(MidiMessage.Commands.NoteOff).Message);
+                }
+            }
+
+            foreach (NoteEvent e in NoteEvents)
+            {
+                if (e.StartTime >= start && e.StartTime < end)
+                {
+                    result.Add(e.ToEvent(MidiMessage.Commands.NoteOn).Message);
                 }
             }
 
