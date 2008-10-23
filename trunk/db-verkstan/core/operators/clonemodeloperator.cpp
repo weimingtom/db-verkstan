@@ -18,11 +18,12 @@ void CloneModelOperator::render()
 
     for (int i = 1; i < clones; i++)
     {
-        globalWorldMatrixStack->Scale(scalex, scaley, scalez);
+        globalWorldMatrixStack->Translate(translationx, translationy, translationz);
         globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(1.0f, 0.0f, 0.0f), rotationx);
         globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 1.0f, 0.0f), rotationy);
         globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), rotationz);
-        globalWorldMatrixStack->Translate(translationx, translationy, translationz);
+        globalWorldMatrixStack->Scale(scalex, scaley, scalez);
+       
         getInput(0)->render();
     }
 

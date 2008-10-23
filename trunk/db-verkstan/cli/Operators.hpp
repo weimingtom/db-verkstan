@@ -156,7 +156,7 @@ END_OP();
 
 DEF_OP("Material", MaterialOperator, Model);
 ADD_INPUT(Mesh);
-ADD_INPUT(Texture);
+ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
 DEF_OP("Clone", CloneModelOperator, Model);

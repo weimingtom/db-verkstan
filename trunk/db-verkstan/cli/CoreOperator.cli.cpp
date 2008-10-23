@@ -216,7 +216,7 @@ namespace Verkstan
                 inputOperators->Add(inputJoints[i]->Sender);
             
         int numberOfInputs = 0;
-
+        int numberOfRequiredInputs = 0;
         warningPresent = false;
         for (int i = 0; i < inputOperators->Count && inputs->Count > 0; i++)
         {
@@ -234,6 +234,8 @@ namespace Verkstan
                     getOperator()->inputs[j] = op->Id;
                     accepted = true;
                     numberOfInputs++;
+                    if (!inputs[j]->Optional)
+                        numberOfRequiredInputs++;
                     break;
                 }
             }
@@ -250,7 +252,6 @@ namespace Verkstan
                     {
                         getOperator()->inputs[j] = op->Id;
                         accepted = true;
-                        System::Console::WriteLine("Input " + op->Id + " accepted at position " + j);
                         numberOfInputs++;
                         break;
                     }
@@ -267,7 +268,7 @@ namespace Verkstan
         for (int i = 0; i < inputs->Count; i++)
             if (!inputs[i]->Optional)
                 requiredInputs++;  
-        processable = requiredInputs <= numberOfInputs;
+        processable = requiredInputs <= numberOfRequiredInputs;
     }
 
     void CoreOperator::UpdateOutputConnections()
