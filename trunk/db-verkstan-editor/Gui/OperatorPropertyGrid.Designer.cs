@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class OperatorProperty
+    partial class OperatorPropertyGrid
     {
         /// <summary> 
         /// Required designer variable.

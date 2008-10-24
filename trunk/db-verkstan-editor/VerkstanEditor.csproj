@@ -12,6 +12,26 @@
     <AssemblyName>db-verkstan-editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ManifestCertificateThumbprint>55B6707806442DC682573703855694C92AFAB3C5</ManifestCertificateThumbprint>
+    <ManifestKeyFile>VerkstanEditor_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <PublishUrl>D:\tmp\db-verkstan\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,7 +53,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3218.33818, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3219.28088, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
     </Reference>
@@ -60,11 +80,11 @@
     <Compile Include="Gui\ColorProperty.Designer.cs">
       <DependentUpon>ColorProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\OperatorProperty.cs">
+    <Compile Include="Gui\OperatorPropertyGrid.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\OperatorProperty.Designer.cs">
-      <DependentUpon>OperatorProperty.cs</DependentUpon>
+    <Compile Include="Gui\OperatorPropertyGrid.Designer.cs">
+      <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\VectorProperty.cs">
       <SubType>UserControl</SubType>
@@ -97,8 +117,8 @@
     <EmbeddedResource Include="Gui\OperatorPage.resx">
       <DependentUpon>OperatorPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OperatorProperty.resx">
-      <DependentUpon>OperatorProperty.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\OperatorPropertyGrid.resx">
+      <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\VectorProperty.resx">
       <DependentUpon>VectorProperty.cs</DependentUpon>
@@ -117,6 +137,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="VerkstanEditor_TemporaryKey.pfx" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -132,6 +153,38 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="warning_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.0 %28x86%29</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

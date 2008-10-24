@@ -11,7 +11,7 @@ using VerkstanEditor.Util;
 
 namespace VerkstanEditor.Gui
 {
-    public partial class operatorPage : UserControl
+    public partial class OperatorPage : UserControl
     {
         private bool InSelect = false;
         private bool InMove = false;
@@ -21,7 +21,7 @@ namespace VerkstanEditor.Gui
         private Point MouseLocation;
         private Point AddLocation;
 
-        public operatorPage()
+        public OperatorPage()
         {
             this.Size = new Size(0, 0);
             this.DoubleBuffered = true;

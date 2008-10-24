@@ -10,7 +10,12 @@ void RectangleOperator::process()
     if (texture == 0)
         texture = new Texture();
 
-    getInput(0)->texture->copy(texture);
+    Operator* input = getInput(0);
+    
+    if (input != 0)
+        input->texture->copy(texture);
+    else
+        texture->fillRectangle(0, 0, 256, 256, 0xff000000);
 
     unsigned char r = getByteProperty(0);
     unsigned char g = getByteProperty(1);

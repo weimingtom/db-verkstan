@@ -16,6 +16,7 @@
 #include "core/operators/lightoperator.hpp"
 #include "core/operators/cameraoperator.hpp"
 #include "core/operators/clonemodeloperator.hpp"
+#include "core/operators/sceneoperator.hpp"
 
 namespace Verkstan
 {
@@ -56,10 +57,11 @@ ADD_OP_TO_CAT("Texture Mapping", "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform",       "Model");
 ADD_OP_TO_CAT("Light",           "Model");
-ADD_OP_TO_CAT("Add",             "Model");
+ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
-ADD_OP_TO_CAT("Clone",           "Model");
+ADD_OP_TO_CAT("Clone Model",     "Model");
 ADD_OP_TO_CAT("Camera",          "Scene");
+ADD_OP_TO_CAT("Scene",           "Scene");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -91,7 +93,7 @@ ADD_BYTE_PROP("X",      10);
 ADD_BYTE_PROP("Y",      10);
 ADD_BYTE_PROP("Width",  100);
 ADD_BYTE_PROP("Height", 100);
-ADD_INPUT(Texture);
+ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
 DEF_OP("Rotozoom", RotozoomOperator, Texture);
@@ -144,7 +146,7 @@ ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Model);
 END_OP();
 
-DEF_OP("Add", AddModelsOperator, Model);
+DEF_OP("Add Models", AddModelsOperator, Model);
 ADD_INFINITE_INPUT(Model);
 END_OP();
 
@@ -159,7 +161,7 @@ ADD_INPUT(Mesh);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
-DEF_OP("Clone", CloneModelOperator, Model);
+DEF_OP("Clone Model", CloneModelOperator, Model);
 ADD_BYTE_PROP("Clones",      2);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
@@ -175,6 +177,10 @@ ADD_COLOR_PROP("Clear color", 255, 0, 255);
 ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
 ADD_INFINITE_INPUT(Model);
+END_OP();
+
+DEF_OP("Scene", SceneOperator, Scene);
+ADD_INFINITE_INPUT(Scene);
 END_OP();
 
 #endif

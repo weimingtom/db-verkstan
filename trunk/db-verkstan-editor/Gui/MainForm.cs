@@ -11,8 +11,6 @@ namespace VerkstanEditor.Gui
 {
     public partial class mainForm : Form
     {
-        operatorPage operatorPage = new operatorPage();
-        OperatorProperty operatorProperty = new OperatorProperty();
         Verkstan.Window verkstanWindow;
 
         public mainForm()
@@ -20,11 +18,8 @@ namespace VerkstanEditor.Gui
             InitializeComponent();
             verkstanWindow = new Verkstan.Window();
             verkstanWindow.ClearColor = Color.DarkCyan.ToArgb();
-            Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.OperatorPage_ViewedOperatorChanged); 
-            Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.OperatorPage_ViewedOperatorPropertiesChanged);
-            splitContainer3.Panel2.Controls.Add(operatorPage);
-            splitContainer4.Panel1.Controls.Add(operatorProperty);
-            operatorProperty.Dock = DockStyle.Fill;
+            Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.Operators_ViewedOperatorChanged); 
+            Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.Operators_ViewedOperatorPropertiesChanged);
 
             unsafe
             {
@@ -55,12 +50,12 @@ namespace VerkstanEditor.Gui
             transportTimeLabel.Location = new Point(transportPanel.Width / 2 - transportTimeLabel.Width / 2, 0);        
         }
 
-        private void OperatorPage_ViewedOperatorPropertiesChanged(Operator op)
+        private void Operators_ViewedOperatorPropertiesChanged(Operator op)
         {
-            operatorProperty.Operator = op;
+            operatorPropertyGrid.Operator = op;
         }
 
-        private void OperatorPage_ViewedOperatorChanged(Operator op)
+        private void Operators_ViewedOperatorChanged(Operator op)
         {
             if (op == null)
                 verkstanWindow.ViewedOperator = null;

@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace VerkstanEditor.Gui
 {
-    public partial class OperatorProperty : UserControl 
+    public partial class OperatorPropertyGrid : UserControl 
     {
         private Operator op;
 
@@ -168,7 +168,7 @@ namespace VerkstanEditor.Gui
             OperatorPropertyTable.Visible = true;
         }
 
-        public OperatorProperty()
+        public OperatorPropertyGrid()
         {
             InitializeComponent();
         }
