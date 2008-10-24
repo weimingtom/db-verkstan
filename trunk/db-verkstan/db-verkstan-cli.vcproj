@@ -397,6 +397,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\demooperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\demooperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\flatoperator.cpp"
 					>
 				</File>

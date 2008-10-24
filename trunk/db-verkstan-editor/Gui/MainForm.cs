@@ -45,11 +45,6 @@ namespace VerkstanEditor.Gui
                 verkstanWindow.Resize();
         }
 
-        private void TransportPanel_SizeChanged(object sender, EventArgs e)
-        {
-            transportTimeLabel.Location = new Point(transportPanel.Width / 2 - transportTimeLabel.Width / 2, 0);        
-        }
-
         private void Operators_ViewedOperatorPropertiesChanged(Operator op)
         {
             operatorPropertyGrid.Operator = op;

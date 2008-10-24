@@ -1,7 +1,6 @@
 #pragma once
 
 using namespace System;
-#using <mscorlib.dll>
 using namespace System::Collections::Generic;
 
 namespace Verkstan

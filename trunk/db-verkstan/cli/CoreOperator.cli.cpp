@@ -15,8 +15,7 @@ namespace Verkstan
                                  List<OperatorInput^>^ inputs)
                              : Operator(name, 
                                         operatorId, 
-                                        type, 
-                                        Constants::OperatorTypes::Core,
+                                        type,
                                         properties)
     {
         this->warningPresent = false;

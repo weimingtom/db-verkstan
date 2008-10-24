@@ -33,7 +33,7 @@ namespace Verkstan
         void RenderLoadOperator(Operator^ op);
         void RenderMeshOperator(Operator^ op);
         void RenderModelOperator(Operator^ op);
-        void RenderSceneOperator(Operator^ op);
+        void RenderDemoSceneRendererOperator(Operator^ op);
         void RenderUnknownOperator(Operator^ op);
 
         Camera^ camera;

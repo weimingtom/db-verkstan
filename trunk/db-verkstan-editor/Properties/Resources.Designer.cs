@@ -67,6 +67,13 @@ namespace VerkstanEditor.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap operators_icon {
+            get {
+                object obj = ResourceManager.GetObject("operators_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap warning_icon {
             get {
                 object obj = ResourceManager.GetObject("warning_icon", resourceCulture);

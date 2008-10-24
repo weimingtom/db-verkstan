@@ -20,14 +20,12 @@ namespace Verkstan
     Operator::Operator(String^ name,
                        int operatorId,
                        Constants::OperatorTypes type,
-                       Constants::OperatorTypes internalType,
                        OperatorProperties^ properties)
     {
         this->name = name;
         DisplayName = name;
         this->id = operatorId;
         this->type = type;
-        this->internalType = internalType;
         this->properties = properties;
     }
 
@@ -54,10 +52,5 @@ namespace Verkstan
     Constants::OperatorTypes Operator::Type::get() 
     {
         return type;
-    }
-
-    Constants::OperatorTypes Operator::InternalType::get() 
-    {
-        return internalType;
     }
 }

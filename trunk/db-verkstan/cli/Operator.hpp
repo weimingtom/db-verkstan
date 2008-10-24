@@ -6,15 +6,17 @@
 #include "cli/Joint.hpp"
 #include "cli/OperatorProperties.hpp"
 
+#using <mscorlib.dll>
+
 namespace Verkstan 
 {
     public ref class OperatorInput
     {
     public:
         OperatorInput(int index,
-                             Constants::OperatorTypes type,
-                             bool infinite,
-                             bool optional);
+                      Constants::OperatorTypes type,
+                      bool infinite,
+                      bool optional);
         property bool Infinite;
         property bool Optional;
         property Constants::OperatorTypes Type;
@@ -25,15 +27,13 @@ namespace Verkstan
 	{
     public:
         Operator(String^ name,
-                        int operatorId,
-                        Constants::OperatorTypes type,
-                        Constants::OperatorTypes internalType,
-                        OperatorProperties^ properties);
+                 int operatorId,
+                 Constants::OperatorTypes type,
+                 OperatorProperties^ properties);
         virtual ~Operator();
 
         String^ DisplayName;
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
-        property Constants::OperatorTypes InternalType { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ Name { String^ get(); }
         property OperatorProperties^ Properties 
@@ -70,7 +70,6 @@ namespace Verkstan
         Constants::OperatorTypes type;
 
     private:
-        Constants::OperatorTypes internalType;
         String^ name;
         OperatorProperties^ properties;
 	};

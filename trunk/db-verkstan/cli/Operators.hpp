@@ -17,6 +17,7 @@
 #include "core/operators/cameraoperator.hpp"
 #include "core/operators/clonemodeloperator.hpp"
 #include "core/operators/sceneoperator.hpp"
+#include "core/operators/demooperator.hpp"
 
 namespace Verkstan
 {
@@ -39,6 +40,7 @@ namespace Verkstan
         using ::LightOperator;
         using ::CameraOperator;
         using ::CloneModelOperator;
+        using ::DemoOperator;
     }
 }
 #endif
@@ -60,8 +62,9 @@ ADD_OP_TO_CAT("Light",           "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
-ADD_OP_TO_CAT("Camera",          "Scene");
+ADD_OP_TO_CAT("Camera",          "Renderer");
 ADD_OP_TO_CAT("Scene",           "Scene");
+ADD_OP_TO_CAT("Demo",            "Scene");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -169,7 +172,7 @@ ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Model);
 END_OP();
 
-DEF_OP("Camera", CameraOperator, Scene);
+DEF_OP("Camera", CameraOperator, Renderer);
 ADD_BYTE_PROP("Angle", 32);
 ADD_INT_PROP("Aspect width", 1024);
 ADD_INT_PROP("Aspect height", 768);
@@ -180,6 +183,10 @@ ADD_INFINITE_INPUT(Model);
 END_OP();
 
 DEF_OP("Scene", SceneOperator, Scene);
+ADD_INFINITE_INPUT(Renderer);
+END_OP();
+
+DEF_OP("Demo", DemoOperator, Demo);
 ADD_INFINITE_INPUT(Scene);
 END_OP();
 

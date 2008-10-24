@@ -94,13 +94,14 @@ namespace VerkstanEditor
                 Color = Color.FromArgb(70, 245, 90);
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Model)
                 Color = Color.FromArgb(70, 90, 255);
+            else if (Binding.Type == Verkstan.Constants.OperatorTypes.Renderer)
+                Color = Color.Purple;
             else if (Binding.Type == Verkstan.Constants.OperatorTypes.Scene)
-            {
-                Color = Color.FromArgb(255, 0, 255);
-                TextColor = Color.White;
-            }
+                Color = Color.Purple;
+            else if (Binding.Type == Verkstan.Constants.OperatorTypes.Demo)
+                Color = Color.Purple;
             else
-                Color = Color.FromArgb(190, 190, 150);
+                Color = Color.Yellow;
         }
 
         public Rectangle GetAreaForInConnections()

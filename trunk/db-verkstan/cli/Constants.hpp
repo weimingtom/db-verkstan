@@ -12,11 +12,11 @@ namespace Verkstan
             Texture,
             Mesh,
             Model,
-            Camera,
+            Renderer,
             Scene,
+            Demo,
             Load,
-            Store,
-            Core
+            Store
         };
 
        enum class OperatorPropertyTypes

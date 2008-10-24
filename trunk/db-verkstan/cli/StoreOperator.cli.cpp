@@ -12,7 +12,6 @@ namespace Verkstan
                              : Operator("Store", 
                                         -1, 
                                         Constants::OperatorTypes::Store, 
-                                        Constants::OperatorTypes::Store,
                                         properties)
     {
         primaryJoint = gcnew Joint();

@@ -12,7 +12,6 @@ namespace Verkstan
                              : Operator("Load", 
                                         -1, 
                                         Constants::OperatorTypes::Load, 
-                                        Constants::OperatorTypes::Load,
                                         properties)
     {
         receivers = gcnew List<Operator^>();

@@ -50,8 +50,10 @@ namespace Verkstan
         case Constants::OperatorTypes::Load:
             RenderLoadOperator(op);
             break;
+        case Constants::OperatorTypes::Demo:
         case Constants::OperatorTypes::Scene:
-            RenderSceneOperator(op);
+        case Constants::OperatorTypes::Renderer:
+            RenderDemoSceneRendererOperator(op);
             break;
         default:
             RenderUnknownOperator(op);
@@ -244,7 +246,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderSceneOperator(Operator^ op)
+    void Renderer::RenderDemoSceneRendererOperator(Operator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 

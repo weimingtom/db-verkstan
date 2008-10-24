@@ -3,7 +3,6 @@
 #include "cli/Constants.hpp"
 
 using namespace System;
-#using <mscorlib.dll>
 using namespace System::Collections::Generic;
 
 namespace Verkstan 
