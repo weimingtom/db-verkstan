@@ -9,11 +9,13 @@
 namespace Verkstan
 {
     CoreOperator::CoreOperator(String^ name,
-                                 int operatorId,
-                                 Constants::OperatorTypes type,
-                                 OperatorProperties^ properties,
-                                 List<OperatorInput^>^ inputs)
-                             : Operator(name, 
+                               String^ typeName,
+                               int operatorId,
+                               Constants::OperatorTypes type,
+                               OperatorProperties^ properties,
+                               List<OperatorInput^>^ inputs)
+                             : Operator(name,
+                                        typeName,
                                         operatorId, 
                                         type,
                                         properties)

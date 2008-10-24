@@ -10,10 +10,11 @@ namespace Verkstan
 	{
     public:
         CoreOperator(String^ name,
-                            int operatorId,
-                            Constants::OperatorTypes type,
-                            OperatorProperties^ properties,
-                            List<OperatorInput^>^ inputs);
+                     String^ typeName,
+                     int operatorId,
+                     Constants::OperatorTypes type,
+                     OperatorProperties^ properties,
+                     List<OperatorInput^>^ inputs);
         virtual ~CoreOperator();
 
         virtual unsigned char GetByteProperty(int index) override;

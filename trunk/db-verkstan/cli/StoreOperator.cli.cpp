@@ -8,8 +8,9 @@
 
 namespace Verkstan
 {
-    StoreOperator::StoreOperator(OperatorProperties^ properties)
-                             : Operator("Store", 
+    StoreOperator::StoreOperator(String^ name, OperatorProperties^ properties)
+                             : Operator(name,
+                                        "Store", 
                                         -1, 
                                         Constants::OperatorTypes::Store, 
                                         properties)

@@ -68,6 +68,7 @@ categories[category]->Add(name);
         OperatorProperties^ properties = gcnew OperatorProperties();\
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
         op = gcnew CoreOperator(opName,  \
+                                opName,  \
                                id,      \
                                Constants::OperatorTypes::##opType,   \
                                properties,  \
@@ -124,14 +125,14 @@ categories[category]->Add(name);
         {
             OperatorProperties^ properties = gcnew OperatorProperties();
             properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
-            op = gcnew StoreOperator(properties);
+            op = gcnew StoreOperator("Store",properties);
         }
 
         if (name == "Load")
         {
             OperatorProperties^ properties = gcnew OperatorProperties();
             properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
-            op = gcnew LoadOperator(properties);
+            op = gcnew LoadOperator("Load",properties);
         }
 
         return op;

@@ -8,8 +8,9 @@
 
 namespace Verkstan
 {
-    LoadOperator::LoadOperator(OperatorProperties^ properties)
-                             : Operator("Load", 
+    LoadOperator::LoadOperator(String^ name, OperatorProperties^ properties)
+                             : Operator(name,
+                                        "Load", 
                                         -1, 
                                         Constants::OperatorTypes::Load, 
                                         properties)

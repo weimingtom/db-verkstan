@@ -27,15 +27,17 @@ namespace Verkstan
 	{
     public:
         Operator(String^ name,
+                 String^ typeName,
                  int operatorId,
                  Constants::OperatorTypes type,
                  OperatorProperties^ properties);
         virtual ~Operator();
 
         String^ DisplayName;
+        String^ Name;
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
-        property String^ Name { String^ get(); }
+        property String^ TypeName { String^ get(); }
         property OperatorProperties^ Properties 
         { 
             OperatorProperties^ get(); 
@@ -70,7 +72,7 @@ namespace Verkstan
         Constants::OperatorTypes type;
 
     private:
-        String^ name;
+        String^ typeName;
         OperatorProperties^ properties;
 	};
 }

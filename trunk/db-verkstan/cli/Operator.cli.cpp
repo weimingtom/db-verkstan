@@ -18,11 +18,13 @@ namespace Verkstan
     }
 
     Operator::Operator(String^ name,
+                       String^ typeName,
                        int operatorId,
                        Constants::OperatorTypes type,
                        OperatorProperties^ properties)
     {
-        this->name = name;
+        this->Name = name;
+        this->typeName = typeName;
         DisplayName = name;
         this->id = operatorId;
         this->type = type;
@@ -44,9 +46,9 @@ namespace Verkstan
         return properties;
     }
 
-    String^ Operator::Name::get() 
+    String^ Operator::TypeName::get() 
     {
-        return name;
+        return typeName;
     }
 
     Constants::OperatorTypes Operator::Type::get() 
