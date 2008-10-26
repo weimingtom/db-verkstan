@@ -47,6 +47,7 @@ namespace Verkstan
 		using ::IcosahedronOperator;
 		using ::SubdivideOperator;
 		using ::RelaxOperator;
+        using ::SceneOperator;
     }
 }
 #endif

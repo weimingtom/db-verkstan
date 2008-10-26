@@ -194,6 +194,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Clip.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Clip.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\ClipFactory.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\ClipFactory.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Connector.cli.cpp"
 				>
 			</File>
@@ -211,6 +227,14 @@
 			</File>
 			<File
 				RelativePath=".\cli\CoreOperator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorProxy.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorProxy.hpp"
 				>
 			</File>
 			<File
@@ -287,6 +311,22 @@
 			</File>
 			<File
 				RelativePath=".\cli\Renderer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\SceneOperator.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\SceneOperator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\SineClip.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\SineClipp.cli.cpp"
 				>
 			</File>
 			<File

@@ -177,15 +177,7 @@
 			Name="core"
 			>
 			<File
-				RelativePath=".\core\broadcaster.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\core\channel.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\core\channel.hpp"
+				RelativePath=".\core\clip.hpp"
 				>
 			</File>
 			<File
@@ -229,11 +221,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\core\timer.cpp"
+				RelativePath=".\core\util.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\core\timer.hpp"
+				RelativePath=".\core\util.hpp"
 				>
 			</File>
 			<Filter
@@ -296,6 +288,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\icosahedronoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\icosahedronoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\lightoperator.cpp"
 					>
 				</File>
@@ -336,6 +336,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\relaxoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\relaxoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\rotozoomoperator.cpp"
 					>
 				</File>
@@ -357,6 +365,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\sphereoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\subdivideoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\subdivideoperator.hpp"
 					>
 				</File>
 				<File
@@ -393,22 +409,22 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="broadcasters"
+				Name="clips"
 				>
 				<File
-					RelativePath=".\core\broadcasters\sinebroadcaster.cpp"
+					RelativePath=".\core\clips\sineclip.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\broadcasters\sinebroadcaster.hpp"
+					RelativePath=".\core\clips\sineclip.hpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\broadcasters\splinebroadcaster.cpp"
+					RelativePath=".\core\clips\splineclip.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\broadcasters\splinebroadcaster.hpp"
+					RelativePath=".\core\clips\splineclip.hpp"
 					>
 				</File>
 			</Filter>

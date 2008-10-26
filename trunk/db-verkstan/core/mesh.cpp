@@ -371,6 +371,7 @@ void Mesh::destroyD3DBuffers()
 
 void Mesh::debugPrint()
 {
+    /*
 	System::Console::WriteLine("Num Vertices: " + numVertices);
 	for(int i = 0; i < numVertices; i++)
 	{
@@ -401,6 +402,7 @@ void Mesh::debugPrint()
 		}
 		System::Console::WriteLine();
 	}
+    */
 }
 
 

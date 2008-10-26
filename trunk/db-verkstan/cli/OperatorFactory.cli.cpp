@@ -7,6 +7,9 @@
 #include "cli/CoreOperator.hpp"
 #include "cli/LoadOperator.hpp"
 #include "cli/StoreOperator.hpp"
+#include "cli/SceneOperator.hpp"
+#include "cli/ClipFactory.hpp"
+#include "cli/Clip.hpp"
 
 namespace Verkstan
 {
@@ -54,13 +57,13 @@ categories[category]->Add(name);
 #define DEF_OP(opName, opClass, opType)             \
     if (name == opName)                             \
     {                                               \
-        Core::Operator* o = new opClass##();\
+        Core::Operator* o = new Core::opClass##();  \
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
-            if (operators[i] == 0)                  \
+        if (Core::operators[i] == 0)                \
             {                                       \
-                operators[i] = o;                   \
+            Core::operators[i] = o;                 \
                 id = i;                             \
                 break;                              \
             }                                       \
@@ -137,22 +140,20 @@ categories[category]->Add(name);
 
         if (name == "Scene")
         {
-            Core::Operator* coreOp = op->getOperator();
-            SineClip* sine = new SineClip();
-            sine->channel = 0;
-            sine->start = 0;
-            sine->end = 256*6;
-            clips[0] = sine;
+            Clip^ c1 = ClipFactory::Create("Sine");
+            c1->Channel = 0;
+            c1->Start = 0;
+            c1->End = 256*6;
 
-            SineClip* sine2 = new SineClip();
-            sine2->channel = 0;
-            sine2->start = 256*12;
-            sine2->end = 256*18;
-            clips[1] = sine2;
-            
-            coreOp->numberOfClips = 2;
-            coreOp->operatorClips[0] = 0;
-            coreOp->operatorClips[1] = 1;
+            Clip^ c2 = ClipFactory::Create("Sine");
+            c2->Channel = 0;
+            c2->Start = 256*12;
+            c2->End = 256*18;
+
+            SceneOperator^ so = gcnew SceneOperator(op);
+            so->AddClip(c1);
+            so->AddClip(c2);
+            return so;
         }
 
         if (name == "Transform Model")
