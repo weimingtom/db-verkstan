@@ -6,7 +6,7 @@ void TorusOperator::render()
 }
 
 void TorusOperator::process()
-{
+{/*
     if (mesh != 0)
         delete mesh;
 
@@ -41,5 +41,5 @@ void TorusOperator::process()
         vertices->v = acosf(vertices->position.y / innerRadius) / 2 * D3DX_PI;
         vertices->u = (acosf(vertices->position.x / (innerRadius + outerRadius * cos(2 * D3DX_PI * vertices->v)))) * 2 * D3DX_PI;
         vertices++;
-    }
+    }*/
 }

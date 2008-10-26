@@ -125,8 +125,7 @@ void Operator::deviceLost()
 
     if (mesh != 0)
     {
-        delete mesh;
-        mesh = 0;
+		mesh->setDirty();
     }
 
     dirty = true;

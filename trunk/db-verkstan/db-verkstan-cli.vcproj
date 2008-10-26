@@ -365,6 +365,14 @@
 				RelativePath=".\core\texture.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\core\util.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\util.hpp"
+				>
+			</File>
 			<Filter
 				Name="operators"
 				>
@@ -425,6 +433,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\icosahedronoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\icosahedronoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\lightoperator.cpp"
 					>
 				</File>
@@ -465,6 +481,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\relaxoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\relaxoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\rotozoomoperator.cpp"
 					>
 				</File>
@@ -486,6 +510,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\sphereoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\subdivideoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\subdivideoperator.hpp"
 					>
 				</File>
 				<File

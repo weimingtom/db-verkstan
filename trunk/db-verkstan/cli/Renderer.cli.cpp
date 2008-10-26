@@ -156,15 +156,18 @@ namespace Verkstan
         globalWorldMatrixStack->LoadIdentity();            
         globalDirect3DDevice->BeginScene();
 
+		coreOp->mesh->render();
+
+		/*
         globalWorldMatrixStack->Push();
         globalWorldMatrixStack->Scale(coreOp->mesh->scale.x,
                                       coreOp->mesh->scale.y,
                                       coreOp->mesh->scale.z);
-        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(1.0f, 0.0f, 0.0f),
+        globalWorldMatrixStack->RotateAxis(&Vec3(1.0f, 0.0f, 0.0f),
                                            coreOp->mesh->rotation.x);
-        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 1.0f, 0.0f),
+        globalWorldMatrixStack->RotateAxis(&Vec3(0.0f, 1.0f, 0.0f),
                                            coreOp->mesh->rotation.y);
-        globalWorldMatrixStack->RotateAxis(&D3DXVECTOR3(0.0f, 0.0f, 1.0f),
+        globalWorldMatrixStack->RotateAxis(&Vec3(0.0f, 0.0f, 1.0f),
                                            coreOp->mesh->rotation.z);
         globalWorldMatrixStack->Translate(coreOp->mesh->translation.x,
                                           coreOp->mesh->translation.y,
@@ -172,6 +175,7 @@ namespace Verkstan
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
         coreOp->mesh->d3d9Mesh->DrawSubset(0);
         globalWorldMatrixStack->Pop();
+		*/
         globalDirect3DDevice->EndScene();
     }
 

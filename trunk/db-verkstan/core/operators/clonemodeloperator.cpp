@@ -19,9 +19,9 @@ void CloneModelOperator::render()
     for (int i = 1; i < clones; i++)
     {
         globalWorldMatrixStack->TranslateLocal(translationx, translationy, translationz);
-        globalWorldMatrixStack->RotateAxisLocal(&D3DXVECTOR3(1.0f, 0.0f, 0.0f), rotationx);
-        globalWorldMatrixStack->RotateAxisLocal(&D3DXVECTOR3(0.0f, 1.0f, 0.0f), rotationy);
-        globalWorldMatrixStack->RotateAxisLocal(&D3DXVECTOR3(0.0f, 0.0f, 1.0f), rotationz);
+        globalWorldMatrixStack->RotateAxisLocal(&Vec3(1.0f, 0.0f, 0.0f), rotationx);
+        globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 1.0f, 0.0f), rotationy);
+        globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 0.0f, 1.0f), rotationz);
         globalWorldMatrixStack->ScaleLocal(scalex, scaley, scalez);
        
         getInput(0)->render();

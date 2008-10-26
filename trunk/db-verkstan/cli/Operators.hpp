@@ -18,6 +18,9 @@
 #include "core/operators/clonemodeloperator.hpp"
 #include "core/operators/sceneoperator.hpp"
 #include "core/operators/demooperator.hpp"
+#include "core/operators/icosahedronoperator.hpp"
+#include "core/operators/subdivideoperator.hpp"
+#include "core/operators/relaxoperator.hpp"
 
 namespace Verkstan
 {
@@ -41,6 +44,9 @@ namespace Verkstan
         using ::CameraOperator;
         using ::CloneModelOperator;
         using ::DemoOperator;
+		using ::IcosahedronOperator;
+		using ::SubdivideOperator;
+		using ::RelaxOperator;
     }
 }
 #endif
@@ -55,7 +61,10 @@ ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
 ADD_OP_TO_CAT("Box",             "Mesh");
+ADD_OP_TO_CAT("Icosahedron",     "Mesh");
 ADD_OP_TO_CAT("Texture Mapping", "Mesh");
+ADD_OP_TO_CAT("Subdivide",       "Mesh");
+ADD_OP_TO_CAT("Relax",	         "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -132,6 +141,20 @@ DEF_OP("Box", BoxOperator, Mesh);
 ADD_FLOAT_PROP("Width",  1.0f);
 ADD_FLOAT_PROP("Height", 1.0f);
 ADD_FLOAT_PROP("Depth",  1.0f);
+END_OP();
+
+DEF_OP("Icosahedron", IcosahedronOperator, Mesh);
+END_OP();
+
+DEF_OP("Subdivide", SubdivideOperator, Mesh);
+ADD_BYTE_PROP("Repetitions", 1);
+ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Relax", RelaxOperator, Mesh);
+ADD_FLOAT_PROP("Strength", 0.1f);
+ADD_BYTE_PROP("Repetitions", 2);
+ADD_INPUT(Mesh);
 END_OP();
 
 DEF_OP("Texture Mapping", TextureMappingOperator, Mesh);

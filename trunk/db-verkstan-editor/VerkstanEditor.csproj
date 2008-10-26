@@ -16,7 +16,7 @@
     <ManifestCertificateThumbprint>55B6707806442DC682573703855694C92AFAB3C5</ManifestCertificateThumbprint>
     <ManifestKeyFile>VerkstanEditor_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <PublishUrl>D:\tmp\db-verkstan\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>

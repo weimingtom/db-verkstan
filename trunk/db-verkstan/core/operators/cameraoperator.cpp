@@ -24,9 +24,9 @@ void CameraOperator::render()
     D3DXMatrixRotationZ(&rotationZ, getFloatProperty(11));
     D3DXMATRIX lookat;
     D3DXMatrixLookAtLH(&lookat,
-                       &D3DXVECTOR3(0.0f, 0.0f, -5.0f),
-                       &D3DXVECTOR3(0.0f, 0.0f, 0.0f),
-                       &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+                       &Vec3(0.0f, 0.0f, -5.0f),
+                       &Vec3(0.0f, 0.0f, 0.0f),
+                       &Vec3(0.0f, 1.0f, 0.0f));
     D3DXMATRIX view = rotationX * rotationY * rotationZ * translation * lookat;
     globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
 

@@ -6,7 +6,7 @@ void CylinderOperator::render()
 }
 
 void CylinderOperator::process()
-{
+{/*
     if (mesh != 0)
         delete mesh;
 
@@ -31,5 +31,5 @@ void CylinderOperator::process()
                           FVF_VERTEX,
                           globalDirect3DDevice,
                           &mesh->d3d9Mesh);
-    tmpMesh->Release();
+    tmpMesh->Release();*/
 }

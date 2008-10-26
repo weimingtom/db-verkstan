@@ -34,7 +34,7 @@ void PixelsOperator::process()
     D3DXCOLOR color;
     for (int i = 0; i < count; i++)
     {
-        D3DXColorLerp(&color, &color1, &color2, rand() / (float)RAND_MAX);
+        D3DXColorLerp(&color, &color1, &color2, frand());
         pixels[pitch * (rand()%256) + (rand()%256)] = color; 
     }
     texture->unlock();
