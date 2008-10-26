@@ -270,6 +270,21 @@ void Mesh::recalculateNormals()
 		normal(verts[2]) += faceNormal;
 	}
 
+	for (int i = 0; i < getNumQuads(); i++)
+	{
+		int *verts = quad(i);
+		Vec3 faceNormal1 = cross(pos(verts[1]) - pos(verts[0]),
+				                 pos(verts[3]) - pos(verts[0]));
+
+		Vec3 faceNormal2 = cross(pos(verts[3]) - pos(verts[2]),
+				                 pos(verts[1]) - pos(verts[2]));
+
+		normal(verts[0]) += faceNormal1;
+		normal(verts[1]) += (faceNormal1 + faceNormal2) / 2;
+		normal(verts[2]) += faceNormal2;
+		normal(verts[3]) += (faceNormal1 + faceNormal2) / 2;
+	}
+
 	for (int i = 0; i < getNumVertices(); i++)
 	{
 		normal(i) = normalize(normal(i));
