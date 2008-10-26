@@ -52,6 +52,7 @@ namespace VerkstanEditor.Gui
         private void start_Click(object sender, EventArgs e)
         {
             Verkstan.Timer.SetBeat(0);
+            UpdateClock();
         }
 
         private void timer_Tick(object sender, EventArgs e)
