@@ -2,6 +2,7 @@
 
 #include "cli/Camera.hpp"
 #include "cli/Operator.hpp"
+#include "cli/Timer.hpp"
 
 namespace Verkstan
 {
@@ -31,6 +32,7 @@ namespace Verkstan
         if (!op->IsProcessable())
             return;
 
+        Core::beat = Timer::GetBeat();
         op->getOperator()->cascadeProcess();
 
         switch (op->Type)

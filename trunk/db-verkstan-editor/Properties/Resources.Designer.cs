@@ -67,6 +67,12 @@ namespace VerkstanEditor.Properties {
             }
         }
         
+        internal static System.IO.UnmanagedMemoryStream metronome {
+            get {
+                return ResourceManager.GetStream("metronome", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap operators_icon {
             get {
                 object obj = ResourceManager.GetObject("operators_icon", resourceCulture);

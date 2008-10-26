@@ -41,6 +41,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
@@ -115,6 +118,8 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
 				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
@@ -172,6 +177,18 @@
 			Name="core"
 			>
 			<File
+				RelativePath=".\core\broadcaster.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\channel.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\channel.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\core\core.cpp"
 				>
 			</File>
@@ -211,6 +228,14 @@
 				RelativePath=".\core\texture.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\core\timer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\timer.hpp"
+				>
+			</File>
 			<Filter
 				Name="operators"
 				>
@@ -239,11 +264,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\clonemodeloperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\clonemodeloperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\cylinderoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\cylinderoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\demooperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\demooperator.hpp"
 					>
 				</File>
 				<File
@@ -303,6 +344,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\sceneoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\sceneoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\sphereoperator.cpp"
 					>
 				</File>
@@ -335,11 +384,31 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\transformmeshoperator.cpp"
+					RelativePath=".\core\operators\transformmodeloperator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\transformmeshoperator.hpp"
+					RelativePath=".\core\operators\transformmodeloperator.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="broadcasters"
+				>
+				<File
+					RelativePath=".\core\broadcasters\sinebroadcaster.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\broadcasters\sinebroadcaster.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\broadcasters\splinebroadcaster.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\broadcasters\splinebroadcaster.hpp"
 					>
 				</File>
 			</Filter>

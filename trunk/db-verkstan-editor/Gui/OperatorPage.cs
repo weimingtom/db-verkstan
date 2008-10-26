@@ -11,6 +11,7 @@ using VerkstanEditor.Util;
 
 namespace VerkstanEditor.Gui
 {
+    [ToolboxItem(true)]
     public partial class OperatorPage : UserControl
     {
         private bool InSelect = false;

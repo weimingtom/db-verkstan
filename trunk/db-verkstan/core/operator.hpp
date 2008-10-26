@@ -10,6 +10,7 @@
 
 #define DB_MAX_OPERATOR_CONNECTIONS 64
 #define DB_MAX_OPERATOR_PROPERTIES 32
+#define DB_MAX_OPERATOR_CLIPS 64
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
 
 class Operator
@@ -18,7 +19,7 @@ public:
     Operator();
     virtual ~Operator() {};
     
-    void cascadeProcess();
+    virtual void cascadeProcess();
     virtual void process() = 0;
     virtual void render() = 0;
 
@@ -40,6 +41,10 @@ public:
 
     Mesh* mesh;
     Texture* texture;
+    int start;
+    int end;
+    int operatorClips[DB_MAX_OPERATOR_CLIPS];
+    int numberOfClips;
 
     union PropertyValue
     {
@@ -54,6 +59,7 @@ public:
         PropertyValue value;
         int channel;
         float amplify;
+        float channelValue;
     };
 
     Property properties[DB_MAX_OPERATOR_PROPERTIES];

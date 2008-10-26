@@ -9,6 +9,7 @@ Operator::Operator()
 texture(0),
 numberOfInputs(0),
 numberOfOutputs(0),
+numberOfClips(0),
 dirty(true)
 {
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
@@ -17,36 +18,41 @@ dirty(true)
         outputs[i] = -1;
     for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
         properties[i].channel = -1;
+    for (int i = 0; i < DB_MAX_OPERATOR_CLIPS; i++)
+        operatorClips[i] = -1;
 }
 
 unsigned char Operator::getByteProperty(int index)
 {
-    return properties[index].value.byteValue;
+    return properties[index].value.byteValue + (unsigned char)properties[index].channelValue;
 }
 
 void Operator::setByteProperty(int index, unsigned char value)
 {
     properties[index].value.byteValue = value;
+    properties[index].channelValue = 0.0f;
 }
 
 int Operator::getIntProperty(int index)
 {
-    return properties[index].value.intValue;
+    return properties[index].value.intValue + (int)properties[index].channelValue;
 }
 
 void Operator::setIntProperty(int index, int value)
 {
     properties[index].value.intValue = value;
+    properties[index].channelValue = 0.0f;
 }
 
 float Operator::getFloatProperty(int index)
 {
-    return properties[index].value.floatValue;
+    return properties[index].value.floatValue + properties[index].channelValue;
 }
 
 void Operator::setFloatProperty(int index, float value)
 {
     properties[index].value.floatValue = value;
+    properties[index].channelValue = 0.0f;
 }
 
 const char* Operator::getStringProperty(int index)
@@ -88,10 +94,8 @@ void Operator::broadcastChannelValue(int channel, float value)
         if (properties[i].channel == channel)
         {
             float v = properties[i].amplify * value;
-            properties[i].value.byteValue = (unsigned char)(v);
-            properties[i].value.intValue = (int)(v);
-            properties[i].value.floatValue = v;
-            setDirty(true);
+            setDirty(properties[i].channelValue != value);
+            properties[i].channelValue = v;
         }
     }
 }

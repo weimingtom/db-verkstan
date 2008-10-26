@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace VerkstanEditor.Gui
 {
+    [ToolboxItem(true)]
     public partial class OperatorPropertyGrid : UserControl 
     {
         private Operator op;

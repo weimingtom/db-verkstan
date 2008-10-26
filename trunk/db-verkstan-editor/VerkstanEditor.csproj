@@ -86,6 +86,12 @@
     <Compile Include="Gui\OperatorPropertyGrid.Designer.cs">
       <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\Transport.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Transport.Designer.cs">
+      <DependentUpon>Transport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\VectorProperty.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -143,6 +149,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Util\RGBHSL.cs" />
+    <Compile Include="Util\Sound.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="eye_icon.png" />
@@ -186,7 +193,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Gui\Transport.resx">
+      <DependentUpon>Transport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="operators_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="metronome.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

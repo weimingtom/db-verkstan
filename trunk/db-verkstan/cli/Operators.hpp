@@ -57,7 +57,7 @@ ADD_OP_TO_CAT("Cylinder",        "Mesh");
 ADD_OP_TO_CAT("Box",             "Mesh");
 ADD_OP_TO_CAT("Texture Mapping", "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
-ADD_OP_TO_CAT("Transform",       "Model");
+ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
@@ -142,7 +142,7 @@ DEF_OP("Model", ModelOperator, Model);
 ADD_INPUT(Mesh);
 END_OP();
 
-DEF_OP("Transform", TransformModelOperator, Model);
+DEF_OP("Transform Model", TransformModelOperator, Model);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);

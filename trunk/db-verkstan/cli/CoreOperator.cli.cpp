@@ -40,7 +40,7 @@ namespace Verkstan
 
     unsigned char CoreOperator::GetByteProperty(int index)
     {
-        return getOperator()->getByteProperty(index);
+        return getOperator()->properties[index].value.byteValue;
     }
 
     void CoreOperator::SetByteProperty(int index, unsigned char value)
@@ -51,7 +51,7 @@ namespace Verkstan
 
     int CoreOperator::GetIntProperty(int index)
     {
-         return getOperator()->getIntProperty(index);
+         return getOperator()->properties[index].value.intValue;
     }
 
     void CoreOperator::SetIntProperty(int index, int value)
@@ -62,7 +62,7 @@ namespace Verkstan
 
     float CoreOperator::GetFloatProperty(int index)
     {
-        return getOperator()->getFloatProperty(index);
+        return getOperator()->properties[index].value.floatValue;
     }
 
     void CoreOperator::SetFloatProperty(int index, float value)

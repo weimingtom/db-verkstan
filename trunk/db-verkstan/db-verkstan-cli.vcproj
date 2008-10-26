@@ -298,6 +298,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Timer.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Timer.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\VerkstanCore.hpp"
 				>
 			</File>
@@ -313,6 +321,10 @@
 		<Filter
 			Name="core"
 			>
+			<File
+				RelativePath=".\core\clip.hpp"
+				>
+			</File>
 			<File
 				RelativePath=".\core\core.cpp"
 				>
@@ -506,6 +518,26 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\transformmodeloperator.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="clips"
+				>
+				<File
+					RelativePath=".\core\clips\sineclip.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\clips\sineclip.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\clips\splineclip.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\clips\splineclip.hpp"
 					>
 				</File>
 			</Filter>

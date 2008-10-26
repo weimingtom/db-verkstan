@@ -135,6 +135,35 @@ categories[category]->Add(name);
             op = gcnew LoadOperator("Load",properties);
         }
 
+        if (name == "Scene")
+        {
+            Core::Operator* coreOp = op->getOperator();
+            SineClip* sine = new SineClip();
+            sine->channel = 0;
+            sine->start = 0;
+            sine->end = 256*6;
+            clips[0] = sine;
+
+            SineClip* sine2 = new SineClip();
+            sine2->channel = 0;
+            sine2->start = 256*12;
+            sine2->end = 256*18;
+            clips[1] = sine2;
+            
+            coreOp->numberOfClips = 2;
+            coreOp->operatorClips[0] = 0;
+            coreOp->operatorClips[1] = 1;
+        }
+
+        if (name == "Transform Model")
+        {
+             Core::Operator* coreOp = op->getOperator();
+             coreOp->properties[6].channel = 0;
+             coreOp->properties[6].amplify = 2.0f;
+             coreOp->properties[4].channel = 0;
+             coreOp->properties[4].amplify = 2.0f;
+        }
+
         return op;
      }
 }
