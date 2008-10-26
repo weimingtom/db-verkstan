@@ -279,10 +279,12 @@ void Mesh::recalculateNormals()
 		Vec3 faceNormal2 = cross(pos(verts[3]) - pos(verts[2]),
 				                 pos(verts[1]) - pos(verts[2]));
 
-		normal(verts[0]) += faceNormal1;
-		normal(verts[1]) += (faceNormal1 + faceNormal2) / 2;
-		normal(verts[2]) += faceNormal2;
-		normal(verts[3]) += (faceNormal1 + faceNormal2) / 2;
+		Vec3 n = (faceNormal1 + faceNormal2) / 2;
+
+		normal(verts[0]) += n;
+		normal(verts[1]) += n;
+		normal(verts[2]) += n;
+		normal(verts[3]) += n;
 	}
 
 	for (int i = 0; i < getNumVertices(); i++)
