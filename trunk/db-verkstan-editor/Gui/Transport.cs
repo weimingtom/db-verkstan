@@ -38,15 +38,15 @@ namespace VerkstanEditor.Gui
         private void play_Click(object sender, EventArgs e)
         {
             Verkstan.Timer.Start();
-            timer.Start();
+            clock.Start();
         }
 
         private void stop_Click(object sender, EventArgs e)
         {
             Verkstan.Timer.Pause();
             Verkstan.Timer.SetBeat(0);
-            this.time.Text = "0";
-            timer.Stop();
+            clock.Stop();
+            UpdateClock();
         }
 
         private void start_Click(object sender, EventArgs e)

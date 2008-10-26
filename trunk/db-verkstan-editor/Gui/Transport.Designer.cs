@@ -38,7 +38,7 @@
             this.end = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.time = new System.Windows.Forms.Label();
-            this.timer = new System.Windows.Forms.Timer(this.components);
+            this.clock = new System.Windows.Forms.Timer(this.components);
             this.bpm = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.beatsOrTime = new System.Windows.Forms.ComboBox();
@@ -154,8 +154,8 @@
             // 
             // timer
             // 
-            this.timer.Interval = 10;
-            this.timer.Tick += new System.EventHandler(this.timer_Tick);
+            this.clock.Interval = 10;
+            this.clock.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // bpm
             // 
@@ -242,7 +242,7 @@
         private System.Windows.Forms.Button end;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label time;
-        private System.Windows.Forms.Timer timer;
+        private System.Windows.Forms.Timer clock;
         private System.Windows.Forms.NumericUpDown bpm;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox beatsOrTime;
