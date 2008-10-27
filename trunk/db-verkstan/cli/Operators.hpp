@@ -178,9 +178,19 @@ ADD_INFINITE_INPUT(Model);
 END_OP();
 
 DEF_OP("Light", LightOperator, Model);
-ADD_COLOR_PROP("Color", 255, 255, 0);
+ADD_ENUM_PROP("Type", "Point,Spot,Directional", "Point");
+ADD_COLOR_PROP("Diffuse", 255, 255, 0);
+ADD_COLOR_PROP("Specular", 255, 255, 255);
+ADD_COLOR_PROP("Ambient", 0, 0, 0);
 ADD_VECTOR_PROP("Position", 0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Direction", 1.0f, 0.0f, 0.0f);
+ADD_FLOAT_PROP("Range", 10.0f);
+ADD_FLOAT_PROP("Falloff", 10.0f);
+ADD_FLOAT_PROP("Attenuation0", 1.0f);
+ADD_FLOAT_PROP("Attenuation1", 1.0f);
+ADD_FLOAT_PROP("Attenuation2", 1.0f);
+ADD_FLOAT_PROP("Theta", 1.0f);
+ADD_FLOAT_PROP("Phi", 1.0f);
 END_OP();
 
 DEF_OP("Material", MaterialOperator, Model);

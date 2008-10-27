@@ -157,6 +157,28 @@ namespace VerkstanEditor.Gui
                    OperatorPropertyTable.Controls.Add(vectorProperty);
                    OperatorPropertyTable.SetCellPosition(vectorProperty, new TableLayoutPanelCellPosition(1, row));
                }
+               else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Enum)
+               {
+                   System.Console.WriteLine("Index = " + property.CoreIndex);
+                   int index = property.CoreIndex;
+                   List<String> enumValues = property.EnumValues;
+                   ComboBox comboBox = new ComboBox();
+                   comboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+
+                   foreach (String value in enumValues)
+                       comboBox.Items.Add(value);
+
+                   int enumValueIndex = op.Binding.GetByteProperty(index);
+                   comboBox.Text = enumValues[enumValueIndex];
+
+                   comboBox.SelectedValueChanged += delegate(object o, EventArgs e)
+                   {
+                       op.Binding.SetByteProperty(index, (byte)comboBox.SelectedIndex);
+                   };
+
+                   OperatorPropertyTable.Controls.Add(comboBox);
+                   OperatorPropertyTable.SetCellPosition(comboBox, new TableLayoutPanelCellPosition(1, row));
+               }
                row++;
             }
 

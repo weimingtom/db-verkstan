@@ -23,6 +23,7 @@ namespace Verkstan
             int get();
         }
         void Add(String^ name, Constants::OperatorPropertyTypes type, int numberOfValues);
+        void AddEnum(String^ name, List<String^>^ values);
         List<OperatorProperty^>^ GetList();
 
     private:

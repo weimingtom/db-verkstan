@@ -27,7 +27,8 @@ namespace Verkstan
             Color,
             String,
             Text,
-            Vector
+            Vector,
+            Enum
        };
     };
 }

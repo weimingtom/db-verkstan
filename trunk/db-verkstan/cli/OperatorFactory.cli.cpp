@@ -103,6 +103,24 @@ categories[category]->Add(name);
     op->SetFloatProperty(properties->CoreCount - 3, x);  \
     op->SetFloatProperty(properties->CoreCount - 2, y);  \
     op->SetFloatProperty(properties->CoreCount - 1, z);
+#define ADD_ENUM_PROP(name, enumValues, value) \
+    String^ tmpEnumValues = gcnew String(enumValues); \
+    array<String^>^ splitted = tmpEnumValues->Split(gcnew array<Char>{','}); \
+    List<String^>^ enumValuesList = gcnew List<String^>();  \
+    for (int enumIndex = 0; enumIndex < splitted->Length; enumIndex++) \
+        enumValuesList->Add(splitted[enumIndex]);   \
+    properties->AddEnum(name, enumValuesList);  \
+    int defaultValue;   \
+    String^ defaultValueString = gcnew String(value);   \
+    for (int listIndex = 0; listIndex < enumValuesList->Count; listIndex++) \
+    {   \
+        if (enumValuesList[listIndex] == defaultValueString)   \
+        {   \
+            defaultValue = listIndex;\
+            break;\
+        }\
+    }\
+    op->SetByteProperty(properties->CoreCount - 1, defaultValue);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \

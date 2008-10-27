@@ -26,7 +26,7 @@ namespace VerkstanEditor.Gui
         {
             if (showClockAsBeats)
             {
-                this.time.Text = String.Format("{0:0.00}", Verkstan.Timer.GetBeat() / (float)Verkstan.Timer.GetTicksPerBeat());
+                this.time.Text = String.Format("{0:000.00}", Verkstan.Timer.GetBeat() / (float)Verkstan.Timer.GetTicksPerBeat());
             }
             else
             {

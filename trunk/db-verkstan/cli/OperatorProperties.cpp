@@ -37,4 +37,15 @@ namespace Verkstan
         properties->Add(prop);
         coreCount += numberOfValues;
     }
+
+    void OperatorProperties::AddEnum(String^ name, List<String^>^ values)
+    {
+        OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
+                                                        coreCount,
+                                                        name,
+                                                        Constants::OperatorPropertyTypes::Enum,
+                                                        values);
+        properties->Add(prop);
+        coreCount += 1;
+    }
 }
