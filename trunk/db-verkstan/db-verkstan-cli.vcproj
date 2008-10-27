@@ -465,6 +465,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\extrudeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\extrudeoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\flatoperator.cpp"
 					>
 				</File>
@@ -510,6 +518,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\pixelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\randomselectionoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\randomselectionoperator.hpp"
 					>
 				</File>
 				<File

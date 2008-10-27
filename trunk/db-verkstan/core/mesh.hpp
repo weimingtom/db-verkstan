@@ -58,6 +58,9 @@ public:
 	// Sets all four vertices of a quad
 	void setQuad(int quadIndex, int v0, int v1, int v2, int v3);	
 
+	// Set a face, any face
+	void setFace(int faceIndex, int *v);	
+
 	// Gets a pointer to the indices of a face (either triangle or quad)
 	// outNumVertices will hold number of vertices (3 or 4)
 	int *face(int faceIndex, int &outNumVertices);
@@ -66,6 +69,25 @@ public:
 	// Caller is responsible for deleting it
 	EdgeInfo *constructEdgeInfo();
 
+	// Gets the normal of a triangle
+	// While the normal points in the right direction, it is not actually normalized
+	Vec3 getTriangleNormal(int triangleIndex);
+
+	// Gets the normal of a quad
+	// While the normal points in the right direction, it is not actually normalized
+	Vec3 getQuadNormal(int quadIndex);
+
+	// Gets the normal of a face
+	// While the normal points in the right direction, it is not actually normalized
+	Vec3 getFaceNormal(int faceIndex);
+
+	// Get and set face selection
+	bool &faceSelected(int faceIndex);
+
+	// Get and set vertex selection 
+//	bool &vertexSelected(int vertexIndex);
+
+	// Recalculates vertex normals
 	void recalculateNormals();
 
 	// Trivial getters and setters, inlined to conserve space and time (i hope?)
@@ -94,6 +116,8 @@ private:
 	void createD3DBuffers();
 	void destroyD3DBuffers();
 
+	bool *faceSelection;
+//	bool *vertexSelection;
 	float *vertexData;
 	int *triangleData;
 	int *quadData;

@@ -28,6 +28,12 @@ Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets) :
 		quadData = new int[numQuads * 4];
 		ZeroMemory(quadData, sizeof(int) * numQuads * 4);
 	}
+
+	faceSelection = new bool[getNumFaces()];
+	ZeroMemory(faceSelection, sizeof(bool) * getNumFaces());
+
+//	vertexSelection = new bool[numVertices];
+//	ZeroMemory(vertexSelection, sizeof(bool) * numVertices);
 }
 
 
@@ -58,6 +64,12 @@ Mesh::Mesh(const Mesh& mesh) :
 		quadData = new int[numQuads * 4];
 		memcpy(quadData, mesh.quadData, sizeof(int) * numQuads * 4);
 	}
+
+	faceSelection = new bool[getNumFaces()];
+	memcpy(faceSelection, mesh.faceSelection, sizeof(bool) * getNumFaces());
+
+//	vertexSelection = new bool[numVertices];
+//	memcpy(vertexSelection, mesh.vertexSelection, sizeof(bool) * numVertices);
 }
 
 
@@ -145,6 +157,19 @@ void Mesh::setQuad(int quadIndex, int v0, int v1, int v2, int v3)
 	o[1] = v1;
 	o[2] = v2;
 	o[3] = v3;
+}
+
+
+void Mesh::setFace(int faceIndex, int *v)
+{
+	if (faceIndex < numTriangles)
+	{
+		setTriangle(faceIndex, v[0], v[1], v[2]);
+	}
+	else
+	{
+		setQuad(faceIndex - numTriangles, v[0], v[1], v[2], v[3]);
+	}
 }
 
 
@@ -252,6 +277,46 @@ Mesh::EdgeInfo *Mesh::constructEdgeInfo()
 }
 
 
+Vec3 Mesh::getTriangleNormal(int triangleIndex)
+{
+	int *verts = triangle(triangleIndex);
+	return cross(pos(verts[1]) - pos(verts[0]),	pos(verts[2]) - pos(verts[0]));
+}
+
+
+Vec3 Mesh::getQuadNormal(int quadIndex)
+{
+	int *verts = quad(quadIndex);
+	return (cross(pos(verts[1]) - pos(verts[0]), pos(verts[3]) - pos(verts[0])) +		   
+		    cross(pos(verts[3]) - pos(verts[2]), pos(verts[1]) - pos(verts[2]))) / 2.0f;
+}
+
+
+Vec3 Mesh::getFaceNormal(int faceIndex)
+{
+	if (faceIndex < numTriangles)
+	{
+		return getTriangleNormal(faceIndex);
+	}
+	else
+	{
+		return getQuadNormal(faceIndex - numTriangles);
+	}
+}
+
+
+bool &Mesh::faceSelected(int faceIndex)
+{
+	return faceSelection[faceIndex];
+}
+
+
+//bool &Mesh::vertexSelected(int vertexIndex)
+//{
+//	return vertexSelection[vertexIndex];
+//}
+
+
 void Mesh::recalculateNormals()
 {
 	for (int i = 0; i < getNumVertices(); i++)
@@ -259,32 +324,16 @@ void Mesh::recalculateNormals()
 		normal(i) = Vec3(0, 0, 0);
 	}
 
-	for (int i = 0; i < getNumTriangles(); i++)
+	for (int i = 0; i < getNumFaces(); i++)
 	{
-		int *verts = triangle(i);
-		Vec3 faceNormal = cross(pos(verts[1]) - pos(verts[0]),
-				                pos(verts[2]) - pos(verts[0]));
+		int size;
+		int *verts = face(i, size);
+		Vec3 n = getFaceNormal(i);
 
-		normal(verts[0]) += faceNormal;
-		normal(verts[1]) += faceNormal;
-		normal(verts[2]) += faceNormal;
-	}
-
-	for (int i = 0; i < getNumQuads(); i++)
-	{
-		int *verts = quad(i);
-		Vec3 faceNormal1 = cross(pos(verts[1]) - pos(verts[0]),
-				                 pos(verts[3]) - pos(verts[0]));
-
-		Vec3 faceNormal2 = cross(pos(verts[3]) - pos(verts[2]),
-				                 pos(verts[1]) - pos(verts[2]));
-
-		Vec3 n = (faceNormal1 + faceNormal2) / 2;
-
-		normal(verts[0]) += n;
-		normal(verts[1]) += n;
-		normal(verts[2]) += n;
-		normal(verts[3]) += n;
+		for (int v = 0; v < size; v++)
+		{
+			normal(verts[v]) += n;			
+		}
 	}
 
 	for (int i = 0; i < getNumVertices(); i++)
@@ -322,7 +371,6 @@ void Mesh::createD3DBuffers()
 
 
 	// CREATE INDEX BUFFER
-	// TODO: Quads too!
 	{
 		int triangleBytes = numTriangles * sizeof(int) * 3;
 		int quadBytes = numQuads * 2 * sizeof(int) * 3;

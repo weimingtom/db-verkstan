@@ -21,6 +21,8 @@
 #include "core/operators/icosahedronoperator.hpp"
 #include "core/operators/subdivideoperator.hpp"
 #include "core/operators/relaxoperator.hpp"
+#include "core/operators/randomselectionoperator.hpp"
+#include "core/operators/extrudeoperator.hpp"
 
 namespace Verkstan
 {
@@ -47,6 +49,8 @@ namespace Verkstan
 		using ::IcosahedronOperator;
 		using ::SubdivideOperator;
 		using ::RelaxOperator;
+		using ::RandomSelectionOperator;
+		using ::ExtrudeOperator;
         using ::SceneOperator;
     }
 }
@@ -66,6 +70,8 @@ ADD_OP_TO_CAT("Icosahedron",     "Mesh");
 ADD_OP_TO_CAT("Texture Mapping", "Mesh");
 ADD_OP_TO_CAT("Subdivide",       "Mesh");
 ADD_OP_TO_CAT("Relax",	         "Mesh");
+ADD_OP_TO_CAT("Random Selection","Mesh");
+ADD_OP_TO_CAT("Extrude",		 "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -155,6 +161,18 @@ END_OP();
 DEF_OP("Relax", RelaxOperator, Mesh);
 ADD_FLOAT_PROP("Strength", 0.1f);
 ADD_BYTE_PROP("Repetitions", 2);
+ADD_INPUT(Mesh);
+END_OP();
+
+DEF_OP("Random Selection", RandomSelectionOperator, Mesh);
+ADD_BYTE_PROP("Probablility", 128);
+ADD_BYTE_PROP("Seed", 1);
+ADD_INPUT(Mesh);
+END_OP();
+
+
+DEF_OP("Extrude", ExtrudeOperator, Mesh);
+ADD_FLOAT_PROP("Distance", 0.1f);
 ADD_INPUT(Mesh);
 END_OP();
 
