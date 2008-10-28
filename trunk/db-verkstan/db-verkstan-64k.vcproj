@@ -41,9 +41,9 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				FavorSizeOrSpeed="2"
-				OmitFramePointers="true"
-				WholeProgramOptimization="true"
+				FavorSizeOrSpeed="0"
+				OmitFramePointers="false"
+				WholeProgramOptimization="false"
 				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
@@ -64,6 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="d3d9.lib d3dx9.lib user32.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -116,7 +117,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
@@ -280,6 +281,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\extrudeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\extrudeoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\flatoperator.cpp"
 					>
 				</File>
@@ -325,6 +334,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\pixelsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\randomselectionoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\randomselectionoperator.hpp"
 					>
 				</File>
 				<File

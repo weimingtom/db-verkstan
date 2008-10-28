@@ -25,17 +25,17 @@ dirty(true)
 
 unsigned char Operator::getByteProperty(int index)
 {
-    return properties[index].byteValue + (unsigned char)properties[index].channelValue;
+    return properties[index].byteValue + (unsigned char)properties[index].channelValue1;
 }
 
 int Operator::getIntProperty(int index)
 {
-    return properties[index].intValue + (int)properties[index].channelValue;
+    return properties[index].intValue + (int)properties[index].channelValue1;
 }
 
 float Operator::getFloatProperty(int index)
 {
-    return properties[index].floatValue + properties[index].channelValue;
+    return properties[index].floatValue + properties[index].channelValue1;
 }
 
 const char* Operator::getStringProperty(int index)
@@ -46,10 +46,9 @@ const char* Operator::getStringProperty(int index)
 D3DXCOLOR Operator::getColorProperty(int index)
 {
     D3DXCOLOR color = properties[index].colorValue;
-    float channelValue = properties[index].channelValue;
-    color.r += channelValue;
-    color.g += channelValue;
-    color.b += channelValue;
+    color.r += properties[index].channelValue1;
+    color.g += properties[index].channelValue2;
+    color.b += properties[index].channelValue3;
     color.a = 1.0f;
 
     return color;
@@ -58,11 +57,10 @@ D3DXCOLOR Operator::getColorProperty(int index)
 D3DXVECTOR4 Operator::getVectorProperty(int index)
 {
     D3DXVECTOR4 vector = properties[index].vectorValue;
-    float channelValue = properties[index].channelValue;
-    vector.x += channelValue;
-    vector.y += channelValue;
-    vector.z += channelValue;
-    vector.w += channelValue;
+    vector.x += properties[index].channelValue1;
+    vector.y += properties[index].channelValue2;
+    vector.z += properties[index].channelValue3;
+    vector.w += properties[index].channelValue4;
     return vector;
 }
 
@@ -83,18 +81,47 @@ void Operator::cascadeProcess()
     dirty = false;
 }
 
-void Operator::broadcastChannelValue(int channel, float value)
+void Operator::broadcastChannelValue(int channel, 
+                                     float value1, 
+                                     float value2, 
+                                     float value3, 
+                                     float value4)
 {
     for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->broadcastChannelValue(channel, value);
+        operators[inputs[i]]->broadcastChannelValue(channel, 
+                                                    value1, 
+                                                    value2, 
+                                                    value3, 
+                                                    value4);
 
     for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
     {
         if (properties[i].channel == channel)
         {
-            float v = properties[i].amplify * value;
-            setDirty(properties[i].channelValue != value);
-            properties[i].channelValue = v;
+            if (value1 != 2)
+            {
+                float v1 = properties[i].amplify * value1;
+                setDirty(properties[i].channelValue1 != value1);
+                properties[i].channelValue1 = v1;
+            }
+            if (value2 != 2)
+            {
+                float v2 = properties[i].amplify * value2;
+                setDirty(properties[i].channelValue2 != value2);
+                properties[i].channelValue2 = v2;
+            }
+            if (value3 != 2)
+            {
+                float v3 = properties[i].amplify * value3;
+                setDirty(properties[i].channelValue3 != value3);
+                properties[i].channelValue3 = v3;
+            }
+            if (value4 != 2)
+            {
+                float v4 = properties[i].amplify * value4;
+                setDirty(properties[i].channelValue4 != value4);
+                properties[i].channelValue4 = v4;
+            }
         }
     }
 }

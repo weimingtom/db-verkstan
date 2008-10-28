@@ -47,7 +47,7 @@ namespace Verkstan
     {
         getOperator()->properties[index].byteValue = value; 
         getOperator()->setDirty(true);
-        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->properties[index].channelValue1 = 0.0f;
     }
 
     int CoreOperator::GetIntProperty(int index)
@@ -59,7 +59,7 @@ namespace Verkstan
     {
         getOperator()->properties[index].intValue = value; 
         getOperator()->setDirty(true);
-        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->properties[index].channelValue1 = 0.0f;
     }
 
     float CoreOperator::GetFloatProperty(int index)
@@ -71,7 +71,7 @@ namespace Verkstan
     {
         getOperator()->properties[index].floatValue = value; 
         getOperator()->setDirty(true);
-        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->properties[index].channelValue1 = 0.0f;
     }
 
     String^ CoreOperator::GetStringProperty(int index)
@@ -117,7 +117,10 @@ namespace Verkstan
         getOperator()->properties[index].vectorValue.y = vector->Y;
         getOperator()->properties[index].vectorValue.z = vector->Z;
         getOperator()->properties[index].vectorValue.w = vector->W;
-        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->properties[index].channelValue1 = 0.0f;
+        getOperator()->properties[index].channelValue2 = 0.0f;
+        getOperator()->properties[index].channelValue3 = 0.0f;
+        getOperator()->properties[index].channelValue4 = 0.0f;
         getOperator()->setDirty(true);
     }
 
@@ -134,7 +137,9 @@ namespace Verkstan
         getOperator()->properties[index].colorValue.r = color->R / 255.0f;
         getOperator()->properties[index].colorValue.g = color->G / 255.0f;
         getOperator()->properties[index].colorValue.b = color->B / 255.0f;
-        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->properties[index].channelValue1 = 0.0f;
+        getOperator()->properties[index].channelValue2 = 0.0f;
+        getOperator()->properties[index].channelValue3 = 0.0f;
         getOperator()->setDirty(true);
     }
 
