@@ -60,7 +60,7 @@ namespace VerkstanEditor.Gui
 
                if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = 1;
                    numericUpDown.Minimum = 0;
@@ -73,7 +73,7 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Int)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = 1;
                    numericUpDown.Minimum = int.MinValue;
@@ -86,7 +86,7 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Float)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    NumericUpDown numericUpDown = new NumericUpDown();
                    numericUpDown.Increment = 0.001M;
                    numericUpDown.DecimalPlaces = 3;
@@ -100,7 +100,7 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.String)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    TextBox textBox = new TextBox();
                    textBox.Dock = DockStyle.Fill;
                    textBox.Text = op.Binding.GetStringProperty(index);
@@ -110,7 +110,7 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Text)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    TextBox textBox = new TextBox();
                    textBox.AcceptsReturn = true;
                    textBox.AcceptsTab = true;
@@ -125,16 +125,13 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Color)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
+                   Verkstan.Color color = op.Binding.GetColorProperty(index);
                    ColorProperty colorProperty = new ColorProperty();
-                   colorProperty.Color = Color.FromArgb(op.Binding.GetByteProperty(index),
-                                                        op.Binding.GetByteProperty(index + 1),
-                                                        op.Binding.GetByteProperty(index + 2));
+                   colorProperty.Color = Color.FromArgb(color.R, color.G, color.B);
                    colorProperty.ColorChanged += delegate(object o, EventArgs e)
                    {
-                       op.Binding.SetByteProperty(index, colorProperty.Color.R);
-                       op.Binding.SetByteProperty(index + 1, colorProperty.Color.G);
-                       op.Binding.SetByteProperty(index + 2, colorProperty.Color.B);
+                       op.Binding.SetColorProperty(index, new Verkstan.Color(colorProperty.Color.R, colorProperty.Color.G, colorProperty.Color.B));
                    };
 
                    OperatorPropertyTable.Controls.Add(colorProperty);
@@ -142,16 +139,15 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Vector)
                {
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    VectorProperty vectorProperty = new VectorProperty();
-                   vectorProperty.X = op.Binding.GetFloatProperty(index);
-                   vectorProperty.Y = op.Binding.GetFloatProperty(index + 1);
-                   vectorProperty.Z = op.Binding.GetFloatProperty(index + 2);
+                   Verkstan.Vector vector = op.Binding.GetVectorProperty(index);
+                   vectorProperty.X = vector.X;
+                   vectorProperty.Y = vector.Y;
+                   vectorProperty.Z = vector.Z;
                    vectorProperty.ValueChanged += delegate(object o, EventArgs e)
                    {
-                       op.Binding.SetFloatProperty(index, vectorProperty.X);
-                       op.Binding.SetFloatProperty(index + 1, vectorProperty.Y);
-                       op.Binding.SetFloatProperty(index + 2, vectorProperty.Z);
+                       op.Binding.SetVectorProperty(index, new Verkstan.Vector(vectorProperty.X, vectorProperty.Y, vectorProperty.Z));
                    };
 
                    OperatorPropertyTable.Controls.Add(vectorProperty);
@@ -159,8 +155,7 @@ namespace VerkstanEditor.Gui
                }
                else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Enum)
                {
-                   System.Console.WriteLine("Index = " + property.CoreIndex);
-                   int index = property.CoreIndex;
+                   int index = property.Index;
                    List<String> enumValues = property.EnumValues;
                    ComboBox comboBox = new ComboBox();
                    comboBox.DropDownStyle = ComboBoxStyle.DropDownList;

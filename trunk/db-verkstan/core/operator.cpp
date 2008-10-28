@@ -22,49 +22,48 @@ dirty(true)
         operatorClips[i] = -1;
 }
 
+
 unsigned char Operator::getByteProperty(int index)
 {
-    return properties[index].value.byteValue + (unsigned char)properties[index].channelValue;
-}
-
-void Operator::setByteProperty(int index, unsigned char value)
-{
-    properties[index].value.byteValue = value;
-    properties[index].channelValue = 0.0f;
+    return properties[index].byteValue + (unsigned char)properties[index].channelValue;
 }
 
 int Operator::getIntProperty(int index)
 {
-    return properties[index].value.intValue + (int)properties[index].channelValue;
-}
-
-void Operator::setIntProperty(int index, int value)
-{
-    properties[index].value.intValue = value;
-    properties[index].channelValue = 0.0f;
+    return properties[index].intValue + (int)properties[index].channelValue;
 }
 
 float Operator::getFloatProperty(int index)
 {
-    return properties[index].value.floatValue + properties[index].channelValue;
-}
-
-void Operator::setFloatProperty(int index, float value)
-{
-    properties[index].value.floatValue = value;
-    properties[index].channelValue = 0.0f;
+    return properties[index].floatValue + properties[index].channelValue;
 }
 
 const char* Operator::getStringProperty(int index)
 {
-    return properties[index].value.stringValue;
+    return properties[index].stringValue;
 }
 
-void Operator::setStringProperty(int index, const char *value)
+D3DXCOLOR Operator::getColorProperty(int index)
 {
-    // TODO Should strcpy really be used here? Perhaps there is a better solution.
-    // Perhaps strcpy requires a runtime library that we cannot relay on (like Microsoft runtime libraries).
-    strcpy(properties[index].value.stringValue, value);
+    D3DXCOLOR color = properties[index].colorValue;
+    float channelValue = properties[index].channelValue;
+    color.r += channelValue;
+    color.g += channelValue;
+    color.b += channelValue;
+    color.a = 1.0f;
+
+    return color;
+}
+
+D3DXVECTOR4 Operator::getVectorProperty(int index)
+{
+    D3DXVECTOR4 vector = properties[index].vectorValue;
+    float channelValue = properties[index].channelValue;
+    vector.x += channelValue;
+    vector.y += channelValue;
+    vector.z += channelValue;
+    vector.w += channelValue;
+    return vector;
 }
 
 bool Operator::isDirty()

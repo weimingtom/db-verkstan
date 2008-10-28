@@ -2,9 +2,11 @@
 
 #include "cli/VerkstanCore.hpp"
 
+#include "cli/Color.hpp"
 #include "cli/Constants.hpp"
 #include "cli/Joint.hpp"
 #include "cli/OperatorProperties.hpp"
+#include "cli/Vector.hpp"
 
 #using <mscorlib.dll>
 
@@ -61,7 +63,11 @@ namespace Verkstan
         virtual void SetFloatProperty(int index, float value) = 0;
         virtual String^ GetStringProperty(int index) = 0;
         virtual void SetStringProperty(int index, String^ value) = 0;
-        
+        virtual Vector^ GetVectorProperty(int index) = 0;
+        virtual void SetVectorProperty(int index, Vector^ vector) = 0;
+        virtual Color^ GetColorProperty(int index) = 0;
+        virtual void SetColorProperty(int index, Color^ color) = 0;
+
         virtual bool IsProcessable() = 0;
         virtual bool IsWarningPresent() = 0;
 

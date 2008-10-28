@@ -225,12 +225,13 @@ ADD_INPUT(Model);
 END_OP();
 
 DEF_OP("Camera", CameraOperator, Renderer);
-ADD_BYTE_PROP("Angle", 32);
+ADD_FLOAT_PROP("Angle", 45.0f);
 ADD_INT_PROP("Aspect width", 1024);
 ADD_INT_PROP("Aspect height", 768);
 ADD_COLOR_PROP("Clear color", 255, 0, 255);
-ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
-ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -5.0f);
+ADD_VECTOR_PROP("Look at", 0.0f, 0.0f, 0.0f);
+ADD_FLOAT_PROP("Rotation", 0.0f);
 ADD_INFINITE_INPUT(Model);
 END_OP();
 

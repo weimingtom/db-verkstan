@@ -77,6 +77,26 @@ namespace Verkstan
         }
     }
 
+    Vector^ LoadOperator::GetVectorProperty(int index)
+    {
+        return gcnew Vector();
+    }
+
+    void LoadOperator::SetVectorProperty(int index, Vector^ vector)
+    {
+
+    }
+
+    Color^ LoadOperator::GetColorProperty(int index)
+    {
+        return gcnew Color();
+    }
+
+    void LoadOperator::SetColorProperty(int index, Color^ color)
+    {
+
+    }
+
     bool LoadOperator::IsProcessable()
     {
         return primaryJoint->Sender != nullptr && primaryJoint->Sender->IsProcessable();

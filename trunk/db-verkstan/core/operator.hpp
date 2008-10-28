@@ -26,14 +26,14 @@ public:
     virtual void deviceLost();
 
     Operator* getInput(int index);
+    
     unsigned char getByteProperty(int index);
-    void setByteProperty(int index, unsigned char value);
     int getIntProperty(int index);
-    void setIntProperty(int index, int value);
     float getFloatProperty(int index);
-    void setFloatProperty(int index, float value);
     const char* getStringProperty(int index);
-    void setStringProperty(int index, const char *value);
+    D3DXCOLOR getColorProperty(int index);
+    D3DXVECTOR4 getVectorProperty(int index);
+
     bool isDirty();
     void setDirty(bool dirty);
     
@@ -46,17 +46,14 @@ public:
     int operatorClips[DB_MAX_OPERATOR_CLIPS];
     int numberOfClips;
 
-    union PropertyValue
+    struct Property
     {
         unsigned char byteValue;
         float floatValue;
         int intValue;
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
-    };
-
-    struct Property
-    {
-        PropertyValue value;
+        D3DXCOLOR colorValue;
+        D3DXVECTOR4 vectorValue;
         int channel;
         float amplify;
         float channelValue;

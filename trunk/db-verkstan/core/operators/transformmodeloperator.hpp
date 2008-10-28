@@ -7,4 +7,5 @@ class TransformModelOperator: public Operator
 public:
     void process();
     void render();
+    D3DXMATRIX matrix;
 };

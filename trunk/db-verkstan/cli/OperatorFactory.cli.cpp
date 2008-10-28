@@ -79,30 +79,26 @@ categories[category]->Add(name);
 
   
 #define ADD_BYTE_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Byte, 1);  \
-    op->SetByteProperty(properties->CoreCount - 1, value);
+    properties->Add(name, Constants::OperatorPropertyTypes::Byte);  \
+    op->SetByteProperty(properties->Count - 1, value);
 #define ADD_INT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Int, 1);  \
-    op->SetIntProperty(properties->CoreCount - 1, value);
+    properties->Add(name, Constants::OperatorPropertyTypes::Int);  \
+    op->SetIntProperty(properties->Count - 1, value);
 #define ADD_FLOAT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Float, 1);  \
-    op->SetFloatProperty(properties->CoreCount - 1, value);
+    properties->Add(name, Constants::OperatorPropertyTypes::Float);  \
+    op->SetFloatProperty(properties->Count - 1, value);
 #define ADD_STRING_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::String, 1);  \
-    op->SetStringProperty(properties->CoreCount - 1, value);
+    properties->Add(name, Constants::OperatorPropertyTypes::String);  \
+    op->SetStringProperty(properties->Count - 1, value);
 #define ADD_TEXT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Text, 1);  \
-    op->SetStringProperty(properties->CoreCount - 1, value);
+    properties->Add(name, Constants::OperatorPropertyTypes::Text);  \
+    op->SetStringProperty(properties->Count - 1, value);
 #define ADD_COLOR_PROP(name, r, g, b) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Color, 3);  \
-    op->SetByteProperty(properties->CoreCount - 3, r);  \
-    op->SetByteProperty(properties->CoreCount - 2, g);  \
-    op->SetByteProperty(properties->CoreCount - 1, b);
+    properties->Add(name, Constants::OperatorPropertyTypes::Color);  \
+    op->SetColorProperty(properties->Count - 1, gcnew Color(r, g, b));
 #define ADD_VECTOR_PROP(name, x, y, z) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Vector, 3);  \
-    op->SetFloatProperty(properties->CoreCount - 3, x);  \
-    op->SetFloatProperty(properties->CoreCount - 2, y);  \
-    op->SetFloatProperty(properties->CoreCount - 1, z);
+    properties->Add(name, Constants::OperatorPropertyTypes::Vector);  \
+    op->SetVectorProperty(properties->Count - 1, gcnew Vector(x, y, z));
 #define ADD_ENUM_PROP(name, enumValues, value) \
     String^ tmpEnumValues = gcnew String(enumValues); \
     array<String^>^ splitted = tmpEnumValues->Split(gcnew array<Char>{','}); \
@@ -120,7 +116,7 @@ categories[category]->Add(name);
             break;\
         }\
     }\
-    op->SetByteProperty(properties->CoreCount - 1, defaultValue);
+    op->SetByteProperty(properties->Count - 1, defaultValue);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
@@ -145,14 +141,14 @@ categories[category]->Add(name);
         if (name == "Store")
         {
             OperatorProperties^ properties = gcnew OperatorProperties();
-            properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
+            properties->Add("Name", Constants::OperatorPropertyTypes::String);
             op = gcnew StoreOperator("Store",properties);
         }
 
         if (name == "Load")
         {
             OperatorProperties^ properties = gcnew OperatorProperties();
-            properties->Add("Name", Constants::OperatorPropertyTypes::String, 1);
+            properties->Add("Name", Constants::OperatorPropertyTypes::String);
             op = gcnew LoadOperator("Load",properties);
         }
 

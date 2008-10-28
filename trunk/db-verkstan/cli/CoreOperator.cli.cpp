@@ -40,35 +40,38 @@ namespace Verkstan
 
     unsigned char CoreOperator::GetByteProperty(int index)
     {
-        return getOperator()->properties[index].value.byteValue;
+        return getOperator()->properties[index].byteValue;
     }
 
     void CoreOperator::SetByteProperty(int index, unsigned char value)
     {
-        getOperator()->setByteProperty(index, value); 
+        getOperator()->properties[index].byteValue = value; 
         getOperator()->setDirty(true);
+        getOperator()->properties[index].channelValue = 0.0f;
     }
 
     int CoreOperator::GetIntProperty(int index)
     {
-         return getOperator()->properties[index].value.intValue;
+         return getOperator()->properties[index].intValue;
     }
 
     void CoreOperator::SetIntProperty(int index, int value)
     {
-        getOperator()->setIntProperty(index, value); 
+        getOperator()->properties[index].intValue = value; 
         getOperator()->setDirty(true);
+        getOperator()->properties[index].channelValue = 0.0f;
     }
 
     float CoreOperator::GetFloatProperty(int index)
     {
-        return getOperator()->properties[index].value.floatValue;
+        return getOperator()->properties[index].floatValue;
     }
 
     void CoreOperator::SetFloatProperty(int index, float value)
     {
-        getOperator()->setFloatProperty(index, value); 
+        getOperator()->properties[index].floatValue = value; 
         getOperator()->setDirty(true);
+        getOperator()->properties[index].channelValue = 0.0f;
     }
 
     String^ CoreOperator::GetStringProperty(int index)
@@ -98,7 +101,40 @@ namespace Verkstan
                          wch, 
                          sizeInBytes);
 
-        getOperator()->setStringProperty(index, ch);
+        strcpy(getOperator()->properties[index].stringValue, ch);
+        getOperator()->setDirty(true);
+    }
+
+    Vector^ CoreOperator::GetVectorProperty(int index)
+    {
+        D3DXVECTOR4 vector = getOperator()->properties[index].vectorValue;
+        return gcnew Vector(vector.x, vector.y, vector.z, vector.w);
+    }
+
+    void CoreOperator::SetVectorProperty(int index, Vector^ vector)
+    {
+        getOperator()->properties[index].vectorValue.x = vector->X;
+        getOperator()->properties[index].vectorValue.y = vector->Y;
+        getOperator()->properties[index].vectorValue.z = vector->Z;
+        getOperator()->properties[index].vectorValue.w = vector->W;
+        getOperator()->properties[index].channelValue = 0.0f;
+        getOperator()->setDirty(true);
+    }
+
+    Color^ CoreOperator::GetColorProperty(int index)
+    {
+        D3DXCOLOR color = getOperator()->properties[index].colorValue;
+        return gcnew Color((unsigned char)(color.r * 255), 
+                           (unsigned char)(color.g * 255), 
+                           (unsigned char)(color.b * 255));
+    }
+
+    void CoreOperator::SetColorProperty(int index, Color^ color)
+    {
+        getOperator()->properties[index].colorValue.r = color->R / 255.0f;
+        getOperator()->properties[index].colorValue.g = color->G / 255.0f;
+        getOperator()->properties[index].colorValue.b = color->B / 255.0f;
+        getOperator()->properties[index].channelValue = 0.0f;
         getOperator()->setDirty(true);
     }
 

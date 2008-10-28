@@ -24,38 +24,18 @@ void LightOperator::process()
         break;
     }
   
-    d3dLight.Diffuse.r = getByteProperty(1) / 256.0f;
-    d3dLight.Diffuse.g = getByteProperty(2) / 256.0f;
-    d3dLight.Diffuse.b = getByteProperty(3) / 256.0f;
-    d3dLight.Diffuse.a = 1.0f;
-
-    d3dLight.Specular.r = getByteProperty(4) / 256.0f;
-    d3dLight.Specular.g = getByteProperty(5) / 256.0f;
-    d3dLight.Specular.b = getByteProperty(6) / 256.0f;
-    d3dLight.Specular.a = 1.0f;
-
-    d3dLight.Ambient.r = getByteProperty(7) / 256.0f;
-    d3dLight.Ambient.g = getByteProperty(8) / 256.0f;
-    d3dLight.Ambient.b = getByteProperty(9) / 256.0f;
-    d3dLight.Ambient.a = 1.0f;
-
-    D3DVECTOR position;
-    position.x = getFloatProperty(10);
-    position.y = getFloatProperty(11);
-    position.z = getFloatProperty(12);
-    d3dLight.Position = position;
-
-    D3DVECTOR direction;
-    direction.x = getFloatProperty(13);
-    direction.y = getFloatProperty(14);
-    direction.z = getFloatProperty(15);
-    d3dLight.Direction = direction;
-
-    d3dLight.Range = getFloatProperty(16);
-    d3dLight.Falloff = getFloatProperty(17);
-    d3dLight.Attenuation0 = getFloatProperty(18);
-    d3dLight.Attenuation1 = getFloatProperty(19);
-    d3dLight.Attenuation2 = getFloatProperty(20);
-    d3dLight.Theta = getFloatProperty(21);
-    d3dLight.Phi = getFloatProperty(22);
+    d3dLight.Diffuse = getColorProperty(1);
+    d3dLight.Specular = getColorProperty(2);
+    d3dLight.Ambient = getColorProperty(3);
+    D3DXVECTOR4 position = getVectorProperty(4);
+    d3dLight.Position = D3DXVECTOR3(position.x, position.y, position.z);
+    D3DXVECTOR4 direction = getVectorProperty(4);
+    d3dLight.Direction = D3DXVECTOR3(direction.x, direction.y, direction.z);
+    d3dLight.Range = getFloatProperty(6);
+    d3dLight.Falloff = getFloatProperty(7);
+    d3dLight.Attenuation0 = getFloatProperty(8);
+    d3dLight.Attenuation1 = getFloatProperty(9);
+    d3dLight.Attenuation2 = getFloatProperty(10);
+    d3dLight.Theta = getFloatProperty(11);
+    d3dLight.Phi = getFloatProperty(12);
 }

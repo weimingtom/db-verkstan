@@ -3,23 +3,31 @@
 void TransformModelOperator::render()
 {
     globalWorldMatrixStack->Push();
-    globalWorldMatrixStack->TranslateLocal(getFloatProperty(6),
-                                  getFloatProperty(7),
-                                  getFloatProperty(8));
-    globalWorldMatrixStack->RotateAxisLocal(&Vec3(1.0f, 0.0f, 0.0f),
-                                       getFloatProperty(3));
-    globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 1.0f, 0.0f),
-                                       getFloatProperty(4));
-    globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 0.0f, 1.0f),
-                                       getFloatProperty(5));
-    globalWorldMatrixStack->ScaleLocal(getFloatProperty(0),
-                                  getFloatProperty(1),
-                                  getFloatProperty(2));
-
+    globalWorldMatrixStack->MultMatrixLocal(&matrix);
     getInput(0)->render();
     globalWorldMatrixStack->Pop();
 }
 
 void TransformModelOperator::process()
 {
+    D3DXVECTOR4 scaleVector = getVectorProperty(0);
+    D3DXVECTOR4 rotationVector = getVectorProperty(1);
+    D3DXVECTOR4 translationVector = getVectorProperty(2);
+    D3DXMATRIX scaleMatrix;
+    D3DXMatrixScaling(&scaleMatrix, 
+                      scaleVector.x, 
+                      scaleVector.y, 
+                      scaleVector.z);
+    D3DXMATRIX rotationXMatrix;
+    D3DXMatrixRotationX(&rotationXMatrix, rotationVector.x);
+    D3DXMATRIX rotationYMatrix;
+    D3DXMatrixRotationY(&rotationYMatrix, rotationVector.y);
+    D3DXMATRIX rotationZMatrix;
+    D3DXMatrixRotationZ(&rotationZMatrix, rotationVector.z);
+    D3DXMATRIX translationMatrix;
+    D3DXMatrixTranslation(&translationMatrix,
+                          translationVector.x,
+                          translationVector.y,
+                          translationVector.z);
+    matrix = scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix * translationMatrix; 
 }

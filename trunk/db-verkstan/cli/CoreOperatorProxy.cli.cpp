@@ -58,6 +58,26 @@ namespace Verkstan
         coreOperator->SetStringProperty(index, value);
     }
 
+    Vector^ CoreOperatorProxy::GetVectorProperty(int index)
+    {
+        return coreOperator->GetVectorProperty(index);
+    }
+
+    void CoreOperatorProxy::SetVectorProperty(int index, Vector^ vector)
+    {
+        coreOperator->SetVectorProperty(index, vector);
+    }
+
+    Color^ CoreOperatorProxy::GetColorProperty(int index)
+    {
+        return coreOperator->GetColorProperty(index);
+    }
+
+    void CoreOperatorProxy::SetColorProperty(int index, Color^ color)
+    {
+        coreOperator->SetColorProperty(index, color);
+    }
+
     bool CoreOperatorProxy::IsProcessable()
     {
         return coreOperator->IsProcessable();

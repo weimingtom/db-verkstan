@@ -5,7 +5,6 @@ namespace Verkstan
     OperatorProperties::OperatorProperties()
     {
         properties = gcnew List<OperatorProperty^>();
-        coreCount = 0;
     }
 
     OperatorProperty^ OperatorProperties::operator[](int index)
@@ -17,35 +16,26 @@ namespace Verkstan
     {
         return properties->Count;
     }
-    
-    int OperatorProperties::CoreCount::get()
-    {
-        return coreCount;
-    }
 
     List<OperatorProperty^>^ OperatorProperties::GetList()
     {
         return properties;
     }
 
-    void OperatorProperties::Add(String^ name, Constants::OperatorPropertyTypes type, int numberOfValues)
+    void OperatorProperties::Add(String^ name, Constants::OperatorPropertyTypes type)
     {
         OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
-                                                        coreCount,
                                                         name,
                                                         type);
         properties->Add(prop);
-        coreCount += numberOfValues;
     }
 
     void OperatorProperties::AddEnum(String^ name, List<String^>^ values)
     {
         OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
-                                                        coreCount,
                                                         name,
                                                         Constants::OperatorPropertyTypes::Enum,
                                                         values);
         properties->Add(prop);
-        coreCount += 1;
     }
 }

@@ -17,13 +17,11 @@ void RectangleOperator::process()
     else
         texture->fillRectangle(0, 0, 256, 256, 0xff000000);
 
-    unsigned char r = getByteProperty(0);
-    unsigned char g = getByteProperty(1);
-    unsigned char b = getByteProperty(2);
-    unsigned char x = getByteProperty(3);
-    unsigned char y = getByteProperty(4);
-    unsigned char width = getByteProperty(5);
-    unsigned char height = getByteProperty(6);
+    D3DXCOLOR color = getColorProperty(0);
+    unsigned char x = getByteProperty(1);
+    unsigned char y = getByteProperty(2);
+    unsigned char width = getByteProperty(3);
+    unsigned char height = getByteProperty(4);
 
-    texture->fillRectangle(x, y, width, height, D3DCOLOR_XRGB(r, g, b));
+    texture->fillRectangle(x, y, width, height, color);
 }

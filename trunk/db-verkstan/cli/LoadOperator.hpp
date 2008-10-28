@@ -21,7 +21,11 @@ namespace Verkstan
         virtual void SetFloatProperty(int index, float value) override;
         virtual String^ GetStringProperty(int index) override;
         virtual void SetStringProperty(int index, String ^value) override;
-        
+        virtual Vector^ GetVectorProperty(int index)override;
+        virtual void SetVectorProperty(int index, Vector^ vector) override;
+        virtual Color^ GetColorProperty(int index) override;
+        virtual void SetColorProperty(int index, Color^ color) override;
+
         virtual bool IsProcessable() override;
         virtual bool IsWarningPresent() override;
 

@@ -11,18 +11,15 @@ namespace Verkstan
     {
     public:
         OperatorProperty(int index, 
-                         int coreIndex,
                          String^ name, 
                          Constants::OperatorPropertyTypes type);
         OperatorProperty(int index, 
-                         int coreIndex,
                          String^ name, 
                          Constants::OperatorPropertyTypes type,
                          List<String^>^ enumValues);
         property String^ Name;
         property Constants::OperatorPropertyTypes Type;
         property int Index;
-        property int CoreIndex;
         property List<String^>^ EnumValues;
     };
 }

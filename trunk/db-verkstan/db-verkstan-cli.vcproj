@@ -210,6 +210,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Color.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Color.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Connector.cli.cpp"
 				>
 			</File>
@@ -343,6 +351,14 @@
 			</File>
 			<File
 				RelativePath=".\cli\Timer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Vector.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Vector.hpp"
 				>
 			</File>
 			<File

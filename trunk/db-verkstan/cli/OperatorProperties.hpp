@@ -18,16 +18,11 @@ namespace Verkstan
         {
             int get();
         }
-        property int CoreCount
-        {
-            int get();
-        }
-        void Add(String^ name, Constants::OperatorPropertyTypes type, int numberOfValues);
+        void Add(String^ name, Constants::OperatorPropertyTypes type);
         void AddEnum(String^ name, List<String^>^ values);
         List<OperatorProperty^>^ GetList();
 
     private:
         List<OperatorProperty^>^ properties;
-        int coreCount; 
     };
 }
