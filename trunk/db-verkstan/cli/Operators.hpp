@@ -17,7 +17,6 @@
 #include "core/operators/cameraoperator.hpp"
 #include "core/operators/clonemodeloperator.hpp"
 #include "core/operators/sceneoperator.hpp"
-#include "core/operators/demooperator.hpp"
 #include "core/operators/icosahedronoperator.hpp"
 #include "core/operators/subdivideoperator.hpp"
 #include "core/operators/relaxoperator.hpp"
@@ -45,7 +44,6 @@ namespace Verkstan
         using ::LightOperator;
         using ::CameraOperator;
         using ::CloneModelOperator;
-        using ::DemoOperator;
 		using ::IcosahedronOperator;
 		using ::SubdivideOperator;
 		using ::RelaxOperator;
@@ -79,8 +77,8 @@ ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
 ADD_OP_TO_CAT("Camera",          "Renderer");
-ADD_OP_TO_CAT("Scene",           "Scene");
-ADD_OP_TO_CAT("Demo",            "Scene");
+ADD_OP_TO_CAT("Scene",           "Misc");
+ADD_OP_TO_CAT("Transform Scene", "Misc");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -236,11 +234,14 @@ ADD_INFINITE_INPUT(Model);
 END_OP();
 
 DEF_OP("Scene", SceneOperator, Scene);
-ADD_INFINITE_INPUT(Renderer);
+ADD_INFINITE_INPUT(Unspecified);
 END_OP();
 
-DEF_OP("Demo", DemoOperator, Demo);
-ADD_INFINITE_INPUT(Scene);
+DEF_OP("Transform Scene", TransformModelOperator, Scene);
+ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Scene);
 END_OP();
 
 #endif

@@ -9,7 +9,8 @@ namespace Verkstan
     public:
         Camera();
         void Reset();
-        void ApplyTransformations();
+        void ApplyUserTransformations();
+        void ApplyFixedTransformations();
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);
         void MouseUp(int button, int x, int y);

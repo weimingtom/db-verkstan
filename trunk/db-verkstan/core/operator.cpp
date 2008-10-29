@@ -22,7 +22,6 @@ dirty(true)
         operatorClips[i] = -1;
 }
 
-
 unsigned char Operator::getByteProperty(int index)
 {
     return properties[index].byteValue + (unsigned char)properties[index].channelValue1;
@@ -101,25 +100,29 @@ void Operator::broadcastChannelValue(int channel,
             if (value1 != 2)
             {
                 float v1 = properties[i].amplify * value1;
-                setDirty(properties[i].channelValue1 != value1);
+                if (properties[i].channelValue1 != value1)
+                    setDirty(true);
                 properties[i].channelValue1 = v1;
             }
             if (value2 != 2)
             {
                 float v2 = properties[i].amplify * value2;
-                setDirty(properties[i].channelValue2 != value2);
+                if (properties[i].channelValue2 != value2)
+                    setDirty(true);
                 properties[i].channelValue2 = v2;
             }
             if (value3 != 2)
             {
                 float v3 = properties[i].amplify * value3;
-                setDirty(properties[i].channelValue3 != value3);
+                if (properties[i].channelValue3 != value3)
+                    setDirty(true);
                 properties[i].channelValue3 = v3;
             }
             if (value4 != 2)
             {
                 float v4 = properties[i].amplify * value4;
-                setDirty(properties[i].channelValue4 != value4);
+                if (properties[i].channelValue4 != value4)
+                    setDirty(true);
                 properties[i].channelValue4 = v4;
             }
         }
@@ -128,6 +131,9 @@ void Operator::broadcastChannelValue(int channel,
 
 void Operator::setDirty(bool dirty)
 {
+    int address = (int)this;
+    System::Console::WriteLine("Dirty = " + dirty + " " + numberOfOutputs + " this = " + address);
+
     for (int i = 0; i < numberOfOutputs; i++)
         operators[outputs[i]]->setDirty(dirty);
 

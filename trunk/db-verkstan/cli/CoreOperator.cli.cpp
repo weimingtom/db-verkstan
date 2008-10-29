@@ -270,7 +270,7 @@ namespace Verkstan
             int j = 0;
             for (j; j < inputs->Count; j++)
             {
-                if (inputs[j]->Type == op->Type
+                if ((inputs[j]->Type == op->Type || inputs[j]->Type == Constants::OperatorTypes::Unspecified)
                     && getOperator()->inputs[j] == -1)
                 {
                     getOperator()->inputs[j] = op->Id;
@@ -286,7 +286,7 @@ namespace Verkstan
 			
             if (!accepted 
                 && inputs[j]->Infinite
-                && inputs[j]->Type == op->Type)
+                && (inputs[j]->Type == op->Type || inputs[j]->Type == Constants::OperatorTypes::Unspecified))
             {
                 for (j; j < DB_MAX_OPERATOR_CONNECTIONS; j++)
                 {

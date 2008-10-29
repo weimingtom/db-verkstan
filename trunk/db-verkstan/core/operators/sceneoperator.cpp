@@ -12,7 +12,8 @@ void SceneOperator::cascadeProcess()
             broadcastChannelValue(clip->channel, clip->getValue(beat), 2, 2, 2);
     }
 
-    Operator::cascadeProcess();
+    for (int i = 0; i < numberOfInputs; i++)
+        operators[inputs[i]]->cascadeProcess();
 }
 
 void SceneOperator::render()

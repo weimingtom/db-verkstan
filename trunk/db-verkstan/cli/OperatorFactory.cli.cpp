@@ -152,6 +152,7 @@ categories[category]->Add(name);
             op = gcnew LoadOperator("Load",properties);
         }
 
+        /*
         if (name == "Scene")
         {
             Clip^ c1 = ClipFactory::Create("Sine");
@@ -177,7 +178,7 @@ categories[category]->Add(name);
              coreOp->properties[6].amplify = 2.0f;
              coreOp->properties[4].channel = 0;
              coreOp->properties[4].amplify = 2.0f;
-        }
+        }*/
 
         return op;
      }

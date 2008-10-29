@@ -13,10 +13,10 @@ namespace Verkstan
             Mesh,
             Model,
             Renderer,
-            Scene,
-            Demo,
             Load,
-            Store
+            Store,
+            Unspecified,
+            Scene
         };
 
        enum class OperatorPropertyTypes

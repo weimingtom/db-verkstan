@@ -20,7 +20,7 @@ namespace Verkstan
         zoom = 0.0f;
     }
 
-    void Camera::ApplyTransformations()
+    void Camera::ApplyUserTransformations()
     {
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
@@ -43,15 +43,24 @@ namespace Verkstan
                            &Vec3(0.0f, 1.0f, 0.0f));
         D3DXMATRIX view = rotationX * rotationY * translation * lookat;
         globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
+    }
 
-        //globalWorldMatrixStack->Translate(0.0f, 0.0f, zoom);
-        /*
-       
-        D3DXMATRIX world;
-        globalDirect3DDevice->GetTransform(D3DTS_WORLD, &world);
-        world *= rotationX * rotationY * translation;
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &world);
-        */
+    void Camera::ApplyFixedTransformations()
+    {
+        D3DXMATRIX projection;
+        D3DXMatrixPerspectiveFovLH(&projection, 
+                                   D3DXToRadian(45.0f), 
+                                   4.0f / 3.0f, 
+                                   0.1f, 
+                                   100.0f);
+        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);
+
+        D3DXMATRIX view;
+        D3DXMatrixLookAtLH(&view,
+                           &Vec3(0.0f, 0.0f, -3.0f),
+                           &Vec3(0.0f, 0.0f, 0.0f),
+                           &Vec3(0.0f, 1.0f, 0.0f));
+        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &view);
     }
 
     void Camera::MouseDown(int button, int x, int y)

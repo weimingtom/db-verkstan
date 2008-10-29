@@ -134,6 +134,7 @@ namespace VerkstanEditor.Gui
             Pen lightPen = new Pen(lightColor);
             Pen darkPen = new Pen(darkColor);
 
+            Brush gradientBrush = new LinearGradientBrush(rect, lightColor, color, 0.0f);
             e.Graphics.FillRectangle(brush, rect);
             e.Graphics.DrawLine(lightPen,
                                 op.Location.X,

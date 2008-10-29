@@ -86,6 +86,18 @@
     <Compile Include="Gui\OperatorPropertyGrid.Designer.cs">
       <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\PlayerPositionLine.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\PlayerPositionLine.Designer.cs">
+      <DependentUpon>PlayerPositionLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\SceneTimeline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\SceneTimeline.Designer.cs">
+      <DependentUpon>SceneTimeline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\Transport.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -193,6 +205,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Gui\PlayerPositionLine.resx">
+      <DependentUpon>PlayerPositionLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\SceneTimeline.resx">
+      <DependentUpon>SceneTimeline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\Transport.resx">
       <DependentUpon>Transport.cs</DependentUpon>
     </EmbeddedResource>
