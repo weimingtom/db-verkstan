@@ -175,6 +175,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Scenes.cs" />
     <Compile Include="Util\RGBHSL.cs" />
     <Compile Include="Util\Sound.cs" />
   </ItemGroup>

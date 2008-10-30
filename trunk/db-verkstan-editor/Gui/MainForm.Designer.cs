@@ -46,6 +46,7 @@
             this.boardTabControl = new System.Windows.Forms.TabControl();
             this.operatorsTab = new System.Windows.Forms.TabPage();
             this.operatorPagePanel = new System.Windows.Forms.Panel();
+            this.operatorPage1 = new VerkstanEditor.Gui.OperatorPage();
             this.scenesTab = new System.Windows.Forms.TabPage();
             this.sceneTimeline1 = new VerkstanEditor.Gui.SceneTimeline();
             this.channelTab = new System.Windows.Forms.TabPage();
@@ -67,6 +68,7 @@
             this.previewBoardSplitContainer.SuspendLayout();
             this.boardTabControl.SuspendLayout();
             this.operatorsTab.SuspendLayout();
+            this.operatorPagePanel.SuspendLayout();
             this.scenesTab.SuspendLayout();
             this.propertiesChannelSplitContainer.Panel1.SuspendLayout();
             this.propertiesChannelSplitContainer.SuspendLayout();
@@ -245,12 +247,21 @@
             // operatorPagePanel
             // 
             this.operatorPagePanel.AutoScroll = true;
+            this.operatorPagePanel.Controls.Add(this.operatorPage1);
             this.operatorPagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorPagePanel.Location = new System.Drawing.Point(0, 0);
             this.operatorPagePanel.Margin = new System.Windows.Forms.Padding(0);
             this.operatorPagePanel.Name = "operatorPagePanel";
             this.operatorPagePanel.Size = new System.Drawing.Size(548, 86);
             this.operatorPagePanel.TabIndex = 1;
+            // 
+            // operatorPage1
+            // 
+            this.operatorPage1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.operatorPage1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPage1.Name = "operatorPage1";
+            this.operatorPage1.Size = new System.Drawing.Size(548, 86);
+            this.operatorPage1.TabIndex = 0;
             // 
             // scenesTab
             // 
@@ -265,6 +276,7 @@
             // 
             // sceneTimeline1
             // 
+            this.sceneTimeline1.BackColor = System.Drawing.SystemColors.Control;
             this.sceneTimeline1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.sceneTimeline1.Location = new System.Drawing.Point(0, 0);
             this.sceneTimeline1.Margin = new System.Windows.Forms.Padding(0);
@@ -362,6 +374,7 @@
             this.previewBoardSplitContainer.ResumeLayout(false);
             this.boardTabControl.ResumeLayout(false);
             this.operatorsTab.ResumeLayout(false);
+            this.operatorPagePanel.ResumeLayout(false);
             this.scenesTab.ResumeLayout(false);
             this.propertiesChannelSplitContainer.Panel1.ResumeLayout(false);
             this.propertiesChannelSplitContainer.ResumeLayout(false);
@@ -395,6 +408,7 @@
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
         private SceneTimeline sceneTimeline1;
+        private OperatorPage operatorPage1;
     }
 }
 

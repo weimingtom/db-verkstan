@@ -35,6 +35,11 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.playerPositionLine1 = new VerkstanEditor.Gui.PlayerPositionLine();
             this.channels1 = new VerkstanEditor.Gui.Channels();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -44,6 +49,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -66,7 +74,7 @@
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(684, 264);
+            this.splitContainer1.Size = new System.Drawing.Size(684, 237);
             this.splitContainer1.SplitterDistance = 94;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -88,7 +96,7 @@
             // 
             this.splitContainer3.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer3.Panel2.Controls.Add(this.channelInfos1);
-            this.splitContainer3.Size = new System.Drawing.Size(92, 262);
+            this.splitContainer3.Size = new System.Drawing.Size(92, 235);
             this.splitContainer3.SplitterDistance = 25;
             this.splitContainer3.SplitterWidth = 1;
             this.splitContainer3.TabIndex = 0;
@@ -129,7 +137,7 @@
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer2.Panel2.Controls.Add(this.channels1);
-            this.splitContainer2.Size = new System.Drawing.Size(584, 262);
+            this.splitContainer2.Size = new System.Drawing.Size(584, 235);
             this.splitContainer2.SplitterDistance = 25;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
@@ -158,15 +166,79 @@
             this.channels1.Location = new System.Drawing.Point(0, 0);
             this.channels1.Margin = new System.Windows.Forms.Padding(0);
             this.channels1.Name = "channels1";
-            this.channels1.Size = new System.Drawing.Size(64, 236);
+            this.channels1.PlayerPosition = 0;
+            this.channels1.Size = new System.Drawing.Size(64, 371);
             this.channels1.TabIndex = 0;
             this.channels1.LocationChanged += new System.EventHandler(this.channels1_LocationChanged);
+            // 
+            // splitContainer4
+            // 
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.IsSplitterFixed = true;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.button2);
+            this.splitContainer4.Panel1.Controls.Add(this.button1);
+            this.splitContainer4.Panel1.Controls.Add(this.label2);
+            this.splitContainer4.Panel1.Controls.Add(this.comboBox1);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this.splitContainer1);
+            this.splitContainer4.Size = new System.Drawing.Size(684, 264);
+            this.splitContainer4.SplitterDistance = 26;
+            this.splitContainer4.SplitterWidth = 1;
+            this.splitContainer4.TabIndex = 1;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(224, 1);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(49, 23);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "Spline";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(169, 1);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(49, 23);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "Wave";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(38, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Scene";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Items.AddRange(new object[] {
+            "Scene1",
+            "Scene2",
+            "Root"});
+            this.comboBox1.Location = new System.Drawing.Point(42, 3);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 0;
             // 
             // SceneTimeline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this.splitContainer4);
             this.Name = "SceneTimeline";
             this.Size = new System.Drawing.Size(684, 264);
             this.splitContainer1.Panel1.ResumeLayout(false);
@@ -179,6 +251,10 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel1.PerformLayout();
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            this.splitContainer4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -192,5 +268,10 @@
         private Channels channels1;
         private ChannelInfos channelInfos1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }
