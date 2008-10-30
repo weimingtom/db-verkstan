@@ -90,5 +90,15 @@ namespace VerkstanEditor.Gui
         {
             verkstanWindow.MouseMove(e.X, e.Y);
         }
+
+        private void transport1_BeatChanged(object sender, Transport.BeatChangedEventArgs e)
+        {
+            sceneTimeline1.PlayerPosition = e.Beat;
+        }
+
+        private void sceneTimeline1_PlayerPositionChanged(object sender, SceneTimeline.PlayerPositionChangedEventArgs e)
+        {
+            
+        }
     }
 }

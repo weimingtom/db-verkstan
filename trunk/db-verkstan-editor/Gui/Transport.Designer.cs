@@ -43,6 +43,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.beatsOrTime = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.beatChangedTimer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.bpm)).BeginInit();
             this.SuspendLayout();
             // 
@@ -152,7 +153,7 @@
             this.time.TabIndex = 13;
             this.time.Text = "0";
             // 
-            // timer
+            // clock
             // 
             this.clock.Interval = 10;
             this.clock.Tick += new System.EventHandler(this.timer_Tick);
@@ -204,6 +205,11 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Clock:";
             // 
+            // beatChangedTimer
+            // 
+            this.beatChangedTimer.Interval = 200;
+            this.beatChangedTimer.Tick += new System.EventHandler(this.beatChangedTimer_Tick);
+            // 
             // Transport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,5 +253,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox beatsOrTime;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Timer beatChangedTimer;
     }
 }

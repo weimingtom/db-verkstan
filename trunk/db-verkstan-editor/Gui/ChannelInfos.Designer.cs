@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class PlayerPositionLine
+    partial class ChannelInfos
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,21 +30,22 @@
         {
             this.SuspendLayout();
             // 
-            // PlayerPositionLine
+            // ChannelInfos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.DoubleBuffered = true;
-            this.Name = "PlayerPositionLine";
-            this.Size = new System.Drawing.Size(714, 25);
-            this.Load += new System.EventHandler(this.PlayerPositionLine_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayerPositionLine_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlayerPositionLine_MouseDown);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Name = "ChannelInfos";
+            this.Size = new System.Drawing.Size(120, 86);
+            this.Load += new System.EventHandler(this.ChannelInfos_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+
+
+
     }
 }

@@ -41,19 +41,18 @@
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
             this.mainTransportSplitContainer = new System.Windows.Forms.SplitContainer();
             this.mainLeftAndRightSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.propertiesChannelSplitContainer = new System.Windows.Forms.SplitContainer();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.previewBoardSplitContainer = new System.Windows.Forms.SplitContainer();
             this.previewPanel = new System.Windows.Forms.Panel();
             this.boardTabControl = new System.Windows.Forms.TabControl();
             this.operatorsTab = new System.Windows.Forms.TabPage();
             this.operatorPagePanel = new System.Windows.Forms.Panel();
             this.scenesTab = new System.Windows.Forms.TabPage();
-            this.channelTab = new System.Windows.Forms.TabPage();
             this.sceneTimeline1 = new VerkstanEditor.Gui.SceneTimeline();
+            this.channelTab = new System.Windows.Forms.TabPage();
+            this.propertiesChannelSplitContainer = new System.Windows.Forms.SplitContainer();
             this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
             this.transport1 = new VerkstanEditor.Gui.Transport();
-            this.operatorPage1 = new VerkstanEditor.Gui.OperatorPage();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.mainMenu.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -63,15 +62,14 @@
             this.mainLeftAndRightSplitContainer.Panel1.SuspendLayout();
             this.mainLeftAndRightSplitContainer.Panel2.SuspendLayout();
             this.mainLeftAndRightSplitContainer.SuspendLayout();
-            this.propertiesChannelSplitContainer.Panel1.SuspendLayout();
-            this.propertiesChannelSplitContainer.SuspendLayout();
             this.previewBoardSplitContainer.Panel1.SuspendLayout();
             this.previewBoardSplitContainer.Panel2.SuspendLayout();
             this.previewBoardSplitContainer.SuspendLayout();
             this.boardTabControl.SuspendLayout();
             this.operatorsTab.SuspendLayout();
-            this.operatorPagePanel.SuspendLayout();
             this.scenesTab.SuspendLayout();
+            this.propertiesChannelSplitContainer.Panel1.SuspendLayout();
+            this.propertiesChannelSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
             // renderTimer
@@ -183,33 +181,6 @@
             this.mainLeftAndRightSplitContainer.SplitterDistance = 556;
             this.mainLeftAndRightSplitContainer.TabIndex = 0;
             // 
-            // propertiesChannelSplitContainer
-            // 
-            this.propertiesChannelSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.propertiesChannelSplitContainer.Location = new System.Drawing.Point(0, 0);
-            this.propertiesChannelSplitContainer.Name = "propertiesChannelSplitContainer";
-            this.propertiesChannelSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // propertiesChannelSplitContainer.Panel1
-            // 
-            this.propertiesChannelSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.propertiesChannelSplitContainer.Panel1.Controls.Add(this.operatorPropertyGrid);
-            // 
-            // propertiesChannelSplitContainer.Panel2
-            // 
-            this.propertiesChannelSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.propertiesChannelSplitContainer.Size = new System.Drawing.Size(206, 238);
-            this.propertiesChannelSplitContainer.SplitterDistance = 119;
-            this.propertiesChannelSplitContainer.TabIndex = 0;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
             // previewBoardSplitContainer
             // 
             this.previewBoardSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -274,7 +245,6 @@
             // operatorPagePanel
             // 
             this.operatorPagePanel.AutoScroll = true;
-            this.operatorPagePanel.Controls.Add(this.operatorPage1);
             this.operatorPagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorPagePanel.Location = new System.Drawing.Point(0, 0);
             this.operatorPagePanel.Margin = new System.Windows.Forms.Padding(0);
@@ -293,6 +263,16 @@
             this.scenesTab.Text = "Scenes";
             this.scenesTab.UseVisualStyleBackColor = true;
             // 
+            // sceneTimeline1
+            // 
+            this.sceneTimeline1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.sceneTimeline1.Location = new System.Drawing.Point(0, 0);
+            this.sceneTimeline1.Margin = new System.Windows.Forms.Padding(0);
+            this.sceneTimeline1.Name = "sceneTimeline1";
+            this.sceneTimeline1.Size = new System.Drawing.Size(548, 86);
+            this.sceneTimeline1.TabIndex = 0;
+            this.sceneTimeline1.PlayerPositionChanged += new VerkstanEditor.Gui.SceneTimeline.PlayerPositionChangedHandler(this.sceneTimeline1_PlayerPositionChanged);
+            // 
             // channelTab
             // 
             this.channelTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -302,14 +282,24 @@
             this.channelTab.TabIndex = 3;
             this.channelTab.Text = "Channel";
             // 
-            // sceneTimeline1
+            // propertiesChannelSplitContainer
             // 
-            this.sceneTimeline1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneTimeline1.Location = new System.Drawing.Point(0, 0);
-            this.sceneTimeline1.Margin = new System.Windows.Forms.Padding(0);
-            this.sceneTimeline1.Name = "sceneTimeline1";
-            this.sceneTimeline1.Size = new System.Drawing.Size(548, 86);
-            this.sceneTimeline1.TabIndex = 0;
+            this.propertiesChannelSplitContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.propertiesChannelSplitContainer.Location = new System.Drawing.Point(0, 0);
+            this.propertiesChannelSplitContainer.Name = "propertiesChannelSplitContainer";
+            this.propertiesChannelSplitContainer.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // propertiesChannelSplitContainer.Panel1
+            // 
+            this.propertiesChannelSplitContainer.Panel1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.propertiesChannelSplitContainer.Panel1.Controls.Add(this.operatorPropertyGrid);
+            // 
+            // propertiesChannelSplitContainer.Panel2
+            // 
+            this.propertiesChannelSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.propertiesChannelSplitContainer.Size = new System.Drawing.Size(206, 238);
+            this.propertiesChannelSplitContainer.SplitterDistance = 119;
+            this.propertiesChannelSplitContainer.TabIndex = 0;
             // 
             // operatorPropertyGrid
             // 
@@ -331,14 +321,15 @@
             this.transport1.Name = "transport1";
             this.transport1.Size = new System.Drawing.Size(766, 64);
             this.transport1.TabIndex = 0;
+            this.transport1.BeatChanged += new VerkstanEditor.Gui.Transport.BeatChangedHandler(this.transport1_BeatChanged);
             // 
-            // operatorPage1
+            // statusStrip1
             // 
-            this.operatorPage1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.operatorPage1.Location = new System.Drawing.Point(0, 0);
-            this.operatorPage1.Name = "operatorPage1";
-            this.operatorPage1.Size = new System.Drawing.Size(75, 86);
-            this.operatorPage1.TabIndex = 0;
+            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // mainForm
             // 
@@ -366,15 +357,14 @@
             this.mainLeftAndRightSplitContainer.Panel1.ResumeLayout(false);
             this.mainLeftAndRightSplitContainer.Panel2.ResumeLayout(false);
             this.mainLeftAndRightSplitContainer.ResumeLayout(false);
-            this.propertiesChannelSplitContainer.Panel1.ResumeLayout(false);
-            this.propertiesChannelSplitContainer.ResumeLayout(false);
             this.previewBoardSplitContainer.Panel1.ResumeLayout(false);
             this.previewBoardSplitContainer.Panel2.ResumeLayout(false);
             this.previewBoardSplitContainer.ResumeLayout(false);
             this.boardTabControl.ResumeLayout(false);
             this.operatorsTab.ResumeLayout(false);
-            this.operatorPagePanel.ResumeLayout(false);
             this.scenesTab.ResumeLayout(false);
+            this.propertiesChannelSplitContainer.Panel1.ResumeLayout(false);
+            this.propertiesChannelSplitContainer.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,7 +395,6 @@
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
         private SceneTimeline sceneTimeline1;
-        private OperatorPage operatorPage1;
     }
 }
 

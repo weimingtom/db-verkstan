@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Design;
 
 namespace VerkstanEditor.Gui
 {
@@ -13,6 +14,7 @@ namespace VerkstanEditor.Gui
     public partial class Transport : UserControl
     {
         private bool showClockAsBeats = true;
+        private int lastBeat;
 
         public Transport()
         {
@@ -20,13 +22,35 @@ namespace VerkstanEditor.Gui
             this.bpm.Value = Verkstan.Timer.BPM;
             this.beatsOrTime.Text = "Beats";
             UpdateClock();
+            beatChangedTimer.Start();
+        }
+
+        public class BeatChangedEventArgs: EventArgs
+        {
+            public int Beat;
+            public BeatChangedEventArgs(int beat)
+            {
+                Beat = beat;
+            }
+        }
+
+        public delegate void BeatChangedHandler(object sender, BeatChangedEventArgs e);
+        [Browsable(true)]
+        [Description("Event fired when the beat has changed.")]
+        [Editor(typeof(BeatChangedHandler), typeof(UITypeEditor))]
+        public event BeatChangedHandler BeatChanged;
+
+        public void OnBeatChanged(object sender, BeatChangedEventArgs e)
+        {
+            if (BeatChanged != null)
+                BeatChanged(sender, e);
         }
 
         private void UpdateClock()
         {
             if (showClockAsBeats)
             {
-                this.time.Text = String.Format("{0:000.00}", Verkstan.Timer.GetBeat() / (float)Verkstan.Timer.GetTicksPerBeat());
+                this.time.Text = String.Format("{0:0000.00}", Verkstan.Timer.GetBeat() / (float)Verkstan.Timer.GetTicksPerBeat() + 1);
             }
             else
             {
@@ -95,6 +119,18 @@ namespace VerkstanEditor.Gui
 
             int beatsOrTimeX = Size.Width - this.beatsOrTime.Width - 3;
             this.beatsOrTime.Location = new Point(beatsOrTimeX, this.beatsOrTime.Location.Y);
+        }
+
+        private void beatChangedTimer_Tick(object sender, EventArgs e)
+        {
+            int beat = Verkstan.Timer.GetBeat();
+
+            if (beat != lastBeat)
+            {
+                OnBeatChanged(this, new BeatChangedEventArgs(beat));
+            }
+
+            lastBeat = beat;
         }
     }
 }

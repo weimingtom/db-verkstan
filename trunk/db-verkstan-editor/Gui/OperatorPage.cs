@@ -24,7 +24,6 @@ namespace VerkstanEditor.Gui
 
         public OperatorPage()
         {
-            this.Size = new Size(0, 0);
             this.DoubleBuffered = true;
             InitializeComponent();
 
@@ -36,7 +35,7 @@ namespace VerkstanEditor.Gui
                 item.AutoSize = true;
                 item.Name = category;
                 item.Text = item.Name;
-                operatorsMenu.Items.Add(item);
+                menu.Items.Add(item);
                 ICollection<String> names = Operators.GetNamesInCategory(category);
                 foreach (String name in names)
                 {
@@ -55,7 +54,7 @@ namespace VerkstanEditor.Gui
             }
         }
 
-        private void OperatorPanel_Paint(object sender, PaintEventArgs e)
+        private void OperatorPage_Paint(object sender, PaintEventArgs e)
         {
             List<Operator> ops = Operators.GetOperatorsInPage("First");
 
@@ -90,7 +89,7 @@ namespace VerkstanEditor.Gui
                 p.Dispose();
             }
         }
-
+ 
         private void PaintMovingOperator(Operator op, PaintEventArgs e)
         {
             Point p = GetMovePoint();
@@ -223,7 +222,7 @@ namespace VerkstanEditor.Gui
             Refresh();
         }
 
-        private void operatorPage_DoubleClick(object sender, EventArgs e)
+        private void OperatorPage_DoubleClick(object sender, EventArgs e)
         {
             Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
 
@@ -350,22 +349,22 @@ namespace VerkstanEditor.Gui
                 Size = new Size(Size.Width, parentSize.Height);
         }
 
-        private void OperatorPage_ParentChanged(object sender, EventArgs e)
-        {
-            Parent.Resize += new System.EventHandler(this.operatorPage_ParentResized);
-        }
-
-        private void operatorPage_ParentResized(object sender, EventArgs e)
-        {
-            CheckSize();
-        }
-
-        private void operatorsMenu_Opened(object sender, EventArgs e)
+        private void menu_Opened(object sender, EventArgs e)
         {
             AddLocation = MouseLocation;
         }
 
-        private void operatorPage_KeyDown(object sender, KeyEventArgs e)
+        private void OperatorPage_ParentChanged(object sender, EventArgs e)
+        {
+            Parent.Resize += new System.EventHandler(this.OperatorPage_ParentResized);
+        }
+
+        private void OperatorPage_ParentResized(object sender, EventArgs e)
+        {
+            CheckSize();
+        }
+
+        private void OperatorPage_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {

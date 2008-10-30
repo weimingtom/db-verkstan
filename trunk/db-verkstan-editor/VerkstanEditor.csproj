@@ -74,11 +74,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gui\ChannelInfo.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ChannelInfo.Designer.cs">
+      <DependentUpon>ChannelInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\ChannelInfos.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ChannelInfos.Designer.cs">
+      <DependentUpon>ChannelInfos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Channels.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Channels.Designer.cs">
+      <DependentUpon>Channels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\ColorProperty.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Gui\ColorProperty.Designer.cs">
       <DependentUpon>ColorProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPage.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPage.Designer.cs">
+      <DependentUpon>OperatorPage.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\OperatorPropertyGrid.cs">
       <SubType>UserControl</SubType>
@@ -118,12 +142,6 @@
     <Compile Include="Gui\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\OperatorPage.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Gui\OperatorPage.Designer.cs">
-      <DependentUpon>OperatorPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\ColorProperty.resx">
@@ -131,9 +149,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OperatorPage.resx">
-      <DependentUpon>OperatorPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPropertyGrid.resx">
       <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
@@ -205,6 +220,18 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Gui\ChannelInfo.resx">
+      <DependentUpon>ChannelInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ChannelInfos.resx">
+      <DependentUpon>ChannelInfos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Channels.resx">
+      <DependentUpon>Channels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPage.resx">
+      <DependentUpon>OperatorPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\PlayerPositionLine.resx">
       <DependentUpon>PlayerPositionLine.cs</DependentUpon>
     </EmbeddedResource>

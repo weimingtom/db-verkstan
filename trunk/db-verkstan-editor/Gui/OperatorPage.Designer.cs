@@ -29,34 +29,35 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.operatorsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.SuspendLayout();
             // 
-            // operatorsMenu
+            // menu
             // 
-            this.operatorsMenu.Name = "OperatorsMenu";
-            this.operatorsMenu.Size = new System.Drawing.Size(61, 4);
-            this.operatorsMenu.Opened += new System.EventHandler(this.operatorsMenu_Opened);
+            this.menu.Name = "menu";
+            this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menu.Size = new System.Drawing.Size(153, 26);
+            this.menu.Opened += new System.EventHandler(this.menu_Opened);
             // 
-            // operatorPage
+            // OperatorPage
             // 
-            this.ContextMenuStrip = this.operatorsMenu;
-            this.Name = "operatorPage";
-            this.DoubleClick += new System.EventHandler(this.operatorPage_DoubleClick);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OperatorPanel_Paint);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ContextMenuStrip = this.menu;
+            this.Name = "OperatorPage";
+            this.DoubleClick += new System.EventHandler(this.OperatorPage_DoubleClick);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OperatorPage_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseMove);
             this.ParentChanged += new System.EventHandler(this.OperatorPage_ParentChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseUp);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.operatorPage_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OperatorPage_KeyDown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip operatorsMenu;
-
-
+        private System.Windows.Forms.ContextMenuStrip menu;
     }
 }
