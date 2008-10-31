@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
@@ -26,7 +27,8 @@ namespace VerkstanEditor.Gui
                 verkstanWindow.Boot(previewPanel.Handle.ToPointer());
             }
 
-            renderTimer.Enabled = true;
+            fastRenderTimer.Enabled = true;
+            slowRenderTimer.Enabled = true;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -34,9 +36,10 @@ namespace VerkstanEditor.Gui
 
         }
 
-        private void RenderTimer_Tick(object sender, EventArgs e)
+        private void FastRenderTimer_Tick(object sender, EventArgs e)
         {
             verkstanWindow.Render();
+            Metronome.OnBeatChangedFastUpdate(Metronome.Beat);
         }
 
         private void PreviewPanel_SizeChanged(object sender, EventArgs e)
@@ -91,14 +94,9 @@ namespace VerkstanEditor.Gui
             verkstanWindow.MouseMove(e.X, e.Y);
         }
 
-        private void transport1_BeatChanged(object sender, Transport.BeatChangedEventArgs e)
+        private void slowRenderTimer_Tick(object sender, EventArgs e)
         {
-            sceneTimeline1.PlayerPosition = e.Beat;
-        }
-
-        private void sceneTimeline1_PlayerPositionChanged(object sender, SceneTimeline.PlayerPositionChangedEventArgs e)
-        {
-            
+            Metronome.OnBeatChangedSlowUpdate(Metronome.Beat);
         }
     }
 }

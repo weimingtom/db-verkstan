@@ -53,9 +53,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3219.28088, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3226.30174, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
+      <HintPath>..\db-verkstan\db.Verkstan.Cli-Release\db.Verkstan.Cli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -98,6 +98,12 @@
     <Compile Include="Gui\ColorProperty.Designer.cs">
       <DependentUpon>ColorProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\MiniTimeline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\MiniTimeline.Designer.cs">
+      <DependentUpon>MiniTimeline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\OperatorPage.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,11 +116,11 @@
     <Compile Include="Gui\OperatorPropertyGrid.Designer.cs">
       <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\PlayerPositionLine.cs">
+    <Compile Include="Gui\BeatPositionLine.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\PlayerPositionLine.Designer.cs">
-      <DependentUpon>PlayerPositionLine.cs</DependentUpon>
+    <Compile Include="Gui\BeatPositionLine.Designer.cs">
+      <DependentUpon>BeatPositionLine.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\SceneTimeline.cs">
       <SubType>UserControl</SubType>
@@ -134,14 +140,15 @@
     <Compile Include="Gui\VectorProperty.Designer.cs">
       <DependentUpon>VectorProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="Operator.cs" />
-    <Compile Include="Operators.cs" />
+    <Compile Include="Logic\Operator.cs" />
+    <Compile Include="Logic\Operators.cs" />
     <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Gui\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Metronome.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\ColorProperty.resx">
@@ -175,7 +182,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Scenes.cs" />
+    <Compile Include="Logic\Scenes.cs" />
     <Compile Include="Util\RGBHSL.cs" />
     <Compile Include="Util\Sound.cs" />
   </ItemGroup>
@@ -230,11 +237,14 @@
     <EmbeddedResource Include="Gui\Channels.resx">
       <DependentUpon>Channels.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Gui\MiniTimeline.resx">
+      <DependentUpon>MiniTimeline.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPage.resx">
       <DependentUpon>OperatorPage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\PlayerPositionLine.resx">
-      <DependentUpon>PlayerPositionLine.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\BeatPositionLine.resx">
+      <DependentUpon>BeatPositionLine.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\SceneTimeline.resx">
       <DependentUpon>SceneTimeline.cs</DependentUpon>

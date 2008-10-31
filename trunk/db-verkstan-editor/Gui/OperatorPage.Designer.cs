@@ -36,7 +36,7 @@
             // 
             this.menu.Name = "menu";
             this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menu.Size = new System.Drawing.Size(153, 26);
+            this.menu.Size = new System.Drawing.Size(61, 4);
             this.menu.Opened += new System.EventHandler(this.menu_Opened);
             // 
             // OperatorPage
@@ -45,6 +45,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ContextMenuStrip = this.menu;
             this.Name = "OperatorPage";
+            this.Load += new System.EventHandler(this.OperatorPage_Load);
             this.DoubleClick += new System.EventHandler(this.OperatorPage_DoubleClick);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.OperatorPage_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseMove);

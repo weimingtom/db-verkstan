@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
-            this.renderTimer = new System.Windows.Forms.Timer(this.components);
+            this.fastRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.mainMenuFile = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuFileNew = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,7 +46,6 @@
             this.boardTabControl = new System.Windows.Forms.TabControl();
             this.operatorsTab = new System.Windows.Forms.TabPage();
             this.operatorPagePanel = new System.Windows.Forms.Panel();
-            this.operatorPage1 = new VerkstanEditor.Gui.OperatorPage();
             this.scenesTab = new System.Windows.Forms.TabPage();
             this.sceneTimeline1 = new VerkstanEditor.Gui.SceneTimeline();
             this.channelTab = new System.Windows.Forms.TabPage();
@@ -54,6 +53,8 @@
             this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
             this.transport1 = new VerkstanEditor.Gui.Transport();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.slowRenderTimer = new System.Windows.Forms.Timer(this.components);
+            this.operatorPage1 = new VerkstanEditor.Gui.OperatorPage();
             this.mainMenu.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -74,10 +75,10 @@
             this.propertiesChannelSplitContainer.SuspendLayout();
             this.SuspendLayout();
             // 
-            // renderTimer
+            // fastRenderTimer
             // 
-            this.renderTimer.Interval = 10;
-            this.renderTimer.Tick += new System.EventHandler(this.RenderTimer_Tick);
+            this.fastRenderTimer.Interval = 10;
+            this.fastRenderTimer.Tick += new System.EventHandler(this.FastRenderTimer_Tick);
             // 
             // mainMenu
             // 
@@ -247,6 +248,7 @@
             // operatorPagePanel
             // 
             this.operatorPagePanel.AutoScroll = true;
+            this.operatorPagePanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.operatorPagePanel.Controls.Add(this.operatorPage1);
             this.operatorPagePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.operatorPagePanel.Location = new System.Drawing.Point(0, 0);
@@ -254,14 +256,6 @@
             this.operatorPagePanel.Name = "operatorPagePanel";
             this.operatorPagePanel.Size = new System.Drawing.Size(548, 86);
             this.operatorPagePanel.TabIndex = 1;
-            // 
-            // operatorPage1
-            // 
-            this.operatorPage1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.operatorPage1.Location = new System.Drawing.Point(0, 0);
-            this.operatorPage1.Name = "operatorPage1";
-            this.operatorPage1.Size = new System.Drawing.Size(548, 86);
-            this.operatorPage1.TabIndex = 0;
             // 
             // scenesTab
             // 
@@ -283,7 +277,6 @@
             this.sceneTimeline1.Name = "sceneTimeline1";
             this.sceneTimeline1.Size = new System.Drawing.Size(548, 86);
             this.sceneTimeline1.TabIndex = 0;
-            this.sceneTimeline1.PlayerPositionChanged += new VerkstanEditor.Gui.SceneTimeline.PlayerPositionChangedHandler(this.sceneTimeline1_PlayerPositionChanged);
             // 
             // channelTab
             // 
@@ -333,7 +326,6 @@
             this.transport1.Name = "transport1";
             this.transport1.Size = new System.Drawing.Size(766, 64);
             this.transport1.TabIndex = 0;
-            this.transport1.BeatChanged += new VerkstanEditor.Gui.Transport.BeatChangedHandler(this.transport1_BeatChanged);
             // 
             // statusStrip1
             // 
@@ -342,6 +334,18 @@
             this.statusStrip1.Size = new System.Drawing.Size(766, 22);
             this.statusStrip1.TabIndex = 2;
             this.statusStrip1.Text = "statusStrip1";
+            // 
+            // slowRenderTimer
+            // 
+            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
+            // 
+            // operatorPage1
+            // 
+            this.operatorPage1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.operatorPage1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPage1.Name = "operatorPage1";
+            this.operatorPage1.Size = new System.Drawing.Size(548, 68);
+            this.operatorPage1.TabIndex = 0;
             // 
             // mainForm
             // 
@@ -385,7 +389,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Timer renderTimer;
+        private System.Windows.Forms.Timer fastRenderTimer;
         private System.Windows.Forms.Panel previewPanel;
         private System.Windows.Forms.MenuStrip mainMenu;
         private System.Windows.Forms.ToolStripMenuItem mainMenuFile;
@@ -408,6 +412,7 @@
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
         private SceneTimeline sceneTimeline1;
+        private System.Windows.Forms.Timer slowRenderTimer;
         private OperatorPage operatorPage1;
     }
 }

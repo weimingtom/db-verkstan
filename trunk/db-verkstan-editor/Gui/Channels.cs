@@ -7,27 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
     [ToolboxItem(true)]
     public partial class Channels : UserControl
     {
+        private int beat;
         private int numberOfChannels = 12;
-        private int beats = 4;
-        public int Beats
-        {
-            set
-            {
-                beats = value;
-                UpdateSize();
-            }
-            get
-            {
-                return beats;
-            }
-        }
-
+      
         [Browsable(true)]
         [Description("The width of a beat in pixels.")]
         [Editor(typeof(int), typeof(UITypeEditor))]
@@ -66,31 +55,39 @@ namespace VerkstanEditor.Gui
 
         }
 
-        private int playerPosition = 0;
-        public int PlayerPosition
-        {
-            set
-            {
-                playerPosition = value;
-                Refresh();
-            }
-            get
-            {
-                return playerPosition;
-            }
-        }
-
-
         public Channels()
         {
             InitializeComponent();
             DoubleBuffered = true;
+            Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.Channels_BeatChangedSlowUpdate);
+        }
+
+        public void Channels_BeatChangedSlowUpdate(int beat)
+        {
+            int oldBeatInPixels = (int)(beatWidth * (this.beat / (float)Metronome.TicksPerBeat));
+            int newBeatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
+            this.beat = beat;
+
+            int x = 0;
+            int width = 0;
+            if (oldBeatInPixels < newBeatInPixels)
+            {
+                x = oldBeatInPixels;
+                width = newBeatInPixels - oldBeatInPixels + 1;
+            }
+            else
+            {
+                x = newBeatInPixels;
+                width = oldBeatInPixels - newBeatInPixels + 1;
+            }
+
+            Invalidate(new Rectangle(x, 0, width, Size.Height), false);
+            Update();
         }
 
         private void UpdateSize()
         {
-          
-            int width = beatWidth * beats;
+            int width = beatWidth * Metronome.Beats / Metronome.TicksPerBeat + 1;
             int height = numberOfChannels * (channelHeight + 1) - 1;
                      
             Size = new Size(width, height);
@@ -124,11 +121,13 @@ namespace VerkstanEditor.Gui
         private void Channels_Paint(object sender, PaintEventArgs e)
         {
             for (int i = 0; i < numberOfChannels; i++)
+            {
                 PaintChannel(e, i * (channelHeight + 1));
+            }
 
             Pen p = new Pen(Color.FromArgb(255, 0, 0), 1);
-            int playerPositionInPixels = (int)(BeatWidth * (PlayerPosition / (float)Verkstan.Timer.GetTicksPerBeat()));
-            e.Graphics.DrawLine(p, new Point(playerPositionInPixels, 0), new Point(playerPositionInPixels, Size.Height));
+            int beatInPixels = (int)(BeatWidth * (beat / (float)Metronome.TicksPerBeat));
+            e.Graphics.DrawLine(p, new Point(beatInPixels, 0), new Point(beatInPixels, Size.Height));
             p.Dispose();
         }
 
@@ -137,8 +136,13 @@ namespace VerkstanEditor.Gui
             Pen p1 = new Pen(Color.FromArgb(80, 80, 80), 1);
             Pen p2 = new Pen(Color.FromArgb(30, 30, 30), 1);
 
-            for (int i = 0; i < Beats; i++)
+            int beats = Metronome.Beats;
+            for (int i = 0; i < beats; i++)
             {
+                Rectangle beatRectangle = new Rectangle(i * beatWidth, 0, beatWidth, Size.Height);
+                if (!e.ClipRectangle.IntersectsWith(beatRectangle))
+                    continue;
+
                 if (i % 2 == 0)
                     e.Graphics.DrawLine(p1, new Point(i * BeatWidth, y), new Point(i * BeatWidth, y + channelHeight));
                 else

@@ -278,6 +278,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Metronome.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\Metronome.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Operator.cli.cpp"
 				>
 			</File>
@@ -343,14 +351,6 @@
 			</File>
 			<File
 				RelativePath=".\cli\StoreOperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Timer.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Timer.hpp"
 				>
 			</File>
 			<File

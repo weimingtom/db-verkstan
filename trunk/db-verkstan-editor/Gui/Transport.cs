@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Design;
+using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
@@ -14,84 +15,62 @@ namespace VerkstanEditor.Gui
     public partial class Transport : UserControl
     {
         private bool showClockAsBeats = true;
-        private int lastBeat;
+        private int beat;
 
         public Transport()
         {
             InitializeComponent();
-            this.bpm.Value = Verkstan.Timer.BPM;
+            this.bpm.Value = Metronome.BPM;
             this.beatsOrTime.Text = "Beats";
             UpdateClock();
-            beatChangedTimer.Start();
+            Metronome.BeatChangedFastUpdate += new Metronome.BeatChangedHandler(this.Transport_BeatChangedFastUpdate);
         }
 
-        public class BeatChangedEventArgs: EventArgs
+        public void Transport_BeatChangedFastUpdate(int beat)
         {
-            public int Beat;
-            public BeatChangedEventArgs(int beat)
-            {
-                Beat = beat;
-            }
-        }
-
-        public delegate void BeatChangedHandler(object sender, BeatChangedEventArgs e);
-        [Browsable(true)]
-        [Description("Event fired when the beat has changed.")]
-        [Editor(typeof(BeatChangedHandler), typeof(UITypeEditor))]
-        public event BeatChangedHandler BeatChanged;
-
-        public void OnBeatChanged(object sender, BeatChangedEventArgs e)
-        {
-            if (BeatChanged != null)
-                BeatChanged(sender, e);
+            this.beat = beat;
+            UpdateClock();
         }
 
         private void UpdateClock()
         {
             if (showClockAsBeats)
             {
-                this.time.Text = String.Format("{0:0000.00}", Verkstan.Timer.GetBeat() / (float)Verkstan.Timer.GetTicksPerBeat() + 1);
+                float bf = this.beat / (float)Metronome.TicksPerBeat;
+                this.time.Text = String.Format("{0:0000.00}", bf + 1);
             }
             else
             {
-                TimeSpan ts = TimeSpan.FromMilliseconds(Verkstan.Timer.GetMilliseconds());
-                this.time.Text = String.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, ts.Milliseconds % 60);
+                TimeSpan ts = TimeSpan.FromMilliseconds(Metronome.Milliseconds);
+                this.time.Text = String.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, (int)(ts.Milliseconds / 10.0f));
             }
         }
 
         private void play_Click(object sender, EventArgs e)
         {
-            Verkstan.Timer.Start();
-            clock.Start();
+            Metronome.Loop = false;
+            Metronome.Start();
         }
 
         private void stop_Click(object sender, EventArgs e)
         {
-            Verkstan.Timer.Pause();
-            Verkstan.Timer.SetBeat(0);
-            clock.Stop();
-            UpdateClock();
+            Metronome.Pause();
+            Metronome.Beat = 0;
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            Verkstan.Timer.SetBeat(0);
-            UpdateClock();
-        }
-
-        private void timer_Tick(object sender, EventArgs e)
-        {
-            UpdateClock();
+            Metronome.Beat = 0;
         }
 
         private void pause_Click(object sender, EventArgs e)
         {
-            Verkstan.Timer.Pause();
+            Metronome.Pause();
         }
 
         private void bpm_ValueChanged(object sender, EventArgs e)
         {
-            Verkstan.Timer.BPM = Convert.ToInt32(this.bpm.Value);
+            Metronome.BPM = Convert.ToInt32(this.bpm.Value);
         }
 
         private void beatsOrTime_SelectedValueChanged(object sender, EventArgs e)
@@ -119,18 +98,14 @@ namespace VerkstanEditor.Gui
 
             int beatsOrTimeX = Size.Width - this.beatsOrTime.Width - 3;
             this.beatsOrTime.Location = new Point(beatsOrTimeX, this.beatsOrTime.Location.Y);
+
+            this.miniTimeline1.Size = new Size(Size.Width - 8, miniTimeline1.Size.Height);
         }
 
-        private void beatChangedTimer_Tick(object sender, EventArgs e)
+        private void loopPlay_Click(object sender, EventArgs e)
         {
-            int beat = Verkstan.Timer.GetBeat();
-
-            if (beat != lastBeat)
-            {
-                OnBeatChanged(this, new BeatChangedEventArgs(beat));
-            }
-
-            lastBeat = beat;
+            Metronome.Loop = true;
+            Metronome.Start();
         }
     }
 }

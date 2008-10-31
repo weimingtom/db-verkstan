@@ -27,7 +27,7 @@ namespace VerkstanEditor.Gui
             this.DoubleBuffered = true;
             InitializeComponent();
 
-            CheckSize();
+            UpdateSize();
 
             foreach (String category in Operators.GetCategories())
             {
@@ -237,13 +237,13 @@ namespace VerkstanEditor.Gui
             if (InMove)
             {
                 Operators.MoveSelectedOperatorsInPage("First", GetMovePoint());
-                CheckSize();
+                UpdateSize();
             }
 
             if (InResize)
             {
                 Operators.ResizeSelectedOperatorsInPage("First", GetResizeWidth());
-                CheckSize();
+                UpdateSize();
             }
 
             InSelect = false;
@@ -309,7 +309,7 @@ namespace VerkstanEditor.Gui
             return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
-        private void CheckSize()
+        private void UpdateSize()
         {
             Rectangle dimension = Operators.GetOperatorsDimensionInPage("First");
 
@@ -361,7 +361,7 @@ namespace VerkstanEditor.Gui
 
         private void OperatorPage_ParentResized(object sender, EventArgs e)
         {
-            CheckSize();
+            UpdateSize();
         }
 
         private void OperatorPage_KeyDown(object sender, KeyEventArgs e)
@@ -371,6 +371,11 @@ namespace VerkstanEditor.Gui
                 Operators.DeleteSelectedOperatorsInPage("First");
                 Refresh();
             }
+        }
+
+        private void OperatorPage_Load(object sender, EventArgs e)
+        {
+            UpdateSize();
         }
     }
 }

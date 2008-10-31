@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.stop = new System.Windows.Forms.Button();
             this.play = new System.Windows.Forms.Button();
             this.pause = new System.Windows.Forms.Button();
@@ -36,14 +35,13 @@
             this.rewind = new System.Windows.Forms.Button();
             this.fastForward = new System.Windows.Forms.Button();
             this.end = new System.Windows.Forms.Button();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.time = new System.Windows.Forms.Label();
-            this.clock = new System.Windows.Forms.Timer(this.components);
             this.bpm = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.beatsOrTime = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.beatChangedTimer = new System.Windows.Forms.Timer(this.components);
+            this.loopPlay = new System.Windows.Forms.Button();
+            this.miniTimeline1 = new VerkstanEditor.Gui.MiniTimeline();
             ((System.ComponentModel.ISupportInitialize)(this.bpm)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,7 +74,7 @@
             // pause
             // 
             this.pause.BackColor = System.Drawing.SystemColors.Control;
-            this.pause.Location = new System.Drawing.Point(48, 4);
+            this.pause.Location = new System.Drawing.Point(70, 4);
             this.pause.Margin = new System.Windows.Forms.Padding(1);
             this.pause.Name = "pause";
             this.pause.Size = new System.Drawing.Size(20, 20);
@@ -134,14 +132,6 @@
             this.end.Text = "►|";
             this.end.UseVisualStyleBackColor = false;
             // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.SystemColors.ControlText;
-            this.panel1.Location = new System.Drawing.Point(4, 50);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(567, 10);
-            this.panel1.TabIndex = 12;
-            // 
             // time
             // 
             this.time.AutoSize = true;
@@ -152,11 +142,6 @@
             this.time.Size = new System.Drawing.Size(53, 59);
             this.time.TabIndex = 13;
             this.time.Text = "0";
-            // 
-            // clock
-            // 
-            this.clock.Interval = 10;
-            this.clock.Tick += new System.EventHandler(this.timer_Tick);
             // 
             // bpm
             // 
@@ -205,21 +190,38 @@
             this.label2.TabIndex = 17;
             this.label2.Text = "Clock:";
             // 
-            // beatChangedTimer
+            // loopPlay
             // 
-            this.beatChangedTimer.Interval = 200;
-            this.beatChangedTimer.Tick += new System.EventHandler(this.beatChangedTimer_Tick);
+            this.loopPlay.BackColor = System.Drawing.SystemColors.Control;
+            this.loopPlay.Location = new System.Drawing.Point(48, 4);
+            this.loopPlay.Margin = new System.Windows.Forms.Padding(1);
+            this.loopPlay.Name = "loopPlay";
+            this.loopPlay.Size = new System.Drawing.Size(20, 20);
+            this.loopPlay.TabIndex = 20;
+            this.loopPlay.Text = "L";
+            this.loopPlay.UseVisualStyleBackColor = false;
+            this.loopPlay.Click += new System.EventHandler(this.loopPlay_Click);
+            // 
+            // miniTimeline1
+            // 
+            this.miniTimeline1.BackColor = System.Drawing.SystemColors.ControlText;
+            this.miniTimeline1.ForeColor = System.Drawing.Color.Red;
+            this.miniTimeline1.Location = new System.Drawing.Point(4, 49);
+            this.miniTimeline1.Name = "miniTimeline1";
+            this.miniTimeline1.Size = new System.Drawing.Size(559, 10);
+            this.miniTimeline1.TabIndex = 18;
             // 
             // Transport
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Controls.Add(this.loopPlay);
+            this.Controls.Add(this.miniTimeline1);
             this.Controls.Add(this.beatsOrTime);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.bpm);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.time);
             this.Controls.Add(this.end);
             this.Controls.Add(this.fastForward);
@@ -246,13 +248,12 @@
         private System.Windows.Forms.Button rewind;
         private System.Windows.Forms.Button fastForward;
         private System.Windows.Forms.Button end;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label time;
-        private System.Windows.Forms.Timer clock;
         private System.Windows.Forms.NumericUpDown bpm;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox beatsOrTime;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Timer beatChangedTimer;
+        private MiniTimeline miniTimeline1;
+        private System.Windows.Forms.Button loopPlay;
     }
 }

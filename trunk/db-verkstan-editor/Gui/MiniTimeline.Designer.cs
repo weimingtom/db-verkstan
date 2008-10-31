@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class PlayerPositionLine
+    partial class MiniTimeline
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,21 +30,21 @@
         {
             this.SuspendLayout();
             // 
-            // PlayerPositionLine
+            // MiniTimeline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoScroll = true;
-            this.DoubleBuffered = true;
-            this.Name = "PlayerPositionLine";
-            this.Size = new System.Drawing.Size(714, 25);
-            this.Load += new System.EventHandler(this.PlayerPositionLine_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayerPositionLine_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlayerPositionLine_MouseDown);
+            this.Name = "MiniTimeline";
+            this.Size = new System.Drawing.Size(559, 10);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MiniTimeline_Paint);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MiniTimeline_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MiniTimeline_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MiniTimeline_MouseUp);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
     }
 }

@@ -131,9 +131,6 @@ void Operator::broadcastChannelValue(int channel,
 
 void Operator::setDirty(bool dirty)
 {
-    int address = (int)this;
-    System::Console::WriteLine("Dirty = " + dirty + " " + numberOfOutputs + " this = " + address);
-
     for (int i = 0; i < numberOfOutputs; i++)
         operators[outputs[i]]->setDirty(dirty);
 

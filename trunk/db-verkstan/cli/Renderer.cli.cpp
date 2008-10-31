@@ -2,7 +2,7 @@
 
 #include "cli/Camera.hpp"
 #include "cli/Operator.hpp"
-#include "cli/Timer.hpp"
+#include "cli/Metronome.hpp"
 
 namespace Verkstan
 {
@@ -32,7 +32,7 @@ namespace Verkstan
         if (!op->IsProcessable())
             return;
 
-        Core::beat = Timer::GetBeat();
+        Core::beat = Metronome::Beat;
         op->getOperator()->cascadeProcess();
 
         switch (op->Type)

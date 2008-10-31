@@ -33,13 +33,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.channelInfos1 = new VerkstanEditor.Gui.ChannelInfos();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.playerPositionLine1 = new VerkstanEditor.Gui.PlayerPositionLine();
+            this.playerPositionLine1 = new VerkstanEditor.Gui.BeatPositionLine();
             this.channels1 = new VerkstanEditor.Gui.Channels();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -146,28 +147,22 @@
             // 
             this.playerPositionLine1.AutoScroll = true;
             this.playerPositionLine1.BackColor = System.Drawing.SystemColors.Control;
-            this.playerPositionLine1.Beats = 40;
             this.playerPositionLine1.BeatWidth = 16;
             this.playerPositionLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.playerPositionLine1.Location = new System.Drawing.Point(0, 0);
             this.playerPositionLine1.Margin = new System.Windows.Forms.Padding(0);
             this.playerPositionLine1.Name = "playerPositionLine1";
-            this.playerPositionLine1.PlayerPosition = 0;
-            this.playerPositionLine1.Size = new System.Drawing.Size(640, 25);
-            this.playerPositionLine1.TabIndex = 0;
-            this.playerPositionLine1.PlayerPositionChanged += new VerkstanEditor.Gui.PlayerPositionLine.PlayerPositionChangedHandler(this.playerPositionLine1_PlayerPositionChanged);
-            // 
+            this.playerPositionLine1.Size = new System.Drawing.Size(320, 25);
+            this.playerPositionLine1.TabIndex = 0;            // 
             // channels1
             // 
             this.channels1.BackColor = System.Drawing.SystemColors.ControlText;
-            this.channels1.Beats = 4;
             this.channels1.BeatWidth = 16;
             this.channels1.ChannelHeight = 30;
             this.channels1.Location = new System.Drawing.Point(0, 0);
             this.channels1.Margin = new System.Windows.Forms.Padding(0);
             this.channels1.Name = "channels1";
-            this.channels1.PlayerPosition = 0;
-            this.channels1.Size = new System.Drawing.Size(64, 371);
+            this.channels1.Size = new System.Drawing.Size(320, 371);
             this.channels1.TabIndex = 0;
             this.channels1.LocationChanged += new System.EventHandler(this.channels1_LocationChanged);
             // 
@@ -181,6 +176,7 @@
             // 
             // splitContainer4.Panel1
             // 
+            this.splitContainer4.Panel1.Controls.Add(this.label3);
             this.splitContainer4.Panel1.Controls.Add(this.button2);
             this.splitContainer4.Panel1.Controls.Add(this.button1);
             this.splitContainer4.Panel1.Controls.Add(this.label2);
@@ -234,6 +230,15 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 0;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(279, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Using wave tool";
+            // 
             // SceneTimeline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -264,7 +269,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private PlayerPositionLine playerPositionLine1;
+        private BeatPositionLine playerPositionLine1;
         private Channels channels1;
         private ChannelInfos channelInfos1;
         private System.Windows.Forms.Label label1;
@@ -273,5 +278,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label3;
     }
 }
