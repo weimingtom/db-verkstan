@@ -45,17 +45,33 @@ namespace Verkstan
 
     void OperatorProperty::Channel1::set(int channel)
     {
+        System::Console::WriteLine("Channel1::set("+ channel + ")");
         ParentOperator->getOperator()->properties[Index].channel1 = channel;
+        if (channel == -1)
+        {
+            ParentOperator->getOperator()->properties[Index].channelValue1 = 0.0f;
+            ParentOperator->getOperator()->setDirty(true);
+        }
     }
 
     void OperatorProperty::Channel2::set(int channel)
     {
         ParentOperator->getOperator()->properties[Index].channel2 = channel;
+        if (channel == -1)
+        {
+            ParentOperator->getOperator()->properties[Index].channelValue2 = 0.0f;
+            ParentOperator->getOperator()->setDirty(true);
+        }
     }
 
     void OperatorProperty::Channel3::set(int channel)
     {
         ParentOperator->getOperator()->properties[Index].channel3 = channel;
+        if (channel == -1)
+        {
+            ParentOperator->getOperator()->properties[Index].channelValue3 = 0.0f; 
+            ParentOperator->getOperator()->setDirty(true);
+        }
     }
 
     float OperatorProperty::Amplify1::get()

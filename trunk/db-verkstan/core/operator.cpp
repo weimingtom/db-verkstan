@@ -34,7 +34,7 @@ dirty(true)
 
 unsigned char Operator::getByteProperty(int index)
 {
-    return properties[index].byteValue + (unsigned char)properties[index].channelValue1;
+    return properties[index].byteValue + (int)properties[index].channelValue1;
 }
 
 int Operator::getIntProperty(int index)
@@ -55,9 +55,9 @@ const char* Operator::getStringProperty(int index)
 D3DXCOLOR Operator::getColorProperty(int index)
 {
     D3DXCOLOR color = properties[index].colorValue;
-    color.r += properties[index].channelValue1;
-    color.g += properties[index].channelValue2;
-    color.b += properties[index].channelValue3;
+    color.r += properties[index].channelValue1 / 256.0f;
+    color.g += properties[index].channelValue2 / 256.0f;
+    color.b += properties[index].channelValue3 / 256.0f;
     color.a = 1.0f;
 
     return color;

@@ -72,7 +72,7 @@ namespace VerkstanEditor.Gui
 
         private void offsetNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            Offset = Convert.ToSingle(offsetNumericUpDown);
+            Offset = Convert.ToSingle(offsetNumericUpDown.Value);
             OnSettingsChanged();
         }
     }

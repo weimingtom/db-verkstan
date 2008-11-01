@@ -78,6 +78,27 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
+        // Reset all channel values as we don't want any animation
+        // to pollute the view.
+        for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+        {
+            if (coreOp->properties[i].channelValue1 != 0.0f)
+            {
+                coreOp->properties[i].channelValue1 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue2 != 0.0f)
+            {
+                coreOp->properties[i].channelValue2 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue3 != 0.0f)
+            {
+                coreOp->properties[i].channelValue3 = 0.0f;
+                coreOp->setDirty(true);
+            } 
+        }
+
         if (coreOp->texture == 0)
             return;
 
@@ -133,6 +154,27 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
+        // Reset all channel values as we don't want any animation
+        // to pollute the view.
+        for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+        {
+            if (coreOp->properties[i].channelValue1 != 0.0f)
+            {
+                coreOp->properties[i].channelValue1 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue2 != 0.0f)
+            {
+                coreOp->properties[i].channelValue2 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue3 != 0.0f)
+            {
+                coreOp->properties[i].channelValue3 = 0.0f;
+                coreOp->setDirty(true);
+            } 
+        }
+
         if (coreOp->mesh == 0)
             return;
 
@@ -148,12 +190,10 @@ namespace Verkstan
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
         globalWorldMatrixStack->LoadIdentity();
-        globalViewMatrixStack->LoadIdentity();
-        globalProjectionMatrixStack->LoadIdentity();
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
         camera->ApplyUserTransformations();
-
-        globalWorldMatrixStack->LoadIdentity();            
+        
         globalDirect3DDevice->BeginScene();
 
 		coreOp->mesh->render();
@@ -164,6 +204,27 @@ namespace Verkstan
     void Renderer::RenderModelOperator(Operator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
+
+        // Reset all channel values as we don't want any animation
+        // to pollute the view.
+        for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+        {
+            if (coreOp->properties[i].channelValue1 != 0.0f)
+            {
+                coreOp->properties[i].channelValue1 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue2 != 0.0f)
+            {
+                coreOp->properties[i].channelValue2 = 0.0f;
+                coreOp->setDirty(true);
+            }
+            if (coreOp->properties[i].channelValue3 != 0.0f)
+            {
+                coreOp->properties[i].channelValue3 = 0.0f;
+                coreOp->setDirty(true);
+            } 
+        }
 
         globalDirect3DDevice->Clear(0, 
                                    NULL, 
