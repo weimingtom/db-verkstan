@@ -7,13 +7,16 @@ using namespace System::Collections::Generic;
 
 namespace Verkstan 
 { 
+    ref class Operator;
     public ref class OperatorProperty
     {
     public:
-        OperatorProperty(int index, 
+        OperatorProperty(Operator^ op,
+                         int index, 
                          String^ name, 
                          Constants::OperatorPropertyTypes type);
-        OperatorProperty(int index, 
+        OperatorProperty(Operator^ op,
+                         int index, 
                          String^ name, 
                          Constants::OperatorPropertyTypes type,
                          List<String^>^ enumValues);
@@ -21,5 +24,51 @@ namespace Verkstan
         property Constants::OperatorPropertyTypes Type;
         property int Index;
         property List<String^>^ EnumValues;
+        property Operator^ ParentOperator;
+        property int Channel1
+        {
+            int get();
+            void set(int channel);
+        }
+        property int Channel2
+        {
+            int get();
+            void set(int channel);
+        }
+        property int Channel3
+        {
+            int get();
+            void set(int channel);
+        }
+        property float Amplify1
+        {
+            float get();
+            void set(float amplify);
+        }
+        property float Amplify2
+        {
+            float get();
+            void set(float amplify);
+        }
+        property float Amplify3
+        {
+            float get();
+            void set(float amplify);
+        }
+        property float Offset1
+        {
+            float get();
+            void set(float offset);
+        }
+        property float Offset2
+        {
+            float get();
+            void set(float offset);
+        }
+        property float Offset3
+        {
+            float get();
+            void set(float offset);
+        }
     };
 }

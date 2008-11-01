@@ -37,11 +37,7 @@ public:
     bool isDirty();
     void setDirty(bool dirty);
     
-    void broadcastChannelValue(int channel, 
-                               float value1, 
-                               float value2, 
-                               float value3, 
-                               float value4);
+    void broadcastChannelValue(int channel, float value);
 
     Mesh* mesh;
     Texture* texture;
@@ -58,12 +54,18 @@ public:
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
         D3DXCOLOR colorValue;
         D3DXVECTOR4 vectorValue;
-        int channel;
-        float amplify;
+        int channel1;
+        int channel2;
+        int channel3;
+        float amplify1;
+        float amplify2;
+        float amplify3;
+        float offset1;
+        float offset2;
+        float offset3;
         float channelValue1;
         float channelValue2;
         float channelValue3;
-        float channelValue4;
     };
 
     Property properties[DB_MAX_OPERATOR_PROPERTIES];

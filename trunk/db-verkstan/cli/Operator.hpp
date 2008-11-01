@@ -5,13 +5,14 @@
 #include "cli/Color.hpp"
 #include "cli/Constants.hpp"
 #include "cli/Joint.hpp"
-#include "cli/OperatorProperties.hpp"
 #include "cli/Vector.hpp"
 
 #using <mscorlib.dll>
 
 namespace Verkstan 
 {
+    ref class OperatorProperty;
+
     public ref class OperatorInput
     {
     public:
@@ -31,8 +32,7 @@ namespace Verkstan
         Operator(String^ name,
                  String^ typeName,
                  int operatorId,
-                 Constants::OperatorTypes type,
-                 OperatorProperties^ properties);
+                 Constants::OperatorTypes type);
         virtual ~Operator();
 
         String^ DisplayName;
@@ -40,9 +40,9 @@ namespace Verkstan
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ TypeName { String^ get(); }
-        property OperatorProperties^ Properties 
+        property List<OperatorProperty^>^ Properties 
         { 
-            OperatorProperties^ get(); 
+            List<OperatorProperty^>^ get(); 
         }
 
         virtual Joint^ GetPrimaryJoint() = 0;
@@ -73,12 +73,15 @@ namespace Verkstan
 
         virtual Core::Operator* getOperator() = 0;
 
+        void AddProperty(String^ name, Constants::OperatorPropertyTypes type);
+        void AddEnumProperty(String^ name, List<String^>^ values);
+
     protected:
         int id;
         Constants::OperatorTypes type;
 
     private:
         String^ typeName;
-        OperatorProperties^ properties;
+        List<OperatorProperty^>^ properties;
 	};
 }

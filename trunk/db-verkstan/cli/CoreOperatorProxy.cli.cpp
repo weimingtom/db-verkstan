@@ -7,8 +7,7 @@ namespace Verkstan
         : Operator(coreOperator->Name,
                    coreOperator->TypeName,
                    coreOperator->Id,
-                   coreOperator->Type,
-                   coreOperator->Properties)
+                   coreOperator->Type)
     {
         this->coreOperator = coreOperator;
     }

@@ -34,11 +34,11 @@ void CameraOperator::process()
 
     D3DXMATRIX lookAtMatrix;
     D3DXMatrixLookAtLH(&lookAtMatrix,
-                       &Vec3(translationVector.x, translationVector.y, translationVector.z),
-                       &Vec3(lookAtVector.x, lookAtVector.y, lookAtVector.z),
-                       &Vec3(0.0f, 1.0f, 0.0f));
+                       &D3DXVECTOR3(translationVector.x, translationVector.y, translationVector.z),
+                       &D3DXVECTOR3(lookAtVector.x, lookAtVector.y, lookAtVector.z),
+                       &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
     D3DXMATRIX rotationMatrix;
     D3DXMatrixRotationZ(&rotationMatrix, rotation);
-    viewMatrix = rotationMatrix * lookAtMatrix;
+    viewMatrix = lookAtMatrix * rotationMatrix;
 }

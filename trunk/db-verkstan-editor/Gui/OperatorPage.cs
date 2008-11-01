@@ -27,8 +27,6 @@ namespace VerkstanEditor.Gui
             this.DoubleBuffered = true;
             InitializeComponent();
 
-            UpdateSize();
-
             foreach (String category in Operators.GetCategories())
             {
                 ToolStripMenuItem item = new ToolStripMenuItem();

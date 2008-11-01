@@ -12,13 +12,11 @@ namespace Verkstan
                                String^ typeName,
                                int operatorId,
                                Constants::OperatorTypes type,
-                               OperatorProperties^ properties,
                                List<OperatorInput^>^ inputs)
                              : Operator(name,
                                         typeName,
                                         operatorId, 
-                                        type,
-                                        properties)
+                                        type)
     {
         this->warningPresent = false;
         this->inputs = inputs;
@@ -116,11 +114,9 @@ namespace Verkstan
         getOperator()->properties[index].vectorValue.x = vector->X;
         getOperator()->properties[index].vectorValue.y = vector->Y;
         getOperator()->properties[index].vectorValue.z = vector->Z;
-        getOperator()->properties[index].vectorValue.w = vector->W;
         getOperator()->properties[index].channelValue1 = 0.0f;
         getOperator()->properties[index].channelValue2 = 0.0f;
         getOperator()->properties[index].channelValue3 = 0.0f;
-        getOperator()->properties[index].channelValue4 = 0.0f;
         getOperator()->setDirty(true);
     }
 

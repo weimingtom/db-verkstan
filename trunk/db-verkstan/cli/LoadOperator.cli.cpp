@@ -8,12 +8,11 @@
 
 namespace Verkstan
 {
-    LoadOperator::LoadOperator(String^ name, OperatorProperties^ properties)
+    LoadOperator::LoadOperator(String^ name)
                              : Operator(name,
                                         "Load", 
                                         -1, 
-                                        Constants::OperatorTypes::Load, 
-                                        properties)
+                                        Constants::OperatorTypes::Load)
     {
         receivers = gcnew List<Operator^>();
         loadJoint = gcnew Joint();

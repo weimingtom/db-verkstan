@@ -45,13 +45,7 @@ namespace VerkstanEditor
                 return new Rectangle(Location.X, Location.Y, Size.Width, Size.Height);
             }
         }
-        public virtual Verkstan.OperatorProperties Properties
-        {
-            get
-            {
-                return Binding.Properties;
-            }
-        }
+
         public static Point QuantizeLocation(Point location)
         {
             return new Point(location.X - location.X % 100,

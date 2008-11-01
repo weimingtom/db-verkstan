@@ -13,7 +13,6 @@ namespace Verkstan
                      String^ typeName,
                      int operatorId,
                      Constants::OperatorTypes type,
-                     OperatorProperties^ properties,
                      List<OperatorInput^>^ inputs);
         virtual ~CoreOperator();
 

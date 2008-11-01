@@ -53,9 +53,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3226.30174, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3227.32973, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\db-verkstan\db.Verkstan.Cli-Release\db.Verkstan.Cli.dll</HintPath>
+      <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -109,6 +109,12 @@
     </Compile>
     <Compile Include="Gui\OperatorPage.Designer.cs">
       <DependentUpon>OperatorPage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPropertyAnimationSettings.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPropertyAnimationSettings.Designer.cs">
+      <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\OperatorPropertyGrid.cs">
       <SubType>UserControl</SubType>
@@ -245,6 +251,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\BeatPositionLine.resx">
       <DependentUpon>BeatPositionLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPropertyAnimationSettings.resx">
+      <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\SceneTimeline.resx">
       <DependentUpon>SceneTimeline.cs</DependentUpon>

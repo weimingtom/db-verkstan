@@ -302,14 +302,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\OperatorProperties.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorProperties.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\OperatorProperty.cpp"
 				>
 			</File>

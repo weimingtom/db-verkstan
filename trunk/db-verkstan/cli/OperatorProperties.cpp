@@ -1,9 +1,13 @@
+#include "cli/Operator.hpp"
+
 #include "cli/OperatorProperties.hpp"
+#include "cli/OperatorProperty.hpp"
 
 namespace Verkstan 
 { 
-    OperatorProperties::OperatorProperties()
+    OperatorProperties::OperatorProperties(Operator^ op)
     {
+        this->op = op;
         properties = gcnew List<OperatorProperty^>();
     }
 
@@ -24,7 +28,8 @@ namespace Verkstan
 
     void OperatorProperties::Add(String^ name, Constants::OperatorPropertyTypes type)
     {
-        OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
+        OperatorProperty^ prop = gcnew OperatorProperty(op,
+                                                        properties->Count,
                                                         name,
                                                         type);
         properties->Add(prop);
@@ -32,7 +37,8 @@ namespace Verkstan
 
     void OperatorProperties::AddEnum(String^ name, List<String^>^ values)
     {
-        OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
+        OperatorProperty^ prop = gcnew OperatorProperty(op,
+                                                        properties->Count,
                                                         name,
                                                         Constants::OperatorPropertyTypes::Enum,
                                                         values);

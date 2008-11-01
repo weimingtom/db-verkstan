@@ -3,6 +3,7 @@
 #include <vcclr.h>
 
 #include "cli/Operator.hpp"
+#include "cli/OperatorProperty.hpp"
 
 namespace Verkstan
 {
@@ -20,15 +21,14 @@ namespace Verkstan
     Operator::Operator(String^ name,
                        String^ typeName,
                        int operatorId,
-                       Constants::OperatorTypes type,
-                       OperatorProperties^ properties)
+                       Constants::OperatorTypes type)
     {
         this->Name = name;
         this->typeName = typeName;
         DisplayName = name;
         this->id = operatorId;
         this->type = type;
-        this->properties = properties;
+        this->properties = gcnew List<OperatorProperty^>();
     }
 
     Operator::~Operator()
@@ -41,7 +41,7 @@ namespace Verkstan
         return id;
     }
 
-    OperatorProperties^ Operator::Properties::get() 
+    List<OperatorProperty^>^ Operator::Properties::get() 
     {
         return properties;
     }
@@ -54,5 +54,24 @@ namespace Verkstan
     Constants::OperatorTypes Operator::Type::get() 
     {
         return type;
+    }
+
+    void Operator::AddProperty(String^ name, Constants::OperatorPropertyTypes type)
+    {
+        OperatorProperty^ prop = gcnew OperatorProperty(this,
+                                                        properties->Count,
+                                                        name,
+                                                        type);
+        properties->Add(prop);
+    }
+
+    void Operator::AddEnumProperty(String^ name, List<String^>^ values)
+    {
+        OperatorProperty^ prop = gcnew OperatorProperty(this,
+                                                        properties->Count,
+                                                        name,
+                                                        Constants::OperatorPropertyTypes::Enum,
+                                                        values);
+        properties->Add(prop);
     }
 }

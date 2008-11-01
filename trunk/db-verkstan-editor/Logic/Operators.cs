@@ -34,6 +34,7 @@ namespace VerkstanEditor
                 return viewedOperatorProperties;
             }
         }
+        
         static List<Operator> operators = new List<Operator>();
 
         public delegate void ViewedOperatorChangedHandler(Operator op);
@@ -52,6 +53,15 @@ namespace VerkstanEditor
         {
             if (ViewedOperatorPropertiesChanged != null)
                 ViewedOperatorPropertiesChanged(op);
+        }
+
+        public delegate void ViewedOperatorPropertyAnimationChangedHandler(Verkstan.OperatorProperty property);
+        public static event ViewedOperatorPropertyAnimationChangedHandler ViewedOperatorPropertyAnimationChanged;
+
+        public static void OnViewedOperatorPropertyAnimationChanged(Verkstan.OperatorProperty property)
+        {
+            if (ViewedOperatorPropertyAnimationChanged != null)
+                ViewedOperatorPropertyAnimationChanged(property);
         }
 
         public static ICollection<String> GetCategories()
@@ -271,7 +281,7 @@ namespace VerkstanEditor
                 ViewedOperator = null;
             if (op == viewedOperatorProperties)
                 ViewedOperatorProperties = null;
-           
+         
             Verkstan.Connector.Disconnect(op.Binding);
             op.Binding.Dispose();
             operators.Remove(op);

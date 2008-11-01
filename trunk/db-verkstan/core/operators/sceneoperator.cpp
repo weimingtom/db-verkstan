@@ -9,7 +9,7 @@ void SceneOperator::cascadeProcess()
         Clip* clip = clips[operatorClips[i]];
 
         if (clip->start <= beat && clip->end > beat)
-            broadcastChannelValue(clip->channel, clip->getValue(beat), 2, 2, 2);
+            broadcastChannelValue(clip->channel, clip->getValue(beat));
     }
 
     for (int i = 0; i < numberOfInputs; i++)

@@ -9,7 +9,7 @@ namespace Verkstan
     public ref class LoadOperator: public Operator
 	{
     public:
-        LoadOperator(String^ name, OperatorProperties^ properties);
+        LoadOperator(String^ name);
         virtual ~LoadOperator();
 
         void AddReceiver(Operator^ op);

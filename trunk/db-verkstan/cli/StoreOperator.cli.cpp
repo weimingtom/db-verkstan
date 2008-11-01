@@ -8,12 +8,11 @@
 
 namespace Verkstan
 {
-    StoreOperator::StoreOperator(String^ name, OperatorProperties^ properties)
+    StoreOperator::StoreOperator(String^ name)
                              : Operator(name,
                                         "Store", 
                                         -1, 
-                                        Constants::OperatorTypes::Store, 
-                                        properties)
+                                        Constants::OperatorTypes::Store)
     {
         primaryJoint = gcnew Joint();
         Joints::Add(primaryJoint);

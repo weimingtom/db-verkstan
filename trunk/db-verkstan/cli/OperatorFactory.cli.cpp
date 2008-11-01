@@ -68,44 +68,42 @@ categories[category]->Add(name);
                 break;                              \
             }                                       \
         }                                           \
-        OperatorProperties^ properties = gcnew OperatorProperties();\
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
         op = gcnew CoreOperator(opName,  \
                                 opName,  \
                                id,      \
                                Constants::OperatorTypes::##opType,   \
-                               properties,  \
                                inputs);                                              
 
   
 #define ADD_BYTE_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Byte);  \
-    op->SetByteProperty(properties->Count - 1, value);
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Byte);  \
+    op->SetByteProperty(op->Properties->Count - 1, value);
 #define ADD_INT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Int);  \
-    op->SetIntProperty(properties->Count - 1, value);
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Int);  \
+    op->SetIntProperty(op->Properties->Count - 1, value);
 #define ADD_FLOAT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Float);  \
-    op->SetFloatProperty(properties->Count - 1, value);
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Float);  \
+    op->SetFloatProperty(op->Properties->Count - 1, value);
 #define ADD_STRING_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::String);  \
-    op->SetStringProperty(properties->Count - 1, value);
+    op->AddProperty(name, Constants::OperatorPropertyTypes::String);  \
+    op->SetStringProperty(op->Properties->Count - 1, value);
 #define ADD_TEXT_PROP(name, value) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Text);  \
-    op->SetStringProperty(properties->Count - 1, value);
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Text);  \
+    op->SetStringProperty(op->Properties->Count - 1, value);
 #define ADD_COLOR_PROP(name, r, g, b) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Color);  \
-    op->SetColorProperty(properties->Count - 1, gcnew Color(r, g, b));
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Color);  \
+    op->SetColorProperty(op->Properties->Count - 1, gcnew Color(r, g, b));
 #define ADD_VECTOR_PROP(name, x, y, z) \
-    properties->Add(name, Constants::OperatorPropertyTypes::Vector);  \
-    op->SetVectorProperty(properties->Count - 1, gcnew Vector(x, y, z));
+    op->AddProperty(name, Constants::OperatorPropertyTypes::Vector);  \
+    op->SetVectorProperty(op->Properties->Count - 1, gcnew Vector(x, y, z));
 #define ADD_ENUM_PROP(name, enumValues, value) \
     String^ tmpEnumValues = gcnew String(enumValues); \
     array<String^>^ splitted = tmpEnumValues->Split(gcnew array<Char>{','}); \
     List<String^>^ enumValuesList = gcnew List<String^>();  \
     for (int enumIndex = 0; enumIndex < splitted->Length; enumIndex++) \
         enumValuesList->Add(splitted[enumIndex]);   \
-    properties->AddEnum(name, enumValuesList);  \
+    op->AddEnumProperty(name, enumValuesList);  \
     int defaultValue;   \
     String^ defaultValueString = gcnew String(value);   \
     for (int listIndex = 0; listIndex < enumValuesList->Count; listIndex++) \
@@ -116,7 +114,7 @@ categories[category]->Add(name);
             break;\
         }\
     }\
-    op->SetByteProperty(properties->Count - 1, defaultValue);
+    op->SetByteProperty(op->Properties->Count - 1, defaultValue);
 #define ADD_INPUT(inType) \
     if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
         throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
@@ -140,36 +138,35 @@ categories[category]->Add(name);
 
         if (name == "Store")
         {
-            OperatorProperties^ properties = gcnew OperatorProperties();
-            properties->Add("Name", Constants::OperatorPropertyTypes::String);
-            op = gcnew StoreOperator("Store",properties);
+            op = gcnew StoreOperator("Store");
+            op->AddProperty("Name", Constants::OperatorPropertyTypes::String);
         }
 
         if (name == "Load")
         {
-            OperatorProperties^ properties = gcnew OperatorProperties();
-            properties->Add("Name", Constants::OperatorPropertyTypes::String);
-            op = gcnew LoadOperator("Load",properties);
+            op = gcnew LoadOperator("Load");
+            op->AddProperty("Name", Constants::OperatorPropertyTypes::String);
         }
 
-        /*
+   
         if (name == "Scene")
         {
             Clip^ c1 = ClipFactory::Create("Sine");
             c1->Channel = 0;
             c1->Start = 0;
-            c1->End = 256*6;
+            c1->End = 256*30;
 
             Clip^ c2 = ClipFactory::Create("Sine");
-            c2->Channel = 0;
-            c2->Start = 256*12;
-            c2->End = 256*18;
+            c2->Channel = 1;
+            c2->Start = 0;
+            c2->End = 256*30;
 
             SceneOperator^ so = gcnew SceneOperator(op);
             so->AddClip(c1);
             so->AddClip(c2);
             return so;
         }
+        /*
 
         if (name == "Transform Model")
         {
