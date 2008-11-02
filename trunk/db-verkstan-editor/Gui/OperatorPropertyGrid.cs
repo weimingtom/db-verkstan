@@ -54,13 +54,16 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel1.Dock = DockStyle.None;
             tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.AutoScroll = false;
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            Controls.Add(tableLayoutPanel1);
+    
+            //Controls.Add(tableLayoutPanel1);
         }
 
         private void Deinitialize()
         {
+            Controls.Remove(tableLayoutPanel1);
             tableLayoutPanel1.Visible = false;
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.Height = 0;
@@ -114,6 +117,9 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Controls.Add(dummyLabel);
             tableLayoutPanel1.SetCellPosition(dummyLabel, new TableLayoutPanelCellPosition(0, row));
             tableLayoutPanel1.Visible = true;
+            tableLayoutPanel1.PerformLayout();
+            Controls.Add(tableLayoutPanel1);
+            ResumeLayout(false);
         }
 
         private int AddByteProperty(Verkstan.OperatorProperty property, int row)
@@ -282,16 +288,14 @@ namespace VerkstanEditor.Gui
                 animationSettings.Visible = false;
                 animationSettings.Channel = prop.Channel1;
                 animationSettings.Amplify = prop.Amplify1;
-                animationSettings.Offset = prop.Offset1;
                 animationSettings.SettingsChanged += delegate(object o, EventArgs e)
                 {
                     prop.Channel1 = animationSettings.Channel;
                     prop.Amplify1 = animationSettings.Amplify;
-                    prop.Offset1 = animationSettings.Offset;
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings);
                 tableLayoutPanel1.SetCellPosition(animationSettings, new TableLayoutPanelCellPosition(1, row + 1));
-                 
+
                 button.Click += delegate(object o, EventArgs e)
                 {
                     animationSettings.Visible = !animationSettings.Visible;
@@ -307,12 +311,10 @@ namespace VerkstanEditor.Gui
                 animationSettings1.Visible = false;
                 animationSettings1.Channel = prop.Channel1;
                 animationSettings1.Amplify = prop.Amplify1;
-                animationSettings1.Offset = prop.Offset1;
                 animationSettings1.SettingsChanged += delegate(object o, EventArgs e)
                 {
                     prop.Channel1 = animationSettings1.Channel;
                     prop.Amplify1 = animationSettings1.Amplify;
-                    prop.Offset1 = animationSettings1.Offset;
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings1);
                 tableLayoutPanel1.SetCellPosition(animationSettings1, new TableLayoutPanelCellPosition(1, row + 1));
@@ -321,12 +323,10 @@ namespace VerkstanEditor.Gui
                 animationSettings2.Visible = false;
                 animationSettings2.Channel = prop.Channel2;
                 animationSettings2.Amplify = prop.Amplify2;
-                animationSettings2.Offset = prop.Offset2;
                 animationSettings2.SettingsChanged += delegate(object o, EventArgs e)
                 {
                     prop.Channel2 = animationSettings2.Channel;
                     prop.Amplify2 = animationSettings2.Amplify;
-                    prop.Offset2 = animationSettings2.Offset;
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings2);
                 tableLayoutPanel1.SetCellPosition(animationSettings2, new TableLayoutPanelCellPosition(1, row + 2));
@@ -335,12 +335,10 @@ namespace VerkstanEditor.Gui
                 animationSettings3.Visible = false;
                 animationSettings3.Channel = prop.Channel3;
                 animationSettings3.Amplify = prop.Amplify3;
-                animationSettings3.Offset = prop.Offset3;
                 animationSettings3.SettingsChanged += delegate(object o, EventArgs e)
                 {
                     prop.Channel3 = animationSettings3.Channel;
                     prop.Amplify3 = animationSettings3.Amplify;
-                    prop.Offset3 = animationSettings3.Offset;
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings3);
                 tableLayoutPanel1.SetCellPosition(animationSettings3, new TableLayoutPanelCellPosition(1, row + 3));

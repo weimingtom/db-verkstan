@@ -55,20 +55,5 @@ namespace Verkstan
             float get();
             void set(float amplify);
         }
-        property float Offset1
-        {
-            float get();
-            void set(float offset);
-        }
-        property float Offset2
-        {
-            float get();
-            void set(float offset);
-        }
-        property float Offset3
-        {
-            float get();
-            void set(float offset);
-        }
     };
 }

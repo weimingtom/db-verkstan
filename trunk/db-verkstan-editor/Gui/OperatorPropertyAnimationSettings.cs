@@ -33,17 +33,6 @@ namespace VerkstanEditor.Gui
                 return Convert.ToSingle(amplifyNumericUpDown.Value);
             }
         }
-        public float Offset
-        {
-            set
-            {
-                offsetNumericUpDown.Value = Convert.ToDecimal(value);
-            }
-            get
-            {
-                return Convert.ToSingle(offsetNumericUpDown.Value);
-            }
-        }
 
         public event EventHandler SettingsChanged;
 
@@ -67,12 +56,6 @@ namespace VerkstanEditor.Gui
         private void amplifyNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
             Amplify = Convert.ToSingle(amplifyNumericUpDown.Value);
-            OnSettingsChanged();
-        }
-
-        private void offsetNumericUpDown_ValueChanged(object sender, EventArgs e)
-        {
-            Offset = Convert.ToSingle(offsetNumericUpDown.Value);
             OnSettingsChanged();
         }
     }

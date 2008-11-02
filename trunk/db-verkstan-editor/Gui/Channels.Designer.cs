@@ -36,13 +36,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.Name = "Channels";
+            this.Size = new System.Drawing.Size(736, 368);
             this.Load += new System.EventHandler(this.Channels_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Channels_Paint);
             this.ParentChanged += new System.EventHandler(this.Channels_ParentChanged);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Channels_MouseDown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
     }
 }

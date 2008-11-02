@@ -74,6 +74,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Gui\ChannelClip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ChannelClip.Designer.cs">
+      <DependentUpon>ChannelClip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\ChannelInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -234,6 +240,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Gui\ChannelClip.resx">
+      <DependentUpon>ChannelClip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\ChannelInfo.resx">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </EmbeddedResource>

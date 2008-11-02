@@ -60,9 +60,6 @@ public:
         float amplify1;
         float amplify2;
         float amplify3;
-        float offset1;
-        float offset2;
-        float offset3;
         float channelValue1;
         float channelValue2;
         float channelValue3;

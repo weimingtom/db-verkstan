@@ -103,34 +103,4 @@ namespace Verkstan
     {
         ParentOperator->getOperator()->properties[Index].amplify3 = amplify;
     }
-
-    float OperatorProperty::Offset1::get()
-    {
-        return ParentOperator->getOperator()->properties[Index].offset1;
-    }
-    
-    float OperatorProperty::Offset2::get()
-    {
-        return ParentOperator->getOperator()->properties[Index].offset2;
-    }
-
-    float OperatorProperty::Offset3::get()
-    {
-        return ParentOperator->getOperator()->properties[Index].offset3;
-    }
-
-    void OperatorProperty::Offset1::set(float offset)
-    {
-        ParentOperator->getOperator()->properties[Index].offset1 = offset;
-    }
-
-    void OperatorProperty::Offset2::set(float offset)
-    {
-        ParentOperator->getOperator()->properties[Index].offset2 = offset;
-    }
-
-    void OperatorProperty::Offset3::set(float offset)
-    {
-        ParentOperator->getOperator()->properties[Index].offset3 = offset;
-    }
 }

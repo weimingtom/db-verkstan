@@ -32,11 +32,8 @@
             this.channelNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.amplifyNumericUpDown = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
-            this.offsetNumericUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.channelNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.amplifyNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.offsetNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -101,55 +98,18 @@
             this.amplifyNumericUpDown.TabIndex = 4;
             this.amplifyNumericUpDown.ValueChanged += new System.EventHandler(this.amplifyNumericUpDown_ValueChanged);
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 47);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Offset";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // offsetNumericUpDown
-            // 
-            this.offsetNumericUpDown.DecimalPlaces = 3;
-            this.offsetNumericUpDown.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.offsetNumericUpDown.Location = new System.Drawing.Point(49, 45);
-            this.offsetNumericUpDown.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.offsetNumericUpDown.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.offsetNumericUpDown.Name = "offsetNumericUpDown";
-            this.offsetNumericUpDown.Size = new System.Drawing.Size(93, 20);
-            this.offsetNumericUpDown.TabIndex = 5;
-            this.offsetNumericUpDown.ValueChanged += new System.EventHandler(this.offsetNumericUpDown_ValueChanged);
-            // 
             // OperatorPropertyAnimationSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.offsetNumericUpDown);
             this.Controls.Add(this.amplifyNumericUpDown);
             this.Controls.Add(this.channelNumericUpDown);
             this.Controls.Add(this.label2);
             this.Name = "OperatorPropertyAnimationSettings";
-            this.Size = new System.Drawing.Size(146, 68);
+            this.Size = new System.Drawing.Size(146, 45);
             ((System.ComponentModel.ISupportInitialize)(this.channelNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.amplifyNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.offsetNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,7 +121,5 @@
         private System.Windows.Forms.NumericUpDown channelNumericUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown amplifyNumericUpDown;
-        private System.Windows.Forms.NumericUpDown offsetNumericUpDown;
-        private System.Windows.Forms.Label label3;
     }
 }

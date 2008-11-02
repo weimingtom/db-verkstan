@@ -36,11 +36,11 @@
             this.playerPositionLine1 = new VerkstanEditor.Gui.BeatPositionLine();
             this.channels1 = new VerkstanEditor.Gui.Channels();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -152,17 +152,18 @@
             this.playerPositionLine1.Location = new System.Drawing.Point(0, 0);
             this.playerPositionLine1.Margin = new System.Windows.Forms.Padding(0);
             this.playerPositionLine1.Name = "playerPositionLine1";
-            this.playerPositionLine1.Size = new System.Drawing.Size(320, 25);
-            this.playerPositionLine1.TabIndex = 0;            // 
+            this.playerPositionLine1.Size = new System.Drawing.Size(481, 25);
+            this.playerPositionLine1.TabIndex = 0;
+            // 
             // channels1
             // 
             this.channels1.BackColor = System.Drawing.SystemColors.ControlText;
             this.channels1.BeatWidth = 16;
-            this.channels1.ChannelHeight = 30;
+            this.channels1.ChannelHeight = 31;
             this.channels1.Location = new System.Drawing.Point(0, 0);
             this.channels1.Margin = new System.Windows.Forms.Padding(0);
             this.channels1.Name = "channels1";
-            this.channels1.Size = new System.Drawing.Size(320, 371);
+            this.channels1.Size = new System.Drawing.Size(481, 371);
             this.channels1.TabIndex = 0;
             this.channels1.LocationChanged += new System.EventHandler(this.channels1_LocationChanged);
             // 
@@ -189,6 +190,15 @@
             this.splitContainer4.SplitterDistance = 26;
             this.splitContainer4.SplitterWidth = 1;
             this.splitContainer4.TabIndex = 1;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(279, 6);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(83, 13);
+            this.label3.TabIndex = 4;
+            this.label3.Text = "Using wave tool";
             // 
             // button2
             // 
@@ -229,15 +239,6 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 21);
             this.comboBox1.TabIndex = 0;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(279, 6);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(83, 13);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Using wave tool";
             // 
             // SceneTimeline
             // 
