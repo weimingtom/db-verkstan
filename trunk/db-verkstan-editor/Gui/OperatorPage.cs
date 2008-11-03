@@ -6,374 +6,91 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using System.Drawing.Drawing2D;
-using VerkstanEditor.Util;
 
 namespace VerkstanEditor.Gui
 {
-    [ToolboxItem(true)]
     public partial class OperatorPage : UserControl
     {
-        private bool InSelect = false;
-        private bool InMove = false;
-        private bool InResize = false;
-        private Point SelectMarkLocation;
-        private Point MarkLocation;
-        private Point MouseLocation;
-        private Point AddLocation;
-
         public OperatorPage()
         {
-            this.DoubleBuffered = true;
             InitializeComponent();
-
-            foreach (String category in Operators.GetCategories())
-            {
-                ToolStripMenuItem item = new ToolStripMenuItem();
-                item.AutoSize = true;
-                item.Name = category;
-                item.Text = item.Name;
-                menu.Items.Add(item);
-                ICollection<String> names = Operators.GetNamesInCategory(category);
-                foreach (String name in names)
-                {
-                    ToolStripMenuItem nestedItem = new ToolStripMenuItem();
-                    nestedItem.AutoSize = true;
-                    nestedItem.Name = name;
-                    nestedItem.Text = nestedItem.Name;
-                    String clickedName = name;
-                    nestedItem.Click += delegate (object o, EventArgs e)
-                    {
-                        Operators.AddOperatorInPage("First", AddLocation, clickedName);
-                        Refresh();
-                    };
-                    item.DropDownItems.Add(nestedItem);
-                }            
-            }
+            operatorPagePanel1.MouseWheel += new MouseEventHandler(operatorPagePanel1_MouseWheel);
         }
 
-        private void OperatorPage_Paint(object sender, PaintEventArgs e)
+        private void operatorPagePanel1_Resize(object sender, EventArgs e)
         {
-            List<Operator> ops = Operators.GetOperatorsInPage("First");
-
-            foreach (Operator op in ops)
-            {
-                PaintOperator(op, e);
-            }
-
-            if (InMove)
-            {
-                List<Operator> selectedOperators = Operators.GetSelectedOperatorsInPage("First");
-                foreach (Operator op in selectedOperators)
-                {
-                    PaintMovingOperator(op, e);
-                }
-            }
-
-            if (InResize)
-            {
-                List<Operator> selectedOperators = Operators.GetSelectedOperatorsInPage("First");
-                foreach (Operator op in selectedOperators)
-                {
-                    PaintResizingOperator(op, e);
-                }
-            }
-
-            if (InSelect)
-            {
-                Pen p = new Pen(Color.Black, 1);
-                p.DashStyle = DashStyle.Dash;
-                e.Graphics.DrawRectangle(p, GetSelectionRectangle());
-                p.Dispose();
-            }
-        }
- 
-        private void PaintMovingOperator(Operator op, PaintEventArgs e)
-        {
-            Point p = GetMovePoint();
-            Point opLocation = op.Location;
-            opLocation.X += p.X;
-            opLocation.Y += p.Y;
-            opLocation = Operator.QuantizeLocation(opLocation);
-            Pen pen = new Pen(Color.Black, 2);
-            e.Graphics.DrawRectangle(pen, opLocation.X, opLocation.Y, op.Size.Width, op.Size.Height);
-            pen.Dispose();
+            UpdateScrollBars();
         }
 
-        private void PaintResizingOperator(Operator op, PaintEventArgs e)
+        private void OperatorPage_Resize(object sender, EventArgs e)
         {
-            Size size = Operator.QuantizeSize(new Size(op.Size.Width + GetResizeWidth(),
-                                                       op.Size.Height));
-            Pen pen = new Pen(Color.Black, 2);
-            e.Graphics.DrawRectangle(pen, op.Location.X, op.Location.Y, size.Width, size.Height);
-            pen.Dispose();
+            if (operatorPagePanel1.Width < (Width - vScrollBar1.Width - 1))
+                operatorPagePanel1.Width = (Width - vScrollBar1.Width - 1);
+            if (operatorPagePanel1.Height < (Height - hScrollBar1.Height - 1))
+                operatorPagePanel1.Height = (Height - hScrollBar1.Height - 1);
+
+            UpdateScrollBars();
         }
 
-        private void PaintOperator(Operator op, PaintEventArgs e)
+        private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            Rectangle rect = new Rectangle(op.Location, op.Size);
-            SizeF stringSize = e.Graphics.MeasureString(op.Binding.DisplayName, Font);
-            Point namePoint = new Point(rect.Width / 2 - (int)stringSize.Width / 2 + rect.X,
-                                        rect.Height / 2 - (int)stringSize.Height / 2 + rect.Y);
-
-            double brightness = 1.0;
-            if (op.Selected)
-                brightness = 1.3;
-            double saturation = 0.0;
-            if (op.Binding.IsProcessable())
-                saturation = 1.0;
-
-            Color color = RGBHSL.ModifyBrightness(op.Color, brightness);
-            color = RGBHSL.ModifySaturation(color, saturation);
-            Color lightColor = RGBHSL.ModifyBrightness(color, 1.3);
-            Color darkColor = RGBHSL.ModifyBrightness(color, 0.7);
-            Brush brush = new SolidBrush(color);
-            Pen lightPen = new Pen(lightColor);
-            Pen darkPen = new Pen(darkColor);
-
-            Brush gradientBrush = new LinearGradientBrush(rect, lightColor, color, 0.0f);
-            e.Graphics.FillRectangle(brush, rect);
-            e.Graphics.DrawLine(lightPen,
-                                op.Location.X,
-                                op.Location.Y + op.Size.Height - 1,
-                                op.Location.X,
-                                op.Location.Y);
-            e.Graphics.DrawLine(lightPen,
-                                op.Location.X,
-                                op.Location.Y,
-                                op.Location.X + op.Size.Width - 1,
-                                op.Location.Y);
-            e.Graphics.DrawLine(darkPen,
-                                op.Location.X + op.Size.Width - 1,
-                                op.Location.Y,
-                                op.Location.X + op.Size.Width - 1,
-                                op.Location.Y + op.Size.Height - 1);
-            e.Graphics.DrawLine(darkPen,
-                                op.Location.X,
-                                op.Location.Y + op.Size.Height - 1,
-                                op.Location.X + op.Size.Width - 1,
-                                op.Location.Y + op.Size.Height - 1);
-            Brush textBrush = new SolidBrush(op.TextColor);
-            e.Graphics.DrawString(op.Binding.DisplayName, Font, textBrush, namePoint);
-
-            int x1 = op.GetAreaForResize().Left;
-            int y1 = op.Location.Y + 3;
-            int y2 = op.Location.Y + op.Size.Height - 4;
-
-            for (int i = 0; i < 4; i++)
-            {
-                e.Graphics.DrawLine(lightPen,
-                                    x1 + i * 3,
-                                    y1,
-                                    x1 + i * 3,
-                                    y2);
-                e.Graphics.DrawLine(darkPen,
-                                    x1 + 1 + i * 3,
-                                    y1,
-                                    x1 + 1 + i * 3,
-                                    y2);
-            }
-
-            if (!op.Binding.IsProcessable() || op.Binding.IsWarningPresent())
-                e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.warning_icon, op.Location.X + 1, op.Location.Y + 1);
-            if (op == Operators.ViewedOperator)
-                e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.eye_icon, op.Location.X + 1, op.Location.Y + 1);
+            operatorPagePanel1.Left = -e.NewValue; 
         }
 
-        private void OperatorPage_MouseDown(object sender, MouseEventArgs e)
+        private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                MouseLocation = new Point(e.X, e.Y);
-                SelectMarkLocation = MouseLocation;
-                MarkLocation = SelectMarkLocation;
-                Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
+            operatorPagePanel1.Top = -e.NewValue;
+        }
 
-                if (op == null)
-                {
-                    InSelect = true;
-                    Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
-                }
+        private void hScrollBar1_Layout(object sender, LayoutEventArgs e)
+        {
+            hScrollBar1.Width = Width - vScrollBar1.Width - 1;
+        }
+
+        private void vScrollBar1_Layout(object sender, LayoutEventArgs e)
+        {
+            vScrollBar1.Height = Height - hScrollBar1.Height - 1;
+        }
+
+        private void UpdateScrollBars()
+        {
+            hScrollBar1.Enabled = operatorPagePanel1.Width > (Width - vScrollBar1.Width - 1);
+            vScrollBar1.Enabled = operatorPagePanel1.Height > (Height - hScrollBar1.Height - 1);
+
+            hScrollBar1.Minimum = 0;
+            hScrollBar1.Maximum = operatorPagePanel1.Width;
+            hScrollBar1.LargeChange = Width - vScrollBar1.Width;
+            hScrollBar1.SmallChange = 10;  
+            vScrollBar1.Minimum = 0;
+            vScrollBar1.Maximum = operatorPagePanel1.Height;
+            vScrollBar1.LargeChange = Height - hScrollBar1.Height;
+            vScrollBar1.SmallChange = 10;
+
+            if (!hScrollBar1.Enabled)
+                operatorPagePanel1.Left = 0;
+
+            if (!vScrollBar1.Enabled)
+                operatorPagePanel1.Top = 0;
+        }
+
+        private void operatorPagePanel1_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+                if (vScrollBar1.Value - vScrollBar1.SmallChange > vScrollBar1.Minimum)
+                    vScrollBar1.Value -= vScrollBar1.SmallChange;
                 else
-                {                   
-                    if (op.GetAreaForResize().IntersectsWith(new Rectangle(MouseLocation.X, MouseLocation.Y, 1, 1)))
-                    {
-                        InResize = true;
-                        Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
-                    }
-                    else
-                    {
-                        InMove = true;
-                        if (!op.Selected)
-                            Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
-                    }
-
-                    Operators.ViewedOperatorProperties = op;
-                }
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                InSelect = false;
-                InMove = false;
-                Operators.DeselectAllOperatorsInPage("First");
-            }
-            Refresh();
-        }
-
-        private void OperatorPage_DoubleClick(object sender, EventArgs e)
-        {
-            Operator op = Operators.GetOperatorInPageAt("First", MouseLocation);
-
-            if (op != null)
-                Operators.ViewedOperator = op;
-
-            Refresh();
-        }
-
-        private void OperatorPage_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (InMove)
-            {
-                Operators.MoveSelectedOperatorsInPage("First", GetMovePoint());
-                UpdateSize();
-            }
-
-            if (InResize)
-            {
-                Operators.ResizeSelectedOperatorsInPage("First", GetResizeWidth());
-                UpdateSize();
-            }
-
-            InSelect = false;
-            InMove = false;
-            InResize = false;
-            Refresh();
-        }
-
-        private void OperatorPage_MouseMove(object sender, MouseEventArgs e)
-        {
-            MouseLocation = new Point(e.X, e.Y);
-
-            if (InSelect)
-                Operators.SetOperatorsSelectedInPage("First", GetSelectionRectangle());
-
-            if (InMove || InSelect || InResize)
-                Refresh();
-         
-        }
-
-        private Point GetMovePoint()
-        {
-            Point mouseLocation = Operator.QuantizeLocation(MouseLocation);
-            Point moveMarkerLocation = Operator.QuantizeLocation(MarkLocation);
-            return new Point(mouseLocation.X - moveMarkerLocation.X,
-                             mouseLocation.Y - moveMarkerLocation.Y);
-        }
-
-        private int GetResizeWidth()
-        {
-            return MouseLocation.X - MarkLocation.X;
-        }
-
-        private Rectangle GetSelectionRectangle()
-        {
-            int x1 = 0;
-            int y1 = 0;
-            int x2 = 0;
-            int y2 = 0;
-
-            if (MouseLocation.X < SelectMarkLocation.X)
-            {
-                x1 = MouseLocation.X;
-                x2 = SelectMarkLocation.X;
+                    vScrollBar1.Value = vScrollBar1.Minimum;
             }
             else
             {
-                x2 = MouseLocation.X;
-                x1 = SelectMarkLocation.X;
+                if (vScrollBar1.Value + vScrollBar1.SmallChange < (vScrollBar1.Maximum - vScrollBar1.LargeChange + 1))
+                    vScrollBar1.Value += vScrollBar1.SmallChange;
+                else
+                    vScrollBar1.Value = vScrollBar1.Maximum - vScrollBar1.LargeChange + 1;
             }
 
-            if (MouseLocation.Y < SelectMarkLocation.Y)
-            {
-                y1 = MouseLocation.Y;
-                y2 = SelectMarkLocation.Y;
-            }
-            else
-            {
-                y2 = MouseLocation.Y;
-                y1 = SelectMarkLocation.Y;
-            }
-
-            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
-        }
-
-        private void UpdateSize()
-        {
-            Rectangle dimension = Operators.GetOperatorsDimensionInPage("First");
-
-            // Check the size of the operators dimension.
-            Point move = new Point();
-            if (dimension.X < 0)
-                move.X = -dimension.X - 1;
-            if (dimension.Y < 0)
-                move.Y = -dimension.Y - 1;
-
-            if (move.X != 0 || move.Y != 0)
-            {
-                Operators.SelectAllOperatorsInPage("First");
-                Operators.MoveSelectedOperatorsInPage("First", move);
-                Operators.DeselectAllOperatorsInPage("First");
-            }
-
-            // Move operators if necessary.
-            if (Size.Width < dimension.Width)
-                Size = new Size(dimension.Width + 1, Size.Height);
-
-            if (Size.Height < dimension.Height)
-                Size = new Size(Size.Width, dimension.Height + 1);
-
-
-            if (Parent == null)
-                return;
-
-            // Finally, check that the page is at least as big as it's
-            // parent.
-            Size parentSize = Parent.Size;
-
-            if (Size.Width < parentSize.Width)
-                Size = new Size(parentSize.Width, Size.Height);
-
-            if (Size.Height < parentSize.Height)
-                Size = new Size(Size.Width, parentSize.Height);
-        }
-
-        private void menu_Opened(object sender, EventArgs e)
-        {
-            AddLocation = MouseLocation;
-        }
-
-        private void OperatorPage_ParentChanged(object sender, EventArgs e)
-        {
-            Parent.Resize += new System.EventHandler(this.OperatorPage_ParentResized);
-        }
-
-        private void OperatorPage_ParentResized(object sender, EventArgs e)
-        {
-            UpdateSize();
-        }
-
-        private void OperatorPage_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                Operators.DeleteSelectedOperatorsInPage("First");
-                Refresh();
-            }
-        }
-
-        private void OperatorPage_Load(object sender, EventArgs e)
-        {
-            UpdateSize();
+            operatorPagePanel1.Top = -vScrollBar1.Value;
         }
     }
 }

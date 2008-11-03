@@ -4,7 +4,7 @@
 #include "core/globals.hpp"
 #include "core/operator.hpp"
 #include "core/clip.hpp"
-#include "core/clips/sineclip.hpp"
+#include "core/generatorclip.hpp"
 
 namespace Verkstan
 {
@@ -17,6 +17,6 @@ namespace Verkstan
         using ::Texture;
         using ::Mesh;
         using ::Clip;
-        using ::SineClip;
+        using ::GeneratorClip;
     }
 }

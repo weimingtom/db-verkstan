@@ -75,7 +75,7 @@
             // 
             this.splitContainer1.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(684, 237);
+            this.splitContainer1.Size = new System.Drawing.Size(848, 237);
             this.splitContainer1.SplitterDistance = 94;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -138,7 +138,7 @@
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitContainer2.Panel2.Controls.Add(this.channels1);
-            this.splitContainer2.Size = new System.Drawing.Size(584, 235);
+            this.splitContainer2.Size = new System.Drawing.Size(748, 235);
             this.splitContainer2.SplitterDistance = 25;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
@@ -152,7 +152,7 @@
             this.playerPositionLine1.Location = new System.Drawing.Point(0, 0);
             this.playerPositionLine1.Margin = new System.Windows.Forms.Padding(0);
             this.playerPositionLine1.Name = "playerPositionLine1";
-            this.playerPositionLine1.Size = new System.Drawing.Size(481, 25);
+            this.playerPositionLine1.Size = new System.Drawing.Size(623, 25);
             this.playerPositionLine1.TabIndex = 0;
             // 
             // channels1
@@ -163,7 +163,7 @@
             this.channels1.Location = new System.Drawing.Point(0, 0);
             this.channels1.Margin = new System.Windows.Forms.Padding(0);
             this.channels1.Name = "channels1";
-            this.channels1.Size = new System.Drawing.Size(481, 371);
+            this.channels1.Size = new System.Drawing.Size(623, 383);
             this.channels1.TabIndex = 0;
             this.channels1.LocationChanged += new System.EventHandler(this.channels1_LocationChanged);
             // 
@@ -186,7 +186,7 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer1);
-            this.splitContainer4.Size = new System.Drawing.Size(684, 264);
+            this.splitContainer4.Size = new System.Drawing.Size(848, 264);
             this.splitContainer4.SplitterDistance = 26;
             this.splitContainer4.SplitterWidth = 1;
             this.splitContainer4.TabIndex = 1;
@@ -246,7 +246,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer4);
             this.Name = "SceneTimeline";
-            this.Size = new System.Drawing.Size(684, 264);
+            this.Size = new System.Drawing.Size(848, 264);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);

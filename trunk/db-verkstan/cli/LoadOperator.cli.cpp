@@ -3,8 +3,8 @@
 #include <vcclr.h>
 
 #include "cli/LoadOperator.hpp"
-#include "cli/Joint.hpp"
-#include "cli/Joints.hpp"
+#include "cli/internal/Joint.hpp"
+#include "cli/internal/Joints.hpp"
 
 namespace Verkstan
 {

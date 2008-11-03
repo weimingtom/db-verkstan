@@ -1,7 +1,7 @@
 #define WINDOWS_LEAN_AND_MEAN
 #include <windows.h>
 
-#include "cli/VerkstanCore.hpp"
+#include "cli/internal/VerkstanCore.hpp"
 
 #include "cli/Metronome.hpp"
 

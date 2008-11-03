@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cli/VerkstanCore.hpp"
+#include "cli/internal/VerkstanCore.hpp"
 
 using namespace System;
 
@@ -9,7 +9,7 @@ namespace Verkstan
     public ref class Clip
     {
     public:
-        Clip(int clipid);
+        Clip();
         virtual ~Clip();
         property int Id
         {
@@ -32,7 +32,7 @@ namespace Verkstan
         }
         Core::Clip* getClip();
     
-    private:
+    protected:
         int id;
     };
 }

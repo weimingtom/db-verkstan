@@ -186,11 +186,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Camera.cpp"
+				RelativePath=".\cli\Channel.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Camera.hpp"
+				RelativePath=".\cli\Channel.hpp"
 				>
 			</File>
 			<File
@@ -199,14 +199,6 @@
 			</File>
 			<File
 				RelativePath=".\cli\Clip.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\ClipFactory.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\ClipFactory.hpp"
 				>
 			</File>
 			<File
@@ -254,19 +246,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Joint.cli.cpp"
+				RelativePath=".\cli\GeneratorClip.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Joint.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Joints.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Joints.hpp"
+				RelativePath=".\cli\GeneratorClip.hpp"
 				>
 			</File>
 			<File
@@ -314,14 +298,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Renderer.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Renderer.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\SceneOperator.cli.cpp"
 				>
 			</File>
@@ -330,11 +306,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\SineClip.hpp"
+				RelativePath=".\cli\SplineClip.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\SineClipp.cli.cpp"
+				RelativePath=".\cli\SplineClip.hpp"
 				>
 			</File>
 			<File
@@ -354,10 +330,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\VerkstanCore.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\Window.cli.cpp"
 				>
 			</File>
@@ -365,6 +337,46 @@
 				RelativePath=".\cli\Window.cli.hpp"
 				>
 			</File>
+			<Filter
+				Name="internal"
+				>
+				<File
+					RelativePath=".\cli\Internal\Camera.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Camera.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Joint.cli.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Joint.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Joints.cli.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Joints.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Renderer.cli.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\Renderer.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\cli\Internal\VerkstanCore.hpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="core"
@@ -379,6 +391,14 @@
 			</File>
 			<File
 				RelativePath=".\core\core.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\generatorclip.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\generatorclip.hpp"
 				>
 			</File>
 			<File
@@ -403,6 +423,14 @@
 			</File>
 			<File
 				RelativePath=".\core\operator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\splineclip.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\splineclip.hpp"
 				>
 			</File>
 			<File
@@ -606,26 +634,6 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\transformmodeloperator.hpp"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="clips"
-				>
-				<File
-					RelativePath=".\core\clips\sineclip.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\clips\sineclip.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\clips\splineclip.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\clips\splineclip.hpp"
 					>
 				</File>
 			</Filter>

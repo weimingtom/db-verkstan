@@ -8,8 +8,9 @@
 #include "cli/LoadOperator.hpp"
 #include "cli/StoreOperator.hpp"
 #include "cli/SceneOperator.hpp"
-#include "cli/ClipFactory.hpp"
 #include "cli/Clip.hpp"
+#include "cli/Channel.hpp"
+#include "cli/GeneratorClip.hpp"
 
 namespace Verkstan
 {
@@ -147,36 +148,49 @@ categories[category]->Add(name);
             op = gcnew LoadOperator("Load");
             op->AddProperty("Name", Constants::OperatorPropertyTypes::String);
         }
-
    
         if (name == "Scene")
         {
-            Clip^ c1 = ClipFactory::Create("Sine");
-            c1->Channel = 0;
-            c1->Start = 0;
-            c1->End = 256*30;
-
-            Clip^ c2 = ClipFactory::Create("Sine");
-            c2->Channel = 1;
-            c2->Start = 0;
-            c2->End = 256*30;
-
             SceneOperator^ so = gcnew SceneOperator(op);
-            so->AddClip(c1);
-            so->AddClip(c2);
+            Channel^ channel1 = gcnew Channel(so);
+            so->AddChannel(channel1);
+            GeneratorClip^ c1 = gcnew GeneratorClip();
+            c1->Start = 0;
+            c1->End = 256*40;
+            c1->Period = DB_TICKS_PER_BEAT;
+            c1->Type = Constants::GeneratorClipTypes::Sine;
+            channel1->AddClip(c1);
+
+            Channel^ channel2 = gcnew Channel(so);
+            so->AddChannel(channel2);
+            GeneratorClip^ c2 = gcnew GeneratorClip();
+            c2->Start = 0;
+            c2->End = 256*40;
+            c2->Period = DB_TICKS_PER_BEAT * 4;
+            c2->Type = Constants::GeneratorClipTypes::Sine;
+            channel2->AddClip(c2);
+
+            Channel^ channel3 = gcnew Channel(so);
+            so->AddChannel(channel3);
+            GeneratorClip^ c3 = gcnew GeneratorClip();
+            c3->Start = 0;
+            c3->End = 256*40;
+            c3->Period = DB_TICKS_PER_BEAT;
+            c3->Type = Constants::GeneratorClipTypes::RampUp;
+            channel3->AddClip(c3);
+
+            Channel^ channel4 = gcnew Channel(so);
+            so->AddChannel(channel4);
+            GeneratorClip^ c4 = gcnew GeneratorClip();
+            c4->Start = 0;
+            c4->End = 256*40;
+            c4->Period = DB_TICKS_PER_BEAT;
+            c4->Type = Constants::GeneratorClipTypes::RampDown;
+            channel4->AddClip(c4);
+          
             return so;
         }
-        /*
-
-        if (name == "Transform Model")
-        {
-             Core::Operator* coreOp = op->getOperator();
-             coreOp->properties[6].channel = 0;
-             coreOp->properties[6].amplify = 2.0f;
-             coreOp->properties[4].channel = 0;
-             coreOp->properties[4].amplify = 2.0f;
-        }*/
-
+   
         return op;
      }
 }

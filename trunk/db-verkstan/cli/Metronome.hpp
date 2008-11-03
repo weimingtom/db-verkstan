@@ -34,7 +34,7 @@ namespace Verkstan
     private:
         static bool ticking = false;
         static int beat = 0;
-        static int beats = 7680;
+        static int beats = 10240;
         static int lastTickCount = 0;
         static float leftOvers = 0.0f;
     };

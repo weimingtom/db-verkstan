@@ -7,7 +7,7 @@
 
 #include "cli/Constants.hpp"
 #include "cli/Operator.hpp"
-#include "cli/Renderer.hpp"
+#include "cli/internal/Renderer.hpp"
 
 namespace Verkstan
 {

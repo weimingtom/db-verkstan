@@ -1,6 +1,6 @@
-#include "cli/Renderer.hpp"
+#include "cli/internal/Renderer.hpp"
 
-#include "cli/Camera.hpp"
+#include "cli/internal/Camera.hpp"
 #include "cli/Operator.hpp"
 #include "cli/Metronome.hpp"
 

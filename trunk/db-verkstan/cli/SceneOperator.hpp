@@ -7,16 +7,22 @@ using namespace System::Collections::Generic;
 
 namespace Verkstan
 {
-    ref class Clip;
+    ref class Channel;
+
     public ref class SceneOperator: public CoreOperatorProxy
 	{
     public:
         SceneOperator(Operator^ sceneOperator);
-        void AddClip(Clip^ clip);
-        void RemoveClip(Clip^ clip);
+        void AddChannel(Channel^ channel);
+        void RemoveChannel(int index);
+        void RemoveChannel(Channel^ channel);
+        property List<Channel^>^ Channels
+        {
+            List<Channel^>^ get();
+        }
+        void UpdateRealClips();
 
     private:
-        List<Clip^>^ clips;
-        void UpdateClips();
+        List<Channel^>^ channels;
 	};
 }

@@ -53,9 +53,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3227.35161, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3229.34647, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\db-verkstan\db.Verkstan.Cli-Release\db.Verkstan.Cli.dll</HintPath>
+      <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -74,12 +74,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gui\ChannelClip.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Gui\ChannelClip.Designer.cs">
-      <DependentUpon>ChannelClip.cs</DependentUpon>
-    </Compile>
     <Compile Include="Gui\ChannelInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -109,6 +103,12 @@
     </Compile>
     <Compile Include="Gui\MiniTimeline.Designer.cs">
       <DependentUpon>MiniTimeline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPagePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPagePanel.Designer.cs">
+      <DependentUpon>OperatorPagePanel.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\OperatorPage.cs">
       <SubType>UserControl</SubType>
@@ -240,9 +240,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Gui\ChannelClip.resx">
-      <DependentUpon>ChannelClip.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Gui\ChannelInfo.resx">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,11 +252,14 @@
     <EmbeddedResource Include="Gui\MiniTimeline.resx">
       <DependentUpon>MiniTimeline.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OperatorPage.resx">
-      <DependentUpon>OperatorPage.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\OperatorPagePanel.resx">
+      <DependentUpon>OperatorPagePanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\BeatPositionLine.resx">
       <DependentUpon>BeatPositionLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPage.resx">
+      <DependentUpon>OperatorPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPropertyAnimationSettings.resx">
       <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>

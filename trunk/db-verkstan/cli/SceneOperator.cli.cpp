@@ -1,5 +1,6 @@
 #include "cli/SceneOperator.hpp"
 
+#include "cli/Channel.hpp"
 #include "cli/Clip.hpp"
 
 namespace Verkstan
@@ -7,31 +8,46 @@ namespace Verkstan
     SceneOperator::SceneOperator(Operator^ sceneOperator)
         : CoreOperatorProxy(sceneOperator)
     {
-        clips = gcnew List<Clip^>();
+        channels = gcnew List<Channel^>();
     }
 
-    void SceneOperator::AddClip(Clip^ clip)
+    void SceneOperator::AddChannel(Channel^ channel)
     {
-        clips->Add(clip);
-
-        UpdateClips();
+        channels->Add(channel);
+        channels[channels->Count - 1]->Number = channels->Count - 1;
     }
 
-    void SceneOperator::RemoveClip(Clip^ clip)
+    void SceneOperator::RemoveChannel(int index)
     {
-        clips->Remove(clip);
-
-        UpdateClips();
+        channels->Remove(channels[index]);
     }
 
-    void SceneOperator::UpdateClips()
+    void SceneOperator::RemoveChannel(Channel^ channel)
+    {
+        channels->Remove(channel);
+    }
+
+    List<Channel^>^ SceneOperator::Channels::get()
+    {
+        return channels;
+    }
+
+    void SceneOperator::UpdateRealClips()
     {
         for (int i = 0; i < DB_MAX_OPERATOR_CLIPS; i++)
             getOperator()->operatorClips[i] = -1;
 
-        for (int i = 0; i < clips->Count; i++)
-            getOperator()->operatorClips[i] = clips[i]->Id;
+        int numberOfClips = 0;
+        for (int i = 0; i < channels->Count; i++)
+        {
+            int clipsCount = channels[i]->Clips->Count;
+            for (int j = 0; j < clipsCount; j++)
+            {
+                getOperator()->operatorClips[i] = channels[i]->Clips[j]->Id;
+                numberOfClips++;
+            }
+        }
 
-        getOperator()->numberOfClips = clips->Count;
+        getOperator()->numberOfClips = numberOfClips;
     }
 }

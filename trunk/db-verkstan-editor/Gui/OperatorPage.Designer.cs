@@ -29,36 +29,61 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.operatorPagePanel1 = new VerkstanEditor.Gui.OperatorPagePanel();
             this.SuspendLayout();
             // 
-            // menu
+            // hScrollBar1
             // 
-            this.menu.Name = "menu";
-            this.menu.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menu.Size = new System.Drawing.Size(61, 4);
-            this.menu.Opened += new System.EventHandler(this.menu_Opened);
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Enabled = false;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 259);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(246, 16);
+            this.hScrollBar1.TabIndex = 0;
+            this.hScrollBar1.Layout += new System.Windows.Forms.LayoutEventHandler(this.hScrollBar1_Layout);
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // vScrollBar1
+            // 
+            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.vScrollBar1.Enabled = false;
+            this.vScrollBar1.Location = new System.Drawing.Point(230, 0);
+            this.vScrollBar1.Name = "vScrollBar1";
+            this.vScrollBar1.Size = new System.Drawing.Size(16, 259);
+            this.vScrollBar1.TabIndex = 1;
+            this.vScrollBar1.Layout += new System.Windows.Forms.LayoutEventHandler(this.vScrollBar1_Layout);
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
+            // 
+            // operatorPagePanel1
+            // 
+            this.operatorPagePanel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.operatorPagePanel1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPagePanel1.Name = "operatorPagePanel1";
+            this.operatorPagePanel1.Size = new System.Drawing.Size(150, 150);
+            this.operatorPagePanel1.TabIndex = 2;
+            this.operatorPagePanel1.Resize += new System.EventHandler(this.operatorPagePanel1_Resize);
             // 
             // OperatorPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ContextMenuStrip = this.menu;
+            this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.Controls.Add(this.vScrollBar1);
+            this.Controls.Add(this.hScrollBar1);
+            this.Controls.Add(this.operatorPagePanel1);
             this.Name = "OperatorPage";
-            this.Load += new System.EventHandler(this.OperatorPage_Load);
-            this.DoubleClick += new System.EventHandler(this.OperatorPage_DoubleClick);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.OperatorPage_Paint);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseMove);
-            this.ParentChanged += new System.EventHandler(this.OperatorPage_ParentChanged);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseDown);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OperatorPage_MouseUp);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OperatorPage_KeyDown);
+            this.Size = new System.Drawing.Size(246, 275);
+            this.Resize += new System.EventHandler(this.OperatorPage_Resize);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.ContextMenuStrip menu;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private OperatorPagePanel operatorPagePanel1;
     }
 }

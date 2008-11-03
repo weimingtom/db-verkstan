@@ -2,9 +2,9 @@
 
 namespace Verkstan
 {
-    Clip::Clip(int clipid)
+    Clip::Clip()
     {
-        this->id = clipid;
+
     }
 
     Clip::~Clip()

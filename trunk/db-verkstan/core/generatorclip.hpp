@@ -2,8 +2,10 @@
 
 #include "core/clip.hpp"
 
-class SineClip: public Clip
+class GeneratorClip: public Clip
 {
 public:
     float getValue(int beat);
+    int period;
+    unsigned char type;
 };

@@ -1,6 +1,6 @@
 #include "cli/Operator.hpp"
 
-#include "cli/Joint.hpp"
+#include "cli/internal/Joint.hpp"
 
 namespace Verkstan
 {   

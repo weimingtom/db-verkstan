@@ -1,10 +1,10 @@
 #pragma once
 
-#include "cli/VerkstanCore.hpp"
+#include "cli/internal/VerkstanCore.hpp"
 
 #include "cli/Color.hpp"
 #include "cli/Constants.hpp"
-#include "cli/Joint.hpp"
+#include "cli/internal/Joint.hpp"
 #include "cli/Vector.hpp"
 
 #using <mscorlib.dll>
