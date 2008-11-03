@@ -15,5 +15,17 @@ float GeneratorClip::getValue(int beat)
         return (beat % period) / (float)period;
     case 3: // Ramp down
         return (1.0f - (beat % period)) / (float)period;
+    case 4: // Sawtooth
+        {
+            float t = ((beat % period) / (float)period);
+            if (t < 0.5f)
+                return t / 0.5f;
+            else
+                return 2.0f - t / 0.5f;
+        }
+    case 5: // Incrementor
+        return beat / (float)period;
+    case 6: // Decrementor
+        return -beat / (float)period;
     }
 }

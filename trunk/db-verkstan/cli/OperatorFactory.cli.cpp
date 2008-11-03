@@ -187,6 +187,24 @@ categories[category]->Add(name);
             c4->Period = DB_TICKS_PER_BEAT;
             c4->Type = Constants::GeneratorClipTypes::RampDown;
             channel4->AddClip(c4);
+
+            Channel^ channel5 = gcnew Channel(so);
+            so->AddChannel(channel5);
+            GeneratorClip^ c5 = gcnew GeneratorClip();
+            c5->Start = 0;
+            c5->End = 256*40;
+            c5->Period = DB_TICKS_PER_BEAT * 2;
+            c5->Type = Constants::GeneratorClipTypes::SawTooth;
+            channel5->AddClip(c5);
+
+            Channel^ channel6 = gcnew Channel(so);
+            so->AddChannel(channel6);
+            GeneratorClip^ c6 = gcnew GeneratorClip();
+            c6->Start = 0;
+            c6->End = 256*40;
+            c6->Period = DB_TICKS_PER_BEAT * 4;
+            c6->Type = Constants::GeneratorClipTypes::Incrementor;
+            channel6->AddClip(c6);
           
             return so;
         }

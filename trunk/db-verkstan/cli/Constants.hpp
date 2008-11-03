@@ -37,7 +37,9 @@ namespace Verkstan
             Cosine,
             RampUp,
             RampDown,
-            SawTooth
+            SawTooth,
+            Incrementor,
+            Decrementor
        };
     };
 }
