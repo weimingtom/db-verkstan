@@ -9,22 +9,18 @@ namespace Verkstan
     public ref class LoadOperator: public Operator
 	{
     public:
-        LoadOperator(String^ name);
+        LoadOperator();
         virtual ~LoadOperator();
 
         void AddReceiver(Operator^ op);
-        virtual unsigned char GetByteProperty(int index) override;
-        virtual void SetByteProperty(int index, unsigned char value) override;
-        virtual int GetIntProperty(int index) override;
-        virtual void SetIntProperty(int index, int value) override;
-        virtual float GetFloatProperty(int index) override;
-        virtual void SetFloatProperty(int index, float value) override;
+
+        property String^ Name
+        {
+            virtual void set(String^ name) override;
+        }
+
         virtual String^ GetStringProperty(int index) override;
         virtual void SetStringProperty(int index, String ^value) override;
-        virtual Vector^ GetVectorProperty(int index)override;
-        virtual void SetVectorProperty(int index, Vector^ vector) override;
-        virtual Color^ GetColorProperty(int index) override;
-        virtual void SetColorProperty(int index, Color^ color) override;
 
         virtual bool IsProcessable() override;
         virtual bool IsWarningPresent() override;

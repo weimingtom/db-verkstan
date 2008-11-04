@@ -5,8 +5,14 @@
 
 namespace Verkstan
 {
-    SceneOperator::SceneOperator(Operator^ sceneOperator)
-        : CoreOperatorProxy(sceneOperator)
+    SceneOperator::SceneOperator(String^ typeName,
+                                 int operatorId,
+                                 Constants::OperatorTypes type,
+                                 List<OperatorInput^>^ inputs)
+        : CoreOperator(typeName,
+                       operatorId,
+                       type,
+                       inputs)
     {
         channels = gcnew List<Channel^>();
     }

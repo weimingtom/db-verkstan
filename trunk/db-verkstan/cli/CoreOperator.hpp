@@ -9,12 +9,16 @@ namespace Verkstan
     public ref class CoreOperator: public Operator
 	{
     public:
-        CoreOperator(String^ name,
-                     String^ typeName,
+        CoreOperator(String^ typeName,
                      int operatorId,
                      Constants::OperatorTypes type,
                      List<OperatorInput^>^ inputs);
         virtual ~CoreOperator();
+
+        property String^ Name
+        {
+            virtual void set(String^ name) override;
+        }
 
         virtual unsigned char GetByteProperty(int index) override;
         virtual void SetByteProperty(int index, unsigned char value) override;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "cli/CoreOperatorProxy.hpp"
+#include "cli/CoreOperator.hpp"
 
 using namespace System;
 using namespace System::Collections::Generic;
@@ -9,10 +9,13 @@ namespace Verkstan
 {
     ref class Channel;
 
-    public ref class SceneOperator: public CoreOperatorProxy
+    public ref class SceneOperator: public CoreOperator
 	{
     public:
-        SceneOperator(Operator^ sceneOperator);
+        SceneOperator(String^ typeName,
+                      int operatorId,
+                      Constants::OperatorTypes type,
+                      List<OperatorInput^>^ inputs);
         void AddChannel(Channel^ channel);
         void RemoveChannel(int index);
         void RemoveChannel(Channel^ channel);

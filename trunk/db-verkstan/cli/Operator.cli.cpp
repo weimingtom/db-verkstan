@@ -18,22 +18,36 @@ namespace Verkstan
         Optional = optional;
     }
 
-    Operator::Operator(String^ name,
-                       String^ typeName,
+    Operator::Operator(String^ typeName,
                        int operatorId,
                        Constants::OperatorTypes type)
     {
-        this->Name = name;
         this->typeName = typeName;
-        DisplayName = name;
         this->id = operatorId;
         this->type = type;
         this->properties = gcnew List<OperatorProperty^>();
+        this->name = "";
+        this->displayName = typeName;
     }
 
     Operator::~Operator()
     {
 
+    }
+
+    String^ Operator::Name::get()
+    {
+        return name;
+    }
+
+    String^ Operator::DisplayName::get()
+    {
+        return displayName;
+    }
+
+    void Operator::Name::set(String^ name)
+    {
+        this->name = name;
     }
 
     int Operator::Id::get()
@@ -73,5 +87,65 @@ namespace Verkstan
                                                         Constants::OperatorPropertyTypes::Enum,
                                                         values);
         properties->Add(prop);
+    }
+
+    unsigned char Operator::GetByteProperty(int index)
+    {
+        return 0;
+    }
+
+    void Operator::SetByteProperty(int index, unsigned char value)
+    {
+
+    }
+
+    int Operator::GetIntProperty(int index)
+    {
+         return 0;
+    }
+
+    void Operator::SetIntProperty(int index, int value)
+    {
+
+    }
+
+    float Operator::GetFloatProperty(int index)
+    {
+        return 0.0f;
+    }
+
+    void Operator::SetFloatProperty(int index, float value)
+    {
+
+    }
+
+    String^ Operator::GetStringProperty(int index)
+    {   
+        return gcnew String("");   
+    }
+
+    void Operator::SetStringProperty(int index, String^ string)
+    {
+      
+    }
+
+    Vector^ Operator::GetVectorProperty(int index)
+    {
+        return gcnew Vector();
+    }
+
+    void Operator::SetVectorProperty(int index, Vector^ vector)
+    {
+
+    }
+
+    Color^ Operator::GetColorProperty(int index)
+    {
+        return gcnew Color();
+    }
+
+    void Operator::SetColorProperty(int index, Color^ color)
+    {
+
     }
 }

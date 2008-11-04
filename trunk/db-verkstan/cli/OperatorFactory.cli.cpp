@@ -2,12 +2,15 @@
 #include "cli/Operators.hpp"
 #undef OPERATOR_HEADERS
 
+#define SPECIAL_OPERATOR_HEADERS 1
+#include "cli/Operators.hpp"
+#undef SPECIAL_OPERATOR_HEADERS
+
 #include "cli/OperatorFactory.hpp"
 #include "cli/Operator.hpp"
 #include "cli/CoreOperator.hpp"
 #include "cli/LoadOperator.hpp"
 #include "cli/StoreOperator.hpp"
-#include "cli/SceneOperator.hpp"
 #include "cli/Clip.hpp"
 #include "cli/Channel.hpp"
 #include "cli/GeneratorClip.hpp"
@@ -56,7 +59,7 @@ categories[category]->Add(name);
     }
 
 #define DEF_OP(opName, opClass, opType)             \
-    if (name == opName)                             \
+    if (typeName == opName)                         \
     {                                               \
         Core::Operator* o = new Core::opClass##();  \
         int id;                                     \
@@ -71,12 +74,28 @@ categories[category]->Add(name);
         }                                           \
         List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
         op = gcnew CoreOperator(opName,  \
-                                opName,  \
-                               id,      \
-                               Constants::OperatorTypes::##opType,   \
-                               inputs);                                              
-
-  
+                                id,      \
+                                Constants::OperatorTypes::##opType,   \
+                                inputs);
+#define DEF_SPECIAL_OP(opName, opClass, opType, cliClass)\
+    if (typeName == opName)                         \
+    {                                               \
+        Core::Operator* o = new Core::opClass##();  \
+        int id;                                     \
+        for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
+        {                                           \
+        if (Core::operators[i] == 0)                \
+            {                                       \
+            Core::operators[i] = o;                 \
+                id = i;                             \
+                break;                              \
+            }                                       \
+        }                                           \
+        List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
+        op = gcnew cliClass##(opName,  \
+                              id,      \
+                              Constants::OperatorTypes::##opType,   \
+                              inputs); 
 #define ADD_BYTE_PROP(name, value) \
     op->AddProperty(name, Constants::OperatorPropertyTypes::Byte);  \
     op->SetByteProperty(op->Properties->Count - 1, value);
@@ -129,29 +148,29 @@ categories[category]->Add(name);
         throw gcnew System::Exception("Unable to add an optional input because last added input was infinite!"); \
     inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false, true));
 #define END_OP() }
+#define END_SPECIAL_OP() }
 
-    Operator^ OperatorFactory::Create(String^ name)
+    Operator^ OperatorFactory::Create(String^ typeName)
     {
         Operator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Operators.hpp"
 #undef OPERATOR_DEFINES
 
-        if (name == "Store")
+        if (typeName == "Store")
         {
-            op = gcnew StoreOperator("Store");
-            op->AddProperty("Name", Constants::OperatorPropertyTypes::String);
+            op = gcnew StoreOperator();
         }
 
-        if (name == "Load")
+        if (typeName == "Load")
         {
-            op = gcnew LoadOperator("Load");
-            op->AddProperty("Name", Constants::OperatorPropertyTypes::String);
+            op = gcnew LoadOperator();
+            op->AddProperty("Store to load", Constants::OperatorPropertyTypes::String);
         }
    
-        if (name == "Scene")
+        if (typeName == "Scene")
         {
-            SceneOperator^ so = gcnew SceneOperator(op);
+            SceneOperator^ so = (SceneOperator^)op;
             Channel^ channel1 = gcnew Channel(so);
             so->AddChannel(channel1);
             GeneratorClip^ c1 = gcnew GeneratorClip();
@@ -205,8 +224,6 @@ categories[category]->Add(name);
             c6->Period = DB_TICKS_PER_BEAT * 4;
             c6->Type = Constants::GeneratorClipTypes::Incrementor;
             channel6->AddClip(c6);
-          
-            return so;
         }
    
         return op;

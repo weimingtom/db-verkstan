@@ -8,9 +8,8 @@
 
 namespace Verkstan
 {
-    LoadOperator::LoadOperator(String^ name)
-                             : Operator(name,
-                                        "Load", 
+    LoadOperator::LoadOperator()
+                             : Operator("Load", 
                                         -1, 
                                         Constants::OperatorTypes::Load)
     {
@@ -25,40 +24,17 @@ namespace Verkstan
         Joints::Remove(loadJoint);  
     }
 
-    unsigned char LoadOperator::GetByteProperty(int index)
+    void LoadOperator::Name::set(String^ name)
     {
-        return 0;
-    }
-
-    void LoadOperator::SetByteProperty(int index, unsigned char value)
-    {
-
-    }
-
-    int LoadOperator::GetIntProperty(int index)
-    {
-         return 0;
-    }
-
-    void LoadOperator::SetIntProperty(int index, int value)
-    {
-
-    }
-
-    float LoadOperator::GetFloatProperty(int index)
-    {
-        return 0.0f;
-    }
-
-    void LoadOperator::SetFloatProperty(int index, float value)
-    {
-
+        Operator::Name::set(name);
+        primaryJoint->Name = Operator::Name::get();
     }
 
     String^ LoadOperator::GetStringProperty(int index)
     {   
         if (index == 0)
             return primaryJoint->Name;
+
         return gcnew String("");   
     }
 
@@ -70,30 +46,10 @@ namespace Verkstan
             UpdatePrimaryJoint(joint);
 
             if (joint != nullptr)
-                DisplayName = "<"+joint->Name+">";
+                displayName = "L<"+joint->Name+">";
             else
-                DisplayName = Name;
+                displayName = TypeName;
         }
-    }
-
-    Vector^ LoadOperator::GetVectorProperty(int index)
-    {
-        return gcnew Vector();
-    }
-
-    void LoadOperator::SetVectorProperty(int index, Vector^ vector)
-    {
-
-    }
-
-    Color^ LoadOperator::GetColorProperty(int index)
-    {
-        return gcnew Color();
-    }
-
-    void LoadOperator::SetColorProperty(int index, Color^ color)
-    {
-
     }
 
     bool LoadOperator::IsProcessable()

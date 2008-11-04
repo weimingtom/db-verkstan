@@ -57,39 +57,27 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.AutoScroll = false;
             tableLayoutPanel1.AutoSize = true;
             tableLayoutPanel1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-    
-            //Controls.Add(tableLayoutPanel1);
+            Controls.Add(tableLayoutPanel1);
         }
 
         private void Deinitialize()
         {
-            Controls.Remove(tableLayoutPanel1);
             tableLayoutPanel1.Visible = false;
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.Height = 0;
+            tableLayoutPanel1.SuspendLayout();
         }
 
         private void Initialize()
         {
+            SuspendLayout();
             tableLayoutPanel1.Controls.Clear();
             int row = 0;
+            AddLabelForProperty("Name", row);
+            row = AddNameProperty(row);
             foreach (Verkstan.OperatorProperty property in op.Binding.Properties)
             {
-                Label label = new Label();
-                //label.MouseDown += new System.Windows.Forms.MouseEventHandler(this.OperatorProperty_LabelMouseDown);
-                label.AutoSize = true;
-                label.Size = new Size(0, 0);
-                label.Text = property.Name;
-                label.Dock = DockStyle.Right;
-                label.TextAlign = ContentAlignment.MiddleCenter;
-                label.Font = new Font(label.Font, FontStyle.Bold);
-                label.Margin = new Padding(1, 1, 10, 1);
-
-                // It is important to add the label to the table before we check it's size
-                // as the auto size isn't done until the label is added to a control.
-                tableLayoutPanel1.Controls.Add(label);
-                tableLayoutPanel1.SetCellPosition(label, new TableLayoutPanelCellPosition(0, row));
-
+                AddLabelForProperty(property.Name, row);
                 if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
                     row = AddByteProperty(property, row);
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Int)
@@ -117,9 +105,24 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Controls.Add(dummyLabel);
             tableLayoutPanel1.SetCellPosition(dummyLabel, new TableLayoutPanelCellPosition(0, row));
             tableLayoutPanel1.Visible = true;
-            tableLayoutPanel1.PerformLayout();
-            Controls.Add(tableLayoutPanel1);
-            ResumeLayout(false);
+            ResumeLayout();
+            tableLayoutPanel1.ResumeLayout(); 
+        }
+
+        private void AddLabelForProperty(String text, int row)
+        {
+            Label label = new Label();
+            label.AutoSize = true;
+            label.Size = new Size(0, 0);
+            label.Text = text;
+            label.Dock = DockStyle.Right;
+            label.TextAlign = ContentAlignment.MiddleCenter;
+            label.Font = new Font(label.Font, FontStyle.Bold);
+            label.Margin = new Padding(1, 1, 10, 1);
+            // It is important to add the label to the table before we check it's size
+            // as the auto size isn't done until the label is added to a control.
+            tableLayoutPanel1.Controls.Add(label);
+            tableLayoutPanel1.SetCellPosition(label, new TableLayoutPanelCellPosition(0, row));
         }
 
         private int AddByteProperty(Verkstan.OperatorProperty property, int row)
@@ -182,6 +185,18 @@ namespace VerkstanEditor.Gui
             textBox.Dock = DockStyle.Fill;
             textBox.Text = op.Binding.GetStringProperty(index);
             textBox.TextChanged += new EventHandler((object o, EventArgs e) => op.Binding.SetStringProperty(index, textBox.Text));
+            tableLayoutPanel1.Controls.Add(textBox);
+            tableLayoutPanel1.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
+            return row + 1;
+        }
+
+        private int AddNameProperty(int row)
+        {
+            TextBox textBox = new TextBox();
+            textBox.Margin = new Padding(0, 1, 0, 1);
+            textBox.Dock = DockStyle.Fill;
+            textBox.Text = op.Binding.Name;
+            textBox.TextChanged += new EventHandler((object o, EventArgs e) => op.Binding.Name = textBox.Text);
             tableLayoutPanel1.Controls.Add(textBox);
             tableLayoutPanel1.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
             return row + 1;
@@ -344,9 +359,11 @@ namespace VerkstanEditor.Gui
                 tableLayoutPanel1.SetCellPosition(animationSettings3, new TableLayoutPanelCellPosition(1, row + 3));
                 button.Click += delegate(object o, EventArgs e)
                 {
+                    tableLayoutPanel1.SuspendLayout();
                     animationSettings1.Visible = !animationSettings1.Visible;
                     animationSettings2.Visible = !animationSettings2.Visible;
                     animationSettings3.Visible = !animationSettings3.Visible;
+                    tableLayoutPanel1.ResumeLayout();
                 };
                 row = row + 3;
             }

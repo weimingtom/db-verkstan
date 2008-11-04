@@ -8,13 +8,11 @@
 
 namespace Verkstan
 {
-    CoreOperator::CoreOperator(String^ name,
-                               String^ typeName,
+    CoreOperator::CoreOperator(String^ typeName,
                                int operatorId,
                                Constants::OperatorTypes type,
                                List<OperatorInput^>^ inputs)
-                             : Operator(name,
-                                        typeName,
+                             : Operator(typeName,
                                         operatorId, 
                                         type)
     {
@@ -34,6 +32,15 @@ namespace Verkstan
         Joints::Remove(primaryJoint);
         delete Core::operators[Id];
         Core::operators[Id] = 0;
+    }
+
+    void CoreOperator::Name::set(String^ name)
+    {
+        Operator::Name::set(name);
+        if (name == nullptr || name == "")
+            displayName = TypeName;
+        else
+            displayName = name;
     }
 
     unsigned char CoreOperator::GetByteProperty(int index)

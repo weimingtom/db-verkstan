@@ -29,14 +29,22 @@ namespace Verkstan
 	public ref class Operator abstract 
 	{
     public:
-        Operator(String^ name,
-                 String^ typeName,
+        Operator(String^ typeName,
                  int operatorId,
                  Constants::OperatorTypes type);
         virtual ~Operator();
 
-        String^ DisplayName;
-        String^ Name;
+        property String^ Name
+        {
+            String^ get();
+            virtual void set(String^ name);
+        }
+
+        property String^ DisplayName
+        {
+            String^ get();
+        }
+
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property int Id { int get(); }
         property String^ TypeName { String^ get(); }
@@ -55,18 +63,18 @@ namespace Verkstan
         virtual void JointReceiverConnected(Joint^ joint, Operator^ op) = 0;
         virtual void JointReceiverDisconnected(Joint^ joint, Operator^ op) = 0;
 
-        virtual unsigned char GetByteProperty(int index) = 0;
-        virtual void SetByteProperty(int index, unsigned char value) = 0;
-        virtual int GetIntProperty(int index) = 0;
-        virtual void SetIntProperty(int index, int value) = 0;
-        virtual float GetFloatProperty(int index) = 0;
-        virtual void SetFloatProperty(int index, float value) = 0;
-        virtual String^ GetStringProperty(int index) = 0;
-        virtual void SetStringProperty(int index, String^ value) = 0;
-        virtual Vector^ GetVectorProperty(int index) = 0;
-        virtual void SetVectorProperty(int index, Vector^ vector) = 0;
-        virtual Color^ GetColorProperty(int index) = 0;
-        virtual void SetColorProperty(int index, Color^ color) = 0;
+        virtual unsigned char GetByteProperty(int index);
+        virtual void SetByteProperty(int index, unsigned char value);
+        virtual int GetIntProperty(int index);
+        virtual void SetIntProperty(int index, int value);
+        virtual float GetFloatProperty(int index);
+        virtual void SetFloatProperty(int index, float value);
+        virtual String^ GetStringProperty(int index);
+        virtual void SetStringProperty(int index, String^ value);
+        virtual Vector^ GetVectorProperty(int index);
+        virtual void SetVectorProperty(int index, Vector^ vector);
+        virtual Color^ GetColorProperty(int index);
+        virtual void SetColorProperty(int index, Color^ color);
 
         virtual bool IsProcessable() = 0;
         virtual bool IsWarningPresent() = 0;
@@ -79,8 +87,10 @@ namespace Verkstan
     protected:
         int id;
         Constants::OperatorTypes type;
+        String^ displayName;
 
     private:
+        String^ name;
         String^ typeName;
         List<OperatorProperty^>^ properties;
 	};

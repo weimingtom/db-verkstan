@@ -230,14 +230,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\CoreOperatorProxy.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\CoreOperatorProxy.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\Exporter.cpp"
 				>
 			</File>

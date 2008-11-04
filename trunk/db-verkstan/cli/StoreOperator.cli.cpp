@@ -8,9 +8,8 @@
 
 namespace Verkstan
 {
-    StoreOperator::StoreOperator(String^ name)
-                             : Operator(name,
-                                        "Store", 
+    StoreOperator::StoreOperator()
+                             : Operator("Store", 
                                         -1, 
                                         Constants::OperatorTypes::Store)
     {
@@ -23,71 +22,15 @@ namespace Verkstan
         Joints::Remove(primaryJoint);
     }
 
-    unsigned char StoreOperator::GetByteProperty(int index)
+    void StoreOperator::Name::set(String^ name)
     {
-        return 0;
-    }
+        Operator::Name::set(name);
+        primaryJoint->Name = name;
 
-    void StoreOperator::SetByteProperty(int index, unsigned char value)
-    {
-
-    }
-
-    int StoreOperator::GetIntProperty(int index)
-    {
-         return 0;
-    }
-
-    void StoreOperator::SetIntProperty(int index, int value)
-    {
-
-    }
-
-    float StoreOperator::GetFloatProperty(int index)
-    {
-        return 0.0f;
-    }
-
-    void StoreOperator::SetFloatProperty(int index, float value)
-    {
-
-    }
-
-    String^ StoreOperator::GetStringProperty(int index)
-    {   
-        if (index == 0)
-            return primaryJoint->Name;
-
-        return gcnew String("");   
-    }
-
-    void StoreOperator::SetStringProperty(int index, String^ string)
-    {
-        if (index == 0)
-        {
-            primaryJoint->Name = string;
-            DisplayName = "<"+string+">";
-        }
-    }
-
-    Vector^ StoreOperator::GetVectorProperty(int index)
-    {
-        return gcnew Vector();
-    }
-
-    void StoreOperator::SetVectorProperty(int index, Vector^ vector)
-    {
-
-    }
-
-    Color^ StoreOperator::GetColorProperty(int index)
-    {
-        return gcnew Color();
-    }
-
-    void StoreOperator::SetColorProperty(int index, Color^ color)
-    {
-
+        if (name == nullptr || name == "")
+            displayName = TypeName;
+        else
+            displayName = name;
     }
 
     bool StoreOperator::IsProcessable()
