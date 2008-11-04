@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class Channels
+    partial class TimelineChannels
     {
         /// <summary> 
         /// Required designer variable.

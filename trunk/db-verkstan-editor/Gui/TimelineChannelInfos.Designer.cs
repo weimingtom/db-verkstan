@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class ChannelInfos
+    partial class TimelineChannelInfos
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,14 +30,15 @@
         {
             this.SuspendLayout();
             // 
-            // ChannelInfos
+            // TimelineChannelInfos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.Name = "ChannelInfos";
+            this.Name = "TimelineChannelInfos";
             this.Size = new System.Drawing.Size(120, 86);
             this.Load += new System.EventHandler(this.ChannelInfos_Load);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.TimelineChannelInfos_Layout);
             this.ResumeLayout(false);
 
         }

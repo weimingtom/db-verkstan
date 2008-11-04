@@ -45,14 +45,14 @@
             this.previewPanel = new System.Windows.Forms.Panel();
             this.boardTabControl = new System.Windows.Forms.TabControl();
             this.operatorsTab = new System.Windows.Forms.TabPage();
-            this.operatorPageControl1 = new VerkstanEditor.Gui.OperatorPage();
             this.scenesTab = new System.Windows.Forms.TabPage();
-            this.sceneTimeline1 = new VerkstanEditor.Gui.SceneTimeline();
             this.channelTab = new System.Windows.Forms.TabPage();
-            this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
-            this.transport1 = new VerkstanEditor.Gui.Transport();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slowRenderTimer = new System.Windows.Forms.Timer(this.components);
+            this.operatorPageControl1 = new VerkstanEditor.Gui.OperatorPage();
+            this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
+            this.transport1 = new VerkstanEditor.Gui.Transport();
+            this.timeline1 = new VerkstanEditor.Gui.Timeline();
             this.mainMenu.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -240,36 +240,16 @@
             this.operatorsTab.Text = "Operators";
             this.operatorsTab.UseVisualStyleBackColor = true;
             // 
-            // operatorPageControl1
-            // 
-            this.operatorPageControl1.BackColor = System.Drawing.SystemColors.Control;
-            this.operatorPageControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.operatorPageControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.operatorPageControl1.Location = new System.Drawing.Point(0, 0);
-            this.operatorPageControl1.Name = "operatorPageControl1";
-            this.operatorPageControl1.Size = new System.Drawing.Size(548, 87);
-            this.operatorPageControl1.TabIndex = 0;
-            // 
             // scenesTab
             // 
             this.scenesTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.scenesTab.Controls.Add(this.sceneTimeline1);
+            this.scenesTab.Controls.Add(this.timeline1);
             this.scenesTab.Location = new System.Drawing.Point(4, 25);
             this.scenesTab.Name = "scenesTab";
             this.scenesTab.Size = new System.Drawing.Size(548, 87);
             this.scenesTab.TabIndex = 1;
             this.scenesTab.Text = "Scenes";
             this.scenesTab.UseVisualStyleBackColor = true;
-            // 
-            // sceneTimeline1
-            // 
-            this.sceneTimeline1.BackColor = System.Drawing.SystemColors.Control;
-            this.sceneTimeline1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.sceneTimeline1.Location = new System.Drawing.Point(0, 0);
-            this.sceneTimeline1.Margin = new System.Windows.Forms.Padding(0);
-            this.sceneTimeline1.Name = "sceneTimeline1";
-            this.sceneTimeline1.Size = new System.Drawing.Size(548, 87);
-            this.sceneTimeline1.TabIndex = 0;
             // 
             // channelTab
             // 
@@ -279,6 +259,28 @@
             this.channelTab.Size = new System.Drawing.Size(548, 87);
             this.channelTab.TabIndex = 3;
             this.channelTab.Text = "Channel";
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // slowRenderTimer
+            // 
+            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
+            // 
+            // operatorPageControl1
+            // 
+            this.operatorPageControl1.BackColor = System.Drawing.SystemColors.Control;
+            this.operatorPageControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.operatorPageControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.operatorPageControl1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPageControl1.Name = "operatorPageControl1";
+            this.operatorPageControl1.Size = new System.Drawing.Size(548, 87);
+            this.operatorPageControl1.TabIndex = 0;
             // 
             // operatorPropertyGrid
             // 
@@ -304,17 +306,14 @@
             this.transport1.Size = new System.Drawing.Size(766, 64);
             this.transport1.TabIndex = 0;
             // 
-            // statusStrip1
+            // timeline1
             // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // slowRenderTimer
-            // 
-            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
+            this.timeline1.BackColor = System.Drawing.SystemColors.Control;
+            this.timeline1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timeline1.Location = new System.Drawing.Point(0, 0);
+            this.timeline1.Name = "timeline1";
+            this.timeline1.Size = new System.Drawing.Size(548, 87);
+            this.timeline1.TabIndex = 0;
             // 
             // mainForm
             // 
@@ -376,9 +375,9 @@
         private System.Windows.Forms.TabPage channelTab;
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
-        private SceneTimeline sceneTimeline1;
         private System.Windows.Forms.Timer slowRenderTimer;
         private OperatorPage operatorPageControl1;
+        private Timeline timeline1;
     }
 }
 

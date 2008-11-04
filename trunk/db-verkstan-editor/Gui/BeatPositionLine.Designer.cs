@@ -38,7 +38,6 @@
             this.DoubleBuffered = true;
             this.Name = "BeatPositionLine";
             this.Size = new System.Drawing.Size(714, 25);
-            this.Load += new System.EventHandler(this.BeatPositionLine_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.BeatPositionLine_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.BeatPositionLine_MouseMove);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.BeatPositionLine_MouseDown);

@@ -41,8 +41,7 @@ public:
 
     Mesh* mesh;
     Texture* texture;
-    int start;
-    int end;
+    int beats;
     int operatorClips[DB_MAX_OPERATOR_CLIPS];
     int numberOfClips;
 

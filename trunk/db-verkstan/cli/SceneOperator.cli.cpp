@@ -15,6 +15,7 @@ namespace Verkstan
                        inputs)
     {
         channels = gcnew List<Channel^>();
+        getOperator()->beats = 0;
     }
 
     void SceneOperator::AddChannel(Channel^ channel)
@@ -44,6 +45,7 @@ namespace Verkstan
             getOperator()->operatorClips[i] = -1;
 
         int numberOfClips = 0;
+        int beats = 0;
         for (int i = 0; i < channels->Count; i++)
         {
             int clipsCount = channels[i]->Clips->Count;
@@ -51,9 +53,17 @@ namespace Verkstan
             {
                 getOperator()->operatorClips[i] = channels[i]->Clips[j]->Id;
                 numberOfClips++;
+                if (channels[i]->Clips[j]->End > beats)
+                    beats = channels[i]->Clips[j]->End;
             }
         }
 
         getOperator()->numberOfClips = numberOfClips;
+        getOperator()->beats = beats;
+    }
+    
+    int SceneOperator::Beats::get()
+    {
+         return getOperator()->beats;
     }
 }

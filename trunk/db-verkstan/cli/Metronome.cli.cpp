@@ -25,17 +25,14 @@ namespace Verkstan
 
         lastTickCount = currentTick;
 
-        if (beat > beats)
+        if (Loop && beat > loopEnd)
         {
-            if (Loop)
-            {
-                beat = 0;
-            }
-            else
-            {
-                beat = beats;
-                ticking = false;
-            }
+            beat = loopStart;
+        }
+        else if (beat > beats)
+        {
+            beat = beats;
+            ticking = false;
         }
 
         return beat;
@@ -68,6 +65,41 @@ namespace Verkstan
             beat = beats;
             ticking = Loop;
         }
+
+        if (loopStart > beats)
+            loopStart = beats;
+        if (loopEnd > beats)
+            loopEnd = beats;
+    }
+
+    int Metronome::LoopStart::get()
+    {
+        return loopStart;
+    }
+
+    void Metronome::LoopStart::set(int newLoopStart)
+    {
+        loopStart = newLoopStart;
+
+        if (loopStart < 0)
+            loopStart = 0;
+        if (loopStart > beats)
+            loopStart = beats;
+    }
+
+    int Metronome::LoopEnd::get()
+    {
+        return loopEnd;
+    }
+
+    void Metronome::LoopEnd::set(int newLoopEnd)
+    {
+        loopEnd = newLoopEnd;
+
+        if (loopEnd < 0)
+            loopEnd = 0;
+        if (loopEnd > beats)
+            loopEnd = beats;
     }
 
     int Metronome::Milliseconds::get()

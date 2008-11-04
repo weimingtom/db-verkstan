@@ -80,17 +80,17 @@
     <Compile Include="Gui\ChannelInfo.Designer.cs">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\ChannelInfos.cs">
+    <Compile Include="Gui\TimelineChannelInfos.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\ChannelInfos.Designer.cs">
-      <DependentUpon>ChannelInfos.cs</DependentUpon>
+    <Compile Include="Gui\TimelineChannelInfos.Designer.cs">
+      <DependentUpon>TimelineChannelInfos.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Channels.cs">
+    <Compile Include="Gui\TimelineChannels.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Channels.Designer.cs">
-      <DependentUpon>Channels.cs</DependentUpon>
+    <Compile Include="Gui\TimelineChannels.Designer.cs">
+      <DependentUpon>TimelineChannels.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\ColorProperty.cs">
       <SubType>UserControl</SubType>
@@ -139,6 +139,12 @@
     </Compile>
     <Compile Include="Gui\SceneTimeline.Designer.cs">
       <DependentUpon>SceneTimeline.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\Timeline.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\Timeline.Designer.cs">
+      <DependentUpon>Timeline.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Transport.cs">
       <SubType>UserControl</SubType>
@@ -243,11 +249,11 @@
     <EmbeddedResource Include="Gui\ChannelInfo.resx">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\ChannelInfos.resx">
-      <DependentUpon>ChannelInfos.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\TimelineChannelInfos.resx">
+      <DependentUpon>TimelineChannelInfos.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Channels.resx">
-      <DependentUpon>Channels.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\TimelineChannels.resx">
+      <DependentUpon>TimelineChannels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\MiniTimeline.resx">
       <DependentUpon>MiniTimeline.cs</DependentUpon>
@@ -266,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\SceneTimeline.resx">
       <DependentUpon>SceneTimeline.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\Timeline.resx">
+      <DependentUpon>Timeline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Transport.resx">
       <DependentUpon>Transport.cs</DependentUpon>

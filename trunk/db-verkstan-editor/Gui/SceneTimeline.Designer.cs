@@ -31,10 +31,10 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
-            this.channelInfos1 = new VerkstanEditor.Gui.ChannelInfos();
+            this.channelInfos1 = new VerkstanEditor.Gui.TimelineChannelInfos();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.playerPositionLine1 = new VerkstanEditor.Gui.BeatPositionLine();
-            this.channels1 = new VerkstanEditor.Gui.Channels();
+            this.channels1 = new VerkstanEditor.Gui.TimelineChannels();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.label3 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
@@ -271,8 +271,8 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private BeatPositionLine playerPositionLine1;
-        private Channels channels1;
-        private ChannelInfos channelInfos1;
+        private TimelineChannels channels1;
+        private TimelineChannelInfos channelInfos1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.SplitContainer splitContainer4;
         private System.Windows.Forms.Label label2;

@@ -23,6 +23,10 @@ namespace Verkstan
         {
             List<Channel^>^ get();
         }
+        property int Beats
+        {
+            int get();
+        }
         void UpdateRealClips();
 
     private:

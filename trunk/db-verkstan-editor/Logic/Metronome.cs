@@ -71,6 +71,30 @@ namespace VerkstanEditor.Logic
             }
         }
 
+        public static int LoopStart
+        {
+            set
+            {
+                Verkstan.Metronome.LoopStart = value;
+            }
+            get
+            {
+                return Verkstan.Metronome.LoopStart;
+            }
+        }
+
+        public static int LoopEnd
+        {
+            set
+            {
+                Verkstan.Metronome.LoopEnd = value;
+            }
+            get
+            {
+                return Verkstan.Metronome.LoopEnd;
+            }
+        }
+
         public static int TicksPerBeat
         {
             get

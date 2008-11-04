@@ -8,7 +8,17 @@ namespace Verkstan
     {
     public:
         static int BPM = 120;
-        static bool Loop = false;
+        static bool Loop = false;    
+        static property int LoopEnd
+        {
+            int get();
+            void set(int loopEnd);
+        }
+        static property int LoopStart
+        {
+            int get();
+            void set(int loopStart);
+        }
         static property int Beat
         {
             int get();
@@ -37,5 +47,7 @@ namespace Verkstan
         static int beats = 10240;
         static int lastTickCount = 0;
         static float leftOvers = 0.0f;
+        static int loopStart = 0;
+        static int loopEnd = 0;
     };
 }
