@@ -82,7 +82,10 @@ namespace VerkstanEditor.Gui
                 if (i % 2 == 0)
                 {
                     e.Graphics.DrawLine(p, new Point(i * beatWidth, 0), new Point(i * beatWidth, Height - 1));
-                    e.Graphics.DrawString("" + (i + 1), Font, b, new Point(i * BeatWidth + 1, 0));
+                    String number = "" + (i + 1);
+                    SizeF stringSize = e.Graphics.MeasureString(number, Font);
+                    if (stringSize.Width < beatWidth)
+                        e.Graphics.DrawString(number, Font, b, new Point(i * BeatWidth + 1, 0));
                 }
                 else
                 {

@@ -65,12 +65,10 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Visible = false;
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.Height = 0;
-            tableLayoutPanel1.SuspendLayout();
         }
 
         private void Initialize()
         {
-            SuspendLayout();
             tableLayoutPanel1.Controls.Clear();
             int row = 0;
             AddLabelForProperty("Name", row);
@@ -105,8 +103,6 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Controls.Add(dummyLabel);
             tableLayoutPanel1.SetCellPosition(dummyLabel, new TableLayoutPanelCellPosition(0, row));
             tableLayoutPanel1.Visible = true;
-            ResumeLayout();
-            tableLayoutPanel1.ResumeLayout(); 
         }
 
         private void AddLabelForProperty(String text, int row)
