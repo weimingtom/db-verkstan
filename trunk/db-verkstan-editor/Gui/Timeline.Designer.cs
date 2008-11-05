@@ -213,6 +213,7 @@
             // 
             this.splitPositionAndChannels.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitPositionAndChannels.Panel2.Controls.Add(this.timelineChannels1);
+            this.splitPositionAndChannels.Panel2.Resize += new System.EventHandler(this.splitPositionAndChannels_Panel2_Resize);
             this.splitPositionAndChannels.Size = new System.Drawing.Size(842, 240);
             this.splitPositionAndChannels.SplitterDistance = 25;
             this.splitPositionAndChannels.SplitterWidth = 1;

@@ -9,10 +9,8 @@ namespace Verkstan
     public:
         Vector();
         Vector(float x, float y, float z);
-        Vector(float x, float y, float z, float w);
         float X;
         float Y;
         float Z;
-        float W;
     };
 }

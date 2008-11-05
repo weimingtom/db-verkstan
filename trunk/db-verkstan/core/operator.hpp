@@ -32,7 +32,7 @@ public:
     float getFloatProperty(int index);
     const char* getStringProperty(int index);
     D3DXCOLOR getColorProperty(int index);
-    D3DXVECTOR4 getVectorProperty(int index);
+    D3DXVECTOR3 getVectorProperty(int index);
 
     bool isDirty();
     void setDirty(bool dirty);
@@ -52,7 +52,7 @@ public:
         int intValue;
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
         D3DXCOLOR colorValue;
-        D3DXVECTOR4 vectorValue;
+        D3DXVECTOR3 vectorValue;
         int channel1;
         int channel2;
         int channel3;

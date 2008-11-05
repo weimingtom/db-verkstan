@@ -158,6 +158,7 @@
     <Compile Include="Gui\VectorProperty.Designer.cs">
       <DependentUpon>VectorProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\ClipPreviewCache.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\Operators.cs" />
     <Compile Include="Gui\MainForm.cs">

@@ -31,6 +31,7 @@ namespace Verkstan
             void set(int value);
         }
         Core::Clip* getClip();
+        float GetValue(int beat);
     
     protected:
         int id;

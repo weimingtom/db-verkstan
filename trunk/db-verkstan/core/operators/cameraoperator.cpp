@@ -22,8 +22,8 @@ void CameraOperator::process()
     float angle = getFloatProperty(0);
     int ratioWidth = getIntProperty(1);
     int ratioHeight = getIntProperty(2);
-    D3DXVECTOR4 translationVector = getVectorProperty(4);
-    D3DXVECTOR4 lookAtVector = getVectorProperty(5);
+    D3DXVECTOR3 translationVector = getVectorProperty(4);
+    D3DXVECTOR3 lookAtVector = getVectorProperty(5);
     float rotation = getFloatProperty(6);
 
     D3DXMatrixPerspectiveFovLH(&projectionMatrix, 
@@ -34,8 +34,8 @@ void CameraOperator::process()
 
     D3DXMATRIX lookAtMatrix;
     D3DXMatrixLookAtLH(&lookAtMatrix,
-                       &D3DXVECTOR3(translationVector.x, translationVector.y, translationVector.z),
-                       &D3DXVECTOR3(lookAtVector.x, lookAtVector.y, lookAtVector.z),
+                       &translationVector,
+                       &lookAtVector,
                        &D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
     D3DXMATRIX rotationMatrix;

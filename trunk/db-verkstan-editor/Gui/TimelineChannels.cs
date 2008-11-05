@@ -304,6 +304,9 @@ namespace VerkstanEditor.Gui
                 Pen boundingPen = new Pen(Color.FromArgb(170, 170, 170));
 
                 e.Graphics.FillRectangle(brush, rect);
+                Bitmap preview = ClipPreviewCache.GetPreview(clip, beatWidth, channelHeight - 8);
+                e.Graphics.DrawImage(preview, rect.X, rect.Y + 4);
+
                 e.Graphics.DrawLine(lightPen,
                                     rect.X + 1,
                                     rect.Y + 1,

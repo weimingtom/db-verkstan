@@ -60,9 +60,9 @@ D3DXCOLOR Operator::getColorProperty(int index)
     return color;
 }
 
-D3DXVECTOR4 Operator::getVectorProperty(int index)
+D3DXVECTOR3 Operator::getVectorProperty(int index)
 {
-    D3DXVECTOR4 vector = properties[index].vectorValue;
+    D3DXVECTOR3 vector = properties[index].vectorValue;
     vector.x += properties[index].channelValue1;
     vector.y += properties[index].channelValue2;
     vector.z += properties[index].channelValue3;

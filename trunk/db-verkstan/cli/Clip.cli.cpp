@@ -52,4 +52,9 @@ namespace Verkstan
     {
         return Core::clips[id];
     }
+
+    float Clip::GetValue(int beat)
+    {
+        return getClip()->getValue(beat);
+    }
 }

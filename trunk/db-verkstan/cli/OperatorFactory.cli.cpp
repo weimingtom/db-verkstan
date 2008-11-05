@@ -221,8 +221,8 @@ categories[category]->Add(name);
             GeneratorClip^ c6 = gcnew GeneratorClip();
             c6->Start = 256*25;
             c6->End = 256*60;
-            c6->Period = DB_TICKS_PER_BEAT * 4;
-            c6->Type = Constants::GeneratorClipTypes::Incrementor;
+            c6->Period = c6->End - c6->Start;
+            c6->Type = Constants::GeneratorClipTypes::RampUp;
             channel6->AddClip(c6);
         }
    

@@ -102,5 +102,10 @@ namespace VerkstanEditor.Gui
         {
 
         }
+
+        private void splitPositionAndChannels_Panel2_Resize(object sender, EventArgs e)
+        {
+            UpdateScrollBars();
+        }
     }
 }

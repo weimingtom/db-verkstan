@@ -112,8 +112,8 @@ namespace Verkstan
 
     Vector^ CoreOperator::GetVectorProperty(int index)
     {
-        D3DXVECTOR4 vector = getOperator()->properties[index].vectorValue;
-        return gcnew Vector(vector.x, vector.y, vector.z, vector.w);
+        D3DXVECTOR3 vector = getOperator()->properties[index].vectorValue;
+        return gcnew Vector(vector.x, vector.y, vector.z);
     }
 
     void CoreOperator::SetVectorProperty(int index, Vector^ vector)

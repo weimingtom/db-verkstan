@@ -27,10 +27,8 @@ void LightOperator::process()
     d3dLight.Diffuse = getColorProperty(1);
     d3dLight.Specular = getColorProperty(2);
     d3dLight.Ambient = getColorProperty(3);
-    D3DXVECTOR4 position = getVectorProperty(4);
-    d3dLight.Position = D3DXVECTOR3(position.x, position.y, position.z);
-    D3DXVECTOR4 direction = getVectorProperty(4);
-    d3dLight.Direction = D3DXVECTOR3(direction.x, direction.y, direction.z);
+    d3dLight.Position = getVectorProperty(4);
+    d3dLight.Direction = getVectorProperty(5);
     d3dLight.Range = getFloatProperty(6);
     d3dLight.Falloff = getFloatProperty(7);
     d3dLight.Attenuation0 = getFloatProperty(8);

@@ -47,10 +47,6 @@ namespace Verkstan
             return Constants::GeneratorClipTypes::RampDown;
         case 4:
             return Constants::GeneratorClipTypes::SawTooth;
-        case 5:
-            return Constants::GeneratorClipTypes::Incrementor;
-        case 6:
-            return Constants::GeneratorClipTypes::Decrementor;
         }
     }
 
@@ -73,12 +69,6 @@ namespace Verkstan
             break;
         case Constants::GeneratorClipTypes::SawTooth:
             newType = 4;
-            break;
-        case Constants::GeneratorClipTypes::Incrementor:
-            newType = 5;
-            break;
-        case Constants::GeneratorClipTypes::Decrementor:
-            newType = 6;
             break;
         }
 

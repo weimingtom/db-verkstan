@@ -19,9 +19,9 @@ void CloneModelOperator::render()
 void CloneModelOperator::process()
 {
     clones = getByteProperty(0);
-    D3DXVECTOR4 scaleVector = getVectorProperty(1);
-    D3DXVECTOR4 rotationVector = getVectorProperty(2);
-    D3DXVECTOR4 translationVector = getVectorProperty(3);
+    D3DXVECTOR3 scaleVector = getVectorProperty(1);
+    D3DXVECTOR3 rotationVector = getVectorProperty(2);
+    D3DXVECTOR3 translationVector = getVectorProperty(3);
     D3DXMATRIX scaleMatrix;
     D3DXMatrixScaling(&scaleMatrix, 
                       scaleVector.x, 
@@ -38,12 +38,5 @@ void CloneModelOperator::process()
                           translationVector.x,
                           translationVector.y,
                           translationVector.z);
-    matrix = scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix * translationMatrix; 
-    /* globalWorldMatrixStack->TranslateLocal(translationVector.x, 
-                                               translationVector.y,
-                                               translationVector.z);
-        globalWorldMatrixStack->RotateAxisLocal(&Vec3(1.0f, 0.0f, 0.0f), rotationVector.x);
-        globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 1.0f, 0.0f), rotationVector.y);
-        globalWorldMatrixStack->RotateAxisLocal(&Vec3(0.0f, 0.0f, 1.0f), rotationVector.z);
-        globalWorldMatrixStack->ScaleLocal(scaleVector.x, scaleVector.y, scaleVector.z);*/
+    matrix = scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix * translationMatrix;
 }
