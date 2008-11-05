@@ -15,6 +15,9 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class TimelineChannels : UserControl
     {
+        private Point mouseMarkerLocation;
+        private Point mouseLocation;
+        private bool inMove = false;
         private int beat;
         private int channelPadding = 2;
         private Verkstan.Clip selectedClip = null;
@@ -29,6 +32,7 @@ namespace VerkstanEditor.Gui
             set
             {
                 beatWidth = value;
+                UpdateSize();
                 Refresh();
             }
             get
@@ -146,7 +150,9 @@ namespace VerkstanEditor.Gui
             int width = scene.Beats / Metronome.TicksPerBeat * beatWidth + 1;
             int height = scene.Channels.Count * (channelHeight + 2 * channelPadding) + 1;                     
             Height = height;
-            Width = width;
+            
+            if (Width < width)
+                Width = width;
 
             if (Parent == null)
                 return;
@@ -180,7 +186,11 @@ namespace VerkstanEditor.Gui
                 PaintChannelHighlights(e, i);
             PaintGrid(e);
             foreach (Verkstan.Channel channel in scene.Channels)
-                 PaintChannelClips(e, channel); 
+                 PaintChannelClips(e, channel);
+
+            if (inMove)
+                PaintMove(e);
+
             PaintBeatPosition(e);
         }
 
@@ -297,14 +307,17 @@ namespace VerkstanEditor.Gui
 
                 Color color = RGBHSL.ModifyBrightness(Color.FromArgb(70, 90, 150), brightness);
                 Color lightColor = RGBHSL.ModifyBrightness(color, 1.3);
+                Color notSoDarkColor = RGBHSL.ModifyBrightness(color, 0.9);
                 Color darkColor = RGBHSL.ModifyBrightness(color, 0.7);
                 Brush brush = new SolidBrush(color);
                 Pen lightPen = new Pen(lightColor);
                 Pen darkPen = new Pen(darkColor, 1);
+                Pen notSoDarkPen = new Pen(notSoDarkColor, 1);
                 Pen boundingPen = new Pen(Color.FromArgb(170, 170, 170));
 
                 e.Graphics.FillRectangle(brush, rect);
-                Bitmap preview = ClipPreviewCache.GetPreview(clip, beatWidth, channelHeight - 8);
+                e.Graphics.DrawLine(notSoDarkPen, rect.X, rect.Y + rect.Height / 2, rect.X + rect.Width - 2, rect.Y + rect.Height / 2);
+                Bitmap preview = ClipPreviewCache.GetPreview(clip, darkColor, beatWidth, channelHeight - 8);
                 e.Graphics.DrawImage(preview, rect.X, rect.Y + 4);
 
                 e.Graphics.DrawLine(lightPen,
@@ -336,6 +349,11 @@ namespace VerkstanEditor.Gui
             }
         }
 
+        private void PaintMove(PaintEventArgs e)
+        {
+            e.Graphics.DrawRectangle(Pens.White, GetMovingClipRectangle());
+        }
+
         private void PaintChannelHighlights(PaintEventArgs e, int index)
         {
             int y = channelHeight * index + index * 2 * channelPadding + channelPadding;
@@ -356,8 +374,7 @@ namespace VerkstanEditor.Gui
 
         private void Channels_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button != MouseButtons.Left)
-                return;
+            mouseMarkerLocation = e.Location;
 
             int index = e.Y / (channelHeight +  2 * channelPadding);
             if (index != SelectedChannelIndex)
@@ -366,31 +383,84 @@ namespace VerkstanEditor.Gui
                 OnChannelSelected(SelectedChannelIndex);
             }
 
-            bool selectedClipFound = false;
-            foreach (Verkstan.Channel channel in scene.Channels)
+            if (e.Button == MouseButtons.Left)
             {
-                foreach (Verkstan.Clip clip in channel.Clips)
+                selectedClip = null;
+                bool selectedClipFound = false;
+                foreach (Verkstan.Channel channel in scene.Channels)
                 {
-                    int i = scene.Channels.IndexOf(channel);
-                    int y = i * (channelHeight + channelPadding * 2) + channelPadding;
-
-                    int start = clip.Start / Metronome.TicksPerBeat;
-                    int end = clip.End / Metronome.TicksPerBeat;
-                    Rectangle rect = new Rectangle(start * beatWidth, y, end * beatWidth - start * beatWidth, channelHeight);
-               
-                    if (rect.Contains(e.X, e.Y))
+                    foreach (Verkstan.Clip clip in channel.Clips)
                     {
-                        selectedClip = clip;
-                        selectedClipFound = true;
-                        break;
+                        int i = scene.Channels.IndexOf(channel);
+                        int y = i * (channelHeight + channelPadding * 2) + channelPadding;
+
+                        int start = clip.Start / Metronome.TicksPerBeat;
+                        int end = clip.End / Metronome.TicksPerBeat;
+                        Rectangle rect = new Rectangle(start * beatWidth, y, end * beatWidth - start * beatWidth, channelHeight);
+
+                        if (rect.Contains(e.X, e.Y))
+                        {
+                            selectedClip = clip;
+                            selectedClipFound = true;
+                            break;
+                        }
                     }
+
+                    if (selectedClipFound)
+                        break;
                 }
 
-                if (selectedClipFound)
-                    break;
+                if (selectedClip != null)
+                    inMove = true;
             }
 
             Refresh();
         }
-    }
+
+        private void TimelineChannels_MouseMove(object sender, MouseEventArgs e)
+        {
+            mouseLocation = e.Location;
+
+            if (inMove)
+                Refresh();
+        }
+
+        private Rectangle GetMovingClipRectangle()
+        {
+            int index = mouseLocation.Y / (channelHeight +  2 * channelPadding);
+            
+            if (index < 0)
+                index = 0;
+            if (index > scene.Channels.Count - 1)
+                index = scene.Channels.Count - 1;
+
+            int x = selectedClip.Start / Metronome.TicksPerBeat * beatWidth - ((mouseLocation.X - mouseMarkerLocation.X) % beatWidth - (mouseLocation.X - mouseMarkerLocation.X));
+
+            if (x < 0)
+                x = 0;
+
+            int y = channelHeight * index + index * 2 * channelPadding + channelPadding;
+            int width = (selectedClip.End - selectedClip.Start) / Metronome.TicksPerBeat * beatWidth;
+            int height = channelHeight;
+            return new Rectangle(x, y, width, height);
+        }
+
+        private void TimelineChannels_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (inMove)
+            {
+                inMove = false;
+                Rectangle rect = GetMovingClipRectangle();
+                scene.Channels[selectedChannelIndex].RemoveClip(selectedClip);
+                int index = mouseLocation.Y / (channelHeight +  2 * channelPadding);
+                scene.Channels[index].AddClip(selectedClip);
+                selectedClip.Start = rect.X / beatWidth * Metronome.TicksPerBeat;
+                selectedClip.End = selectedClip.Start + rect.Width / beatWidth * Metronome.TicksPerBeat;
+                scene.UpdateRealClips();
+                Metronome.Beats = scene.Beats;
+                UpdateSize();
+                Refresh();
+            }
+        }
+   }
 }

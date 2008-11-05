@@ -23,6 +23,7 @@ namespace VerkstanEditor.Gui
             Metronome.Beats = scene.Beats;
             Metronome.LoopStart = 0;
             Metronome.LoopEnd = scene.Beats;
+            numericUpDown1.Value = timelineChannels1.BeatWidth;
         }
 
         private void timelineChannels1_Resize(object sender, EventArgs e)
@@ -106,6 +107,12 @@ namespace VerkstanEditor.Gui
         private void splitPositionAndChannels_Panel2_Resize(object sender, EventArgs e)
         {
             UpdateScrollBars();
+        }
+
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            timelineChannels1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
+            beatPositionLine1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
         }
     }
 }

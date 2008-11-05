@@ -8,7 +8,7 @@ namespace VerkstanEditor.Logic
 {
     class ClipPreviewCache
     {
-        public static Bitmap GetPreview(Verkstan.Clip clip, int beatWidth, int height)
+        public static Bitmap GetPreview(Verkstan.Clip clip, Color color, int beatWidth, int height)
         {
             int width = (clip.End - clip.Start) / Metronome.TicksPerBeat * beatWidth;
             Bitmap preview = new Bitmap(width, height);
@@ -20,18 +20,17 @@ namespace VerkstanEditor.Logic
             float v = clip.GetValue(0);
             int lastX = 0;
             int lastY = (int)(middle -  v * middle);
-            preview.SetPixel(lastX, lastY, Color.Black);
-
+            Pen p = new Pen(color);
             for (int x = 1; x < width; x++)
             {
                 int beat = (int)((x / (float)width) * clipLength);
                 float value = clip.GetValue(beat);
                 int y = (int)(middle - value * middle);
-                g.DrawLine(Pens.Black, lastX, lastY, x, y);
-                preview.SetPixel(x, y, Color.Black);
+                g.DrawLine(p, lastX, lastY, x, y);
                 lastX = x;
                 lastY = y;
             }
+            p.Dispose();
             
             return preview;
         }

@@ -41,6 +41,7 @@
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -59,8 +60,10 @@
             this.splitPositionAndChannels.SuspendLayout();
             this.splitContainer7.Panel1.SuspendLayout();
             this.splitContainer7.SuspendLayout();
+            this.splitContainer8.Panel1.SuspendLayout();
             this.splitContainer8.Panel2.SuspendLayout();
             this.splitContainer8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -285,6 +288,7 @@
             // splitContainer8.Panel1
             // 
             this.splitContainer8.Panel1.BackColor = System.Drawing.SystemColors.Control;
+            this.splitContainer8.Panel1.Controls.Add(this.numericUpDown1);
             // 
             // splitContainer8.Panel2
             // 
@@ -303,6 +307,25 @@
             this.hScrollBar1.Size = new System.Drawing.Size(709, 16);
             this.hScrollBar1.TabIndex = 0;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.numericUpDown1.Location = new System.Drawing.Point(0, -4);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(132, 20);
+            this.numericUpDown1.TabIndex = 0;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // Timeline
             // 
@@ -330,8 +353,10 @@
             this.splitPositionAndChannels.ResumeLayout(false);
             this.splitContainer7.Panel1.ResumeLayout(false);
             this.splitContainer7.ResumeLayout(false);
+            this.splitContainer8.Panel1.ResumeLayout(false);
             this.splitContainer8.Panel2.ResumeLayout(false);
             this.splitContainer8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -351,5 +376,6 @@
         private BeatPositionLine beatPositionLine1;
         private TimelineChannels timelineChannels1;
         private TimelineChannelInfos timelineChannelInfos1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
     }
 }

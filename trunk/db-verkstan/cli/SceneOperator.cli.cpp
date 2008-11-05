@@ -15,7 +15,7 @@ namespace Verkstan
                        inputs)
     {
         channels = gcnew List<Channel^>();
-        getOperator()->beats = 0;
+        getOperator()->beats = DB_TICKS_PER_BEAT;
     }
 
     void SceneOperator::AddChannel(Channel^ channel)
@@ -45,7 +45,7 @@ namespace Verkstan
             getOperator()->operatorClips[i] = -1;
 
         int numberOfClips = 0;
-        int beats = 0;
+        int beats = DB_TICKS_PER_BEAT;
         for (int i = 0; i < channels->Count; i++)
         {
             int clipsCount = channels[i]->Clips->Count;

@@ -30,17 +30,19 @@
         {
             this.SuspendLayout();
             // 
-            // Channels
+            // TimelineChannels
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
-            this.Name = "Channels";
+            this.Name = "TimelineChannels";
             this.Size = new System.Drawing.Size(736, 368);
             this.Load += new System.EventHandler(this.Channels_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Channels_Paint);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseMove);
             this.ParentChanged += new System.EventHandler(this.Channels_ParentChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Channels_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseUp);
             this.ResumeLayout(false);
 
         }
