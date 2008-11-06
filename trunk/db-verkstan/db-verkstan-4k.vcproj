@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="db.Verkstan.64k"
-	ProjectGUID="{8C846DFE-D02E-49C2-966C-7EDC2B65AB65}"
+	Name="db.Verkstan.4k"
+	ProjectGUID="{57854C75-D3AB-4291-81C0-E0E32132DD62}"
 	RootNamespace="dbverkstanengine"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
@@ -281,38 +281,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\cylinderoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\cylinderoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\extrudeoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\extrudeoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\flatoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\flatoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\icosahedronoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\icosahedronoperator.hpp"
-					>
-				</File>
-				<File
 					RelativePath=".\core\operators\lightoperator.cpp"
 					>
 				</File>
@@ -337,91 +305,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\pixelsoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\pixelsoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\randomselectionoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\randomselectionoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\rectangleoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\rectangleoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\relaxoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\relaxoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\rotozoomoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\rotozoomoperator.hpp"
-					>
-				</File>
-				<File
 					RelativePath=".\core\operators\sceneoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\sceneoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sphereoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sphereoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\subdivideoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\subdivideoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\textoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\textoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\texturemappingoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\texturemappingoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\torusoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\torusoperator.hpp"
 					>
 				</File>
 				<File
