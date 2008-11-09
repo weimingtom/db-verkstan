@@ -160,7 +160,6 @@
     <Compile Include="Logic\OperatorFactory.cs" />
     <Compile Include="Logic\OperatorJoint.cs" />
     <Compile Include="Logic\OperatorPage.cs" />
-    <Compile Include="Logic\Operators.cs" />
     <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
