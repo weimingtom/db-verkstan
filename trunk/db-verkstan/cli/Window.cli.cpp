@@ -7,7 +7,7 @@
 
 #include "cli/Constants.hpp"
 #include "cli/Operator.hpp"
-#include "cli/internal/Renderer.hpp"
+#include "cli/Renderer.hpp"
 
 namespace Verkstan
 {
@@ -140,15 +140,14 @@ namespace Verkstan
         }
     }
 
-    Operator^ Window::ViewedOperator::get()
+    CoreOperator^ Window::ViewedOperator::get()
     {
         return viewedOperator;
     }
 
-    void Window::ViewedOperator::set(Operator^ op)
+    void Window::ViewedOperator::set(CoreOperator^ op)
     {
         viewedOperator = op;
-        renderer->ResetCamera();
     }
 
     int Window::ClearColor::get()
@@ -174,5 +173,10 @@ namespace Verkstan
     void Window::MouseUp(int button, int x, int y)
     {
         renderer->MouseUp(button, x, y);
+    }
+
+    void Window::ResetCamera()
+    {
+        renderer->ResetCamera();
     }
 }

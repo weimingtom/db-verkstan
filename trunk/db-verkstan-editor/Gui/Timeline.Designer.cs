@@ -141,7 +141,6 @@
             this.timelineChannelInfos1.Location = new System.Drawing.Point(0, 0);
             this.timelineChannelInfos1.Margin = new System.Windows.Forms.Padding(0);
             this.timelineChannelInfos1.Name = "timelineChannelInfos1";
-            this.timelineChannelInfos1.Scene = null;
             this.timelineChannelInfos1.SelectedChannel = 0;
             this.timelineChannelInfos1.Size = new System.Drawing.Size(133, 0);
             this.timelineChannelInfos1.TabIndex = 0;
@@ -242,7 +241,6 @@
             this.timelineChannels1.Location = new System.Drawing.Point(0, 0);
             this.timelineChannels1.Margin = new System.Windows.Forms.Padding(0);
             this.timelineChannels1.Name = "timelineChannels1";
-            this.timelineChannels1.Scene = null;
             this.timelineChannels1.SelectedChannelIndex = 0;
             this.timelineChannels1.Size = new System.Drawing.Size(0, 0);
             this.timelineChannels1.TabIndex = 0;

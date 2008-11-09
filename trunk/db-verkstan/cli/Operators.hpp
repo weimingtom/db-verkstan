@@ -54,10 +54,6 @@ namespace Verkstan
 }
 #endif
 
-#ifdef SPECIAL_OPERATOR_HEADERS
-#include "cli/SceneOperator.hpp"
-#endif
-
 #ifdef OPERATOR_CATEGORY_DEFINES
 ADD_OP_TO_CAT("Pixels",          "Texture");
 ADD_OP_TO_CAT("Flat",            "Texture");
@@ -244,8 +240,8 @@ ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Scene);
 END_OP();
 
-DEF_SPECIAL_OP("Scene", SceneOperator, Scene, SceneOperator);
+DEF_OP("Scene", SceneOperator, Scene);
 ADD_INFINITE_INPUT(Unspecified);
-END_SPECIAL_OP();
+END_OP();
 
 #endif

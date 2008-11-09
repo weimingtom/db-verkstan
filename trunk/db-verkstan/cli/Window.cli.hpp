@@ -2,7 +2,7 @@
 
 namespace Verkstan 
 {
-    ref class Operator;
+    ref class CoreOperator;
     ref class Renderer;
     
 	public ref class Window
@@ -10,10 +10,10 @@ namespace Verkstan
     public:
         Window();
         
-        property Operator^ ViewedOperator
+        property CoreOperator^ ViewedOperator
         {
-            Operator^ get();
-            void set(Operator^ viewedOperator);
+            CoreOperator^ get();
+            void set(CoreOperator^ viewedOperator);
         }
         property int ClearColor
         {
@@ -28,10 +28,11 @@ namespace Verkstan
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);
         void MouseUp(int button, int x, int y);
+        void ResetCamera();
 
     private:
         void Reset();
-        Operator^ viewedOperator;
+        CoreOperator^ viewedOperator;
         bool resetDevice;
         Renderer^ renderer;
 	};

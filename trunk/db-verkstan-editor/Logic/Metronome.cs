@@ -22,7 +22,7 @@ namespace VerkstanEditor.Logic
             if (BeatChangedSlowUpdate != null)
                 BeatChangedSlowUpdate(beat);
         }
-
+        /*
         public static int Beat
         {
             set
@@ -120,5 +120,6 @@ namespace VerkstanEditor.Logic
         {
             Verkstan.Metronome.Pause();
         }
+         */
     }
 }

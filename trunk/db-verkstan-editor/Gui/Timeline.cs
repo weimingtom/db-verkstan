@@ -12,17 +12,17 @@ namespace VerkstanEditor.Gui
 {
     public partial class Timeline : UserControl
     {
-        private Verkstan.SceneOperator scene;
+        //private Verkstan.SceneOperator scene;
         public Timeline()
         {
             InitializeComponent();
             this.MouseWheel += new MouseEventHandler(Timeline_MouseWheel);
             timelineChannels1.ChannelSelected += new TimelineChannels.ChannelSelectedHandler(this.timelineChannels1_ChannelSelected);
-            scene = (Verkstan.SceneOperator)Verkstan.OperatorFactory.Create("Scene");
-            timelineChannels1.Scene = scene;
-            Metronome.Beats = scene.Beats;
-            Metronome.LoopStart = 0;
-            Metronome.LoopEnd = scene.Beats;
+          //  scene = (Verkstan.SceneOperator)Verkstan.OperatorFactory.Create("Scene");
+          //  timelineChannels1.Scene = scene;
+           // Metronome.Beats = scene.Beats;
+           // Metronome.LoopStart = 0;
+           // Metronome.LoopEnd = scene.Beats;
             numericUpDown1.Value = timelineChannels1.BeatWidth;
         }
 

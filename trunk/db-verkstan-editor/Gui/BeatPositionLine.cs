@@ -47,6 +47,7 @@ namespace VerkstanEditor.Gui
 
         public void BeatPositionLine_BeatChangedSlowUpdate(int beat)
         {
+            /*
             int oldBeatInPixels = (int)(beatWidth * (this.beat / (float)Metronome.TicksPerBeat));
             int newBeatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
             this.beat = beat;
@@ -66,10 +67,12 @@ namespace VerkstanEditor.Gui
 
             Invalidate(new Rectangle(x, 0, width, Size.Height), false);
             Update();
+             */
         }
 
         private void BeatPositionLine_Paint(object sender, PaintEventArgs e)
         {
+            /*
             Brush b = new SolidBrush(ForeColor);
             Pen p = new Pen(Color.FromArgb(100, 100, 100), 1);
             int beats = Width / beatWidth + 1;
@@ -111,10 +114,12 @@ namespace VerkstanEditor.Gui
 
             e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X, 0, loopEndRectangle.X, Height);
             e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X + 1, 0, loopEndRectangle.X + 1, Height);
+            */     
         }
 
         private void BeatPositionLine_MouseDown(object sender, MouseEventArgs e)
         {
+            /*
             if (e.Button == MouseButtons.Right)
             {
                 loopMarker = e.X;
@@ -125,18 +130,22 @@ namespace VerkstanEditor.Gui
                 Metronome.Beat = e.X / beatWidth * Metronome.TicksPerBeat;
                 dragBeat = true;
             }
+             */
         }
 
         private void BeatPositionLine_MouseMove(object sender, MouseEventArgs e)
         {
+            /*
             if (!dragBeat)
                 return;
 
             Metronome.Beat = e.X / beatWidth * Metronome.TicksPerBeat;
+             * */
         }
 
         private void BeatPositionLine_MouseUp(object sender, MouseEventArgs e)
         {
+            /*
             dragBeat = false;
 
             if (changeLoop)
@@ -165,6 +174,7 @@ namespace VerkstanEditor.Gui
                 Metronome.LoopEnd = end;
                 Refresh();
             }
+             * */
         }
     }
 }

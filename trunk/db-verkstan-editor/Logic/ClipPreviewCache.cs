@@ -8,8 +8,10 @@ namespace VerkstanEditor.Logic
 {
     class ClipPreviewCache
     {
+           /*
+        
         public static Bitmap GetPreview(Verkstan.Clip clip, Color color, int beatWidth, int height)
-        {
+        {         
             int width = (clip.End - clip.Start) / Metronome.TicksPerBeat * beatWidth;
             Bitmap preview = new Bitmap(width, height);
             Graphics g = Graphics.FromImage(preview);
@@ -33,6 +35,8 @@ namespace VerkstanEditor.Logic
             p.Dispose();
             
             return preview;
+             
         }
+    */
     }
 }

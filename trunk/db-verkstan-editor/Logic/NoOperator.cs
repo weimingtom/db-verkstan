@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VerkstanEditor
+namespace VerkstanEditor.Logic
 {
-    class Scenes
+    class NoOperator
     {
     }
 }

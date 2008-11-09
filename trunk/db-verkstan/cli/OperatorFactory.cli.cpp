@@ -2,18 +2,10 @@
 #include "cli/Operators.hpp"
 #undef OPERATOR_HEADERS
 
-#define SPECIAL_OPERATOR_HEADERS 1
-#include "cli/Operators.hpp"
-#undef SPECIAL_OPERATOR_HEADERS
-
 #include "cli/OperatorFactory.hpp"
 #include "cli/Operator.hpp"
-#include "cli/CoreOperator.hpp"
-#include "cli/LoadOperator.hpp"
-#include "cli/StoreOperator.hpp"
-#include "cli/Clip.hpp"
-#include "cli/Channel.hpp"
-#include "cli/GeneratorClip.hpp"
+#include "cli/Color.hpp"
+#include "cli/Vector.hpp"
 
 namespace Verkstan
 {
@@ -22,7 +14,7 @@ if (!categories->ContainsKey(category)) \
     categories[category] = gcnew List<String^>(); \
 categories[category]->Add(name);
 
-    void OperatorFactory::CreateCategories()
+    void CoreOperatorFactory::CreateCategories()
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
@@ -39,7 +31,7 @@ categories[category]->Add(name);
             categories["Misc"]->Add("Load");
     }
 
-    ICollection<String^>^ OperatorFactory::GetCategories()
+    ICollection<String^>^ CoreOperatorFactory::GetCategories()
     {
         if (!categories)
             CreateCategories();
@@ -47,7 +39,7 @@ categories[category]->Add(name);
         return categories->Keys;
     }
 
-    ICollection<String^>^ OperatorFactory::GetNamesInCategory(String^ category)
+    ICollection<String^>^ CoreOperatorFactory::GetNamesInCategory(String^ category)
     {
         if (!categories)
             CreateCategories();
@@ -72,30 +64,9 @@ categories[category]->Add(name);
                 break;                              \
             }                                       \
         }                                           \
-        List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
-        op = gcnew CoreOperator(opName,  \
-                                id,      \
-                                Constants::OperatorTypes::##opType,   \
-                                inputs);
-#define DEF_SPECIAL_OP(opName, opClass, opType, cliClass)\
-    if (typeName == opName)                         \
-    {                                               \
-        Core::Operator* o = new Core::opClass##();  \
-        int id;                                     \
-        for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
-        {                                           \
-        if (Core::operators[i] == 0)                \
-            {                                       \
-            Core::operators[i] = o;                 \
-                id = i;                             \
-                break;                              \
-            }                                       \
-        }                                           \
-        List<OperatorInput^>^ inputs = gcnew List<OperatorInput^>();\
-        op = gcnew cliClass##(opName,  \
-                              id,      \
-                              Constants::OperatorTypes::##opType,   \
-                              inputs); 
+        op = gcnew CoreOperator(opName,             \
+                                id,                 \
+                                Constants::OperatorTypes::##opType);
 #define ADD_BYTE_PROP(name, value) \
     op->AddProperty(name, Constants::OperatorPropertyTypes::Byte);  \
     op->SetByteProperty(op->Properties->Count - 1, value);
@@ -136,27 +107,21 @@ categories[category]->Add(name);
     }\
     op->SetByteProperty(op->Properties->Count - 1, defaultValue);
 #define ADD_INPUT(inType) \
-    if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
-        throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
-    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false, false));
+    op->AddInput(Constants::OperatorTypes::##inType, false, false);
 #define ADD_INFINITE_INPUT(inType) \
-    if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
-        throw gcnew System::Exception("Unable to add an input because last added input was infinite!"); \
-    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, true, false));
+    op->AddInput(Constants::OperatorTypes::##inType, true, false);
 #define ADD_OPTIONAL_INPUT(inType) \
-    if (inputs->Count > 0 && inputs[inputs->Count - 1]->Infinite) \
-        throw gcnew System::Exception("Unable to add an optional input because last added input was infinite!"); \
-    inputs->Add(gcnew OperatorInput(inputs->Count, Constants::OperatorTypes::##inType, false, true));
+    op->AddInput(Constants::OperatorTypes::##inType, false, true);
 #define END_OP() }
-#define END_SPECIAL_OP() }
 
-    Operator^ OperatorFactory::Create(String^ typeName)
+    CoreOperator^ CoreOperatorFactory::Create(String^ typeName)
     {
-        Operator^ op;
+        CoreOperator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Operators.hpp"
 #undef OPERATOR_DEFINES
 
+        /*
         if (typeName == "Store")
         {
             op = gcnew StoreOperator();
@@ -225,6 +190,7 @@ categories[category]->Add(name);
             c6->Type = Constants::GeneratorClipTypes::RampUp;
             channel6->AddClip(c6);
         }
+        */
    
         return op;
      }

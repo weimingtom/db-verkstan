@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class OperatorPage
+    partial class OperatorPageView
     {
         /// <summary> 
         /// Required designer variable.
@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
-            this.operatorPagePanel1 = new VerkstanEditor.Gui.OperatorPagePanel();
+            this.operatorPageViewPanel1 = new VerkstanEditor.Gui.OperatorPageViewPanel();
             this.SuspendLayout();
             // 
             // hScrollBar1
@@ -56,24 +56,29 @@
             this.vScrollBar1.Layout += new System.Windows.Forms.LayoutEventHandler(this.vScrollBar1_Layout);
             this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
-            // operatorPagePanel1
+            // operatorPageViewPanel1
             // 
-            this.operatorPagePanel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.operatorPagePanel1.Location = new System.Drawing.Point(0, 0);
-            this.operatorPagePanel1.Name = "operatorPagePanel1";
-            this.operatorPagePanel1.Size = new System.Drawing.Size(150, 150);
-            this.operatorPagePanel1.TabIndex = 2;
-            this.operatorPagePanel1.Resize += new System.EventHandler(this.operatorPagePanel1_Resize);
+            this.operatorPageViewPanel1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.operatorPageViewPanel1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPageViewPanel1.Name = "operatorPageViewPanel1";
+            this.operatorPageViewPanel1.Page = null;
+            this.operatorPageViewPanel1.Size = new System.Drawing.Size(150, 150);
+            this.operatorPageViewPanel1.TabIndex = 2;
+            this.operatorPageViewPanel1.ViewedOperator = null;
+            this.operatorPageViewPanel1.ViewedOperatorProperties = null;
+            this.operatorPageViewPanel1.ViewedOperatorPropertiesChanged += new System.EventHandler(this.operatorPageViewPanel1_ViewedOperatorPropertiesChanged);
+            this.operatorPageViewPanel1.Resize += new System.EventHandler(this.operatorPagePanel1_Resize);
+            this.operatorPageViewPanel1.ViewedOperatorChanged += new System.EventHandler(this.operatorPageViewPanel1_ViewedOperatorChanged);
             // 
-            // OperatorPage
+            // OperatorPageView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Controls.Add(this.vScrollBar1);
             this.Controls.Add(this.hScrollBar1);
-            this.Controls.Add(this.operatorPagePanel1);
-            this.Name = "OperatorPage";
+            this.Controls.Add(this.operatorPageViewPanel1);
+            this.Name = "OperatorPageView";
             this.Size = new System.Drawing.Size(246, 275);
             this.Resize += new System.EventHandler(this.OperatorPage_Resize);
             this.ResumeLayout(false);
@@ -84,6 +89,6 @@
 
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.VScrollBar vScrollBar1;
-        private OperatorPagePanel operatorPagePanel1;
+        private OperatorPageViewPanel operatorPageViewPanel1;
     }
 }

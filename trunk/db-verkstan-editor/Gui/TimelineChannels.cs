@@ -20,7 +20,7 @@ namespace VerkstanEditor.Gui
         private bool inMove = false;
         private int beat;
         private int channelPadding = 2;
-        private Verkstan.Clip selectedClip = null;
+       // private Verkstan.Clip selectedClip = null;
       
         [Browsable(true)]
         [Description("The width of a beat in pixels.")]
@@ -75,6 +75,7 @@ namespace VerkstanEditor.Gui
             }
         }
 
+        /*
         private Verkstan.SceneOperator scene;
         public Verkstan.SceneOperator Scene
         {
@@ -91,7 +92,7 @@ namespace VerkstanEditor.Gui
                 Refresh();
             }
         }
-
+        */
         public TimelineChannels()
         {
             InitializeComponent();
@@ -117,6 +118,7 @@ namespace VerkstanEditor.Gui
 
         public void Channels_BeatChangedSlowUpdate(int beat)
         {
+            /*
             int oldBeatInPixels = (int)(beatWidth * (this.beat / (float)Metronome.TicksPerBeat));
             int newBeatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
             this.beat = beat;
@@ -136,10 +138,12 @@ namespace VerkstanEditor.Gui
    
             Invalidate(new Rectangle(x, 0, width, Size.Height), false);
             Update();
+             */
         }
 
         private void UpdateSize()
         {
+            /*
             if (scene == null)
             {
                 Width = 0;
@@ -159,6 +163,7 @@ namespace VerkstanEditor.Gui
 
             if (Parent.ClientRectangle.Width > Width)
                 Width = Parent.ClientRectangle.Width;
+             */
         }
 
         private void Channels_Load(object sender, EventArgs e)
@@ -179,6 +184,7 @@ namespace VerkstanEditor.Gui
         
         private void Channels_Paint(object sender, PaintEventArgs e)
         {
+            /*
             if (scene == null)
                 return;
 
@@ -192,10 +198,12 @@ namespace VerkstanEditor.Gui
                 PaintMove(e);
 
             PaintBeatPosition(e);
+             * */
         }
 
         private void PaintBeatPosition(PaintEventArgs e)
         {
+            /*
             int beatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
 
             Rectangle rect = new Rectangle(beatInPixels, 0, 1, Height);
@@ -207,6 +215,7 @@ namespace VerkstanEditor.Gui
             Pen p = new Pen(Color.FromArgb(255, 0, 0), 1);
             e.Graphics.DrawLine(p, rect.X, rect.Y, rect.X, rect.Y + rect.Height);
             p.Dispose();
+             */
         }
 
         private void PaintGrid(PaintEventArgs e)
@@ -286,8 +295,10 @@ namespace VerkstanEditor.Gui
             b.Dispose();
         }
 
+        /*
         private void PaintChannelClips(PaintEventArgs e, Verkstan.Channel channel)
         {
+            
             int index = scene.Channels.IndexOf(channel);
             int y =  index * (channelHeight + channelPadding * 2) + channelPadding;
 
@@ -347,7 +358,9 @@ namespace VerkstanEditor.Gui
                                    rect.Y + rect.Height - 1);
                 e.Graphics.DrawRectangle(boundingPen, rect.X, rect.Y, rect.Width - 1, rect.Height);
             }
+             
         }
+         * */
 
         private void PaintMove(PaintEventArgs e)
         {
@@ -374,6 +387,7 @@ namespace VerkstanEditor.Gui
 
         private void Channels_MouseDown(object sender, MouseEventArgs e)
         {
+            /*
             mouseMarkerLocation = e.Location;
 
             int index = e.Y / (channelHeight +  2 * channelPadding);
@@ -415,6 +429,7 @@ namespace VerkstanEditor.Gui
             }
 
             Refresh();
+             */
         }
 
         private void TimelineChannels_MouseMove(object sender, MouseEventArgs e)
@@ -427,6 +442,8 @@ namespace VerkstanEditor.Gui
 
         private Rectangle GetMovingClipRectangle()
         {
+            return new Rectangle();
+            /*
             int index = mouseLocation.Y / (channelHeight +  2 * channelPadding);
             
             if (index < 0)
@@ -443,10 +460,12 @@ namespace VerkstanEditor.Gui
             int width = (selectedClip.End - selectedClip.Start) / Metronome.TicksPerBeat * beatWidth;
             int height = channelHeight;
             return new Rectangle(x, y, width, height);
+             */
         }
 
         private void TimelineChannels_MouseUp(object sender, MouseEventArgs e)
         {
+            /*
             if (inMove)
             {
                 inMove = false;
@@ -461,6 +480,9 @@ namespace VerkstanEditor.Gui
                 UpdateSize();
                 Refresh();
             }
+             */
+            
         }
+        
    }
 }

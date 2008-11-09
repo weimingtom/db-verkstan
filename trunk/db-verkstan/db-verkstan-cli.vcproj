@@ -186,19 +186,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Channel.cli.cpp"
+				RelativePath=".\cli\Camera.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Channel.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Clip.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Clip.hpp"
+				RelativePath=".\cli\Camera.hpp"
 				>
 			</File>
 			<File
@@ -210,55 +202,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Connector.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Connector.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Constants.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\CoreOperator.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\CoreOperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Exporter.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Exporter.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\GeneratorClip.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\GeneratorClip.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\LoadOperator.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\LoadOperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Metronome.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Metronome.hpp"
+				RelativePath=".\cli\Core.hpp"
 				>
 			</File>
 			<File
@@ -278,6 +222,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\OperatorInput.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\OperatorInput.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\OperatorProperty.cpp"
 				>
 			</File>
@@ -290,27 +242,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\SceneOperator.cli.cpp"
+				RelativePath=".\cli\Renderer.cli.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\cli\SceneOperator.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\SplineClip.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\SplineClip.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\StoreOperator.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\StoreOperator.hpp"
+				RelativePath=".\cli\Renderer.hpp"
 				>
 			</File>
 			<File
@@ -329,46 +265,6 @@
 				RelativePath=".\cli\Window.cli.hpp"
 				>
 			</File>
-			<Filter
-				Name="internal"
-				>
-				<File
-					RelativePath=".\cli\Internal\Camera.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Camera.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Joint.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Joint.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Joints.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Joints.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Renderer.cli.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\Renderer.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\cli\Internal\VerkstanCore.hpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="core"

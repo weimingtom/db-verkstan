@@ -10,17 +10,22 @@ using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
-    public partial class mainForm : Form
+    public partial class MainForm : Form
     {
-        Verkstan.Window verkstanWindow;
+        #region Private Variables
+        private Verkstan.Window verkstanWindow;
+        private OperatorPage page;
+        private Operator viewedOperator;
+        #endregion
 
-        public mainForm()
+        #region Constructor
+        public MainForm()
         {
             InitializeComponent();
             verkstanWindow = new Verkstan.Window();
             verkstanWindow.ClearColor = Color.DarkCyan.ToArgb();
-            Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.Operators_ViewedOperatorChanged); 
-            Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.Operators_ViewedOperatorPropertiesChanged);
+           // Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.Operators_ViewedOperatorChanged); 
+           // Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.Operators_ViewedOperatorPropertiesChanged);
 
             unsafe
             {
@@ -29,38 +34,44 @@ namespace VerkstanEditor.Gui
 
             fastRenderTimer.Enabled = true;
             slowRenderTimer.Enabled = true;
+
+            page = new OperatorPage();
+            operatorPageView1.Page = page;
         }
+        #endregion
 
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-
+        #region Event Handlers
         private void FastRenderTimer_Tick(object sender, EventArgs e)
         {
-            verkstanWindow.Render();
-            Metronome.OnBeatChangedFastUpdate(Metronome.Beat);
-        }
+            if (viewedOperator != null && viewedOperator.IsProcessable)
+                verkstanWindow.ViewedOperator = viewedOperator.BindedCoreOperator;
 
+            if (viewedOperator == null || !viewedOperator.IsProcessable)
+                verkstanWindow.ViewedOperator = null;
+
+            verkstanWindow.Render();
+           
+            /*
+           Metronome.OnBeatChangedFastUpdate(Metronome.Beat);
+            */
+        }
         private void PreviewPanel_SizeChanged(object sender, EventArgs e)
         {
             if (verkstanWindow != null)
                 verkstanWindow.Resize();
         }
-
         private void Operators_ViewedOperatorPropertiesChanged(Operator op)
         {
             operatorPropertyGrid.Operator = op;
         }
-
         private void Operators_ViewedOperatorChanged(Operator op)
         {
+            /*
             if (op == null)
                 verkstanWindow.ViewedOperator = null;
             else
-                verkstanWindow.ViewedOperator = op.Binding;
+                verkstanWindow.ViewedOperator = op.Binding;*/
         }
-
         private void previewPanel_MouseDown(object sender, MouseEventArgs e)
         {
             int button = 0;
@@ -74,7 +85,6 @@ namespace VerkstanEditor.Gui
 
             verkstanWindow.MouseDown(button, e.X, e.Y);
         }
-
         private void previewPanel_MouseUp(object sender, MouseEventArgs e)
         {
             int button = 0;
@@ -88,15 +98,22 @@ namespace VerkstanEditor.Gui
 
             verkstanWindow.MouseUp(button, e.X, e.Y);
         }
-
         private void previewPanel_MouseMove(object sender, MouseEventArgs e)
         {
             verkstanWindow.MouseMove(e.X, e.Y);
         }
-
         private void slowRenderTimer_Tick(object sender, EventArgs e)
         {
-            Metronome.OnBeatChangedSlowUpdate(Metronome.Beat);
+            //Metronome.OnBeatChangedSlowUpdate(Metronome.Beat);
         }
+        private void operatorPageView1_ViewedOperatorChanged(object sender, EventArgs e)
+        {
+            viewedOperator = operatorPageView1.ViewedOperator;
+        }
+        private void operatorPageView1_ViewedOperatorPropertiesChanged(object sender, EventArgs e)
+        {
+            operatorPropertyGrid.Operator = operatorPageView1.ViewedOperatorProperties;
+        }
+        #endregion
     }
 }

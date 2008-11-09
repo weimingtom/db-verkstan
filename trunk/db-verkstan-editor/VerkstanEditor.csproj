@@ -104,17 +104,17 @@
     <Compile Include="Gui\MiniTimeline.Designer.cs">
       <DependentUpon>MiniTimeline.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\OperatorPagePanel.cs">
+    <Compile Include="Gui\OperatorPageViewPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\OperatorPagePanel.Designer.cs">
-      <DependentUpon>OperatorPagePanel.cs</DependentUpon>
+    <Compile Include="Gui\OperatorPageViewPanel.Designer.cs">
+      <DependentUpon>OperatorPageViewPanel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\OperatorPage.cs">
+    <Compile Include="Gui\OperatorPageView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\OperatorPage.Designer.cs">
-      <DependentUpon>OperatorPage.cs</DependentUpon>
+    <Compile Include="Gui\OperatorPageView.Designer.cs">
+      <DependentUpon>OperatorPageView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\OperatorPropertyAnimationSettings.cs">
       <SubType>UserControl</SubType>
@@ -153,7 +153,13 @@
       <DependentUpon>VectorProperty.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\ClipPreviewCache.cs" />
+    <Compile Include="Logic\CoreOperator.cs" />
+    <Compile Include="Logic\LoadOperator.cs" />
+    <Compile Include="Logic\NoOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
+    <Compile Include="Logic\OperatorFactory.cs" />
+    <Compile Include="Logic\OperatorJoint.cs" />
+    <Compile Include="Logic\OperatorPage.cs" />
     <Compile Include="Logic\Operators.cs" />
     <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>
@@ -162,6 +168,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Metronome.cs" />
+    <Compile Include="Logic\StoreOperator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\ColorProperty.resx">
@@ -195,7 +202,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Logic\Scenes.cs" />
     <Compile Include="Util\RGBHSL.cs" />
     <Compile Include="Util\Sound.cs" />
   </ItemGroup>
@@ -253,14 +259,14 @@
     <EmbeddedResource Include="Gui\MiniTimeline.resx">
       <DependentUpon>MiniTimeline.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OperatorPagePanel.resx">
-      <DependentUpon>OperatorPagePanel.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\OperatorPageViewPanel.resx">
+      <DependentUpon>OperatorPageViewPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\BeatPositionLine.resx">
       <DependentUpon>BeatPositionLine.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\OperatorPage.resx">
-      <DependentUpon>OperatorPage.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\OperatorPageView.resx">
+      <DependentUpon>OperatorPageView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPropertyAnimationSettings.resx">
       <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>

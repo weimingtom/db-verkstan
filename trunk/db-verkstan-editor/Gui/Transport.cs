@@ -20,7 +20,7 @@ namespace VerkstanEditor.Gui
         public Transport()
         {
             InitializeComponent();
-            this.bpm.Value = Metronome.BPM;
+          //  this.bpm.Value = Metronome.BPM;
             this.beatsOrTime.Text = "Beats";
             UpdateClock();
             Metronome.BeatChangedFastUpdate += new Metronome.BeatChangedHandler(this.Transport_BeatChangedFastUpdate);
@@ -34,6 +34,7 @@ namespace VerkstanEditor.Gui
 
         private void UpdateClock()
         {
+            /*
             if (showClockAsBeats)
             {
                 float bf = this.beat / (float)Metronome.TicksPerBeat;
@@ -44,33 +45,34 @@ namespace VerkstanEditor.Gui
                 TimeSpan ts = TimeSpan.FromMilliseconds(Metronome.Milliseconds);
                 this.time.Text = String.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, (int)(ts.Milliseconds / 10.0f));
             }
+             * */
         }
 
         private void play_Click(object sender, EventArgs e)
         {
-            Metronome.Loop = false;
-            Metronome.Start();
+           // Metronome.Loop = false;
+           // Metronome.Start();
         }
 
         private void stop_Click(object sender, EventArgs e)
         {
-            Metronome.Pause();
-            Metronome.Beat = 0;
+           // Metronome.Pause();
+           // Metronome.Beat = 0;
         }
 
         private void start_Click(object sender, EventArgs e)
         {
-            Metronome.Beat = 0;
+           // Metronome.Beat = 0;
         }
 
         private void pause_Click(object sender, EventArgs e)
         {
-            Metronome.Pause();
+           // Metronome.Pause();
         }
 
         private void bpm_ValueChanged(object sender, EventArgs e)
         {
-            Metronome.BPM = Convert.ToInt32(this.bpm.Value);
+            //Metronome.BPM = Convert.ToInt32(this.bpm.Value);
         }
 
         private void beatsOrTime_SelectedValueChanged(object sender, EventArgs e)
@@ -104,8 +106,8 @@ namespace VerkstanEditor.Gui
 
         private void loopPlay_Click(object sender, EventArgs e)
         {
-            Metronome.Loop = true;
-            Metronome.Start();
+           // Metronome.Loop = true;
+           // Metronome.Start();
         }
     }
 }

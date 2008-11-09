@@ -15,7 +15,7 @@ namespace VerkstanEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Gui.mainForm());
+            Application.Run(new Gui.MainForm());
         }
     }
 }

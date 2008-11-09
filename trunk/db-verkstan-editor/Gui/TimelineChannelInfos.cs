@@ -36,7 +36,7 @@ namespace VerkstanEditor.Gui
                 return selectedChannel;
             }
         }
-
+        /*
         private Verkstan.SceneOperator scene;
         public Verkstan.SceneOperator Scene
         {
@@ -49,6 +49,7 @@ namespace VerkstanEditor.Gui
                 scene = value;
             }
         }
+         */
 
         public TimelineChannelInfos()
         {

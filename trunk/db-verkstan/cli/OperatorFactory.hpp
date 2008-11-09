@@ -7,14 +7,14 @@ using namespace System::Collections::Generic;
 
 namespace Verkstan 
 {
-    ref class Operator;
+    ref class CoreOperator;
 
-    public ref class OperatorFactory
+    public ref class CoreOperatorFactory
     {
     public:
         static ICollection<String^>^ GetCategories();
         static ICollection<String^>^ GetNamesInCategory(String^ category);
-        static Operator^ Create(String^ name);
+        static CoreOperator^ Create(String^ typeName);
      
     private:
         static void CreateCategories();

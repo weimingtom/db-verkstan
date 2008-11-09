@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class OperatorPagePanel
+    partial class OperatorPageViewPanel
     {
         /// <summary> 
         /// Required designer variable.

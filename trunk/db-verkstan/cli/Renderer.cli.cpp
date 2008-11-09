@@ -1,8 +1,7 @@
-#include "cli/internal/Renderer.hpp"
+#include "cli/Renderer.hpp"
 
-#include "cli/internal/Camera.hpp"
+#include "cli/Camera.hpp"
 #include "cli/Operator.hpp"
-#include "cli/Metronome.hpp"
 
 namespace Verkstan
 {
@@ -16,7 +15,7 @@ namespace Verkstan
 
     }
 
-    void Renderer::RenderOperator(Operator^ op)
+    void Renderer::RenderOperator(CoreOperator^ op)
     {
         if (op == nullptr)
         {
@@ -29,10 +28,7 @@ namespace Verkstan
             return;
         }
 
-        if (!op->IsProcessable())
-            return;
-
-        Core::beat = Metronome::Beat;
+        //Core::beat = Metronome::Beat;
         op->getOperator()->cascadeProcess();
 
         switch (op->Type)
@@ -62,19 +58,19 @@ namespace Verkstan
         }
     }
 
-    void Renderer::RenderStoreOperator(Operator^ op)
+    void Renderer::RenderStoreOperator(CoreOperator^ op)
     {
-        if (op->GetPrimaryJoint()->Sender != nullptr)
-            RenderOperator(op->GetPrimaryJoint()->Sender);
+        //if (op->GetPrimaryJoint()->Sender != nullptr)
+        //    RenderOperator(op->GetPrimaryJoint()->Sender);
     }
 
-    void Renderer::RenderLoadOperator(Operator^ op)
+    void Renderer::RenderLoadOperator(CoreOperator^ op)
     {
-        if (op->GetPrimaryJoint()->Sender != nullptr)
-            RenderOperator(op->GetPrimaryJoint()->Sender);
+      //  if (op->GetPrimaryJoint()->Sender != nullptr)
+      //      RenderOperator(op->GetPrimaryJoint()->Sender);
     }
 
-    void Renderer::RenderTextureOperator(Operator^ op)
+    void Renderer::RenderTextureOperator(CoreOperator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -140,7 +136,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderUnknownOperator(Operator^ op)
+    void Renderer::RenderUnknownOperator(CoreOperator^ op)
     {
         globalDirect3DDevice->Clear(0, 
                    NULL, 
@@ -150,7 +146,7 @@ namespace Verkstan
                    0);
     }
 
-    void Renderer::RenderMeshOperator(Operator^ op)
+    void Renderer::RenderMeshOperator(CoreOperator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -201,7 +197,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderModelOperator(Operator^ op)
+    void Renderer::RenderModelOperator(CoreOperator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -296,7 +292,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderDemoSceneRendererOperator(Operator^ op)
+    void Renderer::RenderDemoSceneRendererOperator(CoreOperator^ op)
     {
         Core::Operator* coreOp = op->getOperator();
 

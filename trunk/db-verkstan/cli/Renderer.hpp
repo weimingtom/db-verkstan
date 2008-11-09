@@ -12,7 +12,7 @@ struct VertexWithTexture
 namespace Verkstan
 {
     ref class Camera;
-    ref class Operator;
+    ref class CoreOperator;
     
     public ref class Renderer
     {
@@ -21,20 +21,20 @@ namespace Verkstan
         ~Renderer();
         int ClearColor;
             
-        void RenderOperator(Operator^ op);
+        void RenderOperator(CoreOperator^ op);
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);
         void MouseUp(int button, int x, int y);
         void ResetCamera();
 
     private:
-        void RenderTextureOperator(Operator^ op);
-        void RenderStoreOperator(Operator^ op);
-        void RenderLoadOperator(Operator^ op);
-        void RenderMeshOperator(Operator^ op);
-        void RenderModelOperator(Operator^ op);
-        void RenderDemoSceneRendererOperator(Operator^ op);
-        void RenderUnknownOperator(Operator^ op);
+        void RenderTextureOperator(CoreOperator^ op);
+        void RenderStoreOperator(CoreOperator^ op);
+        void RenderLoadOperator(CoreOperator^ op);
+        void RenderMeshOperator(CoreOperator^ op);
+        void RenderModelOperator(CoreOperator^ op);
+        void RenderDemoSceneRendererOperator(CoreOperator^ op);
+        void RenderUnknownOperator(CoreOperator^ op);
 
         Camera^ camera;
     };

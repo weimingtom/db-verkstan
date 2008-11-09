@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class mainForm
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.fastRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenu = new System.Windows.Forms.MenuStrip();
             this.mainMenuFile = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,14 +45,14 @@
             this.previewPanel = new System.Windows.Forms.Panel();
             this.boardTabControl = new System.Windows.Forms.TabControl();
             this.operatorsTab = new System.Windows.Forms.TabPage();
+            this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.scenesTab = new System.Windows.Forms.TabPage();
+            this.timeline1 = new VerkstanEditor.Gui.Timeline();
             this.channelTab = new System.Windows.Forms.TabPage();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.slowRenderTimer = new System.Windows.Forms.Timer(this.components);
-            this.operatorPageControl1 = new VerkstanEditor.Gui.OperatorPage();
             this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
             this.transport1 = new VerkstanEditor.Gui.Transport();
-            this.timeline1 = new VerkstanEditor.Gui.Timeline();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.slowRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenu.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -196,7 +196,7 @@
             this.previewBoardSplitContainer.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.previewBoardSplitContainer.Panel2.Controls.Add(this.boardTabControl);
             this.previewBoardSplitContainer.Size = new System.Drawing.Size(556, 238);
-            this.previewBoardSplitContainer.SplitterDistance = 118;
+            this.previewBoardSplitContainer.SplitterDistance = 117;
             this.previewBoardSplitContainer.TabIndex = 0;
             // 
             // previewPanel
@@ -206,7 +206,7 @@
             this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPanel.Location = new System.Drawing.Point(0, 0);
             this.previewPanel.Name = "previewPanel";
-            this.previewPanel.Size = new System.Drawing.Size(556, 118);
+            this.previewPanel.Size = new System.Drawing.Size(556, 117);
             this.previewPanel.TabIndex = 0;
             this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
             this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
@@ -224,21 +224,36 @@
             this.boardTabControl.Margin = new System.Windows.Forms.Padding(0);
             this.boardTabControl.Name = "boardTabControl";
             this.boardTabControl.SelectedIndex = 0;
-            this.boardTabControl.Size = new System.Drawing.Size(556, 116);
+            this.boardTabControl.Size = new System.Drawing.Size(556, 117);
             this.boardTabControl.TabIndex = 0;
             // 
             // operatorsTab
             // 
             this.operatorsTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.operatorsTab.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.operatorsTab.Controls.Add(this.operatorPageControl1);
+            this.operatorsTab.Controls.Add(this.operatorPageView1);
             this.operatorsTab.Location = new System.Drawing.Point(4, 25);
             this.operatorsTab.Margin = new System.Windows.Forms.Padding(0);
             this.operatorsTab.Name = "operatorsTab";
-            this.operatorsTab.Size = new System.Drawing.Size(548, 87);
+            this.operatorsTab.Size = new System.Drawing.Size(548, 88);
             this.operatorsTab.TabIndex = 2;
             this.operatorsTab.Text = "Operators";
             this.operatorsTab.UseVisualStyleBackColor = true;
+            // 
+            // operatorPageView1
+            // 
+            this.operatorPageView1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.operatorPageView1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.operatorPageView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.operatorPageView1.Location = new System.Drawing.Point(0, 0);
+            this.operatorPageView1.Name = "operatorPageView1";
+            this.operatorPageView1.Page = null;
+            this.operatorPageView1.Size = new System.Drawing.Size(548, 88);
+            this.operatorPageView1.TabIndex = 0;
+            this.operatorPageView1.ViewedOperator = null;
+            this.operatorPageView1.ViewedOperatorProperties = null;
+            this.operatorPageView1.ViewedOperatorPropertiesChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorPropertiesChanged);
+            this.operatorPageView1.ViewedOperatorChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorChanged);
             // 
             // scenesTab
             // 
@@ -246,41 +261,29 @@
             this.scenesTab.Controls.Add(this.timeline1);
             this.scenesTab.Location = new System.Drawing.Point(4, 25);
             this.scenesTab.Name = "scenesTab";
-            this.scenesTab.Size = new System.Drawing.Size(548, 87);
+            this.scenesTab.Size = new System.Drawing.Size(548, 88);
             this.scenesTab.TabIndex = 1;
             this.scenesTab.Text = "Scenes";
             this.scenesTab.UseVisualStyleBackColor = true;
+            // 
+            // timeline1
+            // 
+            this.timeline1.BackColor = System.Drawing.SystemColors.Control;
+            this.timeline1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.timeline1.Location = new System.Drawing.Point(0, 0);
+            this.timeline1.Margin = new System.Windows.Forms.Padding(0);
+            this.timeline1.Name = "timeline1";
+            this.timeline1.Size = new System.Drawing.Size(548, 88);
+            this.timeline1.TabIndex = 0;
             // 
             // channelTab
             // 
             this.channelTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.channelTab.Location = new System.Drawing.Point(4, 25);
             this.channelTab.Name = "channelTab";
-            this.channelTab.Size = new System.Drawing.Size(548, 87);
+            this.channelTab.Size = new System.Drawing.Size(548, 88);
             this.channelTab.TabIndex = 3;
             this.channelTab.Text = "Channel";
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // slowRenderTimer
-            // 
-            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
-            // 
-            // operatorPageControl1
-            // 
-            this.operatorPageControl1.BackColor = System.Drawing.SystemColors.Control;
-            this.operatorPageControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.operatorPageControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.operatorPageControl1.Location = new System.Drawing.Point(0, 0);
-            this.operatorPageControl1.Name = "operatorPageControl1";
-            this.operatorPageControl1.Size = new System.Drawing.Size(548, 87);
-            this.operatorPageControl1.TabIndex = 0;
             // 
             // operatorPropertyGrid
             // 
@@ -306,16 +309,19 @@
             this.transport1.Size = new System.Drawing.Size(766, 64);
             this.transport1.TabIndex = 0;
             // 
-            // timeline1
+            // statusStrip1
             // 
-            this.timeline1.BackColor = System.Drawing.SystemColors.Control;
-            this.timeline1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.timeline1.Location = new System.Drawing.Point(0, 0);
-            this.timeline1.Name = "timeline1";
-            this.timeline1.Size = new System.Drawing.Size(548, 87);
-            this.timeline1.TabIndex = 0;
+            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // mainForm
+            // slowRenderTimer
+            // 
+            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -326,10 +332,9 @@
             this.Controls.Add(this.statusStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenu;
-            this.Name = "mainForm";
+            this.Name = "MainForm";
             this.Text = "db - Verkstan 1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Load += new System.EventHandler(this.MainForm_Load);
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -376,8 +381,8 @@
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
         private System.Windows.Forms.Timer slowRenderTimer;
-        private OperatorPage operatorPageControl1;
         private Timeline timeline1;
+        private OperatorPageView operatorPageView1;
     }
 }
 
