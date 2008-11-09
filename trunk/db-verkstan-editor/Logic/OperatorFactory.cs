@@ -19,6 +19,10 @@ namespace VerkstanEditor.Logic
             {
                 op = new LoadOperator();
             }
+            else if (typeName == "No Operator")
+            {
+                op = new NoOperator();
+            }
             else
             {
                 Verkstan.CoreOperator coreOp = Verkstan.CoreOperatorFactory.Create(typeName);

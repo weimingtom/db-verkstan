@@ -82,10 +82,6 @@ namespace VerkstanEditor.Logic
         public override void OnCascadeStateChanged()
         {
             OnStateChanged();
-            /*
-            foreach (OperatorJoint joint in outputJoints)
-                foreach (Operator op in joint.Receivers)
-                    op.OnCascadeStateChanged();*/
         }
         public void AddReceiver(Operator receiver)
         {

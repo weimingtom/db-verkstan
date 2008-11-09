@@ -29,6 +29,9 @@ categories[category]->Add(name);
 
         if (!categories["Misc"]->Contains("Load"))
             categories["Misc"]->Add("Load");
+
+        if (!categories["Misc"]->Contains("No Operator"))
+            categories["Misc"]->Add("No Operator");
     }
 
     ICollection<String^>^ CoreOperatorFactory::GetCategories()
@@ -122,17 +125,6 @@ categories[category]->Add(name);
 #undef OPERATOR_DEFINES
 
         /*
-        if (typeName == "Store")
-        {
-            op = gcnew StoreOperator();
-        }
-
-        if (typeName == "Load")
-        {
-            op = gcnew LoadOperator();
-            op->AddProperty("Store to load", Constants::OperatorPropertyTypes::String);
-        }
-   
         if (typeName == "Scene")
         {
             SceneOperator^ so = (SceneOperator^)op;

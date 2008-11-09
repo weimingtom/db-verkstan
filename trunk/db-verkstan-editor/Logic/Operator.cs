@@ -184,7 +184,7 @@ namespace VerkstanEditor.Logic
         private OperatorJoint.EventHandler processableChangedHandler;
         #endregion
 
-        #region Static methods
+        #region Public Static methods
         public static Point QuantizeLocation(Point location)
         {
             return new Point(location.X - location.X % 100,
@@ -220,11 +220,19 @@ namespace VerkstanEditor.Logic
             {
                 sender.ConnectWithJointAsSender(receiver.PrimaryJoint);
             }
+            else if (receiver.GetType() == typeof(NoOperator))
+            {
+                sender.ConnectWithJointAsSender(receiver.PrimaryJoint);
+            }
             else if (sender.GetType() == typeof(LoadOperator))
             {
                 receiver.ConnectWithJointAsReceiver(sender.PrimaryJoint);
                 LoadOperator loadOp = (LoadOperator)sender;
                 loadOp.AddReceiver(receiver);
+            }
+            else if (sender.GetType() == typeof(NoOperator))
+            {
+                receiver.ConnectWithJointAsReceiver(sender.PrimaryJoint);
             }
             else
             {
