@@ -29,9 +29,6 @@ categories[category]->Add(name);
 
         if (!categories["Misc"]->Contains("Load"))
             categories["Misc"]->Add("Load");
-
-        if (!categories["Misc"]->Contains("No Operator"))
-            categories["Misc"]->Add("No Operator");
     }
 
     ICollection<String^>^ CoreOperatorFactory::GetCategories()

@@ -155,7 +155,6 @@
     <Compile Include="Logic\ClipPreviewCache.cs" />
     <Compile Include="Logic\CoreOperator.cs" />
     <Compile Include="Logic\LoadOperator.cs" />
-    <Compile Include="Logic\NoOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\OperatorFactory.cs" />
     <Compile Include="Logic\OperatorJoint.cs" />
