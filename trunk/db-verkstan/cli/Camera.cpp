@@ -2,7 +2,7 @@
 #include <d3dx9.h>
 
 #include "cli/Camera.hpp"
-#include "cli/VerkstanCore.hpp"
+#include "cli/Core.hpp"
 
 namespace Verkstan
 {
