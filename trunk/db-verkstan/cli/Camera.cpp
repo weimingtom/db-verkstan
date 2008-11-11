@@ -1,8 +1,8 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
-#include "cli/internal/Camera.hpp"
-#include "cli/internal/VerkstanCore.hpp"
+#include "cli/Camera.hpp"
+#include "cli/VerkstanCore.hpp"
 
 namespace Verkstan
 {
