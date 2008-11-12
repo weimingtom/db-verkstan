@@ -155,9 +155,9 @@
     <Compile Include="Logic\ClipPreviewCache.cs" />
     <Compile Include="Logic\CoreOperator.cs" />
     <Compile Include="Logic\LoadOperator.cs" />
+    <Compile Include="Logic\PropagateOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\OperatorFactory.cs" />
-    <Compile Include="Logic\OperatorJoint.cs" />
     <Compile Include="Logic\OperatorPage.cs" />
     <Compile Include="Gui\MainForm.cs">
       <SubType>Form</SubType>

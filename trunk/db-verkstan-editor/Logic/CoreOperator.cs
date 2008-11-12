@@ -24,14 +24,6 @@ namespace VerkstanEditor.Logic
                     return bindedCoreOperator.Name;
             }
         }
-        private OperatorJoint primaryJoint;
-        public override OperatorJoint PrimaryJoint
-        {
-            get
-            {
-                return primaryJoint;
-            }
-        }
         private bool isProcessable = false;
         public override bool IsProcessable
         {
@@ -39,9 +31,8 @@ namespace VerkstanEditor.Logic
             {
                 bool result = isProcessable;
 
-                foreach (OperatorJoint joint in inputJoints)
-                    if (joint.Sender != null)
-                        result &= joint.Sender.IsProcessable;
+                foreach (Operator op in senders)
+                    result &= op.IsProcessable;
 
                 return result;
             }
@@ -63,51 +54,55 @@ namespace VerkstanEditor.Logic
         }
         #endregion
 
-        #region Private Variables
-        private List<OperatorJoint> inputJoints;
-        private List<OperatorJoint> outputJoints;
-        private OperatorJoint.EventHandler senderAddedHandler;
-        private OperatorJoint.EventHandler senderRemovedHandler;
-        private OperatorJoint.EventHandler receiverAddedHandler;
-        private OperatorJoint.EventHandler receiverRemovedHandler;
-        #endregion
-
         #region Constructors
         public CoreOperator(Verkstan.CoreOperator coreOperator)
             :base()
         {
             this.bindedCoreOperator = coreOperator;
-            primaryJoint = new OperatorJoint();
-            primaryJoint.AddSender(this);
             isProcessable = coreOperator.GetNumberOfRequiredInputs() == 0;
-            inputJoints = new List<OperatorJoint>();
-            outputJoints = new List<OperatorJoint>();
-            outputJoints.Add(primaryJoint);
-            senderAddedHandler = new OperatorJoint.EventHandler(this.operatorJoint_SenderAdded);
-            senderRemovedHandler = new OperatorJoint.EventHandler(this.operatorJoint_SenderRemoved);
-            receiverAddedHandler = new OperatorJoint.EventHandler(this.operatorJoint_ReceiverAdded);
-            receiverRemovedHandler = new OperatorJoint.EventHandler(this.operatorJoint_ReceiverRemoved);
-            primaryJoint.SenderAdded += senderAddedHandler;
-            primaryJoint.SenderRemoved += senderRemovedHandler;
-            primaryJoint.ReceiverAdded += receiverAddedHandler;
-            primaryJoint.ReceiverRemoved += receiverRemovedHandler;
         }
         #endregion
 
         #region Public Methods
-        public override void OnCascadeStateChanged()
-        {
-            OnStateChanged();
-
-            foreach (OperatorJoint joint in outputJoints)
-                foreach (Operator op in joint.Receivers)
-                    op.OnCascadeStateChanged();
-        }
         public override void Dispose()
         {
             if (bindedCoreOperator != null)
                 bindedCoreOperator.Dispose();
-            primaryJoint.Dispose();
+            base.Dispose();
+        }
+        public override void Disposed(Operator op)
+        {
+
+        }
+        public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
+        {
+            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            result.Add(bindedCoreOperator);
+            return result;
+        }
+        public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
+        {
+            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            result.Add(bindedCoreOperator);
+            return result;
+        }
+        public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
+        {
+            return GetSenderCoreOperators();
+        }
+        public override void StackConnectChangedUpwards()
+        {
+            UpdateCoreOutputConnections();
+            OnStateChanged();
+        }
+        public override void CascadeStackConnectChangedDownwards()
+        {
+            UpdateCoreInputConnections();
+
+            foreach (Operator op in receivers)
+                op.CascadeStackConnectChangedDownwards();
+
+            OnStateChanged();
         }
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
@@ -209,51 +204,6 @@ namespace VerkstanEditor.Logic
 
             return root;
         }
-        public override void ConnectWithJointAsReceiver(OperatorJoint joint)
-        {
-            joint.SenderAdded += senderAddedHandler;
-            joint.SenderRemoved += senderRemovedHandler;
-            joint.ReceiverAdded += receiverAddedHandler;
-            joint.ReceiverRemoved += receiverRemovedHandler;
-            inputJoints.Add(joint);    
-            joint.AddReceiver(this);
-            UpdateCoreInputConnections();
-            bindedCoreOperator.SetDirty(true);
-        }
-        public override void ConnectWithJointAsSender(OperatorJoint joint)
-        {
-            joint.SenderAdded += senderAddedHandler;
-            joint.SenderRemoved += senderRemovedHandler;
-            joint.ReceiverAdded += receiverAddedHandler;
-            joint.ReceiverRemoved += receiverRemovedHandler;
-            outputJoints.Add(joint);
-            joint.AddSender(this);
-            UpdateCoreOutputConnections();
-            bindedCoreOperator.SetDirty(true);
-        }
-        public override void DisconnectFromAllJoints()
-        {
-            List<OperatorJoint> inputJointsCopy = new List<OperatorJoint>(inputJoints);
-            foreach (OperatorJoint joint in inputJointsCopy)
-                joint.RemoveReceiver(this);
-
-
-            List<OperatorJoint> outputJointsCopy = new List<OperatorJoint>(outputJoints);
-            foreach (OperatorJoint joint in outputJointsCopy)
-            {
-                if (joint == primaryJoint)
-                    continue;
-
-                joint.RemoveSender(this);
-            }
-
-            // As this operator owns the primary joint it's this operator's
-            // responsibility to disconnect all receivers of the primary joint.
-            primaryJoint.RemoveAllReceivers();
-
-            UpdateCoreInputConnections();
-            UpdateCoreOutputConnections();
-        }
         #endregion
 
         #region Private Methods
@@ -261,27 +211,27 @@ namespace VerkstanEditor.Logic
         {
             bindedCoreOperator.ClearInputConnections();
 
-            List<Operator> inputOperators = new List<Operator>();
-            foreach (OperatorJoint joint in inputJoints)
-                if (joint.Sender != null)
-                    inputOperators.Add(joint.Sender);
+            List<Verkstan.CoreOperator> inputOperators = new List<Verkstan.CoreOperator>();
+            foreach (Operator op in senders)
+                foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
+                    inputOperators.Add(coreOp);
 
             int numberOfInputs = 0;
             int numberOfRequiredInputs = 0;
 
-            foreach (Operator op in inputOperators)
+            foreach (Verkstan.CoreOperator coreOp in inputOperators)
             {
-                if (op.BindedCoreOperator == null || op.BindedCoreOperator.Id == bindedCoreOperator.Id)
+                if (coreOp.Id == bindedCoreOperator.Id)
                     continue;
 
                 bool accepted = false;
                 for (int i = numberOfInputs; i < bindedCoreOperator.Inputs.Count; i++)
                 {
                     Verkstan.OperatorInput input = bindedCoreOperator.Inputs[i];
-                    if ((input.Type == op.BindedCoreOperator.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
+                    if ((input.Type == coreOp.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
                         && bindedCoreOperator.GetInputConnectionId(i) == -1)
                     {
-                        bindedCoreOperator.SetInputConnectionId(i, op.BindedCoreOperator.Id);
+                        bindedCoreOperator.SetInputConnectionId(i, coreOp.Id);
                         accepted = true;
                         numberOfInputs++;
                         if (!input.Optional)
@@ -297,13 +247,13 @@ namespace VerkstanEditor.Logic
                 if (!accepted
                     && lastInput != null
                     && lastInput.Infinite
-                    && (lastInput.Type == op.BindedCoreOperator.Type || lastInput.Type == Verkstan.Constants.OperatorTypes.Unspecified))
+                    && (lastInput.Type == coreOp.Type || lastInput.Type == Verkstan.Constants.OperatorTypes.Unspecified))
                 {
                     for (int i = numberOfInputs; i < bindedCoreOperator.GetMaxInputConnections(); i++)
                     {
                         if (bindedCoreOperator.GetInputConnectionId(i) == -1)
                         {
-                            bindedCoreOperator.SetInputConnectionId(i, op.BindedCoreOperator.Id);
+                            bindedCoreOperator.SetInputConnectionId(i, coreOp.Id);
                             accepted = true;
                             numberOfInputs++;
                             break;
@@ -322,28 +272,29 @@ namespace VerkstanEditor.Logic
                 if (!bindedCoreOperator.Inputs[i].Optional)
                     requiredInputs++;
 
-            SetProcessable(requiredInputs <= numberOfRequiredInputs);
+            isProcessable = requiredInputs <= numberOfRequiredInputs;
+            bindedCoreOperator.SetDirty(true);
         }
         private void UpdateCoreOutputConnections()
         {
             bindedCoreOperator.ClearOutputConnections();
 
-            List<Operator> outputOperators = new List<Operator>();
-            foreach (OperatorJoint joint in outputJoints)
-                foreach (Operator op in joint.Receivers)
-                    outputOperators.Add(op);
+            List<Verkstan.CoreOperator> outputOperators = new List<Verkstan.CoreOperator>();
+            foreach (Operator op in receivers)
+                foreach (Verkstan.CoreOperator coreOp in op.GetReceiverCoreOperators())
+                    outputOperators.Add(coreOp);
 
             int numberOfOutputs = 0;
-            foreach (Operator op in outputOperators)
+            foreach (Verkstan.CoreOperator coreOp in outputOperators)
             {
-                if (op.BindedCoreOperator == null)
+                if (coreOp == null)
                     continue;
 
                 for (int i = 0; i < bindedCoreOperator.GetMaxOutputConnections(); i++)
                 {
                     if (bindedCoreOperator.GetOutputConnectionId(i) == -1)
                     {
-                        bindedCoreOperator.SetOutputConnectionId(i, op.BindedCoreOperator.Id);
+                        bindedCoreOperator.SetOutputConnectionId(i, coreOp.Id);
                         numberOfOutputs++;
                         break;
                     }
@@ -351,62 +302,6 @@ namespace VerkstanEditor.Logic
             }
 
             bindedCoreOperator.SetNumberOfOutputConnections(numberOfOutputs);
-        }
-        private void SetProcessable(bool processable)
-        {
-            isProcessable = processable;
-            OnCascadeStateChanged();
-        }
-        #endregion
-
-        #region Event Handlers
-        private void operatorJoint_SenderAdded(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (inputJoints.Contains(joint))
-            {
-                UpdateCoreInputConnections();
-                bindedCoreOperator.SetDirty(true);
-            }
-        }
-        private void operatorJoint_SenderRemoved(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (outputJoints.Contains(joint) && e.Sender == this)
-            {
-                joint.SenderAdded -= senderAddedHandler;
-                joint.SenderRemoved -= senderRemovedHandler;
-                joint.ReceiverAdded -= receiverAddedHandler;
-                joint.ReceiverRemoved -= receiverRemovedHandler;
-                outputJoints.Remove(joint);
-                UpdateCoreOutputConnections();
-            }
-            else if (inputJoints.Contains(joint))
-            {
-                UpdateCoreInputConnections();
-                System.Console.WriteLine("Is processable = " + IsProcessable);
-                bindedCoreOperator.SetDirty(true);
-            }
-        }
-        private void operatorJoint_ReceiverAdded(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (outputJoints.Contains(joint))
-                UpdateCoreOutputConnections();
-        }
-        private void operatorJoint_ReceiverRemoved(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (outputJoints.Contains(joint))
-            {
-                UpdateCoreOutputConnections();
-            }
-            else if (inputJoints.Contains(joint) && e.Receiver == this)
-            {
-                joint.SenderAdded -= senderAddedHandler;
-                joint.SenderRemoved -= senderRemovedHandler;
-                joint.ReceiverAdded -= receiverAddedHandler;
-                joint.ReceiverRemoved -= receiverRemovedHandler;
-                inputJoints.Remove(joint);
-                UpdateCoreInputConnections();
-                bindedCoreOperator.SetDirty(true);
-            }
         }
         #endregion
     }

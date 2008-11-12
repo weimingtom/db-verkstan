@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -12,25 +13,23 @@ namespace VerkstanEditor.Logic
         {
             get { return Verkstan.Constants.OperatorTypes.Unspecified; }
         }
-        private OperatorJoint primaryJoint;
-        public override OperatorJoint PrimaryJoint
-        {
-            get { return primaryJoint; }
-        }
         public override Verkstan.CoreOperator BindedCoreOperator
         {
             get 
-            { 
-                if (primaryJoint.Sender != null)
-                    return primaryJoint.Sender.BindedCoreOperator;
-                return null;
+            {
+                if (target == null)
+                    return null;
+
+                return target.BindedCoreOperator;
             }
         }
         public override bool IsProcessable
         {
             get
             {
-                return PrimaryJoint.Sender != null && PrimaryJoint.Sender.IsProcessable;
+                if (target == null)
+                    return false;
+                return target.IsProcessable;
             }
         }
         public override ICollection<Verkstan.OperatorProperty> Properties
@@ -53,12 +52,8 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Private Variables
-        private OperatorJoint loadJoint;
-        private List<Operator> receivers;
-        private OperatorJoint.EventHandler receiverRemovedHandler;
-        private OperatorJoint.EventHandler senderRemovedHandler;
-        private OperatorJoint.EventHandler senderAddedHandler;
-        private OperatorJoint.EventHandler nameChangedHandler;
+        private Operator target;
+        private Operator.EventHandler stateChangedEventHandler;
         #endregion
 
         #region Constructors
@@ -66,53 +61,54 @@ namespace VerkstanEditor.Logic
             : base()
         {
             typeName = "Load";
-            loadJoint = new OperatorJoint();
-            primaryJoint = loadJoint;
-            receivers = new List<Operator>();
-
-            receiverRemovedHandler = new OperatorJoint.EventHandler(this.operatorJoint_ReceiverRemoved);
-            senderRemovedHandler = new OperatorJoint.EventHandler(this.operatorJoint_SenderRemoved);
-            senderAddedHandler = new OperatorJoint.EventHandler(this.operatorJoint_SenderAdded);
-            nameChangedHandler = new OperatorJoint.EventHandler(this.operatorJoint_NameChanged);
-            loadJoint.ReceiverRemoved += receiverRemovedHandler;
+            stateChangedEventHandler = new Operator.EventHandler(this.load_StateChanged);
         }
         #endregion
 
         #region Public Methods
-        public override void OnCascadeStateChanged()
+        public override void Disposed(Operator op)
         {
-            OnStateChanged();
+            if (target == op)
+            {
+                target = null;
+                typeName = "Load";
+                OnStateChanged();
+            }
         }
-        public void AddReceiver(Operator receiver)
-        {
-            receivers.Add(receiver);
-        }
-        public override void ConnectWithJointAsReceiver(OperatorJoint joint)
-        {
-     
-        }
-        public override void ConnectWithJointAsSender(OperatorJoint joint)
-        {
-
-        }
-        public override void Dispose()
-        {
-            loadJoint.Dispose();
-        }
-        public override System.Xml.XmlElement ToXmlElement(System.Xml.XmlDocument doc)
+        public override XmlElement ToXmlElement(System.Xml.XmlDocument doc)
         {
             return doc.CreateElement("Load");
         }
-        public override void DisconnectFromAllJoints()
+        public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
         {
-            List<Operator> receiversCopy = new List<Operator>(receivers);
-            foreach (Operator op in receiversCopy)
-                primaryJoint.RemoveReceiver(op);
+            return new List<Verkstan.CoreOperator>();
+        }
+        public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
+        {
+            if (target == null)
+                return new List<Verkstan.CoreOperator>();
+            else
+                return target.GetSenderCoreOperatorsForLoad();
+        }
+        public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
+        {
+            return new List<Verkstan.CoreOperator>();
+        }
+        public override void StackConnectChangedUpwards()
+        {
+            OnStateChanged();
+        }
+        public override void CascadeStackConnectChangedDownwards()
+        {
+            foreach (Operator op in receivers)
+                op.CascadeStackConnectChangedDownwards();
+
+            OnStateChanged();
         }
         public override String GetStringProperty(int index)
         {   
-            if (index == 0)
-                return primaryJoint.Name;
+            if (index == 0 && target != null)
+                return target.Name;
 
             return "";   
         }
@@ -120,81 +116,46 @@ namespace VerkstanEditor.Logic
         {
             if (index == 0)
             {
-                OperatorJoint joint = OperatorJoint.Find(value);
-                UpdatePrimaryJoint(joint);
+                Operator newTarget = Operator.Find(value);
 
-                if (joint != null)
-                    typeName = "L<"+joint.Name+">";
+                if (newTarget == target)
+                    return;
+
+                if (target != null)
+                {
+                    target.RemoveLoadOperator(this);
+                    target.StateChanged -= stateChangedEventHandler;
+                }
+
+                target = newTarget;
+                if (target != null)
+                    typeName = "L<" + target.Name + ">";
                 else
                     typeName = "Load";
-                OnStateChanged();
-            }
-        }
-        #endregion
 
-        #region Private Methods
-        private void UpdatePrimaryJoint(OperatorJoint joint)
-        {
-            if (joint == null)
-                joint = loadJoint;
-
-            if (joint != primaryJoint)
-            {
-                if (primaryJoint != loadJoint)
+                if (target != null)
                 {
-                    primaryJoint.ReceiverRemoved -= receiverRemovedHandler;
-                    joint.SenderRemoved -= senderRemovedHandler;
-                    joint.SenderAdded -= senderAddedHandler;
-                    joint.NameChanged -= nameChangedHandler;
+                    target.ConnectWithLoadOperator(this);
+                    target.StateChanged += stateChangedEventHandler;
                 }
 
-                List<Operator> receiversCopy = new List<Operator>(receivers);
-                foreach (Operator op in receiversCopy)
-                {
-                    primaryJoint.RemoveReceiver(op);
-                    op.ConnectWithJointAsReceiver(joint);
-                }
-                receivers = receiversCopy;
-
-                joint.ReceiverRemoved += receiverRemovedHandler;
-                joint.SenderRemoved += senderRemovedHandler;
-                joint.SenderAdded += senderAddedHandler;
-                joint.NameChanged += nameChangedHandler;
+                CascadeStackConnectChangedDownwards();
             }
-
-            primaryJoint = joint;
         }
         #endregion
 
         #region Event Handlers
-        private void operatorJoint_SenderAdded(OperatorJoint joint, OperatorJoint.EventArgs e)
+        void load_StateChanged(Operator.EventArgs e)
         {
+            if (e.Operator.Name == null || e.Operator.Name == "")
+                target = null;
+
+            if (target != null)
+                typeName = "L<" + target.Name + ">";
+            else
+                typeName = "Load";
+
             OnStateChanged();
-        }
-        private void operatorJoint_SenderRemoved(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            OnStateChanged();
-        }
-        private void operatorJoint_ReceiverRemoved(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (joint == primaryJoint)
-                receivers.Remove(e.Receiver);
-        }
-        private void operatorJoint_NameChanged(OperatorJoint joint, OperatorJoint.EventArgs e)
-        {
-            if (joint == primaryJoint)
-            {
-                if (joint.Name == null || joint.Name == "")
-                {
-                    typeName = "Load";
-                    UpdatePrimaryJoint(loadJoint);
-                }
-                else
-                {
-                    typeName = "L<" + joint.Name + ">";
-                    OnStateChanged();
-                }
-            }
         }
         #endregion
     }

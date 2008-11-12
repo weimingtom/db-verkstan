@@ -5,17 +5,18 @@ using System.Text;
 
 namespace VerkstanEditor.Logic
 {
-    class StoreOperator: Operator
+    class PropagateOperator: Operator
     {
         #region Properties
         public override Verkstan.CoreOperator BindedCoreOperator
         {
             get 
             {
-                if (senders.Count == 0)
+                List<Verkstan.CoreOperator> senderCores = GetSenderCoreOperators();
+                if (senderCores.Count == 0)
                     return null;
                 else
-                    return senders.First().BindedCoreOperator;
+                    return senderCores.First();
             }
         }
         public override Verkstan.Constants.OperatorTypes Type
@@ -46,13 +47,13 @@ namespace VerkstanEditor.Logic
         {
             get
             {
-                return "Store";
+                return "Propagate";
             }
         }
         #endregion
 
         #region Constructors
-        public StoreOperator()
+        public PropagateOperator()
             :base()
         {
           
@@ -66,11 +67,21 @@ namespace VerkstanEditor.Logic
         }
         public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
         {
-            return new List<Verkstan.CoreOperator>();
+            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            foreach (Operator op in receivers)
+                foreach (Verkstan.CoreOperator coreOp in op.GetReceiverCoreOperators())
+                    result.Add(coreOp);
+
+            return result;
         }
         public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
         {
-            return new List<Verkstan.CoreOperator>();
+            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            foreach (Operator op in senders)
+                foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
+                    result.Add(coreOp);
+
+            return result;
         }
         public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
         {
@@ -84,18 +95,22 @@ namespace VerkstanEditor.Logic
         }
         public override void StackConnectChangedUpwards()
         {
+            foreach (Operator op in senders)
+                op.StackConnectChangedUpwards();
+
             OnStateChanged();
         }
         public override void CascadeStackConnectChangedDownwards()
         {
-            foreach (Operator op in loads)
+            foreach (Operator op in receivers)
                 op.CascadeStackConnectChangedDownwards();
 
+            IsWarningPresent = senders.Count != 1;
             OnStateChanged();
         }
         public override System.Xml.XmlElement ToXmlElement(System.Xml.XmlDocument doc)
         {
-            return doc.CreateElement("Store");
+            return doc.CreateElement("Propagate");
         }
         #endregion
     }

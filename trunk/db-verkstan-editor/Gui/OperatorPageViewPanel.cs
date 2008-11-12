@@ -73,8 +73,14 @@ namespace VerkstanEditor.Gui
         {
             set
             {
+                Operator oldViewedOperator = viewedOperator;
                 viewedOperator = value;
                 OnViewedOperatorChanged();
+                if (oldViewedOperator != viewedOperator && oldViewedOperator != null)
+                    oldViewedOperator.IsViewed = false;
+
+                if (viewedOperator != null)
+                    viewedOperator.IsViewed = true;               
             }
             get
             {
@@ -379,20 +385,64 @@ namespace VerkstanEditor.Gui
             Color color = RGBHSL.ModifyBrightness(GetOperatorColor(op), brightness);
             color = RGBHSL.ModifySaturation(color, saturation);
 
-            Brush b = new SolidBrush(color);
-            e.Graphics.FillRectangle(b, op.Dimension);
             String displayName = op.Name;
 
             if (displayName == null || displayName == "")
                 displayName = op.TypeName;
 
-            e.Graphics.Clip = new Region(new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height));
-            SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
-            e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top + op.Height / 2 - stringSize.Height / 2);
-            e.Graphics.Clip = new Region(op.Dimension);
+            Brush b = new SolidBrush(color);
+            if (op.GetType() == typeof(CoreOperator) || op.GetType() == typeof(PropagateOperator))
+            {
+                e.Graphics.FillRectangle(b, op.Dimension);
+                e.Graphics.Clip = new Region(new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height));
+                SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
+                e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top + op.Height / 2 - stringSize.Height / 2);
+                e.Graphics.Clip = new Region(op.Dimension);
+            }
+            else if (op.GetType() == typeof(StoreOperator))
+            {
+                Point[] points1 = new Point[3];
+                points1[0] = new Point(op.Left, op.Top);
+                points1[1] = new Point(op.Left + 10, op.Top);
+                points1[2] = new Point(op.Left + 10, op.Top + op.Height - 5);
+                e.Graphics.FillPolygon(b, points1);
+                Point[] points2 = new Point[3];
+                points2[0] = new Point(op.Left + op.Width, op.Top);
+                points2[1] = new Point(op.Left + op.Width - 10, op.Top + op.Height - 5);
+                points2[2] = new Point(op.Left + op.Width - 10, op.Top);
+                e.Graphics.FillPolygon(b, points2);
+                e.Graphics.FillRectangle(b, new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height - 5));
+                e.Graphics.Clip = new Region(new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height - 5));
+                SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
+                e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top + (op.Height - 5) / 2 - stringSize.Height / 2);
+                e.Graphics.Clip = new Region(op.Dimension);
+            }
+            else if (op.GetType() == typeof(LoadOperator))
+            {
+                Point[] points1 = new Point[3];
+                points1[0] = new Point(op.Left, op.Top + op.Height);
+                points1[1] = new Point(op.Left + 10, op.Top + op.Height);
+                points1[2] = new Point(op.Left + 10, op.Top + 5);
+                e.Graphics.FillPolygon(b, points1);
+                Point[] points2 = new Point[3];
+                points2[0] = new Point(op.Left + op.Width - 10, op.Top + 5);
+                points2[1] = new Point(op.Left + op.Width, op.Top + op.Height);
+                points2[2] = new Point(op.Left + op.Width - 10, op.Top + op.Height);
+                e.Graphics.FillPolygon(b, points2);
+                e.Graphics.FillRectangle(b, new Rectangle(op.Left + 10, op.Top + 5, op.Width - 20, op.Height - 5));
+                e.Graphics.Clip = new Region(new Rectangle(op.Left + 10, op.Top + 5, op.Width - 20, op.Height - 5));
+                SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
+                e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top  + 5 + (op.Height - 5) / 2 - stringSize.Height / 2);
+                e.Graphics.Clip = new Region(op.Dimension);
+            }
+
             b.Dispose();
-            
-            
+
+            if (!op.IsProcessable || op.IsWarningPresent)
+                e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.warning_icon, op.Location.X + 1, op.Location.Y + 1);
+            if (op == ViewedOperator)
+                e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.eye_icon, op.Location.X + 1, op.Location.Y + 1);
+
             e.Graphics.Clip = clip;
 
 

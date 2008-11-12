@@ -29,6 +29,9 @@ categories[category]->Add(name);
 
         if (!categories["Misc"]->Contains("Load"))
             categories["Misc"]->Add("Load");
+        
+        if (!categories["Misc"]->Contains("Propagate"))
+            categories["Misc"]->Add("Propagate");
     }
 
     ICollection<String^>^ CoreOperatorFactory::GetCategories()

@@ -19,6 +19,10 @@ namespace VerkstanEditor.Logic
             {
                 op = new LoadOperator();
             }
+            else if (typeName == "Propagate")
+            {
+                op = new PropagateOperator();
+            }
             else
             {
                 Verkstan.CoreOperator coreOp = Verkstan.CoreOperatorFactory.Create(typeName);

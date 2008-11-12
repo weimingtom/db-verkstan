@@ -10,12 +10,11 @@ namespace VerkstanEditor.Logic
     public abstract class Operator : IDisposable
     {
         #region Abstract Properties
-        public abstract Verkstan.CoreOperator BindedCoreOperator { get;}
         public abstract ICollection<Verkstan.OperatorProperty> Properties { get; }
         public abstract String TypeName  { get; }
-        public abstract OperatorJoint PrimaryJoint { get; }
         public abstract bool IsProcessable { get; }
         public abstract Verkstan.Constants.OperatorTypes Type { get; }
+        public abstract Verkstan.CoreOperator BindedCoreOperator { get; }
         #endregion
 
         #region Properties
@@ -125,7 +124,7 @@ namespace VerkstanEditor.Logic
             }
         }
         private String name;
-        public virtual String Name
+        public String Name
         {
             get
             {
@@ -172,19 +171,42 @@ namespace VerkstanEditor.Logic
                 return isWarningPresent;
             }
         }
+        private bool isViewed = false;
+        public bool IsViewed
+        {
+            get
+            {
+                return isViewed;
+            }
+            set
+            {
+                if (isViewed != value)
+                {
+                    isViewed = value;
+                    OnStateChanged();
+                }
+            }
+        }
         #endregion
 
-        #region Private Variables
-        private List<OperatorJoint> inputJoints;
-        private List<OperatorJoint> outputJoints;
-        private OperatorJoint.EventHandler senderAddedHandler;
-        private OperatorJoint.EventHandler senderRemovedHandler;
-        private OperatorJoint.EventHandler receiverAddedHandler;
-        private OperatorJoint.EventHandler receiverRemovedHandler;
-        private OperatorJoint.EventHandler processableChangedHandler;
+        #region Protected Member Variables
+        protected List<Operator> senders;
+        protected List<Operator> receivers;
+        protected List<Operator> loads;
+        #endregion
+
+        #region Private Static Variables
+        private static List<Operator> instances = new List<Operator>();
         #endregion
 
         #region Public Static methods
+        public static Operator Find(String name)
+        {
+            foreach (Operator op in instances)
+                if (op.Name == name)
+                    return op;
+            return null;
+        }
         public static Point QuantizeLocation(Point location)
         {
             return new Point(location.X - location.X % 100,
@@ -204,53 +226,99 @@ namespace VerkstanEditor.Logic
         }
         public static void Disconnect(Operator op)
         {
-            op.DisconnectFromAllJoints();
+            op.Disconnect();
         }
         public static void Connect(Operator sender, Operator receiver)
         {
-            if (sender.GetType() == typeof(StoreOperator))
-            {
-                return;
-            }
-            else if (receiver.GetType() == typeof(LoadOperator))
-            {
-                return;
-            }   
-            else if (receiver.GetType() == typeof(StoreOperator))
-            {
-                sender.ConnectWithJointAsSender(receiver.PrimaryJoint);
-            }
-            else if (sender.GetType() == typeof(LoadOperator))
-            {
-                receiver.ConnectWithJointAsReceiver(sender.PrimaryJoint);
-                LoadOperator loadOp = (LoadOperator)sender;
-                loadOp.AddReceiver(receiver);
-            }
-            else
-            {
-                receiver.ConnectWithJointAsReceiver(sender.PrimaryJoint);
-            }
+            sender.ConnectWithOperatorAsSender(receiver);
+            receiver.ConnectWithOperatorAsReceiver(sender);
         }
         #endregion
 
         #region Constructors
         public Operator()
         {
+            instances.Add(this);
             dimension = new Rectangle(0, 0, 100, 20);
             lastDimension = dimension;
+            senders = new List<Operator>(); 
+            receivers = new List<Operator>(); 
+            loads = new List<Operator>(); 
         }
         #endregion
 
         #region Public Abstract Methods
-        public abstract void OnCascadeStateChanged();
-        public abstract void Dispose();
-        public abstract void ConnectWithJointAsReceiver(OperatorJoint joint);
-        public abstract void ConnectWithJointAsSender(OperatorJoint joint);
-        public abstract void DisconnectFromAllJoints();
+        public abstract void Disposed(Operator op);
+        public abstract List<Verkstan.CoreOperator> GetReceiverCoreOperators();
+        public abstract List<Verkstan.CoreOperator> GetSenderCoreOperators();
+        public abstract List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad();
+        public abstract void StackConnectChangedUpwards();
+        public abstract void CascadeStackConnectChangedDownwards();
         public abstract XmlElement ToXmlElement(XmlDocument doc);
         #endregion
 
         #region Public methods
+        public virtual void Dispose()
+        {
+            instances.Remove(this);
+            foreach (Operator op in loads)
+                op.Disposed(this);
+        }
+        public virtual void ConnectWithOperatorAsReceiver(Operator op)
+        {
+            senders.Add(op);
+            CascadeStackConnectChangedDownwards();
+        }
+        public virtual void ConnectWithOperatorAsSender(Operator op)
+        {
+            receivers.Add(op);
+            StackConnectChangedUpwards();
+        }
+        public virtual void ConnectWithLoadOperator(Operator op)
+        {
+            loads.Add(op);
+            StackConnectChangedUpwards();
+            CascadeStackConnectChangedDownwards();
+        }
+        public virtual void RemoveReceiverOperator(Operator op)
+        {
+            receivers.Remove(op);
+            StackConnectChangedUpwards();
+            CascadeStackConnectChangedDownwards();
+            op.StackConnectChangedUpwards();
+            op.StackConnectChangedUpwards();
+        }
+        public virtual void RemoveSenderOperator(Operator op)
+        {
+            senders.Remove(op);
+            StackConnectChangedUpwards();
+            CascadeStackConnectChangedDownwards();
+            op.StackConnectChangedUpwards();
+            op.StackConnectChangedUpwards();
+        }
+        public virtual void RemoveLoadOperator(Operator op)
+        {
+            loads.Remove(op);
+            StackConnectChangedUpwards();
+            CascadeStackConnectChangedDownwards();
+            op.StackConnectChangedUpwards();
+            op.StackConnectChangedUpwards();
+        }
+        public void Disconnect()
+        {
+            List<Operator> receiversCopy = new List<Operator>(receivers);
+            List<Operator> sendersCopy = new List<Operator>(senders);
+            receivers.Clear();
+            senders.Clear();
+            foreach (Operator op in receiversCopy)
+                op.RemoveSenderOperator(this);
+            foreach (Operator op in sendersCopy)
+                op.RemoveSenderOperator(this);
+
+            StackConnectChangedUpwards();
+            CascadeStackConnectChangedDownwards();
+        }    
+
         public byte GetByteProperty(int index)
         {
             return BindedCoreOperator.GetByteProperty(index);
