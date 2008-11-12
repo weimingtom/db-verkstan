@@ -152,8 +152,11 @@
     <Compile Include="Gui\VectorProperty.Designer.cs">
       <DependentUpon>VectorProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Clip.cs" />
+    <Compile Include="Logic\ClipFactory.cs" />
     <Compile Include="Logic\ClipPreviewCache.cs" />
     <Compile Include="Logic\CoreOperator.cs" />
+    <Compile Include="Logic\GeneratorClip.cs" />
     <Compile Include="Logic\LoadOperator.cs" />
     <Compile Include="Logic\PropagateOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
@@ -166,7 +169,9 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Metronome.cs" />
+    <Compile Include="Logic\SplineClip.cs" />
     <Compile Include="Logic\StoreOperator.cs" />
+    <Compile Include="Logic\Timeline.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\ColorProperty.resx">

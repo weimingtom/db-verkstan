@@ -1,40 +1,45 @@
-#include "cli/internal/VerkstanCore.hpp"
-#include "cli/GeneratorClip.hpp"
+#include "cli/CoreGeneratorClip.hpp"
 
 namespace Verkstan
 {
-    GeneratorClip::GeneratorClip()
+    CoreGeneratorClip::CoreGeneratorClip()
     {
-        Core::Clip* clip = new Core::GeneratorClip();
+        coreGeneratorClip = new Core::GeneratorClip();
         for (int i = 0; i < DB_MAX_CLIPS; i++)
         {   
-            if (clips[i] == 0)
+            if (Core::clips[i] == 0)
             {
-                clips[i] = clip;
+                Core::clips[i] = coreGeneratorClip;
                 id = i;
                 break;
             }
         }
     }
 
-    GeneratorClip::~GeneratorClip()
+    CoreGeneratorClip::~CoreGeneratorClip()
     {
-       
+       Core::clips[id] = 0;
+       delete coreGeneratorClip;
     }
 
-    int GeneratorClip::Period::get()
+    int CoreGeneratorClip::Id::get()
     {
-        return ((Core::GeneratorClip*)getClip())->period;
+        return id;
     }
 
-    void GeneratorClip::Period::set(int newPeriod)
+    int CoreGeneratorClip::GetPeriod()
     {
-        ((Core::GeneratorClip*)getClip())->period = newPeriod;
+        return coreGeneratorClip->period;
     }
 
-    Constants::GeneratorClipTypes GeneratorClip::Type::get()
+    void CoreGeneratorClip::SetPeriod(int newPeriod)
     {
-        int type = ((Core::GeneratorClip*)getClip())->type;
+        coreGeneratorClip->period = newPeriod;
+    }
+
+    Constants::GeneratorClipTypes CoreGeneratorClip::GetType()
+    {
+        int type = coreGeneratorClip->type;
         switch (type)
         {
         case 0:
@@ -50,7 +55,7 @@ namespace Verkstan
         }
     }
 
-    void GeneratorClip::Type::set(Constants::GeneratorClipTypes type)
+    void CoreGeneratorClip::SetType(Constants::GeneratorClipTypes type)
     {
         int newType;
         switch (type)
@@ -72,6 +77,6 @@ namespace Verkstan
             break;
         }
 
-        ((Core::GeneratorClip*)getClip())->type = newType;
+        coreGeneratorClip->type = newType;
     }
 }

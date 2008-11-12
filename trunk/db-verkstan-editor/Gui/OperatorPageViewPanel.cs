@@ -384,6 +384,8 @@ namespace VerkstanEditor.Gui
 
             Color color = RGBHSL.ModifyBrightness(GetOperatorColor(op), brightness);
             color = RGBHSL.ModifySaturation(color, saturation);
+            Color lightColor = RGBHSL.ModifyBrightness(color, 1.3);
+            Color darkColor = RGBHSL.ModifyBrightness(color, 0.7);
 
             String displayName = op.Name;
 
@@ -391,6 +393,8 @@ namespace VerkstanEditor.Gui
                 displayName = op.TypeName;
 
             Brush b = new SolidBrush(color);
+            Pen lightPen = new Pen(lightColor);
+            Pen darkPen = new Pen(darkColor);
             if (op.GetType() == typeof(CoreOperator) || op.GetType() == typeof(PropagateOperator))
             {
                 e.Graphics.FillRectangle(b, op.Dimension);
@@ -398,17 +402,21 @@ namespace VerkstanEditor.Gui
                 SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
                 e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top + op.Height / 2 - stringSize.Height / 2);
                 e.Graphics.Clip = new Region(op.Dimension);
+                e.Graphics.DrawLine(lightPen, op.Left, op.Top, op.Left + op.Width, op.Top);
+                e.Graphics.DrawLine(lightPen, op.Left, op.Top + 1, op.Left, op.Top + op.Height - 2);
+                e.Graphics.DrawLine(darkPen, op.Left + 1, op.Top + op.Height - 1, op.Left + op.Width, op.Top + op.Height - 1);
+                e.Graphics.DrawLine(darkPen, op.Left + op.Width - 1, op.Top + 1, op.Left + op.Width - 1, op.Top + op.Height - 2);
             }
             else if (op.GetType() == typeof(StoreOperator))
             {
                 Point[] points1 = new Point[3];
                 points1[0] = new Point(op.Left, op.Top);
                 points1[1] = new Point(op.Left + 10, op.Top);
-                points1[2] = new Point(op.Left + 10, op.Top + op.Height - 5);
+                points1[2] = new Point(op.Left + 10, op.Top + op.Height - 6);
                 e.Graphics.FillPolygon(b, points1);
                 Point[] points2 = new Point[3];
-                points2[0] = new Point(op.Left + op.Width, op.Top);
-                points2[1] = new Point(op.Left + op.Width - 10, op.Top + op.Height - 5);
+                points2[0] = new Point(op.Left + op.Width - 1, op.Top);
+                points2[1] = new Point(op.Left + op.Width - 10, op.Top + op.Height - 6);
                 points2[2] = new Point(op.Left + op.Width - 10, op.Top);
                 e.Graphics.FillPolygon(b, points2);
                 e.Graphics.FillRectangle(b, new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height - 5));
@@ -416,7 +424,11 @@ namespace VerkstanEditor.Gui
                 SizeF stringSize = e.Graphics.MeasureString(displayName, Font);
                 e.Graphics.DrawString(displayName, Font, Brushes.Black, op.Left + op.Width / 2 - stringSize.Width / 2, op.Top + (op.Height - 5) / 2 - stringSize.Height / 2);
                 e.Graphics.Clip = new Region(op.Dimension);
-            }
+                e.Graphics.DrawLine(darkPen, op.Left, op.Top, op.Left + 9, op.Top + op.Height - 6);
+                e.Graphics.DrawLine(darkPen, op.Left + 10, op.Top + op.Height - 6 , op.Left + op.Width - 11, op.Top + op.Height - 6);
+                e.Graphics.DrawLine(darkPen, op.Left + op.Width - 10, op.Top + op.Height - 6, op.Left + op.Width - 1, op.Top);
+                e.Graphics.DrawLine(lightPen, op.Left, op.Top, op.Left + op.Width - 2, op.Top);
+            }   
             else if (op.GetType() == typeof(LoadOperator))
             {
                 Point[] points1 = new Point[3];
@@ -437,6 +449,8 @@ namespace VerkstanEditor.Gui
             }
 
             b.Dispose();
+            lightPen.Dispose();
+            darkPen.Dispose();
 
             if (!op.IsProcessable || op.IsWarningPresent)
                 e.Graphics.DrawImage(VerkstanEditor.Properties.Resources.warning_icon, op.Location.X + 1, op.Location.Y + 1);
