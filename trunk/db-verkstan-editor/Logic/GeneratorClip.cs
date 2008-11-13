@@ -10,34 +10,50 @@ namespace VerkstanEditor.Logic
         #region Properties
         public override int Id
         {
-            get { return bindedCoreClip.Id; }
+            get { return bindedCoreGeneratorClip.Id; }
         }
         #endregion
 
         #region Private Variables
-        private Verkstan.CoreGeneratorClip bindedCoreClip;
+        private Verkstan.CoreGeneratorClip bindedCoreGeneratorClip;
+        #endregion
+
+        #region Constructors
+        public GeneratorClip()
+        {
+            bindedCoreGeneratorClip = new Verkstan.CoreGeneratorClip();
+            SetBindedCoreClip(bindedCoreGeneratorClip);
+        }
         #endregion
 
         #region Public Methods
+        public void SetGeneratorType(Verkstan.Constants.GeneratorClipTypes type)
+        {
+            bindedCoreGeneratorClip.SetType(type);
+        }
+        public Verkstan.Constants.GeneratorClipTypes GetGeneratorType()
+        {
+            return bindedCoreGeneratorClip.GetType();
+        }
         public override void Dispose()
         {
-            bindedCoreClip.Dispose();
+            bindedCoreGeneratorClip.Dispose();
         }
-        public void SetPeriod(int period)
+        public void SetPeriodInTicks(int period)
         {
-            bindedCoreClip.SetPeriod(period);
+            bindedCoreGeneratorClip.SetPeriod(period);
         }
-        public int GetPeriod()
+        public void SetPeriodInBeats(int period)
         {
-            return bindedCoreClip.GetPeriod();
+            bindedCoreGeneratorClip.SetPeriod(period * Metronome.TicksPerBeat);
         }
-        public void SetType(Verkstan.Constants.GeneratorClipTypes type)
+        public int GetPeriodInTicks()
         {
-            bindedCoreClip.SetType(type);
+            return bindedCoreGeneratorClip.GetPeriod();
         }
-        public Verkstan.Constants.GeneratorClipTypes GetType()
+        public int GetPeriodInBeats()
         {
-            return bindedCoreClip.GetType();
+            return bindedCoreGeneratorClip.GetPeriod() / Metronome.TicksPerBeat;
         }
         #endregion
     }

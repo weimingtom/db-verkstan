@@ -14,8 +14,26 @@ namespace VerkstanEditor.Logic
         }
         #endregion
 
+        #region Private Variables
+        private Verkstan.CoreSplineClip bindedSplineCoreClip;
+        #endregion
+
+        #region Constructors
+        public SplineClip()
+        {
+
+        }
+        #endregion
+
         #region Public Methods
         public override void Dispose()
+        {
+
+        }
+        #endregion
+
+        #region Private Methods
+        private void UpdateCoreClip()
         {
 
         }

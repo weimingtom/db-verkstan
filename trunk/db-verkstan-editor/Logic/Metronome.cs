@@ -5,23 +5,33 @@ using System.Text;
 
 namespace VerkstanEditor.Logic
 {
-    class Metronome
+    public class Metronome
     {
+        #region Properties
+        public static int TicksPerBeat
+        {
+            get
+            {
+                return 256;
+            }
+        }
+        #endregion
+
+        #region Events
         public delegate void BeatChangedHandler(int beat);
         public static event BeatChangedHandler BeatChangedFastUpdate;
         public static event BeatChangedHandler BeatChangedSlowUpdate;
-        
         public static void OnBeatChangedFastUpdate(int beat)
         {
             if (BeatChangedFastUpdate != null)
                 BeatChangedFastUpdate(beat);
         }
-
         public static void OnBeatChangedSlowUpdate(int beat)
         {
             if (BeatChangedSlowUpdate != null)
                 BeatChangedSlowUpdate(beat);
         }
+        #endregion
         /*
         public static int Beat
         {

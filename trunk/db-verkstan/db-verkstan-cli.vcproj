@@ -206,6 +206,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\CoreClip.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreClip.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\CoreGeneratorClip.cli.cpp"
 				>
 			</File>

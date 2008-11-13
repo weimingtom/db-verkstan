@@ -134,11 +134,11 @@
     <Compile Include="Gui\BeatPositionLine.Designer.cs">
       <DependentUpon>BeatPositionLine.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Timeline.cs">
+    <Compile Include="Gui\TimelineView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\Timeline.Designer.cs">
-      <DependentUpon>Timeline.cs</DependentUpon>
+    <Compile Include="Gui\TimelineView.Designer.cs">
+      <DependentUpon>TimelineView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\Transport.cs">
       <SubType>UserControl</SubType>
@@ -152,6 +152,7 @@
     <Compile Include="Gui\VectorProperty.Designer.cs">
       <DependentUpon>VectorProperty.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logic\Channel.cs" />
     <Compile Include="Logic\Clip.cs" />
     <Compile Include="Logic\ClipFactory.cs" />
     <Compile Include="Logic\ClipPreviewCache.cs" />
@@ -274,8 +275,8 @@
     <EmbeddedResource Include="Gui\OperatorPropertyAnimationSettings.resx">
       <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Timeline.resx">
-      <DependentUpon>Timeline.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\TimelineView.resx">
+      <DependentUpon>TimelineView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\Transport.resx">
       <DependentUpon>Transport.cs</DependentUpon>

@@ -47,7 +47,7 @@
             this.operatorsTab = new System.Windows.Forms.TabPage();
             this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.scenesTab = new System.Windows.Forms.TabPage();
-            this.timeline1 = new VerkstanEditor.Gui.Timeline();
+            this.timeline1 = new VerkstanEditor.Gui.TimelineView();
             this.channelTab = new System.Windows.Forms.TabPage();
             this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
             this.transport1 = new VerkstanEditor.Gui.Transport();
@@ -381,7 +381,7 @@
         private Transport transport1;
         private System.Windows.Forms.SplitContainer mainTransportSplitContainer;
         private System.Windows.Forms.Timer slowRenderTimer;
-        private Timeline timeline1;
+        private TimelineView timeline1;
         private OperatorPageView operatorPageView1;
     }
 }

@@ -1,13 +1,13 @@
 #pragma once
 
-#include "cli/Core.hpp"
+#include "cli/CoreClip.hpp"
 #include "cli/Constants.hpp"
 
 using namespace System;
 
 namespace Verkstan
 {
-    public ref class CoreGeneratorClip
+    public ref class CoreGeneratorClip: public CoreClip
     {
     public:
         CoreGeneratorClip();

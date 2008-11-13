@@ -14,6 +14,8 @@ namespace Verkstan
                 break;
             }
         }
+
+        SetCoreClip(coreGeneratorClip);
     }
 
     CoreGeneratorClip::~CoreGeneratorClip()

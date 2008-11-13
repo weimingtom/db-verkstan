@@ -1,6 +1,6 @@
 ﻿namespace VerkstanEditor.Gui
 {
-    partial class Timeline
+    partial class TimelineView
     {
         /// <summary> 
         /// Required designer variable.
@@ -40,8 +40,8 @@
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.splitContainer8 = new System.Windows.Forms.SplitContainer();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -82,7 +82,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(1000, 259);
+            this.splitContainer1.Size = new System.Drawing.Size(451, 259);
             this.splitContainer1.SplitterDistance = 135;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -165,7 +165,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.splitContainer7);
             this.splitContainer2.Panel2MinSize = 16;
-            this.splitContainer2.Size = new System.Drawing.Size(859, 257);
+            this.splitContainer2.Size = new System.Drawing.Size(310, 257);
             this.splitContainer2.SplitterDistance = 240;
             this.splitContainer2.SplitterWidth = 1;
             this.splitContainer2.TabIndex = 0;
@@ -187,8 +187,8 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.vScrollBar1);
             this.splitContainer5.Panel2MinSize = 16;
-            this.splitContainer5.Size = new System.Drawing.Size(859, 240);
-            this.splitContainer5.SplitterDistance = 842;
+            this.splitContainer5.Size = new System.Drawing.Size(310, 240);
+            this.splitContainer5.SplitterDistance = 293;
             this.splitContainer5.SplitterWidth = 1;
             this.splitContainer5.TabIndex = 0;
             // 
@@ -216,7 +216,7 @@
             this.splitPositionAndChannels.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.splitPositionAndChannels.Panel2.Controls.Add(this.timelineChannels1);
             this.splitPositionAndChannels.Panel2.Resize += new System.EventHandler(this.splitPositionAndChannels_Panel2_Resize);
-            this.splitPositionAndChannels.Size = new System.Drawing.Size(842, 240);
+            this.splitPositionAndChannels.Size = new System.Drawing.Size(293, 240);
             this.splitPositionAndChannels.SplitterDistance = 25;
             this.splitPositionAndChannels.SplitterWidth = 1;
             this.splitPositionAndChannels.TabIndex = 0;
@@ -241,9 +241,9 @@
             this.timelineChannels1.Location = new System.Drawing.Point(0, 0);
             this.timelineChannels1.Margin = new System.Windows.Forms.Padding(0);
             this.timelineChannels1.Name = "timelineChannels1";
-            this.timelineChannels1.SelectedChannelIndex = 0;
             this.timelineChannels1.Size = new System.Drawing.Size(0, 0);
             this.timelineChannels1.TabIndex = 0;
+            this.timelineChannels1.Timeline = null;
             this.timelineChannels1.Load += new System.EventHandler(this.timelineChannels1_Load);
             this.timelineChannels1.Resize += new System.EventHandler(this.timelineChannels1_Resize);
             // 
@@ -272,8 +272,8 @@
             this.splitContainer7.Panel1.Controls.Add(this.splitContainer8);
             this.splitContainer7.Panel1MinSize = 16;
             this.splitContainer7.Panel2MinSize = 16;
-            this.splitContainer7.Size = new System.Drawing.Size(859, 16);
-            this.splitContainer7.SplitterDistance = 842;
+            this.splitContainer7.Size = new System.Drawing.Size(310, 16);
+            this.splitContainer7.SplitterDistance = 293;
             this.splitContainer7.SplitterWidth = 1;
             this.splitContainer7.TabIndex = 0;
             // 
@@ -291,20 +291,10 @@
             // splitContainer8.Panel2
             // 
             this.splitContainer8.Panel2.Controls.Add(this.hScrollBar1);
-            this.splitContainer8.Size = new System.Drawing.Size(842, 16);
-            this.splitContainer8.SplitterDistance = 132;
+            this.splitContainer8.Size = new System.Drawing.Size(293, 16);
+            this.splitContainer8.SplitterDistance = 45;
             this.splitContainer8.SplitterWidth = 1;
             this.splitContainer8.TabIndex = 0;
-            // 
-            // hScrollBar1
-            // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Enabled = false;
-            this.hScrollBar1.Location = new System.Drawing.Point(0, 0);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(709, 16);
-            this.hScrollBar1.TabIndex = 0;
-            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // numericUpDown1
             // 
@@ -316,7 +306,7 @@
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(132, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(45, 20);
             this.numericUpDown1.TabIndex = 0;
             this.numericUpDown1.Value = new decimal(new int[] {
             5,
@@ -325,14 +315,24 @@
             0});
             this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
-            // Timeline
+            // hScrollBar1
+            // 
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Enabled = false;
+            this.hScrollBar1.Location = new System.Drawing.Point(0, 0);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(247, 16);
+            this.hScrollBar1.TabIndex = 0;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
+            // 
+            // TimelineView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "Timeline";
-            this.Size = new System.Drawing.Size(1000, 259);
+            this.Name = "TimelineView";
+            this.Size = new System.Drawing.Size(451, 259);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);

@@ -5,7 +5,7 @@
 class GeneratorClip: public Clip
 {
 public:
-    float getValue(int beat);
+    float getValue(int tick);
     int period;
     unsigned char type;
 };

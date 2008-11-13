@@ -3,7 +3,7 @@
 class Clip
 {
 public:
-    virtual float getValue(int beat) = 0;
+    virtual float getValue(int tick) = 0;
     int start;
     int end;
     int channel;

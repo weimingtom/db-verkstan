@@ -194,6 +194,10 @@ namespace VerkstanEditor.Logic
             {
                 return timeline;
             }
+            set
+            {
+                timeline = value;
+            }
         }
         #endregion
 
@@ -252,16 +256,6 @@ namespace VerkstanEditor.Logic
             senders = new List<Operator>(); 
             receivers = new List<Operator>(); 
             loads = new List<Operator>(); 
-        }
-        public Operator(Timeline timeline)
-        {
-            instances.Add(this);
-            dimension = new Rectangle(0, 0, 100, 20);
-            lastDimension = dimension;
-            senders = new List<Operator>();
-            receivers = new List<Operator>();
-            loads = new List<Operator>();
-            timeline = timeline;
         }
         #endregion
 

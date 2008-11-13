@@ -162,7 +162,7 @@ namespace VerkstanEditor.Gui
 
             foreach (Operator op in page.Operators)
             {
-                if (e.ClipRectangle.IntersectsWith(e.ClipRectangle))
+                if (e.ClipRectangle.IntersectsWith(op.Dimension))
                     PaintOperator(op, e);
             }
            

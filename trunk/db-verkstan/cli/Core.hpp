@@ -5,6 +5,7 @@
 #include "core/operator.hpp"
 #include "core/clip.hpp"
 #include "core/generatorclip.hpp"
+#include "core/splineclip.hpp"
 
 namespace Verkstan
 {
@@ -18,5 +19,6 @@ namespace Verkstan
         using ::Mesh;
         using ::Clip;
         using ::GeneratorClip;
+        using ::SplineClip;
     }
 }
