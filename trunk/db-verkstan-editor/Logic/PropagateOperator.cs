@@ -105,6 +105,9 @@ namespace VerkstanEditor.Logic
             foreach (Operator op in receivers)
                 op.CascadeStackConnectChangedDownwards();
 
+            foreach (Operator op in loads)
+                op.CascadeStackConnectChangedDownwards();
+
             IsWarningPresent = senders.Count != 1;
             OnStateChanged();
         }

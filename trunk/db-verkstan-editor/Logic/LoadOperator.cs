@@ -103,6 +103,9 @@ namespace VerkstanEditor.Logic
             foreach (Operator op in receivers)
                 op.CascadeStackConnectChangedDownwards();
 
+            foreach (Operator op in loads)
+                op.CascadeStackConnectChangedDownwards();
+
             OnStateChanged();
         }
         public override String GetStringProperty(int index)

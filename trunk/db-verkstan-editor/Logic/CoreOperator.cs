@@ -102,6 +102,9 @@ namespace VerkstanEditor.Logic
             foreach (Operator op in receivers)
                 op.CascadeStackConnectChangedDownwards();
 
+            foreach (Operator op in loads)
+                op.CascadeStackConnectChangedDownwards();
+
             OnStateChanged();
         }
         public override XmlElement ToXmlElement(XmlDocument doc)
