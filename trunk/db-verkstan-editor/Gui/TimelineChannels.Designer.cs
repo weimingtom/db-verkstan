@@ -41,7 +41,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Channels_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseMove);
             this.ParentChanged += new System.EventHandler(this.Channels_ParentChanged);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Channels_MouseDown);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseUp);
             this.ResumeLayout(false);
 

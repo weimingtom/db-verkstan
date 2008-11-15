@@ -171,8 +171,7 @@ namespace VerkstanEditor.Gui
                 ICollection<Operator> selected = page.GetSelected();
                 foreach (Operator op in selected)
                     PaintMovingOperator(op, e);
-            }
-        
+            }  
 
             if (inResize)
             {
@@ -181,15 +180,13 @@ namespace VerkstanEditor.Gui
                     PaintResizingOperator(op, e);
             }
             
-        
             if (inSelect)
             {
                 Pen p = new Pen(Color.Black, 1);
                 p.DashStyle = DashStyle.Dash;
                 e.Graphics.DrawRectangle(p, selectionRectangle.X, selectionRectangle.Y, selectionRectangle.Width - 1, selectionRectangle.Height - 1);
                 p.Dispose();
-            }
-            
+            }      
         }
         private void OperatorPage_MouseDown(object sender, MouseEventArgs e)
         {

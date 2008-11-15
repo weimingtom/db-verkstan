@@ -49,13 +49,6 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
-        public Clip GetAt(int beat)
-        {
-            foreach (Clip clip in clips)
-                if (clip.StartBeat <= beat && (clip.StartBeat + clip.Beats) > beat)
-                    return clip;
-            return null;
-        }
         public int GetBeats()
         {
             int beats = 0;

@@ -61,10 +61,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="Vorlon2, Version=1.0.3203.32593, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="Vorlon2-debug, Version=1.0.3218.37880, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\bin\Vorlon2.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\bin\Vorlon2-debug.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

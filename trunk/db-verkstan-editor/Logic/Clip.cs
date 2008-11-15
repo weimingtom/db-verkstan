@@ -18,6 +18,7 @@ namespace VerkstanEditor.Logic
             }
             set
             {
+                int currentStartBeat = StartBeat;
                 int currentBeats = (bindedCoreClip.GetEnd() - bindedCoreClip.GetStart()) / Metronome.TicksPerBeat;
                
                 if (value < 1)
@@ -28,7 +29,7 @@ namespace VerkstanEditor.Logic
                     lastBeats = value;
                     int start = bindedCoreClip.GetStart();
                     bindedCoreClip.SetEnd(start + value * Metronome.TicksPerBeat);
-                    OnStateChanged();
+                    StartBeat = currentStartBeat;
                 }
             }
         }
@@ -48,6 +49,7 @@ namespace VerkstanEditor.Logic
             }
             set
             {
+                int currentBeats = Beats;
                 int currrentStartBeat = bindedCoreClip.GetStart() / Metronome.TicksPerBeat;
 
                 if (value < 0)
@@ -57,7 +59,7 @@ namespace VerkstanEditor.Logic
                 {
                     lastStartBeat = value;
                     bindedCoreClip.SetStart(value * Metronome.TicksPerBeat);
-                    OnStateChanged();
+                    Beats = currentBeats;
                 }
             }
         }
@@ -66,7 +68,7 @@ namespace VerkstanEditor.Logic
         {
             get
             {
-                return LastStartBeat;
+                return lastStartBeat;
             }
         }
         private bool selected = false;
@@ -85,12 +87,24 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
+        private int lastChannelIndex;
+        public int LastChannelIndex
+        {
+            get
+            {
+                return lastChannelIndex;
+            }
+        }
         private int channelIndex;
         public int ChannelIndex
         {
             set
             {
-                channelIndex = value;
+                if (channelIndex != value)
+                {
+                    lastChannelIndex = channelIndex;
+                    channelIndex = value;
+                }
             }
             get
             {
@@ -132,6 +146,14 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public Rectangle GetDimension()
+        {
+            return new Rectangle(StartBeat, ChannelIndex, Beats, 1);
+        }
+        public Rectangle GetLastDimension()
+        {
+            return new Rectangle(LastStartBeat, LastChannelIndex, LastBeats, 1);
+        }
         public Bitmap GetPreview(int width, int height, Color color)
         {
             if (preview != null && preview.Width == width && preview.Height == height)
