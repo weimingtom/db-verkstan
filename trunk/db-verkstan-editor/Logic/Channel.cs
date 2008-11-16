@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 
 namespace VerkstanEditor.Logic
 {
@@ -16,35 +17,31 @@ namespace VerkstanEditor.Logic
                 return clips;
             }
         }
-        private int index;
-        public int Index
+        private int channelNumber;
+        public int ChannelNumber
         {
             set
             {
-                if (index != value)
+                if (channelNumber != value)
                 {
-                    index = value;
+                    channelNumber = value;
                     foreach (Clip clip in clips)
-                        clip.ChannelIndex = value;
+                        clip.ChannelNumber = value;
+                    
                     OnStateChanged();
                 }
             }
             get
             {
-                return index;
+                return channelNumber;
             }
         }
-        #endregion
-
-        #region Private Variables
-        Clip.EventHandler stateChangedHandler;
         #endregion
 
         #region Constructors
         public Channel()
         {
             clips = new List<Clip>();
-            stateChangedHandler = new Clip.EventHandler(this.clip_StateChanged);
         }
         #endregion
 
@@ -53,56 +50,32 @@ namespace VerkstanEditor.Logic
         {
             int beats = 0;
             foreach (Clip clip in clips)
-                if (clip.StartBeat + clip.Beats > beats)
-                    beats = clip.StartBeat + clip.Beats;
+            {
+                Rectangle dim = clip.Dimension;
+                if (dim.X + dim.Width > beats)
+                    beats = dim.X + dim.Width;
+            }
             return beats;
         }
         public void AddClip(Clip clip)
         {
             clips.Add(clip);
-            clip.StateChanged += stateChangedHandler;
-            clip.ChannelIndex = index;
+            clip.ChannelNumber = channelNumber;
         }
         public void RemoveCip(Clip clip)
         {
             clips.Remove(clip);
-            clip.StateChanged -= stateChangedHandler;
         }
         #endregion
 
         #region Events
-        public delegate void EventHandler(Channel channel, Clip clip);
-        public event EventHandler Added;
-        protected void OnAdded(Clip clip)
-        {
-            if (Added != null)
-                Added(this, clip);
-        }
-        public event EventHandler Removed;
-        protected void OnRemoved(Clip clip)
-        {
-            if (Removed != null)
-                Removed(this, clip);
-        }
-        public event EventHandler ClipStateChanged;
-        protected void OnClipStateChanged(Clip clip)
-        {
-            if (ClipStateChanged != null)
-                ClipStateChanged(this, clip);
-        }
+        public delegate void EventHandler(Channel channel);
         public event EventHandler StateChanged;
         protected void OnStateChanged()
         {
             if (StateChanged != null)
-                StateChanged(this, null);
+                StateChanged(this);
         }
         #endregion 
-
-        #region Event Handlers
-        public void clip_StateChanged(Clip.EventArgs e)
-        {
-            OnClipStateChanged(e.Clip);
-        }
-        #endregion
     }
 }

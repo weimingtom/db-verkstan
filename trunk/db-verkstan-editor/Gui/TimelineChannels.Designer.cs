@@ -37,12 +37,13 @@
             this.BackColor = System.Drawing.SystemColors.ControlText;
             this.Name = "TimelineChannels";
             this.Size = new System.Drawing.Size(736, 368);
-            this.Load += new System.EventHandler(this.Channels_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Channels_Paint);
+            this.Load += new System.EventHandler(this.TimelineChannels_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TimelineChannels_Paint);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseMove);
-            this.ParentChanged += new System.EventHandler(this.Channels_ParentChanged);
+            this.ParentChanged += new System.EventHandler(this.TimelineChannels_ParentChanged);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TimelineChannels_KeyDown);
             this.ResumeLayout(false);
 
         }

@@ -28,9 +28,7 @@ namespace VerkstanEditor.Logic
 
         #region Private Variables
         private Operator operatorParent;
-        private Channel.EventHandler addedHandler;
-        private Channel.EventHandler removedHandler;
-        private Channel.EventHandler clipStateChangedHandler;
+        private Clip.EventHandler clipStateChangedHandler;
         private Channel.EventHandler channelStateChangedHandler;
         #endregion
 
@@ -39,9 +37,7 @@ namespace VerkstanEditor.Logic
         {
             this.operatorParent = operatorParent;
             channels = new List<Channel>();
-            addedHandler = new Channel.EventHandler(this.channel_Added);
-            removedHandler = new Channel.EventHandler(this.channel_Removed);
-            clipStateChangedHandler = new Channel.EventHandler(this.channel_ClipStateChanged);
+            clipStateChangedHandler = new Clip.EventHandler(this.clip_StateChanged);
             channelStateChangedHandler = new Channel.EventHandler(this.channel_StateChanged);
         }
         #endregion
@@ -110,7 +106,7 @@ namespace VerkstanEditor.Logic
 
             foreach (Clip clip in selected)
             {
-                Rectangle dim = clip.GetDimension();
+                Rectangle dim = clip.Dimension;
                 dim.X += point.X;
                 dim.Y += point.Y;
                 // Cannot perform move if a clip ends up outside of a channel.
@@ -127,17 +123,42 @@ namespace VerkstanEditor.Logic
         }
         public void RemoveSelected()
         {
+            ICollection<Clip> selected = GetSelected();
+            foreach (Clip clip in selected)
+                channels[clip.Dimension.Y].RemoveCip(clip);
 
+            OnClipRemoved(selected);
+
+            foreach (Clip clip in selected)
+            {
+                clip.StateChanged -= clipStateChangedHandler;
+                clip.Dispose();
+            }
         }
-        public void ResizeSelected()
+        public void ResizeSelected(int x)
         {
+            ICollection<Clip> selected = GetSelected();
+            ICollection<Clip> notSelected = GetNonSelected();
 
+            foreach (Clip selectedClip in selected)
+            {
+                Rectangle dim = selectedClip.Dimension;
+                dim.Width += x;
+
+                // Cannot perform resize when a clip gets a size less than 1.
+                if (dim.Width < 1)
+                    return;
+            }
+
+            foreach (Clip clip in selected)
+                if (Resize(clip, x))
+                    OnClipResized(clip);
         }
         public Clip GetAt(Point point)
         {
             foreach (Channel channel in channels)
                 foreach (Clip clip in channel.Clips)
-                    if (clip.GetDimension().Contains(point))
+                    if (clip.Dimension.Contains(point))
                         return clip;
             return null;
         }
@@ -146,7 +167,7 @@ namespace VerkstanEditor.Logic
             List<Clip> result = new List<Clip>();
             foreach (Channel channel in channels)
                 foreach (Clip clip in channel.Clips)
-                    if (rectangle.IntersectsWith(clip.GetDimension()))
+                    if (rectangle.IntersectsWith(clip.Dimension))
                         result.Add(clip);
          
             return result;
@@ -161,28 +182,26 @@ namespace VerkstanEditor.Logic
         }
         public void AddChannel(Channel channel)
         {
-            channel.Index = channels.Count;
+            channel.ChannelNumber = channels.Count;
             channels.Add(channel);
             OnChannelAdded(channel);
-            channel.Added += addedHandler;
-            channel.Removed += removedHandler;
-            channel.ClipStateChanged += clipStateChangedHandler;
             channel.StateChanged += channelStateChangedHandler;
         }
         public void RemoveChannel(Channel channel)
         {
             channels.Remove(channel);
             OnChannelRemoved(channel);
-            int i = 0;
-            foreach (Channel c in channels)
-            {
-                c.Index = i;
-                i++;
-            }
-            channel.Added -= addedHandler;
-            channel.Removed -= removedHandler;
-            channel.ClipStateChanged -= clipStateChangedHandler;
             channel.StateChanged -= channelStateChangedHandler;
+        }
+        public void AddClip(Clip clip, Point location, int beats)
+        {
+            if (location.X < 0 || beats <= 0 || location.Y < 0 || location.Y >= channels.Count)
+                return;
+
+            clip.Dimension = new Rectangle(location.X, location.Y, beats, 1);
+            channels[location.Y].AddClip(clip);
+            OnClipAdded(clip);
+            clip.StateChanged += clipStateChangedHandler;
         }
         #endregion
 
@@ -193,13 +212,21 @@ namespace VerkstanEditor.Logic
         }   
         private bool Move(Clip clip, Point point)
         {
-            Rectangle dim = clip.GetDimension();
+            Rectangle dim = clip.Dimension;
             dim.X += point.X;
             dim.Y += point.Y;
 
-            channels[clip.ChannelIndex].RemoveCip(clip);
-            clip.StartBeat = dim.X;
+            channels[clip.Dimension.Y].RemoveCip(clip);
+            clip.Dimension = new Rectangle(dim.X, dim.Y, dim.Width, dim.Height); 
             channels[dim.Y].AddClip(clip);
+
+            return true;
+        }
+        private bool Resize(Clip clip, int x)
+        {
+            Rectangle dim = clip.Dimension;
+            dim.Width += x;        
+            clip.Dimension = new Rectangle(dim.X, dim.Y, dim.Width, dim.Height);
 
             return true;
         }
@@ -231,17 +258,17 @@ namespace VerkstanEditor.Logic
             if (ChannelStateChanged != null)
                 ChannelStateChanged(new Timeline.EventArgs(channel, new List<Clip>()));
         }
-        public event EventHandler ChannelAdded;
-        protected void OnChannelAdded(Channel channel)
-        {
-            if (ChannelAdded != null)
-                ChannelAdded(new Timeline.EventArgs(channel, null));
-        }
         public event EventHandler ChannelRemoved;
         protected void OnChannelRemoved(Channel channel)
         {
             if (ChannelRemoved != null)
                 ChannelRemoved(new Timeline.EventArgs(channel, null));
+        }
+        public event EventHandler ChannelAdded;
+        protected void OnChannelAdded(Channel channel)
+        {
+            if (ChannelAdded != null)
+                ChannelAdded(new Timeline.EventArgs(channel, null));
         }
         public event EventHandler ClipAdded;
         protected void OnClipAdded(Clip clip)
@@ -252,7 +279,7 @@ namespace VerkstanEditor.Logic
                 ClipAdded(new Timeline.EventArgs(null, clips));
         }
         public event EventHandler ClipRemoved;
-        protected void OnClipRemoved(List<Clip> clips)
+        protected void OnClipRemoved(ICollection<Clip> clips)
         {
             if (ClipRemoved != null)
                 ClipRemoved(new Timeline.EventArgs(null, clips));
@@ -265,26 +292,24 @@ namespace VerkstanEditor.Logic
             if (ClipMoved != null)
                 ClipMoved(new Timeline.EventArgs(null, clips));
         }
-        #endregion 
-
-        #region Event Handlers
-        private void channel_StateChanged(Channel channel, Clip clip)
-        {
-            OnChannelStateChanged(channel);
-        }
-        private void channel_ClipStateChanged(Channel channel, Clip clip)
-        {
-            OnClipStateChanged(clip);
-        }
-        private void channel_Added(Channel channel, Clip clip)
-        {
-            OnClipAdded(clip);
-        }
-        private void channel_Removed(Channel channel, Clip clip)
+        public event EventHandler ClipResized;
+        protected void OnClipResized(Clip clip)
         {
             List<Clip> clips = new List<Clip>();
             clips.Add(clip);
-            OnClipRemoved(clips);
+            if (ClipResized != null)
+                ClipResized(new Timeline.EventArgs(null, clips));
+        }
+        #endregion 
+
+        #region Event Handlers
+        private void channel_StateChanged(Channel channel)
+        {
+            OnChannelStateChanged(channel);
+        }
+        private void clip_StateChanged(Clip clip)
+        {
+            OnClipStateChanged(clip);
         }
         #endregion
     }

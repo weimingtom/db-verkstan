@@ -10,67 +10,6 @@ namespace VerkstanEditor.Logic
     {
         #region Properties
         public abstract int Id { get; }
-        public int Beats
-        {
-            get
-            {
-                return (bindedCoreClip.GetEnd() - bindedCoreClip.GetStart()) / Metronome.TicksPerBeat;
-            }
-            set
-            {
-                int currentStartBeat = StartBeat;
-                int currentBeats = (bindedCoreClip.GetEnd() - bindedCoreClip.GetStart()) / Metronome.TicksPerBeat;
-               
-                if (value < 1)
-                    value = 1;
-
-                if (currentBeats != value)
-                {
-                    lastBeats = value;
-                    int start = bindedCoreClip.GetStart();
-                    bindedCoreClip.SetEnd(start + value * Metronome.TicksPerBeat);
-                    StartBeat = currentStartBeat;
-                }
-            }
-        }
-        private int lastBeats;
-        public int LastBeats
-        {
-            get
-            {
-                return lastBeats;
-            }
-        }
-        public int StartBeat
-        {
-            get
-            {
-                return bindedCoreClip.GetStart() / Metronome.TicksPerBeat;
-            }
-            set
-            {
-                int currentBeats = Beats;
-                int currrentStartBeat = bindedCoreClip.GetStart() / Metronome.TicksPerBeat;
-
-                if (value < 0)
-                    value = 0;
-
-                if (currrentStartBeat != value)
-                {
-                    lastStartBeat = value;
-                    bindedCoreClip.SetStart(value * Metronome.TicksPerBeat);
-                    Beats = currentBeats;
-                }
-            }
-        }
-        private int lastStartBeat;
-        public int LastStartBeat
-        {
-            get
-            {
-                return lastStartBeat;
-            }
-        }
         private bool selected = false;
         public bool Selected
         {
@@ -85,30 +24,6 @@ namespace VerkstanEditor.Logic
                     selected = value;
                     OnStateChanged();
                 }
-            }
-        }
-        private int lastChannelIndex;
-        public int LastChannelIndex
-        {
-            get
-            {
-                return lastChannelIndex;
-            }
-        }
-        private int channelIndex;
-        public int ChannelIndex
-        {
-            set
-            {
-                if (channelIndex != value)
-                {
-                    lastChannelIndex = channelIndex;
-                    channelIndex = value;
-                }
-            }
-            get
-            {
-                return channelIndex;
             }
         }
         private bool isSelected = false;
@@ -127,6 +42,44 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
+        public int ChannelNumber
+        {
+            set
+            {
+                bindedCoreClip.SetChannel(value);
+            }
+            get
+            {
+                return bindedCoreClip.GetChannel();
+            }
+        }
+        private Rectangle dimension;
+        public Rectangle Dimension
+        {
+            get
+            {
+                return dimension;
+            }
+            set
+            {
+                if (!dimension.Equals(value))
+                {
+                    lastDimension = dimension;
+                    dimension = value;
+                    SetStartBeatAndBeats(dimension.X, dimension.Width);
+                    OnStateChanged();
+                }
+
+            }
+        }
+        private Rectangle lastDimension;
+        public Rectangle LastDimension
+        {
+            get
+            {
+                return lastDimension;
+            }
+        }
         #endregion
 
         #region Private Variables
@@ -137,7 +90,8 @@ namespace VerkstanEditor.Logic
         #region Constructors
         public Clip()
         {
-
+            dimension = new Rectangle(0, 0, 1, 1);
+            lastDimension = dimension;
         }
         #endregion
 
@@ -146,14 +100,6 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
-        public Rectangle GetDimension()
-        {
-            return new Rectangle(StartBeat, ChannelIndex, Beats, 1);
-        }
-        public Rectangle GetLastDimension()
-        {
-            return new Rectangle(LastStartBeat, LastChannelIndex, LastBeats, 1);
-        }
         public Bitmap GetPreview(int width, int height, Color color)
         {
             if (preview != null && preview.Width == width && preview.Height == height)
@@ -193,21 +139,26 @@ namespace VerkstanEditor.Logic
         }
         #endregion
 
-        #region Events
-        public class EventArgs : System.EventArgs
+        #region Private Methods
+        private void SetStartBeatAndBeats(int startBeat, int beats)
         {
-            public readonly Clip Clip;
-            public EventArgs(Clip clip)
-            {
-                Clip = clip;
-            }
+            if (startBeat < 0)
+                startBeat = 0;
+            if (beats < 1)
+                beats = 1;
+
+            bindedCoreClip.SetStart(startBeat * Metronome.TicksPerBeat);
+            bindedCoreClip.SetEnd(startBeat * Metronome.TicksPerBeat + beats * Metronome.TicksPerBeat);
         }
-        public delegate void EventHandler(EventArgs e);
+        #endregion
+
+        #region Events
+        public delegate void EventHandler(Clip clip);
         public event EventHandler StateChanged;
         protected void OnStateChanged()
         {
             if (StateChanged != null)
-                StateChanged(new Clip.EventArgs(this));
+                StateChanged(this);
         }
         #endregion 
     }

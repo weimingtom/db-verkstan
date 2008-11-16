@@ -41,4 +41,14 @@ namespace Verkstan
     {
         coreClip->end = end;
     }
+
+    int CoreClip::GetChannel()
+    {
+        return coreClip->channel;
+    }
+
+    void CoreClip::SetChannel(int channel)
+    {
+        coreClip->channel = channel;
+    }
 }
