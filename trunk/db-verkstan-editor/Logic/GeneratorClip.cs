@@ -22,6 +22,8 @@ namespace VerkstanEditor.Logic
         public GeneratorClip()
         {
             bindedCoreGeneratorClip = new Verkstan.CoreGeneratorClip();
+            SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.Sine);
+            SetPeriodInBeats(1);
             SetBindedCoreClip(bindedCoreGeneratorClip);
         }
         #endregion

@@ -25,6 +25,17 @@ namespace VerkstanEditor.Gui
                 return timeline;
             }
         }
+        public TimelineChannels.Modes Mode
+        {
+            set
+            {
+                timelineChannels1.Mode = value;
+            }
+            get
+            {
+                return timelineChannels1.Mode;
+            }
+        }
         #endregion
 
         #region Constructors

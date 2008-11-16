@@ -134,6 +134,12 @@
     <Compile Include="Gui\BeatPositionLine.Designer.cs">
       <DependentUpon>BeatPositionLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\TimelinesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\TimelinesView.Designer.cs">
+      <DependentUpon>TimelinesView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\TimelineView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -274,6 +280,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPropertyAnimationSettings.resx">
       <DependentUpon>OperatorPropertyAnimationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\TimelinesView.resx">
+      <DependentUpon>TimelinesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\TimelineView.resx">
       <DependentUpon>TimelineView.cs</DependentUpon>

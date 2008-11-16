@@ -16,22 +16,36 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class TimelineChannels : UserControl
     {
+        #region Public Enums
+        public enum Modes
+        {
+            Move,
+            DrawGenerator,
+            DrawSpline
+        }
+        #endregion
+
         #region Private Variables
         private int channelPadding = 2;
         private bool inSelect = false;
         private bool inMove = false;
         private bool inResize = false;
+        private bool inDraw = false;
         private Point selectMarkLocation;
         private Point markLocation;
         private Point mouseLocation;
+        private int drawX;
         private Rectangle selectionRectangle;
         private Rectangle lastSelectionRectangle;
         private Rectangle moveRectangle;
         private Rectangle lastMoveRectangle;
         private Rectangle resizeRectangle;
         private Rectangle lastResizeRectangle;
+        private Rectangle drawRectangle;
+        private Rectangle lastDrawRectangle;
         private Timeline.EventHandler clipStateChangedHandler;
         private Timeline.EventHandler clipMovedHandler;
+        private Timeline.EventHandler clipAddedHandler;
         private Timeline.EventHandler clipRemovedHandler;
         private Timeline.EventHandler clipResizedHandler;
         #endregion
@@ -88,6 +102,7 @@ namespace VerkstanEditor.Gui
                     timeline.ClipMoved -= clipMovedHandler;
                     timeline.ClipRemoved -= clipRemovedHandler;
                     timeline.ClipResized -= clipResizedHandler;
+                    timeline.ClipAdded -= clipAddedHandler;
                 }
 
                 timeline = value;
@@ -97,7 +112,22 @@ namespace VerkstanEditor.Gui
                     timeline.ClipMoved += clipMovedHandler;
                     timeline.ClipRemoved += clipRemovedHandler;
                     timeline.ClipResized += clipResizedHandler;
+                    timeline.ClipAdded += clipAddedHandler;
                 }
+            }
+        }
+        private Modes mode;
+        public Modes Mode
+        {
+            set
+            {
+                mode = value;
+                if (timeline != null)
+                    timeline.DeselectAll();
+            }
+            get
+            {
+                return mode;
             }
         }
         #endregion
@@ -110,8 +140,10 @@ namespace VerkstanEditor.Gui
             Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.TimelineChannels_BeatChangedSlowUpdate);
             clipStateChangedHandler = new Timeline.EventHandler(this.timeline_ClipStateChanged);
             clipMovedHandler = new Timeline.EventHandler(this.timeline_ClipMoved);
+            clipAddedHandler = new Timeline.EventHandler(this.timeline_ClipAdded);
             clipRemovedHandler = new Timeline.EventHandler(this.timeline_ClipRemoved);
             clipResizedHandler = new Timeline.EventHandler(this.timeline_ClipResized);
+            Mode = Modes.Move;
         }
         #endregion
 
@@ -128,6 +160,13 @@ namespace VerkstanEditor.Gui
                 Invalidate(BeatDimensionToPixelDimension(clip.LastDimension));
                 Invalidate(BeatDimensionToPixelDimension(clip.Dimension));
             }
+
+            UpdateSize();
+        }
+        public void timeline_ClipAdded(Timeline.EventArgs e)
+        {
+            foreach (Clip clip in e.Clips)
+                Invalidate(BeatDimensionToPixelDimension(clip.Dimension));
 
             UpdateSize();
         }
@@ -222,6 +261,11 @@ namespace VerkstanEditor.Gui
                 foreach (Clip clip in selected)
                     PaintMovingClip(clip, e);
             }
+
+            if (inDraw)
+            {
+                PaintDraw(e);
+            }
         }
         private void TimelineChannels_MouseDown(object sender, MouseEventArgs e)
         {
@@ -231,36 +275,47 @@ namespace VerkstanEditor.Gui
                 selectMarkLocation = mouseLocation;
                 markLocation = selectMarkLocation;
 
-                selectionRectangle = CalculateSelectionRectangle();
-                ICollection<Clip> selected = timeline.GetIn(PixelDimensionToBeatDimension(selectionRectangle));
-
-                if (selected.Count == 0)
+                if (Mode == Modes.Move)
                 {
-                    inSelect = true;
-                    timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
-                    Invalidate(selectionRectangle);
-                }
-                else
-                {
-                    Clip clip = selected.First();
+                    selectionRectangle = CalculateSelectionRectangle();
+                    ICollection<Clip> selected = timeline.GetIn(PixelDimensionToBeatDimension(selectionRectangle));
 
-                    if (!clip.IsSelected)
-                        timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
-
-                   
-                    if (CalculateResizeAreaForClip(clip).Contains(mouseLocation))
+                    if (selected.Count == 0)
                     {
-                        inResize = true;
-                        resizeRectangle = CalculateResizeRectangle();
-                        Invalidate(resizeRectangle);
+                        inSelect = true;
+                        timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
+                        Invalidate(selectionRectangle);
                     }
                     else
                     {
-                   
-                        inMove = true;
-                        moveRectangle = CalculateMoveRectangle();
-                        Invalidate(moveRectangle);
-                    } 
+                        Clip clip = selected.First();
+
+                        if (!clip.IsSelected)
+                            timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
+
+
+                        if (CalculateResizeAreaForClip(clip).Contains(mouseLocation))
+                        {
+                            inResize = true;
+                            resizeRectangle = CalculateResizeRectangle();
+                            Invalidate(resizeRectangle);
+                        }
+                        else
+                        {
+
+                            inMove = true;
+                            moveRectangle = CalculateMoveRectangle();
+                            Invalidate(moveRectangle);
+                        }
+                    }
+                }
+
+                if (Mode == Modes.DrawGenerator || Mode == Modes.DrawSpline)
+                {
+                    drawX = e.X - e.X % beatWidth;
+                    drawRectangle = CalculateDrawRectangle();
+                    Invalidate(drawRectangle);
+                    inDraw = true; 
                 }
             }
         }
@@ -268,63 +323,101 @@ namespace VerkstanEditor.Gui
         {
             mouseLocation = new Point(e.X, e.Y);
 
-            if (inSelect)
+            if (Mode == Modes.Move)
             {
-                lastSelectionRectangle = selectionRectangle;
-                selectionRectangle = CalculateSelectionRectangle();
-                timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
-                if (!lastSelectionRectangle.Equals(selectionRectangle))
+                if (inSelect)
                 {
-                    Invalidate(lastSelectionRectangle);
-                    Invalidate(selectionRectangle);
+                    lastSelectionRectangle = selectionRectangle;
+                    selectionRectangle = CalculateSelectionRectangle();
+                    timeline.Select(PixelDimensionToBeatDimension(selectionRectangle));
+                    if (!lastSelectionRectangle.Equals(selectionRectangle))
+                    {
+                        Invalidate(lastSelectionRectangle);
+                        Invalidate(selectionRectangle);
+                    }
+                }
+
+                if (inMove)
+                {
+                    lastMoveRectangle = moveRectangle;
+                    moveRectangle = CalculateMoveRectangle();
+                    if (!lastMoveRectangle.Equals(moveRectangle))
+                    {
+                        Invalidate(lastMoveRectangle);
+                        Invalidate(moveRectangle);
+                    }
+                }
+
+                if (inResize)
+                {
+                    lastResizeRectangle = resizeRectangle;
+                    resizeRectangle = CalculateResizeRectangle();
+                    if (!lastResizeRectangle.Equals(resizeRectangle))
+                    {
+                        Invalidate(lastResizeRectangle);
+                        Invalidate(resizeRectangle);
+                    }
                 }
             }
 
-            if (inMove)
+            if (mode == Modes.DrawGenerator || mode == Modes.DrawSpline)
             {
-                lastMoveRectangle = moveRectangle;
-                moveRectangle = CalculateMoveRectangle();
-                if (!lastMoveRectangle.Equals(moveRectangle))
+                if (inDraw)
                 {
-                    Invalidate(lastMoveRectangle);
-                    Invalidate(moveRectangle);
-                }
-            }
-
-            if (inResize)
-            {
-                lastResizeRectangle = resizeRectangle;
-                resizeRectangle = CalculateResizeRectangle();
-                if (!lastResizeRectangle.Equals(resizeRectangle))
-                {
-                    Invalidate(lastResizeRectangle);
-                    Invalidate(resizeRectangle);
+                    lastDrawRectangle = drawRectangle;
+                    drawRectangle = CalculateDrawRectangle();
+                    if (!lastDrawRectangle.Equals(drawRectangle))
+                    {
+                        Invalidate(lastDrawRectangle);
+                        Invalidate(drawRectangle);
+                    }
                 }
             }
         }
         private void TimelineChannels_MouseUp(object sender, MouseEventArgs e)
         {
-            if (inSelect)
+            if (Mode == Modes.Move)
             {
-                inSelect = false;
-                Invalidate(selectionRectangle);
+                if (inSelect)
+                {
+                    Invalidate(selectionRectangle);
+                }
+
+                if (inMove)
+                {        
+                    moveRectangle = CalculateMoveRectangle();
+                    Invalidate(moveRectangle);
+                    timeline.MoveSelected(CalculateMovePoint());
+                }
+
+                if (inResize)
+                {        
+                    resizeRectangle = CalculateResizeRectangle();
+                    Invalidate(resizeRectangle);
+                    timeline.ResizeSelected(CalculateResizeX());
+                }
             }
 
-            if (inMove)
+            if (Mode == Modes.DrawGenerator)
             {
-                inMove = false;
-                Rectangle moveRectangle = CalculateMoveRectangle();
-                Invalidate(moveRectangle);
-                timeline.MoveSelected(CalculateMovePoint());
-            }
+                if (inDraw)
+                {
+                    drawRectangle = CalculateDrawRectangle();
+                    Invalidate(drawRectangle);
+                    
+                    Clip clip = null;
+                    if (mode == Modes.DrawGenerator)
+                        clip = new GeneratorClip();
+                    else if (mode == Modes.DrawSpline)
+                        clip = new SplineClip();
 
-            if (inResize)
-            {
-                inResize = false;
-                Rectangle resizeRectangle = CalculateResizeRectangle();
-                Invalidate(resizeRectangle);
-                timeline.ResizeSelected(CalculateResizeX());
+                    timeline.AddClip(clip, CalculateDrawPoint(), CalculateDrawBeats());
+                }
             }
+            inSelect = false;
+            inResize = false;
+            inMove = false;
+            inDraw = false;
         }
         private void TimelineChannels_KeyDown(object sender, KeyEventArgs e)
         {
@@ -532,6 +625,11 @@ namespace VerkstanEditor.Gui
             }
              * */
         }
+        private void PaintDraw(PaintEventArgs e)
+        {
+            Rectangle rect = CalculateDrawRectangle();
+            e.Graphics.DrawRectangle(Pens.White, new Rectangle(rect.X, rect.Y, rect.Width - 1, rect.Height - 1));
+        }
         private Rectangle CalculateSelectionRectangle()
         {
             int x1 = 0;
@@ -592,6 +690,19 @@ namespace VerkstanEditor.Gui
 
             return BeatDimensionToPixelDimension(result);
         }
+        private Rectangle CalculateDrawRectangle()
+        {
+            Point p = PixelPointToBeatPoint(markLocation);
+            int width = CalculateDrawBeats();
+            if (width < 1)
+                width = 1;
+            int height = 1;
+
+            Rectangle result = new Rectangle(p.X, p.Y, width, height);
+            result = BeatDimensionToPixelDimension(result);
+            result.Height = channelHeight;
+            return result;
+        }
         private Point CalculateMovePoint()
         {
             Point p = PixelPointToBeatPoint(mouseLocation);
@@ -605,6 +716,17 @@ namespace VerkstanEditor.Gui
             Point p2 = PixelPointToBeatPoint(markLocation);
             int x = p.X - p2.X;
             return x;
+        }
+        private int CalculateDrawBeats()
+        {
+            int x = mouseLocation.X - drawX;
+            x -= x % beatWidth;
+
+            return x / beatWidth + 1;
+        }
+        private Point CalculateDrawPoint()
+        {
+            return PixelPointToBeatPoint(markLocation);
         }
         private Rectangle ClipDimensionToPixelDimension(Clip clip)
         {
