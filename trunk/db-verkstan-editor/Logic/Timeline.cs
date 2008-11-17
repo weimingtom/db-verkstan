@@ -43,10 +43,10 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
-        public void Select(Rectangle rectangle)
+        public void SelectClips(Rectangle rectangle)
         {
-            ICollection<Clip> oldSelection = GetSelected();
-            ICollection<Clip> newSelection = GetIn(rectangle);
+            ICollection<Clip> oldSelection = GetSelectedClips();
+            ICollection<Clip> newSelection = GetClipsIn(rectangle);
 
             foreach (Clip clip in oldSelection)
                 if (!newSelection.Contains(clip))
@@ -56,25 +56,25 @@ namespace VerkstanEditor.Logic
                 if (!oldSelection.Contains(clip))
                     clip.IsSelected = true;
         }
-        public void SelectAll()
+        public void SelectAllClips()
         {
             foreach (Channel channel in channels)
                 foreach (Clip clip in channel.Clips)
                     if (!clip.IsSelected)
                         clip.IsSelected = true;
         }
-        public void DeselectAll()
+        public void DeselectAllClips()
         {
             foreach (Channel channel in channels)
                 foreach (Clip clip in channel.Clips)
                     if (clip.IsSelected)
                         clip.IsSelected = false;
         }
-        public void Clear()
+        public void ClearClips()
         {
 
         }
-        public ICollection<Clip> GetSelected()
+        public ICollection<Clip> GetSelectedClips()
         {
             List<Clip> selected = new List<Clip>();
             foreach (Channel channel in channels)
@@ -87,7 +87,7 @@ namespace VerkstanEditor.Logic
             }
             return selected;
         }
-        public ICollection<Clip> GetNonSelected()
+        public ICollection<Clip> GetNonSelectedClips()
         {
             List<Clip> nonSelected = new List<Clip>();
             foreach (Channel channel in channels)
@@ -100,9 +100,9 @@ namespace VerkstanEditor.Logic
             }
             return nonSelected;
         }
-        public void MoveSelected(Point point)
+        public void MoveSelectedClips(Point point)
         {
-            ICollection<Clip> selected = GetSelected();
+            ICollection<Clip> selected = GetSelectedClips();
 
             foreach (Clip clip in selected)
             {
@@ -121,9 +121,9 @@ namespace VerkstanEditor.Logic
                     OnClipMoved(clip);
             }
         }
-        public void RemoveSelected()
+        public void RemoveSelectedClips()
         {
-            ICollection<Clip> selected = GetSelected();
+            ICollection<Clip> selected = GetSelectedClips();
             foreach (Clip clip in selected)
                 channels[clip.Dimension.Y].RemoveCip(clip);
 
@@ -135,10 +135,10 @@ namespace VerkstanEditor.Logic
                 clip.Dispose();
             }
         }
-        public void ResizeSelected(int x)
+        public void ResizeSelectedClips(int x)
         {
-            ICollection<Clip> selected = GetSelected();
-            ICollection<Clip> notSelected = GetNonSelected();
+            ICollection<Clip> selected = GetSelectedClips();
+            ICollection<Clip> notSelected = GetNonSelectedClips();
 
             foreach (Clip selectedClip in selected)
             {
@@ -154,7 +154,7 @@ namespace VerkstanEditor.Logic
                 if (Resize(clip, x))
                     OnClipResized(clip);
         }
-        public Clip GetAt(Point point)
+        public Clip GetClipAt(Point point)
         {
             foreach (Channel channel in channels)
                 foreach (Clip clip in channel.Clips)
@@ -162,7 +162,7 @@ namespace VerkstanEditor.Logic
                         return clip;
             return null;
         }
-        public ICollection<Clip> GetIn(Rectangle rectangle)
+        public ICollection<Clip> GetClipsIn(Rectangle rectangle)
         {
             List<Clip> result = new List<Clip>();
             foreach (Channel channel in channels)
@@ -183,15 +183,25 @@ namespace VerkstanEditor.Logic
         public void AddChannel(Channel channel)
         {
             channel.ChannelNumber = channels.Count;
+            channel.Y = channels.Count;
             channels.Add(channel);
             OnChannelAdded(channel);
             channel.StateChanged += channelStateChangedHandler;
         }
         public void RemoveChannel(Channel channel)
         {
-            channels.Remove(channel);
-            OnChannelRemoved(channel);
             channel.StateChanged -= channelStateChangedHandler;
+            foreach (Clip clip in channel.Clips)
+                clip.StateChanged -= clipStateChangedHandler;
+
+            channels.Remove(channel);
+
+            foreach (Channel presentChannel in channels)
+                if (presentChannel.Y > channel.Y)
+                    presentChannel.Y--;
+
+            OnChannelRemoved(channel);
+            channel.Dispose();
         }
         public void AddClip(Clip clip, Point location, int beats)
         {
@@ -202,6 +212,32 @@ namespace VerkstanEditor.Logic
             channels[location.Y].AddClip(clip);
             OnClipAdded(clip);
             clip.StateChanged += clipStateChangedHandler;
+        }
+        public void SelectChannel(Point point)
+        {
+            Channel selectedChannel = GetSelectedChannel();
+            Channel channel = channels[point.Y];
+
+            if (selectedChannel == channel)
+                return;
+
+            if (selectedChannel != null)
+                selectedChannel.IsSelected = false;
+
+            channel.IsSelected = true;
+        }
+        public Channel GetSelectedChannel()
+        {
+            foreach (Channel channel in channels)
+                if (channel.IsSelected)
+                    return channel;
+            return null;
+        }
+        public void RemoveSelectedChannel()
+        {
+            Channel channel = GetSelectedChannel();
+            if (channel != null)
+                RemoveChannel(channel);
         }
         #endregion
 

@@ -28,9 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.addChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.removeChannelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timelineChannelInfos1 = new VerkstanEditor.Gui.TimelineChannelInfos();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
@@ -49,6 +53,7 @@
             this.splitContainer3.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -128,16 +133,40 @@
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.splitContainer4.Panel2.ContextMenuStrip = this.contextMenuStrip1;
             this.splitContainer4.Panel2.Controls.Add(this.timelineChannelInfos1);
             this.splitContainer4.Size = new System.Drawing.Size(133, 240);
             this.splitContainer4.SplitterDistance = 25;
             this.splitContainer4.SplitterWidth = 1;
             this.splitContainer4.TabIndex = 0;
             // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addChannelToolStripMenuItem,
+            this.removeChannelToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(200, 70);
+            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.contextMenuStrip1_Opening);
+            // 
+            // addChannelToolStripMenuItem
+            // 
+            this.addChannelToolStripMenuItem.Name = "addChannelToolStripMenuItem";
+            this.addChannelToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.addChannelToolStripMenuItem.Text = "Add Channel";
+            this.addChannelToolStripMenuItem.Click += new System.EventHandler(this.addChannelToolStripMenuItem_Click);
+            // 
+            // removeChannelToolStripMenuItem
+            // 
+            this.removeChannelToolStripMenuItem.Name = "removeChannelToolStripMenuItem";
+            this.removeChannelToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.removeChannelToolStripMenuItem.Text = "Remove Selected Channel";
+            this.removeChannelToolStripMenuItem.Click += new System.EventHandler(this.removeChannelToolStripMenuItem_Click);
+            // 
             // timelineChannelInfos1
             // 
-            this.timelineChannelInfos1.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.timelineChannelInfos1.ChannelHeight = 32;
+            this.timelineChannelInfos1.BackColor = System.Drawing.SystemColors.Control;
+            this.timelineChannelInfos1.ChannelHeight = 31;
             this.timelineChannelInfos1.Location = new System.Drawing.Point(0, 0);
             this.timelineChannelInfos1.Margin = new System.Windows.Forms.Padding(0);
             this.timelineChannelInfos1.Name = "timelineChannelInfos1";
@@ -214,6 +243,7 @@
             // splitPositionAndChannels.Panel2
             // 
             this.splitPositionAndChannels.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.splitPositionAndChannels.Panel2.ContextMenuStrip = this.contextMenuStrip1;
             this.splitPositionAndChannels.Panel2.Controls.Add(this.timelineChannels1);
             this.splitPositionAndChannels.Panel2.Resize += new System.EventHandler(this.splitPositionAndChannels_Panel2_Resize);
             this.splitPositionAndChannels.Size = new System.Drawing.Size(293, 240);
@@ -224,27 +254,24 @@
             // beatPositionLine1
             // 
             this.beatPositionLine1.AutoScroll = true;
-            this.beatPositionLine1.BackColor = System.Drawing.SystemColors.Control;
             this.beatPositionLine1.BeatWidth = 16;
-            this.beatPositionLine1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.beatPositionLine1.Location = new System.Drawing.Point(0, 0);
-            this.beatPositionLine1.Margin = new System.Windows.Forms.Padding(0);
+            this.beatPositionLine1.Margin = new System.Windows.Forms.Padding(2);
             this.beatPositionLine1.Name = "beatPositionLine1";
-            this.beatPositionLine1.Size = new System.Drawing.Size(50, 25);
+            this.beatPositionLine1.Size = new System.Drawing.Size(714, 25);
             this.beatPositionLine1.TabIndex = 0;
             // 
             // timelineChannels1
             // 
             this.timelineChannels1.BackColor = System.Drawing.SystemColors.ControlText;
             this.timelineChannels1.BeatWidth = 16;
-            this.timelineChannels1.ChannelHeight = 32;
+            this.timelineChannels1.ChannelHeight = 31;
             this.timelineChannels1.Location = new System.Drawing.Point(0, 0);
-            this.timelineChannels1.Margin = new System.Windows.Forms.Padding(0);
+            this.timelineChannels1.Mode = VerkstanEditor.Gui.TimelineChannels.Modes.Move;
             this.timelineChannels1.Name = "timelineChannels1";
             this.timelineChannels1.Size = new System.Drawing.Size(0, 0);
             this.timelineChannels1.TabIndex = 0;
             this.timelineChannels1.Timeline = null;
-            this.timelineChannels1.Load += new System.EventHandler(this.timelineChannels1_Load);
             this.timelineChannels1.Resize += new System.EventHandler(this.timelineChannels1_Resize);
             // 
             // vScrollBar1
@@ -340,6 +367,7 @@
             this.splitContainer3.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             this.splitContainer4.ResumeLayout(false);
+            this.contextMenuStrip1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
@@ -371,9 +399,12 @@
         private System.Windows.Forms.SplitContainer splitContainer7;
         private System.Windows.Forms.SplitContainer splitContainer8;
         private System.Windows.Forms.HScrollBar hScrollBar1;
-        private BeatPositionLine beatPositionLine1;
-        private TimelineChannels timelineChannels1;
-        private TimelineChannelInfos timelineChannelInfos1;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem addChannelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem removeChannelToolStripMenuItem;
+        private TimelineChannelInfos timelineChannelInfos1;
+        private TimelineChannels timelineChannels1;
+        private BeatPositionLine beatPositionLine1;
     }
 }

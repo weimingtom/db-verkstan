@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace VerkstanEditor.Logic
 {
-    public class Channel
+    public class Channel: IDisposable
     {
         #region Properties
         private List<Clip> clips;
@@ -36,6 +36,39 @@ namespace VerkstanEditor.Logic
                 return channelNumber;
             }
         }
+        private bool isSelected = false;
+        public bool IsSelected
+        {
+            get
+            {
+                return isSelected;
+            }
+            set
+            {
+                if (isSelected != value)
+                {
+                    isSelected = value;
+                    OnStateChanged();
+                }
+            }
+        }
+        private int y;
+        public int Y
+        {
+            set
+            {
+                if (y != value)
+                {
+                    y = value;
+                    foreach (Clip clip in clips)
+                        clip.Dimension = new Rectangle(clip.Dimension.X, value, clip.Dimension.Width, clip.Dimension.Height);
+                }
+            }
+            get
+            {
+                return y;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -46,6 +79,11 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public void Dispose()
+        {
+            foreach (Clip clip in clips)
+                clip.Dispose();
+        }
         public int GetBeats()
         {
             int beats = 0;

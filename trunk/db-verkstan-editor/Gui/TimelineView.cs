@@ -53,6 +53,28 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Event Handlers
+        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
+        {
+            if (timeline == null)
+            {
+                addChannelToolStripMenuItem.Enabled = false;
+                removeChannelToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                removeChannelToolStripMenuItem.Enabled = timeline.GetSelectedChannel() != null;
+            }
+        }
+        private void addChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (timeline != null)
+                timeline.AddChannel(new Channel());
+        }
+        private void removeChannelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (timeline != null)
+                timeline.RemoveSelectedChannel();
+        }
         private void timelineChannels1_Resize(object sender, EventArgs e)
         {
             UpdateScrollBars();
@@ -133,6 +155,5 @@ namespace VerkstanEditor.Gui
             }
         }
         #endregion
-
     }
 }
