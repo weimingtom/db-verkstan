@@ -184,7 +184,12 @@ namespace VerkstanEditor.Logic
         }
         public void AddChannel(Channel channel)
         {
-            channel.ChannelNumber = channels.Count;
+            int number = 0;
+            foreach (Channel presentChannel in channels)
+                if (number < presentChannel.ChannelNumber)
+                    number = presentChannel.ChannelNumber;
+
+            channel.ChannelNumber = number + 1;
             channel.Y = channels.Count;
             channels.Add(channel);
             OnChannelAdded(channel);
