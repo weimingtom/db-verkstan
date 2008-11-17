@@ -25,8 +25,9 @@ dirty(true)
         properties[i].amplify2 = 1.0f;
         properties[i].amplify3 = 1.0f;
     }
-    for (int i = 0; i < DB_MAX_OPERATOR_CLIPS; i++)
-        operatorClips[i] = -1;
+
+    for (int i = 0; i < DB_MAX_TIMELINE_CLIPS; i++)
+        timelineClips[i] = -1;
 }
 
 unsigned char Operator::getByteProperty(int index)

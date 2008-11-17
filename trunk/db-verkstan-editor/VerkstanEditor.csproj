@@ -166,8 +166,6 @@
     </Compile>
     <Compile Include="Logic\Channel.cs" />
     <Compile Include="Logic\Clip.cs" />
-    <Compile Include="Logic\ClipFactory.cs" />
-    <Compile Include="Logic\ClipPreviewCache.cs" />
     <Compile Include="Logic\CoreOperator.cs" />
     <Compile Include="Logic\GeneratorClip.cs" />
     <Compile Include="Logic\LoadOperator.cs" />

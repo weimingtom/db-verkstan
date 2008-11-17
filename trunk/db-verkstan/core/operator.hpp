@@ -10,7 +10,7 @@
 
 #define DB_MAX_OPERATOR_CONNECTIONS 64
 #define DB_MAX_OPERATOR_PROPERTIES 32
-#define DB_MAX_OPERATOR_CLIPS 64
+#define DB_MAX_TIMELINE_CLIPS 64
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
 
 class Operator
@@ -41,8 +41,8 @@ public:
 
     Mesh* mesh;
     Texture* texture;
-    int beats;
-    int operatorClips[DB_MAX_OPERATOR_CLIPS];
+    int ticks;
+    int timelineClips[DB_MAX_TIMELINE_CLIPS];
     int numberOfClips;
 
     struct Property

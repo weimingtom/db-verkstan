@@ -15,16 +15,8 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class BeatPositionLine : UserControl
     {
-        private int loopMarker = 0;
-        private bool changeLoop = false;
-        private bool dragBeat = false;
-        private int beat;
-
-        [Browsable(true)]
-        [Description("The width of a beat in pixels.")]
-        [Editor(typeof(int), typeof(UITypeEditor))]
-        [DefaultValue(16)]
-        private int beatWidth;
+        #region Properties
+        private int beatWidth = 16;
         public int BeatWidth
         {
             set
@@ -38,13 +30,17 @@ namespace VerkstanEditor.Gui
             }
 
         }
+        #endregion
 
+        #region Constructor
         public BeatPositionLine()
         {
             InitializeComponent();
             Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.BeatPositionLine_BeatChangedSlowUpdate);
         }
+        #endregion
 
+        #region Event Handlers
         public void BeatPositionLine_BeatChangedSlowUpdate(int beat)
         {
             /*
@@ -69,10 +65,8 @@ namespace VerkstanEditor.Gui
             Update();
              */
         }
-
         private void BeatPositionLine_Paint(object sender, PaintEventArgs e)
         {
-            /*
             Brush b = new SolidBrush(ForeColor);
             Pen p = new Pen(Color.FromArgb(100, 100, 100), 1);
             int beats = Width / beatWidth + 1;
@@ -98,25 +92,24 @@ namespace VerkstanEditor.Gui
             p.Dispose();
             b.Dispose();
 
-            int beatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
-            e.Graphics.DrawLine(Pens.Red, new Point(beatInPixels, 0), new Point(beatInPixels, Height));
+           // int beatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
+            //e.Graphics.DrawLine(Pens.Red, new Point(beatInPixels, 0), new Point(beatInPixels, Height));
 
-            Rectangle loopStartRectangle = new Rectangle(Metronome.LoopStart / Metronome.TicksPerBeat * beatWidth, 0, 2, Height);
-            if (!e.ClipRectangle.IntersectsWith(loopStartRectangle))
-                return;
+            //Rectangle loopStartRectangle = new Rectangle(Metronome.LoopStart / Metronome.TicksPerBeat * beatWidth, 0, 2, Height);
+            //if (!e.ClipRectangle.IntersectsWith(loopStartRectangle))
+            //    return;
 
-            e.Graphics.DrawLine(Pens.Blue, loopStartRectangle.X, 0, loopStartRectangle.X, Height);
-            e.Graphics.DrawLine(Pens.Blue, loopStartRectangle.X + 1, 0, loopStartRectangle.X + 1, Height);
+           // e.Graphics.DrawLine(Pens.Blue, loopStartRectangle.X, 0, loopStartRectangle.X, Height);
+           // e.Graphics.DrawLine(Pens.Blue, loopStartRectangle.X + 1, 0, loopStartRectangle.X + 1, Height);
 
-            Rectangle loopEndRectangle = new Rectangle(Metronome.LoopEnd / Metronome.TicksPerBeat * beatWidth, 0, 2, Height);
-            if (!e.ClipRectangle.IntersectsWith(loopEndRectangle))
-                return;
+           // Rectangle loopEndRectangle = new Rectangle(Metronome.LoopEnd / Metronome.TicksPerBeat * beatWidth, 0, 2, Height);
+           // if (!e.ClipRectangle.IntersectsWith(loopEndRectangle))
+           //     return;
 
-            e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X, 0, loopEndRectangle.X, Height);
-            e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X + 1, 0, loopEndRectangle.X + 1, Height);
-            */     
+           // e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X, 0, loopEndRectangle.X, Height);
+           
+            //e.Graphics.DrawLine(Pens.Blue, loopEndRectangle.X + 1, 0, loopEndRectangle.X + 1, Height);    
         }
-
         private void BeatPositionLine_MouseDown(object sender, MouseEventArgs e)
         {
             /*
@@ -132,7 +125,6 @@ namespace VerkstanEditor.Gui
             }
              */
         }
-
         private void BeatPositionLine_MouseMove(object sender, MouseEventArgs e)
         {
             /*
@@ -142,7 +134,6 @@ namespace VerkstanEditor.Gui
             Metronome.Beat = e.X / beatWidth * Metronome.TicksPerBeat;
              * */
         }
-
         private void BeatPositionLine_MouseUp(object sender, MouseEventArgs e)
         {
             /*
@@ -176,5 +167,6 @@ namespace VerkstanEditor.Gui
             }
              * */
         }
+        #endregion
     }
 }

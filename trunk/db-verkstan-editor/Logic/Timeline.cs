@@ -134,6 +134,8 @@ namespace VerkstanEditor.Logic
                 clip.StateChanged -= clipStateChangedHandler;
                 clip.Dispose();
             }
+
+            UpdateCoreClips();
         }
         public void ResizeSelectedClips(int x)
         {
@@ -202,6 +204,8 @@ namespace VerkstanEditor.Logic
 
             OnChannelRemoved(channel);
             channel.Dispose();
+
+            UpdateCoreClips();
         }
         public void AddClip(Clip clip, Point location, int beats)
         {
@@ -212,6 +216,8 @@ namespace VerkstanEditor.Logic
             channels[location.Y].AddClip(clip);
             OnClipAdded(clip);
             clip.StateChanged += clipStateChangedHandler;
+
+            UpdateCoreClips();
         }
         public void SelectChannel(Point point)
         {
@@ -247,7 +253,17 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreClips()
         {
-
+            operatorParent.BindedCoreOperator.ClearClips();
+            int numberOfClips = 0;
+            foreach (Channel channel in channels)
+            {
+                foreach (Clip clip in channel.Clips)
+                {
+                    operatorParent.BindedCoreOperator.SetClipId(numberOfClips, clip.Id);
+                    numberOfClips++;
+                }
+            }
+            operatorParent.BindedCoreOperator.SetNumberOfClips(numberOfClips);
         }   
         private bool Move(Clip clip, Point point)
         {

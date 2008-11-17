@@ -311,4 +311,40 @@ namespace Verkstan
 
         return result;
     }
+
+    void CoreOperator::ClearClips()
+    {
+        for (int i = 0; i < DB_MAX_TIMELINE_CLIPS; i++)
+            getOperator()->timelineClips[i] = -1;
+    }
+
+    int CoreOperator::GetClipId(int index)
+    {
+        return getOperator()->timelineClips[index];
+    }
+
+    void CoreOperator::SetClipId(int index, int id)
+    {
+        getOperator()->timelineClips[index] = id;
+    }
+
+    int CoreOperator::GetTicks()
+    {
+        return getOperator()->ticks;
+    }
+
+    void CoreOperator::SetTicks(int ticks)
+    {
+        getOperator()->ticks = ticks;
+    }
+
+    void CoreOperator::SetNumberOfClips(int numberOfClips)
+    {
+        getOperator()->numberOfClips = numberOfClips;
+    }
+
+    int CoreOperator::GetNumberOfClips()
+    {
+        return getOperator()->numberOfClips;
+    }
 }

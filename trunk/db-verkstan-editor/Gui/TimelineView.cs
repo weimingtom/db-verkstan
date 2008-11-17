@@ -142,7 +142,6 @@ namespace VerkstanEditor.Gui
             vScrollBar1.LargeChange = splitPositionAndChannels.Panel2.Height;
             vScrollBar1.SmallChange = 10;
 
-
             if (!hScrollBar1.Enabled)
             {
                 timelineChannelsView1.Left = 0;
@@ -154,6 +153,12 @@ namespace VerkstanEditor.Gui
                 timelineChannelsView1.Top = 0;
                 timelineChannelsPropertiesView1.Top = 0;
             }
+
+            //timelineChannelsView1.Top = -vScrollBar1.Value;
+            //timelineChannelsPropertiesView1.Top = -vScrollBar1.Value;
+            timelineChannelsView1.Left = splitPositionAndChannels.Panel2.Width - timelineChannelsView1.Width;
+            beatPositionLine1.Left = splitPositionAndChannels.Panel2.Width - beatPositionLine1.Width;
+            hScrollBar1.Value = hScrollBar1.Maximum;
         }
         #endregion
     }

@@ -438,7 +438,7 @@ namespace VerkstanEditor.Gui
                 }
             }
 
-            if (Mode == Modes.DrawGenerator)
+            if (mode == Modes.DrawGenerator || mode == Modes.DrawSpline)
             {
                 if (inDraw)
                 {
@@ -588,7 +588,7 @@ namespace VerkstanEditor.Gui
         {
             if (channel.IsSelected)
             {
-                Brush b = new SolidBrush(Color.FromArgb(30, 30, 30));
+                Brush b = new SolidBrush(Color.FromArgb(40, 40, 40));
                 e.Graphics.FillRectangle(b, ChannelDimensionToPixelDimension(channel));
                 b.Dispose();
             }

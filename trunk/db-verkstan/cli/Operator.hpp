@@ -55,6 +55,13 @@ namespace Verkstan
         int GetNumberOfRequiredInputs();
         void ClearInputConnections();
         void ClearOutputConnections();
+        void ClearClips();
+        int GetClipId(int index);
+        void SetClipId(int index, int id);
+        void SetNumberOfClips(int numberOfClips);
+        int GetNumberOfClips();
+        int GetTicks();
+        void SetTicks(int ticks);
         int GetInputConnectionId(int index);
         int GetOutputConnectionId(int index);
         void SetInputConnectionId(int index, int id);

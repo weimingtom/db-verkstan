@@ -10,7 +10,7 @@ namespace VerkstanEditor.Logic
         #region Properties
         public override int Id
         {
-            get { return -1; }
+            get { return bindedSplineCoreClip.Id; }
         }
         #endregion
 
@@ -21,21 +21,15 @@ namespace VerkstanEditor.Logic
         #region Constructors
         public SplineClip()
         {
-
+            bindedSplineCoreClip = new Verkstan.CoreSplineClip();
+            SetBindedCoreClip(bindedSplineCoreClip);
         }
         #endregion
 
         #region Public Methods
         public override void Dispose()
         {
-
-        }
-        #endregion
-
-        #region Private Methods
-        private void UpdateCoreClip()
-        {
-
+            bindedSplineCoreClip.Dispose();
         }
         #endregion
     }

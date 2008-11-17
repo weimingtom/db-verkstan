@@ -26,12 +26,12 @@ namespace VerkstanEditor.Gui
         }
         private void generatorButton_Click(object sender, EventArgs e)
         {
-            selectedToolLabel.Text = "Draw Generator Tool Selected";
+            selectedToolLabel.Text = "Generator Drawing Tool Selected";
             timelineView1.Mode = TimelineChannelsView.Modes.DrawGenerator;
         }
         private void splineButton_Click(object sender, EventArgs e)
         {
-            selectedToolLabel.Text = "Draw Spline Tool Selected";
+            selectedToolLabel.Text = "Spline Drawing Tool Selected";
             timelineView1.Mode = TimelineChannelsView.Modes.DrawSpline;
         }
         #endregion
