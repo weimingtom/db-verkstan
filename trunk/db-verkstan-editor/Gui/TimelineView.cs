@@ -25,15 +25,15 @@ namespace VerkstanEditor.Gui
                 return timeline;
             }
         }
-        public TimelineChannels.Modes Mode
+        public TimelineChannelsView.Modes Mode
         {
             set
             {
-                timelineChannels1.Mode = value;
+                timelineChannelsView1.Mode = value;
             }
             get
             {
-                return timelineChannels1.Mode;
+                return timelineChannelsView1.Mode;
             }
         }
         #endregion
@@ -44,11 +44,12 @@ namespace VerkstanEditor.Gui
             InitializeComponent();
             this.MouseWheel += new MouseEventHandler(Timeline_MouseWheel);
             timeline = OperatorFactory.Create("Scene").Timeline;
-            timelineChannels1.Timeline = timeline;
+            timelineChannelsView1.Timeline = timeline;
+            timelineChannelsPropertiesView1.Timeline = timeline;
            // Metronome.Beats = scene.Beats;
            // Metronome.LoopStart = 0;
            // Metronome.LoopEnd = scene.Beats;
-            numericUpDown1.Value = timelineChannels1.BeatWidth;
+            numericUpDown1.Value = timelineChannelsView1.BeatWidth;
         }
         #endregion
 
@@ -78,7 +79,7 @@ namespace VerkstanEditor.Gui
         private void timelineChannels1_Resize(object sender, EventArgs e)
         {
             UpdateScrollBars();
-            beatPositionLine1.Width = timelineChannels1.Width;
+            beatPositionLine1.Width = timelineChannelsView1.Width;
         }
         private void timelineChannels1_Load(object sender, EventArgs e)
         {
@@ -86,13 +87,13 @@ namespace VerkstanEditor.Gui
         }
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            timelineChannels1.Left = -e.NewValue;
+            timelineChannelsView1.Left = -e.NewValue;
             beatPositionLine1.Left = -e.NewValue;
         }
         private void vScrollBar1_Scroll(object sender, ScrollEventArgs e)
         {
-            timelineChannels1.Top = -e.NewValue;
-            timelineChannelInfos1.Top = -e.NewValue;
+            timelineChannelsView1.Top = -e.NewValue;
+            timelineChannelsPropertiesView1.Top = -e.NewValue;
         }
         private void Timeline_MouseWheel(object sender, MouseEventArgs e)
         {
@@ -111,8 +112,8 @@ namespace VerkstanEditor.Gui
                     vScrollBar1.Value = vScrollBar1.Maximum - vScrollBar1.LargeChange + 1;
             }
 
-            timelineChannels1.Top = -vScrollBar1.Value;
-            timelineChannelInfos1.Top = -vScrollBar1.Value;
+            timelineChannelsView1.Top = -vScrollBar1.Value;
+            timelineChannelsPropertiesView1.Top = -vScrollBar1.Value;
         }
         private void splitPositionAndChannels_Panel2_Resize(object sender, EventArgs e)
         {
@@ -120,7 +121,7 @@ namespace VerkstanEditor.Gui
         }
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            timelineChannels1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
+            timelineChannelsView1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
             beatPositionLine1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
         }
         #endregion
@@ -128,30 +129,30 @@ namespace VerkstanEditor.Gui
         #region Private Methods
         private void UpdateScrollBars()
         {
-            hScrollBar1.Enabled = timelineChannels1.Width > splitPositionAndChannels.Panel2.Width;
-            vScrollBar1.Enabled = timelineChannels1.Height > splitPositionAndChannels.Panel2.Height;
+            hScrollBar1.Enabled = timelineChannelsView1.Width > splitPositionAndChannels.Panel2.Width;
+            vScrollBar1.Enabled = timelineChannelsView1.Height > splitPositionAndChannels.Panel2.Height;
 
             hScrollBar1.Minimum = 0;
-            hScrollBar1.Maximum = timelineChannels1.Width;
+            hScrollBar1.Maximum = timelineChannelsView1.Width;
             hScrollBar1.LargeChange = splitPositionAndChannels.Panel2.Width;
             hScrollBar1.SmallChange = 10;
           
             vScrollBar1.Minimum = 0;
-            vScrollBar1.Maximum = timelineChannels1.Height;
+            vScrollBar1.Maximum = timelineChannelsView1.Height;
             vScrollBar1.LargeChange = splitPositionAndChannels.Panel2.Height;
             vScrollBar1.SmallChange = 10;
 
 
             if (!hScrollBar1.Enabled)
             {
-                timelineChannels1.Left = 0;
+                timelineChannelsView1.Left = 0;
                 beatPositionLine1.Left = 0;
             }
 
             if (!vScrollBar1.Enabled)
             {
-                timelineChannels1.Top = 0;
-                timelineChannelInfos1.Top = 0;
+                timelineChannelsView1.Top = 0;
+                timelineChannelsPropertiesView1.Top = 0;
             }
         }
         #endregion

@@ -80,17 +80,23 @@
     <Compile Include="Gui\ChannelInfo.Designer.cs">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\TimelineChannelInfos.cs">
+    <Compile Include="Gui\TimelineChannelPropertiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\TimelineChannelInfos.Designer.cs">
-      <DependentUpon>TimelineChannelInfos.cs</DependentUpon>
+    <Compile Include="Gui\TimelineChannelPropertiesView.Designer.cs">
+      <DependentUpon>TimelineChannelPropertiesView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\TimelineChannels.cs">
+    <Compile Include="Gui\TimelineChannelsPropertiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Gui\TimelineChannels.Designer.cs">
-      <DependentUpon>TimelineChannels.cs</DependentUpon>
+    <Compile Include="Gui\TimelineChannelsPropertiesView.Designer.cs">
+      <DependentUpon>TimelineChannelsPropertiesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\TimelineChannelsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\TimelineChannelsView.Designer.cs">
+      <DependentUpon>TimelineChannelsView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\ColorProperty.cs">
       <SubType>UserControl</SubType>
@@ -260,11 +266,14 @@
     <EmbeddedResource Include="Gui\ChannelInfo.resx">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\TimelineChannelInfos.resx">
-      <DependentUpon>TimelineChannelInfos.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\TimelineChannelPropertiesView.resx">
+      <DependentUpon>TimelineChannelPropertiesView.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\TimelineChannels.resx">
-      <DependentUpon>TimelineChannels.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\TimelineChannelsPropertiesView.resx">
+      <DependentUpon>TimelineChannelsPropertiesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\TimelineChannelsView.resx">
+      <DependentUpon>TimelineChannelsView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\MiniTimeline.resx">
       <DependentUpon>MiniTimeline.cs</DependentUpon>

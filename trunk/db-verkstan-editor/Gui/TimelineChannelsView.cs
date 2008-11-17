@@ -14,7 +14,7 @@ using VerkstanEditor.Util;
 namespace VerkstanEditor.Gui
 {
     [ToolboxItem(true)]
-    public partial class TimelineChannels : UserControl
+    public partial class TimelineChannelsView : UserControl
     {
         #region Public Enums
         public enum Modes
@@ -134,7 +134,7 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Constructors
-        public TimelineChannels()
+        public TimelineChannelsView()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -193,12 +193,28 @@ namespace VerkstanEditor.Gui
         }
         public void timeline_ChannelAdded(Timeline.EventArgs e)
         {
-            Invalidate();
+            Point p = new Point(0, e.Channel.Y);
+            p = BeatPointToPixelPoint(p);
+            Rectangle rectangle = new Rectangle(p.X, p.Y, Width, channelHeight);
+            Invalidate(rectangle);
             UpdateSize();
         }
         public void timeline_ChannelRemoved(Timeline.EventArgs e)
         {
-            Invalidate();
+            Rectangle result = new Rectangle();
+
+            foreach (Channel channel in timeline.Channels)
+            {
+                if (channel.Y >= e.Channel.Y)
+                {
+                    Point p = new Point(0, e.Channel.Y);
+                    p = BeatPointToPixelPoint(p);
+                    Rectangle dimension = new Rectangle(p.X, p.Y, Width, channelHeight);
+                    result = Rectangle.Union(result, dimension);
+                }
+            }
+
+            Invalidate(result);
             UpdateSize();
         }
         public void timeline_ChannelStateChanged(Timeline.EventArgs e)

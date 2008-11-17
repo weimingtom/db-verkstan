@@ -215,6 +215,9 @@ namespace VerkstanEditor.Logic
         }
         public void SelectChannel(Point point)
         {
+            if (channels.Count <= point.Y)
+                return;
+
             Channel selectedChannel = GetSelectedChannel();
             Channel channel = channels[point.Y];
 

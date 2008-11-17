@@ -22,17 +22,17 @@ namespace VerkstanEditor.Gui
         private void moveButton_Click(object sender, EventArgs e)
         {
             selectedToolLabel.Text = "Move Tool Selected";
-            timelineView1.Mode = TimelineChannels.Modes.Move;
+            timelineView1.Mode = TimelineChannelsView.Modes.Move;
         }
         private void generatorButton_Click(object sender, EventArgs e)
         {
             selectedToolLabel.Text = "Draw Generator Tool Selected";
-            timelineView1.Mode = TimelineChannels.Modes.DrawGenerator;
+            timelineView1.Mode = TimelineChannelsView.Modes.DrawGenerator;
         }
         private void splineButton_Click(object sender, EventArgs e)
         {
             selectedToolLabel.Text = "Draw Spline Tool Selected";
-            timelineView1.Mode = TimelineChannels.Modes.DrawSpline;
+            timelineView1.Mode = TimelineChannelsView.Modes.DrawSpline;
         }
         #endregion
     }
