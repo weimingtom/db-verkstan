@@ -325,7 +325,7 @@ namespace VerkstanEditor.Logic
             foreach (Operator op in receiversCopy)
                 op.RemoveSenderOperator(this);
             foreach (Operator op in sendersCopy)
-                op.RemoveSenderOperator(this);
+                op.RemoveReceiverOperator(this);
 
             StackConnectChangedUpwards();
             CascadeStackConnectChangedDownwards();
