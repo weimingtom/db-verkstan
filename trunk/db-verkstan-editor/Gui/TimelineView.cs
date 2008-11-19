@@ -13,6 +13,17 @@ namespace VerkstanEditor.Gui
     public partial class TimelineView : UserControl
     {
         #region Properties
+        public Clip ViewedClip
+        {
+            get
+            {
+                return timelineChannelsView1.ViewedClip;
+            }
+            set
+            {
+                timelineChannelsView1.ViewedClip = value;
+            }
+        }
         private Timeline timeline;
         public Timeline Timeline
         {
@@ -51,6 +62,7 @@ namespace VerkstanEditor.Gui
            // Metronome.LoopEnd = scene.Beats;
             numericUpDown1.Value = timelineChannelsView1.BeatWidth;
         }
+       
         #endregion
 
         #region Event Handlers
@@ -124,6 +136,10 @@ namespace VerkstanEditor.Gui
             timelineChannelsView1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
             beatPositionLine1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
         }
+        private void timelineChannelsView1_ViewedClipChanged(object sender, EventArgs e)
+        {
+            OnViewedClipChanged();
+        }
         #endregion
 
         #region Private Methods
@@ -153,12 +169,15 @@ namespace VerkstanEditor.Gui
                 timelineChannelsView1.Top = 0;
                 timelineChannelsPropertiesView1.Top = 0;
             }
+        }
+        #endregion
 
-            //timelineChannelsView1.Top = -vScrollBar1.Value;
-            //timelineChannelsPropertiesView1.Top = -vScrollBar1.Value;
-            timelineChannelsView1.Left = splitPositionAndChannels.Panel2.Width - timelineChannelsView1.Width;
-            beatPositionLine1.Left = splitPositionAndChannels.Panel2.Width - beatPositionLine1.Width;
-            hScrollBar1.Value = hScrollBar1.Maximum;
+        #region Events
+        public event EventHandler ViewedClipChanged;
+        protected void OnViewedClipChanged()
+        {
+            if (ViewedClipChanged != null)
+                ViewedClipChanged(this, new EventArgs());
         }
         #endregion
     }

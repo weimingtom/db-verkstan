@@ -39,46 +39,13 @@ namespace Verkstan
         coreGeneratorClip->period = newPeriod;
     }
 
-    Constants::GeneratorClipTypes CoreGeneratorClip::GetType()
+    int CoreGeneratorClip::GetGeneratorType()
     {
-        int type = coreGeneratorClip->type;
-        switch (type)
-        {
-        case 0:
-            return Constants::GeneratorClipTypes::Sine;
-        case 1:
-            return Constants::GeneratorClipTypes::Cosine;
-        case 2:
-            return Constants::GeneratorClipTypes::RampUp;
-        case 3:
-            return Constants::GeneratorClipTypes::RampDown;
-        case 4:
-            return Constants::GeneratorClipTypes::SawTooth;
-        }
+        return coreGeneratorClip->type;
     }
 
-    void CoreGeneratorClip::SetType(Constants::GeneratorClipTypes type)
+    void CoreGeneratorClip::SetGeneratorType(int type)
     {
-        int newType;
-        switch (type)
-        {
-        case Constants::GeneratorClipTypes::Sine:
-            newType = 0;
-            break;
-        case Constants::GeneratorClipTypes::Cosine:
-            newType = 1;
-            break;
-        case Constants::GeneratorClipTypes::RampUp:
-            newType = 2;
-            break;
-        case Constants::GeneratorClipTypes::RampDown:
-            newType = 3;
-            break;
-        case Constants::GeneratorClipTypes::SawTooth:
-            newType = 4;
-            break;
-        }
-
-        coreGeneratorClip->type = newType;
+        coreGeneratorClip->type = type;
     }
 }

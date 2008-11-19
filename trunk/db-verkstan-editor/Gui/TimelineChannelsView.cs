@@ -131,6 +131,19 @@ namespace VerkstanEditor.Gui
                 return mode;
             }
         }
+        private Clip viewedClip;
+        public Clip ViewedClip
+        {
+            get
+            {
+                return viewedClip;
+            }
+            set
+            {
+                viewedClip = value;
+                OnViewedClipChanged();
+            }
+        }
         #endregion
 
         #region Constructors
@@ -138,7 +151,7 @@ namespace VerkstanEditor.Gui
         {
             InitializeComponent();
             DoubleBuffered = true;
-            Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.TimelineChannels_BeatChangedSlowUpdate);
+            Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.TimelineChannelsView_BeatChangedSlowUpdate);
             clipStateChangedHandler = new Timeline.EventHandler(this.timeline_ClipStateChanged);
             clipMovedHandler = new Timeline.EventHandler(this.timeline_ClipMoved);
             clipAddedHandler = new Timeline.EventHandler(this.timeline_ClipAdded);
@@ -152,12 +165,12 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Event Handlers
-        public void timeline_ClipStateChanged(Timeline.EventArgs e)
+        private void timeline_ClipStateChanged(Timeline.EventArgs e)
         {
             foreach (Clip clip in e.Clips)
                 Invalidate(ClipDimensionToPixelDimension(clip));
         }
-        public void timeline_ClipMoved(Timeline.EventArgs e)
+        private void timeline_ClipMoved(Timeline.EventArgs e)
         {
             foreach (Clip clip in e.Clips)
             {
@@ -167,21 +180,21 @@ namespace VerkstanEditor.Gui
 
             UpdateSize();
         }
-        public void timeline_ClipAdded(Timeline.EventArgs e)
+        private void timeline_ClipAdded(Timeline.EventArgs e)
         {
             foreach (Clip clip in e.Clips)
                 Invalidate(BeatDimensionToPixelDimension(clip.Dimension));
 
             UpdateSize();
         }
-        public void timeline_ClipRemoved(Timeline.EventArgs e)
+        private void timeline_ClipRemoved(Timeline.EventArgs e)
         {
             foreach (Clip clip in e.Clips)
                 Invalidate(BeatDimensionToPixelDimension(clip.Dimension));
 
             UpdateSize();
         }
-        public void timeline_ClipResized(Timeline.EventArgs e)
+        private void timeline_ClipResized(Timeline.EventArgs e)
         {
             foreach (Clip clip in e.Clips)
             {
@@ -191,7 +204,7 @@ namespace VerkstanEditor.Gui
 
             UpdateSize();
         }
-        public void timeline_ChannelAdded(Timeline.EventArgs e)
+        private void timeline_ChannelAdded(Timeline.EventArgs e)
         {
             Point p = new Point(0, e.Channel.Y);
             p = BeatPointToPixelPoint(p);
@@ -199,7 +212,7 @@ namespace VerkstanEditor.Gui
             Invalidate(rectangle);
             UpdateSize();
         }
-        public void timeline_ChannelRemoved(Timeline.EventArgs e)
+        private void timeline_ChannelRemoved(Timeline.EventArgs e)
         {
             Rectangle result = new Rectangle();
 
@@ -217,12 +230,12 @@ namespace VerkstanEditor.Gui
             Invalidate(result);
             UpdateSize();
         }
-        public void timeline_ChannelStateChanged(Timeline.EventArgs e)
+        private void timeline_ChannelStateChanged(Timeline.EventArgs e)
         {
             Invalidate(ChannelDimensionToPixelDimension(e.Channel));
             UpdateSize();
         }
-        public void TimelineChannels_BeatChangedSlowUpdate(int beat)
+        private void TimelineChannelsView_BeatChangedSlowUpdate(int beat)
         {
             /*
             int oldBeatInPixels = (int)(beatWidth * (this.beat / (float)Metronome.TicksPerBeat));
@@ -246,20 +259,20 @@ namespace VerkstanEditor.Gui
             Update();
              */
         }
-        private void TimelineChannels_Load(object sender, EventArgs e)
+        private void TimelineChannelsView_Load(object sender, EventArgs e)
         {
             UpdateSize();
         }
-        private void TimelineChannels_ParentChanged(object sender, EventArgs e)
+        private void TimelineChannelsView_ParentChanged(object sender, EventArgs e)
         {
             UpdateSize();
-            Parent.Resize += new System.EventHandler(this.TimelineChannels_ParentResized);
+            Parent.Resize += new System.EventHandler(this.TimelineChannelsView_ParentResized);
         }
-        private void TimelineChannels_ParentResized(object sender, EventArgs e)
+        private void TimelineChannelsView_ParentResized(object sender, EventArgs e)
         {
             UpdateSize();
         }
-        private void TimelineChannels_Paint(object sender, PaintEventArgs e)
+        private void TimelineChannelsView_Paint(object sender, PaintEventArgs e)
         {
             if (timeline == null)
                 return;
@@ -305,7 +318,7 @@ namespace VerkstanEditor.Gui
                 PaintDraw(e);
             }
         }
-        private void TimelineChannels_MouseDown(object sender, MouseEventArgs e)
+        private void TimelineChannelsView_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -359,8 +372,23 @@ namespace VerkstanEditor.Gui
                 }
             }
         }
-        private void TimelineChannels_MouseMove(object sender, MouseEventArgs e)
+        private void TimelineChannelsView_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            if (timeline == null)
+                return;
+
+            Clip clip = timeline.GetClipAt(PixelPointToBeatPoint(new Point(e.X, e.Y)));
+
+            if (clip == null)
+                return;
+
+            ViewedClip = clip;
+        }
+        private void TimelineChannelsView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (timeline == null)
+                return;
+
             mouseLocation = new Point(e.X, e.Y);
 
             if (Mode == Modes.Move)
@@ -414,8 +442,11 @@ namespace VerkstanEditor.Gui
                 }
             }
         }
-        private void TimelineChannels_MouseUp(object sender, MouseEventArgs e)
+        private void TimelineChannelsView_MouseUp(object sender, MouseEventArgs e)
         {
+            if (timeline == null)
+                return;
+
             if (Mode == Modes.Move)
             {
                 if (inSelect)
@@ -459,8 +490,11 @@ namespace VerkstanEditor.Gui
             inMove = false;
             inDraw = false;
         }
-        private void TimelineChannels_KeyDown(object sender, KeyEventArgs e)
+        private void TimelineChannelsView_KeyDown(object sender, KeyEventArgs e)
         {
+            if (timeline == null)
+                return;
+
             if (e.KeyCode == Keys.Delete)
                 timeline.RemoveSelectedClips();
         }
@@ -491,7 +525,7 @@ namespace VerkstanEditor.Gui
             this.Size = new Size(width, height);
             Rectangle rectangle = new Rectangle(0, 0, width, height);
 
-            Invalidate(Rectangle.Intersect(Parent.ClientRectangle, rectangle));
+            Invalidate();
         }
         private void PaintBeatPosition(PaintEventArgs e)
         {
@@ -825,6 +859,15 @@ namespace VerkstanEditor.Gui
             result.Width = beatWidth - 5;
             result.Height = dimension.Height;
             return result;
+        }
+        #endregion
+
+        #region Events
+        public event EventHandler ViewedClipChanged;
+        protected void OnViewedClipChanged()
+        {
+            if (ViewedClipChanged != null)
+                ViewedClipChanged(this, new EventArgs());
         }
         #endregion
     }

@@ -137,6 +137,10 @@ namespace VerkstanEditor.Logic
         {
             this.bindedCoreClip = bindedCoreClip;
         }
+        public void DestroyPreview()
+        {
+            preview = null;
+        }
         #endregion
 
         #region Private Methods

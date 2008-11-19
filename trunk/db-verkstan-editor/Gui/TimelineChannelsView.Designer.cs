@@ -30,20 +30,21 @@
         {
             this.SuspendLayout();
             // 
-            // TimelineChannels
+            // TimelineChannelsView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlText;
-            this.Name = "TimelineChannels";
+            this.Name = "TimelineChannelsView";
             this.Size = new System.Drawing.Size(736, 368);
-            this.Load += new System.EventHandler(this.TimelineChannels_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TimelineChannels_Paint);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseMove);
-            this.ParentChanged += new System.EventHandler(this.TimelineChannels_ParentChanged);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseDown);
-            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimelineChannels_MouseUp);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TimelineChannels_KeyDown);
+            this.Load += new System.EventHandler(this.TimelineChannelsView_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.TimelineChannelsView_Paint);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TimelineChannelsView_MouseMove);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.TimelineChannelsView_MouseDoubleClick);
+            this.ParentChanged += new System.EventHandler(this.TimelineChannelsView_ParentChanged);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TimelineChannelsView_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TimelineChannelsView_MouseUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TimelineChannelsView_KeyDown);
             this.ResumeLayout(false);
 
         }

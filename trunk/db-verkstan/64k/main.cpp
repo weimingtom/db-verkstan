@@ -1,3 +1,23 @@
+#include "core/core.hpp"
+#include "core/operators/addmodelsoperator.hpp"
+#include "core/operators/boxoperator.hpp"
+#include "core/operators/cameraoperator.hpp"
+#include "core/operators/clonemodeloperator.hpp"
+#include "core/operators/cylinderoperator.hpp"
+#include "core/operators/flatoperator.hpp"
+#include "core/operators/rotozoomoperator.hpp"
+#include "core/operators/extrudeoperator.hpp"
+#include "core/operators/icosahedronoperator.hpp"
+#include "core/operators/lightoperator.hpp"
+#include "core/operators/materialoperator.hpp"
+#include "core/operators/pixelsoperator.hpp"
+#include "core/operators/randomselectionoperator.hpp"
+#include "core/operators/rectangleoperator.hpp"
+#include "core/operators/sphereoperator.hpp"
+#include "core/operators/relaxoperator.hpp"
+#include "core/operators/textoperator.hpp"
+#include "core/operators/torusoperator.hpp"
+#include "core/operators/texturemappingoperator.hpp"
 #include "core/globals.hpp"
 #include <windows.h>
 
@@ -70,6 +90,26 @@ int WINAPI WinMain(HINSTANCE instance,
                                  D3DCREATE_HARDWARE_VERTEXPROCESSING,
                                  &d3dPresentParameters,
                                  &globalDirect3DDevice);
+
+    AddModelsOperator* addModelsOperator = new AddModelsOperator();
+    BoxOperator* boxOperator = new BoxOperator();
+    CameraOperator* cameraOperator = new CameraOperator();
+    RotozoomOperator* rotozoomOperator = new RotozoomOperator();
+    IcosahedronOperator* icosahedronoperator = new IcosahedronOperator();
+    ExtrudeOperator* extrudeOperator = new ExtrudeOperator();
+    CloneModelOperator* cloneModelOperator = new CloneModelOperator();
+    FlatOperator* flatOperator = new FlatOperator();
+    CylinderOperator* cylinderOperator = new CylinderOperator();
+    LightOperator* lightOperator = new LightOperator();
+    MaterialOperator* materialOperator = new MaterialOperator();
+    PixelsOperator* pixelsOperator = new PixelsOperator();
+    RandomSelectionOperator* randomSelectionOperator = new RandomSelectionOperator();
+    RectangleOperator* rectangleOperator = new RectangleOperator();
+    RelaxOperator* relaxOperator = new RelaxOperator();
+    SphereOperator* sphereOperator = new SphereOperator();
+    TextOperator* textOperator = new TextOperator();
+    TorusOperator* torusOperator = new TorusOperator();
+    TextureMappingOperator* textureMappingOperator = new TextureMappingOperator();
 
     bool running = true;
     while (running)

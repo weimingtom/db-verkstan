@@ -202,6 +202,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\Constants.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\Core.hpp"
 				>
 			</File>

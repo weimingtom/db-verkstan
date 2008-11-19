@@ -22,20 +22,21 @@ namespace VerkstanEditor.Logic
         public GeneratorClip()
         {
             bindedCoreGeneratorClip = new Verkstan.CoreGeneratorClip();
-            SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.Sine);
+            SetGeneratorType(0);
             SetPeriodInBeats(1);
             SetBindedCoreClip(bindedCoreGeneratorClip);
         }
         #endregion
 
         #region Public Methods
-        public void SetGeneratorType(Verkstan.Constants.GeneratorClipTypes type)
+        public void SetGeneratorType(int type)
         {
-            bindedCoreGeneratorClip.SetType(type);
+            bindedCoreGeneratorClip.SetGeneratorType(type);
+            DestroyPreview();
         }
-        public Verkstan.Constants.GeneratorClipTypes GetGeneratorType()
+        public int GetGeneratorType()
         {
-            return bindedCoreGeneratorClip.GetType();
+            return bindedCoreGeneratorClip.GetGeneratorType();
         }
         public override void Dispose()
         {
@@ -44,6 +45,7 @@ namespace VerkstanEditor.Logic
         public void SetPeriodInTicks(int period)
         {
             bindedCoreGeneratorClip.SetPeriod(period);
+            DestroyPreview();
         }
         public void SetPeriodInBeats(int period)
         {

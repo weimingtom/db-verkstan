@@ -114,6 +114,14 @@ namespace VerkstanEditor.Gui
         {
             operatorPropertyGrid.Operator = operatorPageView1.ViewedOperatorProperties;
         }
+        private void timelinesView1_ViewedClipChanged(object sender, EventArgs e)
+        {
+            if (timelinesView1.ViewedClip != null)
+            {
+                clipView1.Clip = timelinesView1.ViewedClip;
+                tabControl1.SelectedTab = clipTab;
+            }
+        }
         #endregion
     }
 }

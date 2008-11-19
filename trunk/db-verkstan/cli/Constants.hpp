@@ -30,14 +30,5 @@ namespace Verkstan
             Vector,
             Enum
        };
-
-       enum class GeneratorClipTypes
-       {
-            Sine,
-            Cosine,
-            RampUp,
-            RampDown,
-            SawTooth
-       };
     };
 }

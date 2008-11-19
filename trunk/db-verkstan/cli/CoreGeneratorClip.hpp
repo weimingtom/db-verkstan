@@ -19,8 +19,8 @@ namespace Verkstan
 
         int GetPeriod();
         void SetPeriod(int period);
-        Constants::GeneratorClipTypes GetType();
-        void SetType(Constants::GeneratorClipTypes type);
+        int GetGeneratorType();
+        void SetGeneratorType(int type);
 
     private:
         Core::GeneratorClip* coreGeneratorClip;

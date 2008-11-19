@@ -80,6 +80,18 @@
     <Compile Include="Gui\ChannelInfo.Designer.cs">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\GeneratorClipPropertiesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\GeneratorClipPropertiesView.Designer.cs">
+      <DependentUpon>GeneratorClipPropertiesView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\ClipView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ClipView.Designer.cs">
+      <DependentUpon>ClipView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\TimelineChannelPropertiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -263,6 +275,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Gui\ChannelInfo.resx">
       <DependentUpon>ChannelInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ClipView.resx">
+      <DependentUpon>ClipView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\GeneratorClipPropertiesView.resx">
+      <DependentUpon>GeneratorClipPropertiesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\TimelineChannelPropertiesView.resx">
       <DependentUpon>TimelineChannelPropertiesView.cs</DependentUpon>

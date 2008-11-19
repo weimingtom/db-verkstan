@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.moveButton = new System.Windows.Forms.Button();
-            this.generatorButton = new System.Windows.Forms.Button();
-            this.splineButton = new System.Windows.Forms.Button();
-            this.timelineView1 = new VerkstanEditor.Gui.TimelineView();
             this.selectedToolLabel = new System.Windows.Forms.Label();
+            this.splineButton = new System.Windows.Forms.Button();
+            this.generatorButton = new System.Windows.Forms.Button();
+            this.moveButton = new System.Windows.Forms.Button();
+            this.timelineView1 = new VerkstanEditor.Gui.TimelineView();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -62,25 +62,14 @@
             this.splitContainer1.SplitterWidth = 1;
             this.splitContainer1.TabIndex = 0;
             // 
-            // moveButton
+            // selectedToolLabel
             // 
-            this.moveButton.Location = new System.Drawing.Point(93, 4);
-            this.moveButton.Name = "moveButton";
-            this.moveButton.Size = new System.Drawing.Size(44, 23);
-            this.moveButton.TabIndex = 0;
-            this.moveButton.Text = "Move";
-            this.moveButton.UseVisualStyleBackColor = true;
-            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
-            // 
-            // generatorButton
-            // 
-            this.generatorButton.Location = new System.Drawing.Point(143, 4);
-            this.generatorButton.Name = "generatorButton";
-            this.generatorButton.Size = new System.Drawing.Size(63, 23);
-            this.generatorButton.TabIndex = 1;
-            this.generatorButton.Text = "Generator";
-            this.generatorButton.UseVisualStyleBackColor = true;
-            this.generatorButton.Click += new System.EventHandler(this.generatorButton_Click);
+            this.selectedToolLabel.AutoSize = true;
+            this.selectedToolLabel.Location = new System.Drawing.Point(264, 9);
+            this.selectedToolLabel.Name = "selectedToolLabel";
+            this.selectedToolLabel.Size = new System.Drawing.Size(97, 13);
+            this.selectedToolLabel.TabIndex = 3;
+            this.selectedToolLabel.Text = "Move tool selected";
             // 
             // splineButton
             // 
@@ -92,23 +81,37 @@
             this.splineButton.UseVisualStyleBackColor = true;
             this.splineButton.Click += new System.EventHandler(this.splineButton_Click);
             // 
+            // generatorButton
+            // 
+            this.generatorButton.Location = new System.Drawing.Point(143, 4);
+            this.generatorButton.Name = "generatorButton";
+            this.generatorButton.Size = new System.Drawing.Size(63, 23);
+            this.generatorButton.TabIndex = 1;
+            this.generatorButton.Text = "Generator";
+            this.generatorButton.UseVisualStyleBackColor = true;
+            this.generatorButton.Click += new System.EventHandler(this.generatorButton_Click);
+            // 
+            // moveButton
+            // 
+            this.moveButton.Location = new System.Drawing.Point(93, 4);
+            this.moveButton.Name = "moveButton";
+            this.moveButton.Size = new System.Drawing.Size(44, 23);
+            this.moveButton.TabIndex = 0;
+            this.moveButton.Text = "Move";
+            this.moveButton.UseVisualStyleBackColor = true;
+            this.moveButton.Click += new System.EventHandler(this.moveButton_Click);
+            // 
             // timelineView1
             // 
             this.timelineView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timelineView1.Location = new System.Drawing.Point(0, 0);
             this.timelineView1.Margin = new System.Windows.Forms.Padding(0);
+            this.timelineView1.Mode = VerkstanEditor.Gui.TimelineChannelsView.Modes.Move;
             this.timelineView1.Name = "timelineView1";
             this.timelineView1.Size = new System.Drawing.Size(621, 242);
             this.timelineView1.TabIndex = 0;
-            // 
-            // selectedToolLabel
-            // 
-            this.selectedToolLabel.AutoSize = true;
-            this.selectedToolLabel.Location = new System.Drawing.Point(264, 9);
-            this.selectedToolLabel.Name = "selectedToolLabel";
-            this.selectedToolLabel.Size = new System.Drawing.Size(97, 13);
-            this.selectedToolLabel.TabIndex = 3;
-            this.selectedToolLabel.Text = "Move tool selected";
+            this.timelineView1.ViewedClip = null;
+            this.timelineView1.ViewedClipChanged += new System.EventHandler(this.timelineView1_ViewedClipChanged);
             // 
             // TimelinesView
             // 

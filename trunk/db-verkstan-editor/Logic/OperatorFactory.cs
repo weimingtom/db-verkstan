@@ -41,19 +41,19 @@ namespace VerkstanEditor.Logic
 
                 GeneratorClip clip1 = new GeneratorClip();
                 clip1.SetPeriodInBeats(2);
-                clip1.SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.Sine);
+                clip1.SetGeneratorType(0);
                 op.Timeline.AddClip(clip1, new Point(0, 0), 10);
                 GeneratorClip clip2 = new GeneratorClip();
                 clip2.SetPeriodInBeats(2);
-                clip2.SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.SawTooth);
+                clip2.SetGeneratorType(1);
                 op.Timeline.AddClip(clip2, new Point(0, 1), 20);
                 GeneratorClip clip3 = new GeneratorClip();
                 clip3.SetPeriodInBeats(1);
-                clip3.SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.RampUp);
+                clip3.SetGeneratorType(2);
                 op.Timeline.AddClip(clip3, new Point(0, 2), 20);
                 GeneratorClip clip4 = new GeneratorClip();
                 clip4.SetPeriodInTicks(Metronome.TicksPerBeat / 2);
-                clip4.SetGeneratorType(Verkstan.Constants.GeneratorClipTypes.Sine);
+                clip4.SetGeneratorType(1);
                 op.Timeline.AddClip(clip4, new Point(0, 3), 40);
             }
             else

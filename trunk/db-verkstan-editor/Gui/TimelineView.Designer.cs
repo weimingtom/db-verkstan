@@ -272,7 +272,9 @@
             this.timelineChannelsView1.Size = new System.Drawing.Size(0, 0);
             this.timelineChannelsView1.TabIndex = 0;
             this.timelineChannelsView1.Timeline = null;
+            this.timelineChannelsView1.ViewedClip = null;
             this.timelineChannelsView1.Resize += new System.EventHandler(this.timelineChannels1_Resize);
+            this.timelineChannelsView1.ViewedClipChanged += new System.EventHandler(this.timelineChannelsView1_ViewedClipChanged);
             // 
             // vScrollBar1
             // 
