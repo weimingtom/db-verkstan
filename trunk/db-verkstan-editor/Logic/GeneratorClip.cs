@@ -33,6 +33,7 @@ namespace VerkstanEditor.Logic
         {
             bindedCoreGeneratorClip.SetGeneratorType(type);
             DestroyPreview();
+            OnStateChanged();
         }
         public int GetGeneratorType()
         {
@@ -46,10 +47,13 @@ namespace VerkstanEditor.Logic
         {
             bindedCoreGeneratorClip.SetPeriod(period);
             DestroyPreview();
+            OnStateChanged();
         }
         public void SetPeriodInBeats(int period)
         {
             bindedCoreGeneratorClip.SetPeriod(period * Metronome.TicksPerBeat);
+            DestroyPreview();
+            OnStateChanged();
         }
         public int GetPeriodInTicks()
         {

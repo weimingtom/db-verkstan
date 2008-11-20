@@ -27,11 +27,15 @@ namespace VerkstanEditor.Gui
                 if (clip == null)
                 {
                     generatorClipPropertiesView1.Visible = false;
+                    generatorClipValueView1.Visible = false;
                 }       
                 else if (clip.GetType() == typeof(GeneratorClip))
                 {
                     generatorClipPropertiesView1.GeneratorClip = (GeneratorClip)clip;
+                    generatorClipValueView1.GeneratorClip = (GeneratorClip)clip;
                     generatorClipPropertiesView1.Visible = true;
+                    generatorClipValueView1.Visible = true;
+                    generatorClipValueView1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
                 }
             }
         }
@@ -41,6 +45,13 @@ namespace VerkstanEditor.Gui
         public ClipView()
         {
             InitializeComponent();
+        }
+        #endregion
+
+        #region Event Handlers
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+        {
+            generatorClipValueView1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
         }
         #endregion
     }

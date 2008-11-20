@@ -92,6 +92,12 @@
     <Compile Include="Gui\ClipView.Designer.cs">
       <DependentUpon>ClipView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\GeneratorClipValueView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\GeneratorClipValueView.Designer.cs">
+      <DependentUpon>GeneratorClipValueView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\TimelineChannelPropertiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -281,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GeneratorClipPropertiesView.resx">
       <DependentUpon>GeneratorClipPropertiesView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\GeneratorClipValueView.resx">
+      <DependentUpon>GeneratorClipValueView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\TimelineChannelPropertiesView.resx">
       <DependentUpon>TimelineChannelPropertiesView.cs</DependentUpon>

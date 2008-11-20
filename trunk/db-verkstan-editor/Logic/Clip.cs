@@ -130,6 +130,10 @@ namespace VerkstanEditor.Logic
 
             return preview;
         }
+        public float GetValue(int tick)
+        {
+            return bindedCoreClip.GetValue(tick);
+        }
         #endregion
 
         #region Protected Methods

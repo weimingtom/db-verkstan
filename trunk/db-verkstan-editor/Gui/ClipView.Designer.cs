@@ -31,6 +31,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer7 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer8 = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -39,14 +41,20 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.generatorClipPropertiesView1 = new VerkstanEditor.Gui.GeneratorClipPropertiesView();
+            this.generatorClipValueView1 = new VerkstanEditor.Gui.GeneratorClipValueView();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.splitContainer7.Panel2.SuspendLayout();
+            this.splitContainer7.SuspendLayout();
+            this.splitContainer8.Panel2.SuspendLayout();
+            this.splitContainer8.SuspendLayout();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
@@ -108,6 +116,10 @@
             this.splitContainer4.Name = "splitContainer4";
             this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
+            // splitContainer4.Panel1
+            // 
+            this.splitContainer4.Panel1.Controls.Add(this.splitContainer7);
+            // 
             // splitContainer4.Panel2
             // 
             this.splitContainer4.Panel2.Controls.Add(this.splitContainer5);
@@ -116,6 +128,40 @@
             this.splitContainer4.SplitterDistance = 343;
             this.splitContainer4.SplitterWidth = 1;
             this.splitContainer4.TabIndex = 0;
+            // 
+            // splitContainer7
+            // 
+            this.splitContainer7.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer7.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer7.IsSplitterFixed = true;
+            this.splitContainer7.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer7.Name = "splitContainer7";
+            // 
+            // splitContainer7.Panel2
+            // 
+            this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
+            this.splitContainer7.Size = new System.Drawing.Size(484, 343);
+            this.splitContainer7.SplitterDistance = 25;
+            this.splitContainer7.SplitterWidth = 1;
+            this.splitContainer7.TabIndex = 0;
+            // 
+            // splitContainer8
+            // 
+            this.splitContainer8.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer8.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer8.IsSplitterFixed = true;
+            this.splitContainer8.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer8.Name = "splitContainer8";
+            this.splitContainer8.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer8.Panel2
+            // 
+            this.splitContainer8.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.splitContainer8.Panel2.Controls.Add(this.generatorClipValueView1);
+            this.splitContainer8.Size = new System.Drawing.Size(458, 343);
+            this.splitContainer8.SplitterDistance = 25;
+            this.splitContainer8.SplitterWidth = 1;
+            this.splitContainer8.TabIndex = 0;
             // 
             // splitContainer5
             // 
@@ -132,7 +178,7 @@
             // 
             this.splitContainer5.Panel2.Controls.Add(this.hScrollBar1);
             this.splitContainer5.Size = new System.Drawing.Size(484, 16);
-            this.splitContainer5.SplitterDistance = 217;
+            this.splitContainer5.SplitterDistance = 124;
             this.splitContainer5.SplitterWidth = 1;
             this.splitContainer5.TabIndex = 0;
             // 
@@ -150,8 +196,8 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.numericUpDown2);
-            this.splitContainer6.Size = new System.Drawing.Size(217, 16);
-            this.splitContainer6.SplitterDistance = 108;
+            this.splitContainer6.Size = new System.Drawing.Size(124, 16);
+            this.splitContainer6.SplitterDistance = 66;
             this.splitContainer6.SplitterWidth = 1;
             this.splitContainer6.TabIndex = 0;
             // 
@@ -159,16 +205,27 @@
             // 
             this.numericUpDown1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.numericUpDown1.Location = new System.Drawing.Point(0, -4);
+            this.numericUpDown1.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(108, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(66, 20);
             this.numericUpDown1.TabIndex = 0;
+            this.numericUpDown1.Value = new decimal(new int[] {
+            31,
+            0,
+            0,
+            0});
+            this.numericUpDown1.ValueChanged += new System.EventHandler(this.numericUpDown1_ValueChanged);
             // 
             // numericUpDown2
             // 
             this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.numericUpDown2.Location = new System.Drawing.Point(0, -4);
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(108, 20);
+            this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown2.TabIndex = 0;
             // 
             // hScrollBar1
@@ -177,7 +234,7 @@
             this.hScrollBar1.Enabled = false;
             this.hScrollBar1.Location = new System.Drawing.Point(0, 0);
             this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(266, 16);
+            this.hScrollBar1.Size = new System.Drawing.Size(359, 16);
             this.hScrollBar1.TabIndex = 0;
             // 
             // splitContainer3
@@ -216,6 +273,19 @@
             this.generatorClipPropertiesView1.TabIndex = 0;
             this.generatorClipPropertiesView1.Visible = false;
             // 
+            // generatorClipValueView1
+            // 
+            this.generatorClipValueView1.BackColor = System.Drawing.SystemColors.ControlText;
+            this.generatorClipValueView1.BeatWidth = 16;
+            this.generatorClipValueView1.GeneratorClip = null;
+            this.generatorClipValueView1.Location = new System.Drawing.Point(0, 0);
+            this.generatorClipValueView1.Margin = new System.Windows.Forms.Padding(0);
+            this.generatorClipValueView1.Name = "generatorClipValueView1";
+            this.generatorClipValueView1.Size = new System.Drawing.Size(150, 150);
+            this.generatorClipValueView1.TabIndex = 0;
+            this.generatorClipValueView1.Visible = false;
+            this.generatorClipValueView1.YZoom = 1;
+            // 
             // ClipView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -229,8 +299,13 @@
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             this.splitContainer4.ResumeLayout(false);
+            this.splitContainer7.Panel2.ResumeLayout(false);
+            this.splitContainer7.ResumeLayout(false);
+            this.splitContainer8.Panel2.ResumeLayout(false);
+            this.splitContainer8.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel2.ResumeLayout(false);
             this.splitContainer5.ResumeLayout(false);
@@ -258,5 +333,8 @@
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private GeneratorClipPropertiesView generatorClipPropertiesView1;
+        private System.Windows.Forms.SplitContainer splitContainer7;
+        private System.Windows.Forms.SplitContainer splitContainer8;
+        private GeneratorClipValueView generatorClipValueView1;
     }
 }
