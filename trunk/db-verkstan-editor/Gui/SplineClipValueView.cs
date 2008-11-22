@@ -10,27 +10,27 @@ using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
-    public partial class GeneratorClipValueView : UserControl
+    public partial class SplineClipValueView : UserControl
     {
         #region Properties
-        private GeneratorClip generatorClip;
-        public GeneratorClip GeneratorClip
+        private SplineClip splineClip;
+        public SplineClip SplineClip
         {
             get
             {
-                return generatorClip;
+                return splineClip;
             }
             set
             {
-                if (generatorClip != null)
+                if (splineClip != null)
                 {
-                    generatorClip.StateChanged -= clipStateChanged;
+                    splineClip.StateChanged -= clipStateChanged;
                 }
 
-                generatorClip = value;
-                if (generatorClip != null)
+                splineClip = value;
+                if (splineClip != null)
                 {
-                    generatorClip.StateChanged += clipStateChanged;
+                    splineClip.StateChanged += clipStateChanged;
                 }
                 UpdateSize();
             }
@@ -70,7 +70,7 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Constructors
-        public GeneratorClipValueView()
+        public SplineClipValueView()
         {
             InitializeComponent();
             DoubleBuffered = true;
@@ -79,12 +79,13 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Event Handlers
-        private void GeneratorClipValueView_Paint(object sender, PaintEventArgs e)
+        private void SplineClipValueView_Paint(object sender, PaintEventArgs e)
         {
             PaintGrid(e);
             PaintGraph(e);
+            PaintControlPoints(e);
         }
-        private void GeneratorClipValueView_Load(object sender, EventArgs e)
+        private void SplineClipValueView_Load(object sender, EventArgs e)
         {
             UpdateSize();
         }
@@ -138,19 +139,19 @@ namespace VerkstanEditor.Gui
         }
         private void PaintGraph(PaintEventArgs e)
         {
-            if (generatorClip == null)
+            if (splineClip == null)
                 return;
 
-            int ticks = generatorClip.Dimension.Width * Metronome.TicksPerBeat;
+            int ticks = splineClip.Dimension.Width * Metronome.TicksPerBeat;
             int middle = Height / 2 - 1;
-            float v = generatorClip.GetValue(0);
+            float v = splineClip.GetValue(0);
             int lastX = 0;
             int lastY = (int)(middle - v * middle);
             Pen p = new Pen(Color.FromArgb(45, 45, 255), 2.0f);
             for (int x = 1; x < Width; x++)
             {
                 int beat = (int)((x / (float)Width) * ticks);
-                float value = generatorClip.GetValue(beat);
+                float value = splineClip.GetValue(beat);
                 int y = (int)(middle - value * middle) + 1;
                 e.Graphics.DrawLine(p, lastX, lastY, x, y);
                 lastX = x;
@@ -158,12 +159,23 @@ namespace VerkstanEditor.Gui
             }
             p.Dispose();
         }
-        private void UpdateSize()
+        private void PaintControlPoints(PaintEventArgs e)
         {
-            if (generatorClip == null)
+            if (splineClip == null)
                 return;
 
-            int width = beatWidth * generatorClip.Dimension.Width * 4;
+            foreach (SplineControlPoint point in splineClip.ControlPoints)
+            {
+                Rectangle dim = CalculateControlPointDimension(point);
+                e.Graphics.DrawRectangle(Pens.Red, dim);
+            }
+        }
+        private void UpdateSize()
+        {
+            if (splineClip == null)
+                return;
+
+            int width = beatWidth * splineClip.Dimension.Width * 4;
 
             if (Parent == null)
                 return;
@@ -173,6 +185,19 @@ namespace VerkstanEditor.Gui
             Width = width;
             Height = height;
             Invalidate();
+        }
+        private Rectangle CalculateControlPointDimension(SplineControlPoint point)
+        {
+            int x = (int)(point.X / (float)Metronome.TicksPerBeat * beatWidth*4);
+            int y = 0;
+            if (point.Y < 0)
+                y = (int)(-point.Y * Height / 2 + Height / 2);
+            else if (point.Y == 0)
+                y = Height / 2;
+            else if (point.Y > 0)
+                y = (int)((1.0f - point.Y) * Height / 2);
+               
+            return new Rectangle(x - 3, y - 3, 6, 6);
         }
         #endregion
     }

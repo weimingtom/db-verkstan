@@ -16,6 +16,11 @@ namespace Verkstan
         {
             int get();
         }
+        void SetNumberOfControlPoints(int number);
+        int GetNumberOfControlPoints();
+        void SetControlPoint(int index, int tick, float value);
+        int GetControlPointTick(int index);
+        float GetControlPointValue(int index);
 
     private:
         Core::SplineClip* coreSplineClip;

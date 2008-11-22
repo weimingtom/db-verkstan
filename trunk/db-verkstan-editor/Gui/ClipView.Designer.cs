@@ -32,7 +32,8 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer8 = new System.Windows.Forms.SplitContainer();
+            this.splitEmptyAndValueVerticaLine = new System.Windows.Forms.SplitContainer();
+            this.splitHorizontalLineAndValueView = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
@@ -41,6 +42,9 @@
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
             this.generatorClipPropertiesView1 = new VerkstanEditor.Gui.GeneratorClipPropertiesView();
+            this.clipValueVerticalLine1 = new VerkstanEditor.Gui.ClipValueVerticalLine();
+            this.clipValueHorizontalLine1 = new VerkstanEditor.Gui.ClipValueHorizontalLine();
+            this.splineClipValueView1 = new VerkstanEditor.Gui.SplineClipValueView();
             this.generatorClipValueView1 = new VerkstanEditor.Gui.GeneratorClipValueView();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -51,10 +55,14 @@
             this.splitContainer4.Panel1.SuspendLayout();
             this.splitContainer4.Panel2.SuspendLayout();
             this.splitContainer4.SuspendLayout();
+            this.splitContainer7.Panel1.SuspendLayout();
             this.splitContainer7.Panel2.SuspendLayout();
             this.splitContainer7.SuspendLayout();
-            this.splitContainer8.Panel2.SuspendLayout();
-            this.splitContainer8.SuspendLayout();
+            this.splitEmptyAndValueVerticaLine.Panel2.SuspendLayout();
+            this.splitEmptyAndValueVerticaLine.SuspendLayout();
+            this.splitHorizontalLineAndValueView.Panel1.SuspendLayout();
+            this.splitHorizontalLineAndValueView.Panel2.SuspendLayout();
+            this.splitHorizontalLineAndValueView.SuspendLayout();
             this.splitContainer5.Panel1.SuspendLayout();
             this.splitContainer5.Panel2.SuspendLayout();
             this.splitContainer5.SuspendLayout();
@@ -137,31 +145,57 @@
             this.splitContainer7.Location = new System.Drawing.Point(0, 0);
             this.splitContainer7.Name = "splitContainer7";
             // 
+            // splitContainer7.Panel1
+            // 
+            this.splitContainer7.Panel1.Controls.Add(this.splitEmptyAndValueVerticaLine);
+            // 
             // splitContainer7.Panel2
             // 
-            this.splitContainer7.Panel2.Controls.Add(this.splitContainer8);
+            this.splitContainer7.Panel2.Controls.Add(this.splitHorizontalLineAndValueView);
             this.splitContainer7.Size = new System.Drawing.Size(484, 343);
             this.splitContainer7.SplitterDistance = 25;
             this.splitContainer7.SplitterWidth = 1;
             this.splitContainer7.TabIndex = 0;
             // 
-            // splitContainer8
+            // splitEmptyAndValueVerticaLine
             // 
-            this.splitContainer8.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer8.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.splitContainer8.IsSplitterFixed = true;
-            this.splitContainer8.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer8.Name = "splitContainer8";
-            this.splitContainer8.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            this.splitEmptyAndValueVerticaLine.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitEmptyAndValueVerticaLine.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitEmptyAndValueVerticaLine.IsSplitterFixed = true;
+            this.splitEmptyAndValueVerticaLine.Location = new System.Drawing.Point(0, 0);
+            this.splitEmptyAndValueVerticaLine.Name = "splitEmptyAndValueVerticaLine";
+            this.splitEmptyAndValueVerticaLine.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // splitContainer8.Panel2
+            // splitEmptyAndValueVerticaLine.Panel2
             // 
-            this.splitContainer8.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.splitContainer8.Panel2.Controls.Add(this.generatorClipValueView1);
-            this.splitContainer8.Size = new System.Drawing.Size(458, 343);
-            this.splitContainer8.SplitterDistance = 25;
-            this.splitContainer8.SplitterWidth = 1;
-            this.splitContainer8.TabIndex = 0;
+            this.splitEmptyAndValueVerticaLine.Panel2.Controls.Add(this.clipValueVerticalLine1);
+            this.splitEmptyAndValueVerticaLine.Size = new System.Drawing.Size(25, 343);
+            this.splitEmptyAndValueVerticaLine.SplitterDistance = 25;
+            this.splitEmptyAndValueVerticaLine.SplitterWidth = 1;
+            this.splitEmptyAndValueVerticaLine.TabIndex = 0;
+            // 
+            // splitHorizontalLineAndValueView
+            // 
+            this.splitHorizontalLineAndValueView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitHorizontalLineAndValueView.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitHorizontalLineAndValueView.IsSplitterFixed = true;
+            this.splitHorizontalLineAndValueView.Location = new System.Drawing.Point(0, 0);
+            this.splitHorizontalLineAndValueView.Name = "splitHorizontalLineAndValueView";
+            this.splitHorizontalLineAndValueView.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitHorizontalLineAndValueView.Panel1
+            // 
+            this.splitHorizontalLineAndValueView.Panel1.Controls.Add(this.clipValueHorizontalLine1);
+            // 
+            // splitHorizontalLineAndValueView.Panel2
+            // 
+            this.splitHorizontalLineAndValueView.Panel2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.splitHorizontalLineAndValueView.Panel2.Controls.Add(this.splineClipValueView1);
+            this.splitHorizontalLineAndValueView.Panel2.Controls.Add(this.generatorClipValueView1);
+            this.splitHorizontalLineAndValueView.Size = new System.Drawing.Size(458, 343);
+            this.splitHorizontalLineAndValueView.SplitterDistance = 25;
+            this.splitHorizontalLineAndValueView.SplitterWidth = 1;
+            this.splitHorizontalLineAndValueView.TabIndex = 0;
             // 
             // splitContainer5
             // 
@@ -224,9 +258,25 @@
             // 
             this.numericUpDown2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.numericUpDown2.Location = new System.Drawing.Point(0, -4);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            400,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(57, 20);
             this.numericUpDown2.TabIndex = 0;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericUpDown2.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // hScrollBar1
             // 
@@ -236,6 +286,7 @@
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(359, 16);
             this.hScrollBar1.TabIndex = 0;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar1_Scroll);
             // 
             // splitContainer3
             // 
@@ -261,6 +312,7 @@
             this.vScrollBar1.Name = "vScrollBar1";
             this.vScrollBar1.Size = new System.Drawing.Size(16, 340);
             this.vScrollBar1.TabIndex = 0;
+            this.vScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar1_Scroll);
             // 
             // generatorClipPropertiesView1
             // 
@@ -273,10 +325,44 @@
             this.generatorClipPropertiesView1.TabIndex = 0;
             this.generatorClipPropertiesView1.Visible = false;
             // 
+            // clipValueVerticalLine1
+            // 
+            this.clipValueVerticalLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clipValueVerticalLine1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.clipValueVerticalLine1.Location = new System.Drawing.Point(0, 0);
+            this.clipValueVerticalLine1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.clipValueVerticalLine1.Name = "clipValueVerticalLine1";
+            this.clipValueVerticalLine1.Size = new System.Drawing.Size(25, 309);
+            this.clipValueVerticalLine1.TabIndex = 0;
+            // 
+            // clipValueHorizontalLine1
+            // 
+            this.clipValueHorizontalLine1.BeatWidth = 31;
+            this.clipValueHorizontalLine1.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.clipValueHorizontalLine1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.clipValueHorizontalLine1.Location = new System.Drawing.Point(0, 0);
+            this.clipValueHorizontalLine1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.clipValueHorizontalLine1.Name = "clipValueHorizontalLine1";
+            this.clipValueHorizontalLine1.Size = new System.Drawing.Size(200, 25);
+            this.clipValueHorizontalLine1.TabIndex = 0;
+            // 
+            // splineClipValueView1
+            // 
+            this.splineClipValueView1.BackColor = System.Drawing.SystemColors.ControlText;
+            this.splineClipValueView1.BeatWidth = 31;
+            this.splineClipValueView1.Location = new System.Drawing.Point(0, 0);
+            this.splineClipValueView1.Name = "splineClipValueView1";
+            this.splineClipValueView1.Size = new System.Drawing.Size(150, 150);
+            this.splineClipValueView1.SplineClip = null;
+            this.splineClipValueView1.TabIndex = 1;
+            this.splineClipValueView1.Visible = false;
+            this.splineClipValueView1.YZoom = 1F;
+            this.splineClipValueView1.Resize += new System.EventHandler(this.splineClipValueView1_Resize);
+            // 
             // generatorClipValueView1
             // 
             this.generatorClipValueView1.BackColor = System.Drawing.SystemColors.ControlText;
-            this.generatorClipValueView1.BeatWidth = 16;
+            this.generatorClipValueView1.BeatWidth = 31;
             this.generatorClipValueView1.GeneratorClip = null;
             this.generatorClipValueView1.Location = new System.Drawing.Point(0, 0);
             this.generatorClipValueView1.Margin = new System.Windows.Forms.Padding(0);
@@ -284,7 +370,8 @@
             this.generatorClipValueView1.Size = new System.Drawing.Size(150, 150);
             this.generatorClipValueView1.TabIndex = 0;
             this.generatorClipValueView1.Visible = false;
-            this.generatorClipValueView1.YZoom = 1;
+            this.generatorClipValueView1.YZoom = 1F;
+            this.generatorClipValueView1.Resize += new System.EventHandler(this.generatorClipValueView1_Resize);
             // 
             // ClipView
             // 
@@ -302,10 +389,14 @@
             this.splitContainer4.Panel1.ResumeLayout(false);
             this.splitContainer4.Panel2.ResumeLayout(false);
             this.splitContainer4.ResumeLayout(false);
+            this.splitContainer7.Panel1.ResumeLayout(false);
             this.splitContainer7.Panel2.ResumeLayout(false);
             this.splitContainer7.ResumeLayout(false);
-            this.splitContainer8.Panel2.ResumeLayout(false);
-            this.splitContainer8.ResumeLayout(false);
+            this.splitEmptyAndValueVerticaLine.Panel2.ResumeLayout(false);
+            this.splitEmptyAndValueVerticaLine.ResumeLayout(false);
+            this.splitHorizontalLineAndValueView.Panel1.ResumeLayout(false);
+            this.splitHorizontalLineAndValueView.Panel2.ResumeLayout(false);
+            this.splitHorizontalLineAndValueView.ResumeLayout(false);
             this.splitContainer5.Panel1.ResumeLayout(false);
             this.splitContainer5.Panel2.ResumeLayout(false);
             this.splitContainer5.ResumeLayout(false);
@@ -334,7 +425,11 @@
         private System.Windows.Forms.VScrollBar vScrollBar1;
         private GeneratorClipPropertiesView generatorClipPropertiesView1;
         private System.Windows.Forms.SplitContainer splitContainer7;
-        private System.Windows.Forms.SplitContainer splitContainer8;
+        private System.Windows.Forms.SplitContainer splitHorizontalLineAndValueView;
         private GeneratorClipValueView generatorClipValueView1;
+        private ClipValueHorizontalLine clipValueHorizontalLine1;
+        private System.Windows.Forms.SplitContainer splitEmptyAndValueVerticaLine;
+        private ClipValueVerticalLine clipValueVerticalLine1;
+        private SplineClipValueView splineClipValueView1;
     }
 }

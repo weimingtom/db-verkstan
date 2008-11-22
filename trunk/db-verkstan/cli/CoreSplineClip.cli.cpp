@@ -28,4 +28,30 @@ namespace Verkstan
     {
         return id;
     }
+
+    void CoreSplineClip::SetNumberOfControlPoints(int number)
+    {
+        coreSplineClip->numberOfControlPoints = number;
+    }
+
+    int CoreSplineClip::GetNumberOfControlPoints()
+    {
+        return coreSplineClip->numberOfControlPoints;
+    }
+
+    void CoreSplineClip::SetControlPoint(int index, int tick, float value)
+    {
+        coreSplineClip->controlPoints[index].tick = tick;
+        coreSplineClip->controlPoints[index].value = value;
+    }
+
+    int CoreSplineClip::GetControlPointTick(int index)
+    {
+        return coreSplineClip->controlPoints[index].tick;
+    }
+
+    float CoreSplineClip::GetControlPointValue(int index)
+    {
+        return coreSplineClip->controlPoints[index].value;
+    }
 }
