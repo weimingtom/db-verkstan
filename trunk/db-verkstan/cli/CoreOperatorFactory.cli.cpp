@@ -2,8 +2,8 @@
 #include "cli/Operators.hpp"
 #undef OPERATOR_HEADERS
 
-#include "cli/OperatorFactory.hpp"
-#include "cli/Operator.hpp"
+#include "cli/CoreOperatorFactory.hpp"
+#include "cli/CoreOperator.hpp"
 #include "cli/Color.hpp"
 #include "cli/Vector.hpp"
 
@@ -57,6 +57,7 @@ categories[category]->Add(name);
     if (typeName == opName)                         \
     {                                               \
         Core::Operator* o = new Core::opClass##();  \
+        System::Console::WriteLine("Instanciating " + opName);\
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
@@ -119,71 +120,12 @@ categories[category]->Add(name);
 
     CoreOperator^ CoreOperatorFactory::Create(String^ typeName)
     {
+        System::Console::WriteLine("Creating " + typeName);
         CoreOperator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Operators.hpp"
 #undef OPERATOR_DEFINES
 
-        /*
-        if (typeName == "Scene")
-        {
-            SceneOperator^ so = (SceneOperator^)op;
-            Channel^ channel1 = gcnew Channel(so);
-            so->AddChannel(channel1);
-            GeneratorClip^ c1 = gcnew GeneratorClip();
-            c1->Start = 0;
-            c1->End = 256*60;
-            c1->Period = DB_TICKS_PER_BEAT;
-            c1->Type = Constants::GeneratorClipTypes::Sine;
-            channel1->AddClip(c1);
-
-            Channel^ channel2 = gcnew Channel(so);
-            so->AddChannel(channel2);
-            GeneratorClip^ c2 = gcnew GeneratorClip();
-            c2->Start = 0;
-            c2->End = 256*60;
-            c2->Period = DB_TICKS_PER_BEAT * 4;
-            c2->Type = Constants::GeneratorClipTypes::Sine;
-            channel2->AddClip(c2);
-
-            Channel^ channel3 = gcnew Channel(so);
-            so->AddChannel(channel3);
-            GeneratorClip^ c3 = gcnew GeneratorClip();
-            c3->Start = 0;
-            c3->End = 256*60;
-            c3->Period = DB_TICKS_PER_BEAT;
-            c3->Type = Constants::GeneratorClipTypes::RampUp;
-            channel3->AddClip(c3);
-
-            Channel^ channel4 = gcnew Channel(so);
-            so->AddChannel(channel4);
-            GeneratorClip^ c4 = gcnew GeneratorClip();
-            c4->Start = 0;
-            c4->End = 256*60;
-            c4->Period = DB_TICKS_PER_BEAT;
-            c4->Type = Constants::GeneratorClipTypes::RampDown;
-            channel4->AddClip(c4);
-
-            Channel^ channel5 = gcnew Channel(so);
-            so->AddChannel(channel5);
-            GeneratorClip^ c5 = gcnew GeneratorClip();
-            c5->Start = 0;
-            c5->End = 256*60;
-            c5->Period = DB_TICKS_PER_BEAT * 2;
-            c5->Type = Constants::GeneratorClipTypes::SawTooth;
-            channel5->AddClip(c5);
-
-            Channel^ channel6 = gcnew Channel(so);
-            so->AddChannel(channel6);
-            GeneratorClip^ c6 = gcnew GeneratorClip();
-            c6->Start = 0;
-            c6->End = 256*60;
-            c6->Period = c6->End - c6->Start;
-            c6->Type = Constants::GeneratorClipTypes::RampUp;
-            channel6->AddClip(c6);
-        }
-        */
-   
         return op;
      }
 }

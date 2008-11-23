@@ -49,7 +49,7 @@ namespace VerkstanEditor.Gui
                 if (i % 4 == 0)
                 {
                     e.Graphics.DrawLine(p, new Point(i * beatWidth, 0), new Point(i * beatWidth, Height - 1));
-                    String number = "" + (i + 1) / 4;
+                    String number = "" + (i / 4 + 1);
                     SizeF stringSize = e.Graphics.MeasureString(number, Font);
                     if (stringSize.Width < beatWidth)
                         e.Graphics.DrawString(number, Font, b, new Point(i * BeatWidth + 1, 0));

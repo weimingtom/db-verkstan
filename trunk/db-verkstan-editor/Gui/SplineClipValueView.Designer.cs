@@ -38,6 +38,9 @@
             this.Name = "SplineClipValueView";
             this.Load += new System.EventHandler(this.SplineClipValueView_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.SplineClipValueView_Paint);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseMove);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseDown);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseUp);
             this.ResumeLayout(false);
 
         }

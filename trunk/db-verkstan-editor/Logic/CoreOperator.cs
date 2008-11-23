@@ -45,7 +45,7 @@ namespace VerkstanEditor.Logic
                 return bindedCoreOperator;
             }
         }
-        public override ICollection<Verkstan.OperatorProperty> Properties
+        public override ICollection<Verkstan.CoreOperatorProperty> Properties
         {
             get
             {
@@ -134,7 +134,7 @@ namespace VerkstanEditor.Logic
             if (bindedCoreOperator == null)
                 return root;
 
-            foreach (Verkstan.OperatorProperty property in bindedCoreOperator.Properties)
+            foreach (Verkstan.CoreOperatorProperty property in bindedCoreOperator.Properties)
             {
                 if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
                 {
@@ -230,7 +230,7 @@ namespace VerkstanEditor.Logic
                 bool accepted = false;
                 for (int i = numberOfInputs; i < bindedCoreOperator.Inputs.Count; i++)
                 {
-                    Verkstan.OperatorInput input = bindedCoreOperator.Inputs[i];
+                    Verkstan.CoreOperatorInput input = bindedCoreOperator.Inputs[i];
                     if ((input.Type == coreOp.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
                         && bindedCoreOperator.GetInputConnectionId(i) == -1)
                     {
@@ -243,7 +243,7 @@ namespace VerkstanEditor.Logic
                     }
                 }
 
-                Verkstan.OperatorInput lastInput = null;
+                Verkstan.CoreOperatorInput lastInput = null;
                 if (bindedCoreOperator.Inputs.Count > 0)
                     lastInput = bindedCoreOperator.Inputs[bindedCoreOperator.Inputs.Count - 1];
 

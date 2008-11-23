@@ -24,13 +24,21 @@ namespace VerkstanEditor.Gui
             {
                 if (splineClip != null)
                 {
-                    splineClip.StateChanged -= clipStateChanged;
+                    splineClip.StateChanged -= clipStateChangedHandler;
+                    splineClip.Added -= splineClipAddedHandler;
+                    splineClip.Removed -= splineClipRemovedHandler;
+                    splineClip.Moved -= splineClipMovedHandler;
+                    splineClip.ControlPointStateChanged -= splineClipControlPointStateChangedHandler;
                 }
 
                 splineClip = value;
                 if (splineClip != null)
                 {
-                    splineClip.StateChanged += clipStateChanged;
+                    splineClip.StateChanged += clipStateChangedHandler;
+                    splineClip.Added += splineClipAddedHandler;
+                    splineClip.Removed += splineClipRemovedHandler;
+                    splineClip.Moved += splineClipMovedHandler;
+                    splineClip.ControlPointStateChanged += splineClipControlPointStateChangedHandler;
                 }
                 UpdateSize();
             }
@@ -66,7 +74,13 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Private Variables
-        private Clip.EventHandler clipStateChanged;
+        private int controlPointSize = 8;
+        private bool inMove = false;
+        private Clip.EventHandler clipStateChangedHandler;
+        private SplineClip.EventHandler splineClipAddedHandler;
+        private SplineClip.EventHandler splineClipRemovedHandler;
+        private SplineClip.EventHandler splineClipMovedHandler;
+        private SplineClip.EventHandler splineClipControlPointStateChangedHandler;
         #endregion
 
         #region Constructors
@@ -74,7 +88,11 @@ namespace VerkstanEditor.Gui
         {
             InitializeComponent();
             DoubleBuffered = true;
-            clipStateChanged = new Clip.EventHandler(this.clip_StateChanged);
+            clipStateChangedHandler = new Clip.EventHandler(this.clip_StateChanged);
+            splineClipAddedHandler = new SplineClip.EventHandler(this.splineClip_Added);
+            splineClipRemovedHandler = new SplineClip.EventHandler(this.splineClip_Removed);
+            splineClipMovedHandler = new SplineClip.EventHandler(this.splineClip_Moved);
+            splineClipControlPointStateChangedHandler = new SplineClip.EventHandler(this.splineClip_ControlPointStateChanged);
         }
         #endregion
 
@@ -92,6 +110,52 @@ namespace VerkstanEditor.Gui
         private void clip_StateChanged(Clip clip)
         {
             Invalidate();
+        }
+        private void SplineClipValueView_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                splineClip.Add(new ControlPoint(), PixelXToControlPointX(e.X), PixelYToControlPointY(e.Y));
+                return;
+            }
+
+            if (e.Button == MouseButtons.Left)
+            {
+                splineClip.Select(PixelXToControlPointX(e.X),
+                                  PixelYToControlPointY(e.Y),
+                                  (int)((float)controlPointSize / beatWidth * Metronome.TicksPerBeat),
+                                  (float)controlPointSize / Height);
+                if (splineClip.Selected != null)
+                    inMove = true;
+            }
+        }
+        private void SplineClipValueView_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!inMove)
+                return;
+
+            splineClip.MoveSelected(PixelXToControlPointX(e.X), PixelYToControlPointY(e.Y));
+        }
+        private void splineClip_ControlPointStateChanged(SplineClip.EventArgs e)
+        {
+            foreach (ControlPoint controlPoint in e.ControlPoints)
+                Invalidate(ControlPointDimensionToPixelDimension(controlPoint));
+        }
+        private void splineClip_Added(SplineClip.EventArgs e)
+        {
+            Invalidate();
+        }
+        private void splineClip_Removed(SplineClip.EventArgs e)
+        {
+            Invalidate();
+        }
+        private void splineClip_Moved(SplineClip.EventArgs e)
+        {
+            Invalidate();
+        }
+        private void SplineClipValueView_MouseUp(object sender, MouseEventArgs e)
+        {
+            inMove = false;
         }
         #endregion
 
@@ -164,10 +228,17 @@ namespace VerkstanEditor.Gui
             if (splineClip == null)
                 return;
 
-            foreach (SplineControlPoint point in splineClip.ControlPoints)
+            foreach (ControlPoint point in splineClip.ControlPoints)
             {
-                Rectangle dim = CalculateControlPointDimension(point);
-                e.Graphics.DrawRectangle(Pens.Red, dim);
+                Rectangle dim = ControlPointDimensionToPixelDimension(point);
+
+                if (!e.ClipRectangle.IntersectsWith(dim))
+                    continue;
+
+                if (point.IsSelected)
+                    e.Graphics.FillRectangle(Brushes.Red, dim);
+                else
+                    e.Graphics.DrawRectangle(Pens.Red, new Rectangle(dim.X, dim.Y, dim.Width - 1, dim.Height - 1));
             }
         }
         private void UpdateSize()
@@ -186,18 +257,53 @@ namespace VerkstanEditor.Gui
             Height = height;
             Invalidate();
         }
-        private Rectangle CalculateControlPointDimension(SplineControlPoint point)
+        private Rectangle ControlPointDimensionToPixelDimension(ControlPoint point)
         {
-            int x = (int)(point.X / (float)Metronome.TicksPerBeat * beatWidth*4);
-            int y = 0;
-            if (point.Y < 0)
-                y = (int)(-point.Y * Height / 2 + Height / 2);
-            else if (point.Y == 0)
-                y = Height / 2;
-            else if (point.Y > 0)
-                y = (int)((1.0f - point.Y) * Height / 2);
-               
-            return new Rectangle(x - 3, y - 3, 6, 6);
+            Point p = ControlPointPointToPixelPoint(point.X, point.Y);
+            return new Rectangle(p.X - controlPointSize / 2, p.Y - controlPointSize / 2, controlPointSize, controlPointSize);
+        }
+        private int PixelXToControlPointX(int x)
+        {
+            return (int)((x / (float)beatWidth / 4) * Metronome.TicksPerBeat);
+        }
+        private float PixelYToControlPointY(int y)
+        {
+            int middlei = Height / 2;
+            float middlef = Height / 2;
+
+            if (y > middlei)
+            {
+                return 1.0f - y / middlef;
+            }
+            else if (y == middlei)
+            {
+                return 0.0f;
+            }
+            else
+            {
+                return -((y - middlef) / middlef);
+            }
+        }
+        private int PixelWidthToConrolPointWidth(int width)
+        {
+            return (int)((width / (float)beatWidth / 4) * Metronome.TicksPerBeat);
+        }
+        private float PixelHeightToControlPointHeight(int height)
+        {
+            return height / (float)Height;
+        }
+        private Point ControlPointPointToPixelPoint(int x, float y)
+        {
+            int newX = (int)(x / (float)Metronome.TicksPerBeat * beatWidth * 4);
+            int newY = 0;
+            if (y < 0)
+                newY = (int)(-y * Height / 2 + Height / 2);
+            else if (y == 0)
+                newY = Height / 2;
+            else if (y > 0)
+                newY = (int)((1.0f - y) * Height / 2);
+
+            return new Point(newX, newY);
         }
         #endregion
     }

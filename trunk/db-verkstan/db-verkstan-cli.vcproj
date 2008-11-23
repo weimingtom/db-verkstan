@@ -226,43 +226,43 @@
 				>
 			</File>
 			<File
+				RelativePath=".\cli\CoreOperator.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorFactory.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorFactory.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorInput.cli.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorInput.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorProperty.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\cli\CoreOperatorProperty.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\cli\CoreSplineClip.cli.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\cli\CoreSplineClip.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Operator.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\Operator.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorFactory.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorFactory.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorInput.cli.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorInput.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorProperty.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\cli\OperatorProperty.hpp"
 				>
 			</File>
 			<File

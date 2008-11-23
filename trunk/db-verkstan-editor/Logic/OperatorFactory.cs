@@ -44,11 +44,11 @@ namespace VerkstanEditor.Logic
                 clip1.SetGeneratorType(0);
                 op.Timeline.AddClip(clip1, new Point(0, 0), 10);
                 SplineClip clip2 = new SplineClip();
-                clip2.Add(new SplineControlPoint(), 256, 0.5f);
-                clip2.Add(new SplineControlPoint(), 256*2, 0.2f);
-                clip2.Add(new SplineControlPoint(), 256*2+128, -0.7f);
-                clip2.Add(new SplineControlPoint(), 256 * 4 + 128, 0.7f);
-                clip2.Add(new SplineControlPoint(), 256 * 6 + 128, 0.1f);
+                clip2.Add(new ControlPoint(), 256, 0.5f);
+                clip2.Add(new ControlPoint(), 256*2, 0.2f);
+                clip2.Add(new ControlPoint(), 256*2+128, -0.7f);
+                clip2.Add(new ControlPoint(), 256 * 4 + 128, 0.7f);
+                clip2.Add(new ControlPoint(), 256 * 6 + 128, 0.1f);
                 op.Timeline.AddClip(clip2, new Point(0, 1), 20);
                 GeneratorClip clip3 = new GeneratorClip();
                 clip3.SetPeriodInBeats(1);

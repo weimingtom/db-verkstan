@@ -16,7 +16,8 @@ public:
         int tick;
     };
     ControlPoint controlPoints[DB_MAX_SPLINE_CONTROL_POINTS];
-    int numberOfControlPoints;
+    unsigned char numberOfControlPoints;
+    unsigned char type;
 private:
     ControlPoint getControlPoint(int index);
 };

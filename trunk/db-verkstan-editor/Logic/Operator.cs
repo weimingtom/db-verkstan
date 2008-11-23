@@ -10,7 +10,7 @@ namespace VerkstanEditor.Logic
     public abstract class Operator : IDisposable
     {
         #region Abstract Properties
-        public abstract ICollection<Verkstan.OperatorProperty> Properties { get; }
+        public abstract ICollection<Verkstan.CoreOperatorProperty> Properties { get; }
         public abstract String TypeName  { get; }
         public abstract bool IsProcessable { get; }
         public abstract Verkstan.Constants.OperatorTypes Type { get; }

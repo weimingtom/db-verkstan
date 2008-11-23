@@ -2,24 +2,14 @@
 #include "core/core.hpp"
 
 SplineClip::SplineClip()
-:numberOfControlPoints(0)
+:numberOfControlPoints(0),
+type(0)
 {
   
 }
 
 float SplineClip::getValue(int tick)
 {
-    if (numberOfControlPoints == 0)
-        return 0.0f;
-
-    if (numberOfControlPoints == 1)
-        return controlPoints[0].value;
-    
-    if (controlPoints[0].tick >= tick)
-        return controlPoints[0].value;
-    if (controlPoints[numberOfControlPoints - 1].tick <= tick)  
-        return controlPoints[numberOfControlPoints - 1].value;
-  
     int index = 0;
     for (int i = 0; i < numberOfControlPoints; i++)
     {
@@ -30,17 +20,35 @@ float SplineClip::getValue(int tick)
         }
     }
 
-    ControlPoint p1 = getControlPoint(index - 1);
+    if (type == 2) // On Off
+    {
+        return index % 2 == 0 ? -1.0f : 1.0f;
+    }
+
+    if (numberOfControlPoints == 0)
+        return 0.0f;
+    if (numberOfControlPoints == 1)
+        return controlPoints[0].value;
+    if (controlPoints[0].tick >= tick)
+        return controlPoints[0].value;
+    if (controlPoints[numberOfControlPoints - 1].tick <= tick)  
+        return controlPoints[numberOfControlPoints - 1].value;
+
+   
     ControlPoint p2 = getControlPoint(index);
     ControlPoint p3 = getControlPoint(index + 1);
-    ControlPoint p4 = getControlPoint(index + 2);
+
     float t = (tick - p2.tick) / (float)(p3.tick - p2.tick); 
 
-    // Linear
+    if (type == 1) // Linear
     {
-       // return  (1.0f - t) * p2.value + p3.value * t;
+        return  (1.0f - t) * p2.value + p3.value * t;
     }
-    // Catmull-Rom
+
+    ControlPoint p1 = getControlPoint(index - 1);
+    ControlPoint p4 = getControlPoint(index + 2);
+
+    if (type == 0) // Catmull-Rom
     {
         float t2 = 0.5f * (p3.value - p1.value);
         float t3 = 0.5f * (p4.value - p2.value);
@@ -52,7 +60,6 @@ float SplineClip::getValue(int tick)
 
         return h1*p2.value + h2*p3.value + h3*t2 + h4*t3;
     }
-
 }
 
 SplineClip::ControlPoint SplineClip::getControlPoint(int index)

@@ -29,11 +29,11 @@ namespace VerkstanEditor.Gui
                     generatorClipPropertiesView1.Visible = false;
                     generatorClipValueView1.Visible = false;
                     splineClipValueView1.Visible = false;
-                    //splineClipPropertoesView1.Visible = false;
+                    splineClipPropertiesView1.Visible = false;
                 }       
                 else if (clip.GetType() == typeof(GeneratorClip))
                 {
-                    //splineClipPropertiesView1.Visible = false;
+                    splineClipPropertiesView1.Visible = false;
                     splineClipValueView1.Visible = false;
                     generatorClipPropertiesView1.GeneratorClip = (GeneratorClip)clip;
                     generatorClipValueView1.GeneratorClip = (GeneratorClip)clip;
@@ -46,9 +46,9 @@ namespace VerkstanEditor.Gui
                 {
                     generatorClipPropertiesView1.Visible = false;
                     generatorClipValueView1.Visible = false;
-                    //splineClipPropertiesView1.SplineClip = (SplineClip)clip;
+                    splineClipPropertiesView1.SplineClip = (SplineClip)clip;
                     splineClipValueView1.SplineClip = (SplineClip)clip;
-                    //splineClipPropertiesView1.Visible = false;
+                    splineClipPropertiesView1.Visible = true;
                     splineClipValueView1.Visible = true;
                     splineClipValueView1.BeatWidth = Convert.ToInt32(numericUpDown1.Value);
                     splineClipValueView1.YZoom = Convert.ToSingle(numericUpDown2.Value) / 200.0f;

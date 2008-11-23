@@ -1,7 +1,7 @@
 #include "cli/Renderer.hpp"
 
 #include "cli/Camera.hpp"
-#include "cli/Operator.hpp"
+#include "cli/CoreOperator.hpp"
 
 namespace Verkstan
 {

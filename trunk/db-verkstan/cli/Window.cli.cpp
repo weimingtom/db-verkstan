@@ -6,7 +6,7 @@
 #include "cli/Window.cli.hpp"
 
 #include "cli/Constants.hpp"
-#include "cli/Operator.hpp"
+#include "cli/CoreOperator.hpp"
 #include "cli/Renderer.hpp"
 
 namespace Verkstan

@@ -12,8 +12,8 @@ namespace Verkstan
 {
     ref struct Color;
     ref struct Vector;
-    ref class OperatorProperty;
-    ref class OperatorInput;
+    ref class CoreOperatorProperty;
+    ref class CoreOperatorInput;
 
 	public ref class CoreOperator 
 	{
@@ -21,8 +21,8 @@ namespace Verkstan
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property String^ Name { String^ get(); }
         property int Id { int get(); }
-        property List<OperatorProperty^>^ Properties { List<OperatorProperty^>^ get(); }
-        property List<OperatorInput^>^ Inputs { List<OperatorInput^>^ get(); }
+        property List<CoreOperatorProperty^>^ Properties { List<CoreOperatorProperty^>^ get(); }
+        property List<CoreOperatorInput^>^ Inputs { List<CoreOperatorInput^>^ get(); }
 
         CoreOperator(String^ name,
                      int operatorId,
@@ -79,7 +79,7 @@ namespace Verkstan
         String^ name;
         int id;
         Constants::OperatorTypes type;
-        List<OperatorProperty^>^ properties;
-        List<OperatorInput^>^ inputs;
+        List<CoreOperatorProperty^>^ properties;
+        List<CoreOperatorInput^>^ inputs;
 	};
 }

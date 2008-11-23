@@ -1,8 +1,8 @@
-#include "cli/OperatorInput.hpp"
+#include "cli/CoreOperatorInput.hpp"
 
 namespace Verkstan
 {
-    OperatorInput::OperatorInput(int index,
+    CoreOperatorInput::CoreOperatorInput(int index,
                                          Constants::OperatorTypes type,
                                          bool infinite,
                                          bool optional)

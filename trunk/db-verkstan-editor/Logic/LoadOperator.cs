@@ -32,12 +32,12 @@ namespace VerkstanEditor.Logic
                 return target.IsProcessable;
             }
         }
-        public override ICollection<Verkstan.OperatorProperty> Properties
+        public override ICollection<Verkstan.CoreOperatorProperty> Properties
         {
             get
             {
-                ICollection<Verkstan.OperatorProperty> properties = new List<Verkstan.OperatorProperty>();
-                properties.Add(new Verkstan.OperatorProperty(0, "Target", Verkstan.Constants.OperatorPropertyTypes.String));
+                ICollection<Verkstan.CoreOperatorProperty> properties = new List<Verkstan.CoreOperatorProperty>();
+                properties.Add(new Verkstan.CoreOperatorProperty(0, "Target", Verkstan.Constants.OperatorPropertyTypes.String));
                 return properties;
             }
         }

@@ -79,7 +79,7 @@ namespace VerkstanEditor.Gui
             int row = 0;
             AddLabelForProperty("Name", row);
             row = AddNameProperty(row);
-            foreach (Verkstan.OperatorProperty property in op.Properties)
+            foreach (Verkstan.CoreOperatorProperty property in op.Properties)
             {
                 AddLabelForProperty(property.Name, row);
                 if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
@@ -126,7 +126,7 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Controls.Add(label);
             tableLayoutPanel1.SetCellPosition(label, new TableLayoutPanelCellPosition(0, row));
         }
-        private int AddByteProperty(Verkstan.OperatorProperty property, int row)
+        private int AddByteProperty(Verkstan.CoreOperatorProperty property, int row)
         {
          
             int index = property.Index;
@@ -144,7 +144,7 @@ namespace VerkstanEditor.Gui
             return row + 1;
 
         }
-        private int AddIntProperty(Verkstan.OperatorProperty property, int row)
+        private int AddIntProperty(Verkstan.CoreOperatorProperty property, int row)
         {          
             int index = property.Index;
             NumericUpDown numericUpDown = new NumericUpDown();
@@ -160,7 +160,7 @@ namespace VerkstanEditor.Gui
             row = AddAnimationButton(property, row);
             return row + 1;
         }
-        private int AddFloatProperty(Verkstan.OperatorProperty property, int row)
+        private int AddFloatProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             NumericUpDown numericUpDown = new NumericUpDown();
@@ -177,7 +177,7 @@ namespace VerkstanEditor.Gui
             row = AddAnimationButton(property, row);
             return row + 1;
         }
-        private int AddStringProperty(Verkstan.OperatorProperty property, int row)
+        private int AddStringProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             TextBox textBox = new TextBox();
@@ -200,7 +200,7 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
             return row + 1;
         }
-        private int AddTextProperty(Verkstan.OperatorProperty property, int row)
+        private int AddTextProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             TextBox textBox = new TextBox();
@@ -217,7 +217,7 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.SetCellPosition(textBox, new TableLayoutPanelCellPosition(1, row));
             return row + 1;
         }
-        private int AddVectorProperty(Verkstan.OperatorProperty property, int row)
+        private int AddVectorProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             VectorProperty vectorProperty = new VectorProperty();
@@ -236,7 +236,7 @@ namespace VerkstanEditor.Gui
             row = AddAnimationButton(property, row);
             return row + 1;
         }
-        private int AddColorProperty(Verkstan.OperatorProperty property, int row)
+        private int AddColorProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             ColorProperty colorProperty = new ColorProperty();
@@ -252,7 +252,7 @@ namespace VerkstanEditor.Gui
             row = AddAnimationButton(property, row);
             return row + 1;
         }
-        private int AddEnumProperty(Verkstan.OperatorProperty property, int row)
+        private int AddEnumProperty(Verkstan.CoreOperatorProperty property, int row)
         {
             int index = property.Index;
             List<String> enumValues = property.EnumValues;
@@ -275,7 +275,7 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.SetCellPosition(comboBox, new TableLayoutPanelCellPosition(1, row));
             return row + 1;
         }
-        private int AddAnimationButton(Verkstan.OperatorProperty property, int row)
+        private int AddAnimationButton(Verkstan.CoreOperatorProperty property, int row)
         {
             Button button = new Button();
             button.Text = "A";
@@ -285,7 +285,7 @@ namespace VerkstanEditor.Gui
             button.BackColor = Color.LightGray;
             tableLayoutPanel1.Controls.Add(button);
             tableLayoutPanel1.SetCellPosition(button, new TableLayoutPanelCellPosition(2, row));
-            Verkstan.OperatorProperty prop = property;
+            Verkstan.CoreOperatorProperty prop = property;
 
             if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte
                 || property.Type == Verkstan.Constants.OperatorPropertyTypes.Int

@@ -53,7 +53,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db.Verkstan.Cli, Version=1.0.3242.33033, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db.Verkstan.Cli, Version=1.0.3249.29384, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\db-verkstan\db.Verkstan.Cli-Debug\db.Verkstan.Cli.dll</HintPath>
     </Reference>
@@ -109,6 +109,12 @@
     </Compile>
     <Compile Include="Gui\GeneratorClipValueView.Designer.cs">
       <DependentUpon>GeneratorClipValueView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\SplineClipPropertiesView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\SplineClipPropertiesView.Designer.cs">
+      <DependentUpon>SplineClipPropertiesView.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\SplineClipValueView.cs">
       <SubType>UserControl</SubType>
@@ -217,7 +223,7 @@
     </Compile>
     <Compile Include="Logic\Metronome.cs" />
     <Compile Include="Logic\SplineClip.cs" />
-    <Compile Include="Logic\SplineControlPoint.cs" />
+    <Compile Include="Logic\ControlPoint.cs" />
     <Compile Include="Logic\StoreOperator.cs" />
     <Compile Include="Logic\Timeline.cs" />
     <Compile Include="Program.cs" />
@@ -315,6 +321,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GeneratorClipValueView.resx">
       <DependentUpon>GeneratorClipValueView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\SplineClipPropertiesView.resx">
+      <DependentUpon>SplineClipPropertiesView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\SplineClipValueView.resx">
       <DependentUpon>SplineClipValueView.cs</DependentUpon>

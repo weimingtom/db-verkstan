@@ -54,4 +54,14 @@ namespace Verkstan
     {
         return coreSplineClip->controlPoints[index].value;
     }
+
+    void CoreSplineClip::SetSplineType(int type)
+    {
+        coreSplineClip->type = type;
+    }
+
+    int CoreSplineClip::GetSplineType()
+    {
+        return coreSplineClip->type;
+    }
 }

@@ -46,6 +46,7 @@
             this.clipValueHorizontalLine1 = new VerkstanEditor.Gui.ClipValueHorizontalLine();
             this.splineClipValueView1 = new VerkstanEditor.Gui.SplineClipValueView();
             this.generatorClipValueView1 = new VerkstanEditor.Gui.GeneratorClipValueView();
+            this.splineClipPropertiesView1 = new VerkstanEditor.Gui.SplineClipPropertiesView();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -86,6 +87,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.splineClipPropertiesView1);
             this.splitContainer1.Panel1.Controls.Add(this.generatorClipPropertiesView1);
             // 
             // splitContainer1.Panel2
@@ -373,6 +375,17 @@
             this.generatorClipValueView1.YZoom = 1F;
             this.generatorClipValueView1.Resize += new System.EventHandler(this.generatorClipValueView1_Resize);
             // 
+            // splineClipPropertiesView1
+            // 
+            this.splineClipPropertiesView1.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.splineClipPropertiesView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splineClipPropertiesView1.Location = new System.Drawing.Point(0, 0);
+            this.splineClipPropertiesView1.Name = "splineClipPropertiesView1";
+            this.splineClipPropertiesView1.Size = new System.Drawing.Size(133, 360);
+            this.splineClipPropertiesView1.SplineClip = null;
+            this.splineClipPropertiesView1.TabIndex = 1;
+            this.splineClipPropertiesView1.Visible = false;
+            // 
             // ClipView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -431,5 +444,6 @@
         private System.Windows.Forms.SplitContainer splitEmptyAndValueVerticaLine;
         private ClipValueVerticalLine clipValueVerticalLine1;
         private SplineClipValueView splineClipValueView1;
+        private SplineClipPropertiesView splineClipPropertiesView1;
     }
 }

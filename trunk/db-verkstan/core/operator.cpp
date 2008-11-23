@@ -26,6 +26,7 @@ dirty(true)
         properties[i].amplify3 = 1.0f;
     }
 
+  
     for (int i = 0; i < DB_MAX_TIMELINE_CLIPS; i++)
         timelineClips[i] = -1;
 }

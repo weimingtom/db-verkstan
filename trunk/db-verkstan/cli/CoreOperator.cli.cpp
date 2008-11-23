@@ -3,9 +3,9 @@
 #include <vcclr.h>
 #include "cli/Core.hpp"
 #include "cli/Color.hpp"
-#include "cli/Operator.hpp"
-#include "cli/OperatorInput.hpp"
-#include "cli/OperatorProperty.hpp"
+#include "cli/CoreOperator.hpp"
+#include "cli/CoreOperatorInput.hpp"
+#include "cli/CoreOperatorProperty.hpp"
 #include "cli/Vector.hpp"
 
 namespace Verkstan
@@ -17,8 +17,8 @@ namespace Verkstan
         this->name = name;
         this->id = operatorId;
         this->type = type;
-        this->properties = gcnew List<OperatorProperty^>(); 
-        this->inputs = gcnew List<OperatorInput^>();
+        this->properties = gcnew List<CoreOperatorProperty^>(); 
+        this->inputs = gcnew List<CoreOperatorInput^>();
     }
 
     CoreOperator::~CoreOperator()
@@ -37,12 +37,12 @@ namespace Verkstan
         return name;
     }
 
-    List<OperatorProperty^>^ CoreOperator::Properties::get() 
+    List<CoreOperatorProperty^>^ CoreOperator::Properties::get() 
     {
         return properties;
     }
 
-    List<OperatorInput^>^ CoreOperator::Inputs::get() 
+    List<CoreOperatorInput^>^ CoreOperator::Inputs::get() 
     {
         return inputs;
     }
@@ -54,7 +54,7 @@ namespace Verkstan
 
     void CoreOperator::AddProperty(String^ name, Constants::OperatorPropertyTypes type)
     {
-        OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
+        CoreOperatorProperty^ prop = gcnew CoreOperatorProperty(properties->Count,
                                                         name,
                                                         type);
         properties->Add(prop);
@@ -62,7 +62,7 @@ namespace Verkstan
 
     void CoreOperator::AddEnumProperty(String^ name, List<String^>^ values)
     {
-        OperatorProperty^ prop = gcnew OperatorProperty(properties->Count,
+        CoreOperatorProperty^ prop = gcnew CoreOperatorProperty(properties->Count,
                                                         name,
                                                         Constants::OperatorPropertyTypes::Enum,
                                                         values);
@@ -71,7 +71,7 @@ namespace Verkstan
 
     void CoreOperator::AddInput(Constants::OperatorTypes type, bool infinite, bool optional)
     {
-        OperatorInput^ input = gcnew OperatorInput(inputs->Count, type, infinite, optional);
+        CoreOperatorInput^ input = gcnew CoreOperatorInput(inputs->Count, type, infinite, optional);
         inputs->Add(input);
     }
 

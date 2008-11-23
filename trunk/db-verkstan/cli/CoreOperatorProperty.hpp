@@ -7,13 +7,13 @@ using namespace System::Collections::Generic;
 
 namespace Verkstan 
 { 
-    public ref class OperatorProperty
+    public ref class CoreOperatorProperty
     {
     public:
-        OperatorProperty(int index, 
+        CoreOperatorProperty(int index, 
                              String^ name, 
                              Constants::OperatorPropertyTypes type);
-        OperatorProperty(int index, 
+        CoreOperatorProperty(int index, 
                              String^ name, 
                              Constants::OperatorPropertyTypes type,
                              List<String^>^ enumValues);

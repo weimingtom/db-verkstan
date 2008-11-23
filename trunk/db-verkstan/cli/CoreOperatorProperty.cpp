@@ -1,10 +1,10 @@
-#include "cli/Operator.hpp"
+#include "cli/CoreOperator.hpp"
 
-#include "cli/OperatorProperty.hpp"
+#include "cli/CoreOperatorProperty.hpp"
 
 namespace Verkstan
 {
-    OperatorProperty::OperatorProperty(int index,
+    CoreOperatorProperty::CoreOperatorProperty(int index,
                                                String^ name, 
                                                Constants::OperatorPropertyTypes type)
     {
@@ -14,7 +14,7 @@ namespace Verkstan
     }
 
       
-    OperatorProperty::OperatorProperty(int index,
+    CoreOperatorProperty::CoreOperatorProperty(int index,
                                                String^ name, 
                                                Constants::OperatorPropertyTypes type,
                                                List<String^>^ enumValues)

@@ -36,11 +36,11 @@ namespace VerkstanEditor.Logic
                     return senders.First().IsProcessable;
             }
         }
-        public override ICollection<Verkstan.OperatorProperty> Properties
+        public override ICollection<Verkstan.CoreOperatorProperty> Properties
         {
             get
             {
-                return new List<Verkstan.OperatorProperty>();
+                return new List<Verkstan.CoreOperatorProperty>();
             }
         }
         public override String TypeName

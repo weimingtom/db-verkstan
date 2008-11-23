@@ -6,10 +6,10 @@ using namespace System;
 
 namespace Verkstan
 {
-    public ref class OperatorInput
+    public ref class CoreOperatorInput
     {
     public:
-        OperatorInput(int index,
+        CoreOperatorInput(int index,
                           Constants::OperatorTypes type,
                           bool infinite,
                           bool optional);
