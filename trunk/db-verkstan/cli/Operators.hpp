@@ -241,6 +241,8 @@ ADD_INPUT(Scene);
 END_OP();
 
 DEF_OP("Scene", SceneOperator, Scene);
+ADD_BYTE_PROP("Render", 1);
+ADD_INT_PROP("Time offset", 0);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP();
 

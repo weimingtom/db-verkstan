@@ -102,7 +102,6 @@ namespace VerkstanEditor.Gui
         {
             UpdateScrollBars();
             beatPositionLine1.Width = timelineChannelsView1.Width;
-            Metronome.Ticks = timeline.GetTicks();
         }
         private void timelineChannels1_Load(object sender, EventArgs e)
         {

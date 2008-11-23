@@ -528,6 +528,7 @@ namespace VerkstanEditor.Gui
             Rectangle rectangle = new Rectangle(0, 0, width, height);
 
             Invalidate();
+            Metronome.Ticks = timeline.GetTicks();
         }
         private void PaintBeatPosition(PaintEventArgs e)
         {

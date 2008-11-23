@@ -273,6 +273,10 @@ namespace VerkstanEditor.Logic
                 }
             }
             operatorParent.BindedCoreOperator.SetNumberOfClips(numberOfClips);
+            if (GetTicks() == 0)
+                operatorParent.BindedCoreOperator.SetTicks(1);
+            else
+                operatorParent.BindedCoreOperator.SetTicks(GetTicks());
         }   
         private bool Move(Clip clip, Point point)
         {

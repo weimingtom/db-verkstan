@@ -286,7 +286,7 @@ namespace VerkstanEditor.Gui
             tableLayoutPanel1.Controls.Add(button);
             tableLayoutPanel1.SetCellPosition(button, new TableLayoutPanelCellPosition(2, row));
             Verkstan.CoreOperatorProperty prop = property;
-
+            Operator oper = op;
             if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte
                 || property.Type == Verkstan.Constants.OperatorPropertyTypes.Int
                 || property.Type == Verkstan.Constants.OperatorPropertyTypes.Float)
@@ -298,8 +298,8 @@ namespace VerkstanEditor.Gui
                 animationSettings.Amplify =  op.GetPropertyAmplify(0, 0);
                 animationSettings.SettingsChanged += delegate(object o, EventArgs e)
                 {
-                    op.SetPropertyChannel(prop.Index, 0, animationSettings.Channel);
-                    op.SetPropertyAmplify(prop.Index, 0, animationSettings.Amplify);
+                    oper.SetPropertyChannel(prop.Index, 0, animationSettings.Channel);
+                    oper.SetPropertyAmplify(prop.Index, 0, animationSettings.Amplify);
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings);
                 tableLayoutPanel1.SetCellPosition(animationSettings, new TableLayoutPanelCellPosition(1, row + 1));
@@ -321,8 +321,8 @@ namespace VerkstanEditor.Gui
                 animationSettings1.Amplify = op.GetPropertyAmplify(0, 0);
                 animationSettings1.SettingsChanged += delegate(object o, EventArgs e)
                 {
-                    op.SetPropertyChannel(prop.Index, 0, animationSettings1.Channel);
-                    op.SetPropertyAmplify(prop.Index, 0, animationSettings1.Amplify);
+                    oper.SetPropertyChannel(prop.Index, 0, animationSettings1.Channel);
+                    oper.SetPropertyAmplify(prop.Index, 0, animationSettings1.Amplify);
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings1);
                 tableLayoutPanel1.SetCellPosition(animationSettings1, new TableLayoutPanelCellPosition(1, row + 1));
@@ -333,8 +333,8 @@ namespace VerkstanEditor.Gui
                 animationSettings2.Amplify = op.GetPropertyAmplify(prop.Index, 1);
                 animationSettings2.SettingsChanged += delegate(object o, EventArgs e)
                 {
-                    op.SetPropertyChannel(prop.Index, 1, animationSettings2.Channel);
-                    op.SetPropertyAmplify(prop.Index, 1, animationSettings2.Amplify);
+                    oper.SetPropertyChannel(prop.Index, 1, animationSettings2.Channel);
+                    oper.SetPropertyAmplify(prop.Index, 1, animationSettings2.Amplify);
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings2);
                 tableLayoutPanel1.SetCellPosition(animationSettings2, new TableLayoutPanelCellPosition(1, row + 2));
@@ -345,8 +345,8 @@ namespace VerkstanEditor.Gui
                 animationSettings3.Amplify = op.GetPropertyAmplify(prop.Index, 2);
                 animationSettings3.SettingsChanged += delegate(object o, EventArgs e)
                 {
-                    op.SetPropertyChannel(prop.Index, 2, animationSettings3.Channel);
-                    op.SetPropertyAmplify(prop.Index, 2, animationSettings3.Amplify);
+                    oper.SetPropertyChannel(prop.Index, 2, animationSettings3.Channel);
+                    oper.SetPropertyAmplify(prop.Index, 2, animationSettings3.Amplify);
                 };
                 tableLayoutPanel1.Controls.Add(animationSettings3);
                 tableLayoutPanel1.SetCellPosition(animationSettings3, new TableLayoutPanelCellPosition(1, row + 3));
