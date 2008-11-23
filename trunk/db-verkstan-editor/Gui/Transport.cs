@@ -14,67 +14,50 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class Transport : UserControl
     {
+        #region Private Variables
         private bool showClockAsBeats = true;
-        private int beat;
+        private int tick;
+        #endregion
 
+        #region Constructor
         public Transport()
         {
             InitializeComponent();
-          //  this.bpm.Value = Metronome.BPM;
+            this.bpm.Value = Metronome.BPM;
             this.beatsOrTime.Text = "Beats";
             UpdateClock();
             Metronome.BeatChangedFastUpdate += new Metronome.BeatChangedHandler(this.Transport_BeatChangedFastUpdate);
         }
+        #endregion
 
-        public void Transport_BeatChangedFastUpdate(int beat)
+        #region Event Handlers
+        public void Transport_BeatChangedFastUpdate(int tick)
         {
-            this.beat = beat;
+            this.tick = tick;
             UpdateClock();
         }
-
-        private void UpdateClock()
-        {
-            /*
-            if (showClockAsBeats)
-            {
-                float bf = this.beat / (float)Metronome.TicksPerBeat;
-                this.time.Text = String.Format("{0:0000.00}", bf + 1);
-            }
-            else
-            {
-                TimeSpan ts = TimeSpan.FromMilliseconds(Metronome.Milliseconds);
-                this.time.Text = String.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, (int)(ts.Milliseconds / 10.0f));
-            }
-             * */
-        }
-
         private void play_Click(object sender, EventArgs e)
         {
-           // Metronome.Loop = false;
-           // Metronome.Start();
+            //Metronome.Loop = false;
+            Metronome.Start();
         }
-
         private void stop_Click(object sender, EventArgs e)
         {
-           // Metronome.Pause();
-           // Metronome.Beat = 0;
+            Metronome.Pause();
+            Metronome.Tick = 0;
         }
-
         private void start_Click(object sender, EventArgs e)
         {
-           // Metronome.Beat = 0;
+            Metronome.Tick = 0;
         }
-
         private void pause_Click(object sender, EventArgs e)
         {
-           // Metronome.Pause();
+            Metronome.Pause();
         }
-
         private void bpm_ValueChanged(object sender, EventArgs e)
         {
-            //Metronome.BPM = Convert.ToInt32(this.bpm.Value);
+            Metronome.BPM = Convert.ToInt32(this.bpm.Value);
         }
-
         private void beatsOrTime_SelectedValueChanged(object sender, EventArgs e)
         {
             showClockAsBeats = (String)beatsOrTime.SelectedItem == "Beats";
@@ -83,7 +66,6 @@ namespace VerkstanEditor.Gui
             int clockX = Size.Width / 2 - this.time.Size.Width / 2;
             this.time.Location = new Point(clockX, this.time.Location.Y);  
         }
-
         private void Transport_Resize(object sender, EventArgs e)
         {
             int clockX = Size.Width / 2 - this.time.Size.Width / 2;
@@ -103,11 +85,28 @@ namespace VerkstanEditor.Gui
 
             this.miniTimeline1.Size = new Size(Size.Width - 8, miniTimeline1.Size.Height);
         }
-
         private void loopPlay_Click(object sender, EventArgs e)
         {
-           // Metronome.Loop = true;
+           //Metronome.Loop = true;
            // Metronome.Start();
         }
+        #endregion
+
+        #region Private Methods
+        private void UpdateClock()
+        {
+          
+            if (showClockAsBeats)
+            {
+                float bf = this.tick / (float)Metronome.TicksPerBeat;
+                this.time.Text = String.Format("{0:0000.00}", bf + 1);
+            }
+            else
+            {
+                TimeSpan ts = TimeSpan.FromMilliseconds(Metronome.Milliseconds);
+                this.time.Text = String.Format("{0:00}:{1:00}:{2:00}", (int)ts.TotalMinutes, ts.Seconds, (int)(ts.Milliseconds / 10.0f));
+            }
+        }
+        #endregion
     }
 }

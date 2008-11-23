@@ -21,7 +21,7 @@ namespace Verkstan
         ~Renderer();
         int ClearColor;
             
-        void RenderOperator(CoreOperator^ op);
+        void RenderOperator(CoreOperator^ op, int tick);
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);
         void MouseUp(int button, int x, int y);
@@ -29,8 +29,6 @@ namespace Verkstan
 
     private:
         void RenderTextureOperator(CoreOperator^ op);
-        void RenderStoreOperator(CoreOperator^ op);
-        void RenderLoadOperator(CoreOperator^ op);
         void RenderMeshOperator(CoreOperator^ op);
         void RenderModelOperator(CoreOperator^ op);
         void RenderDemoSceneRendererOperator(CoreOperator^ op);

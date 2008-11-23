@@ -15,7 +15,7 @@ namespace Verkstan
 
     }
 
-    void Renderer::RenderOperator(CoreOperator^ op)
+    void Renderer::RenderOperator(CoreOperator^ op, int tick)
     {
         if (op == nullptr)
         {
@@ -28,8 +28,7 @@ namespace Verkstan
             return;
         }
 
-        //Core::beat = Metronome::Beat;
-        op->getOperator()->cascadeProcess();
+        op->getOperator()->cascadeProcess(tick);
 
         switch (op->Type)
         {
@@ -42,12 +41,6 @@ namespace Verkstan
         case Constants::OperatorTypes::Texture:
             RenderTextureOperator(op);
             break;
-        case Constants::OperatorTypes::Store:
-            RenderStoreOperator(op);
-            break;
-        case Constants::OperatorTypes::Load:
-            RenderLoadOperator(op);
-            break;
         case Constants::OperatorTypes::Scene:
         case Constants::OperatorTypes::Renderer:
             RenderDemoSceneRendererOperator(op);
@@ -56,18 +49,6 @@ namespace Verkstan
             RenderUnknownOperator(op);
             break;
         }
-    }
-
-    void Renderer::RenderStoreOperator(CoreOperator^ op)
-    {
-        //if (op->GetPrimaryJoint()->Sender != nullptr)
-        //    RenderOperator(op->GetPrimaryJoint()->Sender);
-    }
-
-    void Renderer::RenderLoadOperator(CoreOperator^ op)
-    {
-      //  if (op->GetPrimaryJoint()->Sender != nullptr)
-      //      RenderOperator(op->GetPrimaryJoint()->Sender);
     }
 
     void Renderer::RenderTextureOperator(CoreOperator^ op)

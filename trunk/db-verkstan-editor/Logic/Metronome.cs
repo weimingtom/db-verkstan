@@ -8,6 +8,18 @@ namespace VerkstanEditor.Logic
     public class Metronome
     {
         #region Properties
+        private static int bpm = 120;
+        public static int BPM
+        {
+            get
+            {
+                return bpm;
+            }
+            set
+            {
+                bpm = value;
+            }
+        }
         public static int TicksPerBeat
         {
             get
@@ -15,6 +27,85 @@ namespace VerkstanEditor.Logic
                 return 256;
             }
         }
+        private static int ticks = 0;
+        public static int Ticks
+        {
+            get
+            {
+                return ticks;
+            }
+            set
+            {
+                ticks = value;
+
+                if (tick > ticks)
+                {
+                    tick = ticks;
+                }
+            }
+        }
+        private static int tick = 0;
+        public static int Tick
+        {
+            get
+            {
+                 if (!ticking)
+                    return tick;
+    
+                int currentSystemTickCount = System.Environment.TickCount;
+                int ms = currentSystemTickCount - lastSystemTickCount;
+                int tpm = BPM * TicksPerBeat;
+                float tps = tpm / 60.0f;
+                float tpms = tps / 1000.0f;
+
+                int tickAddition = (int)(tpms * ms) + (int)leftOvers;
+                tick += tickAddition;
+                leftOvers -= (int)leftOvers;
+                leftOvers +=  (tpms * ms) - (int)(tpms * ms);
+
+                lastSystemTickCount = currentSystemTickCount;
+
+                /*
+                if (Loop && beat > loopEnd)
+                {
+                    beat = loopStart;
+                }*/
+                if (tick > ticks)
+                {
+                    tick = ticks;
+                    ticking = false;
+                }
+
+                return tick;
+            }
+            set
+            {
+                tick = value;
+                lastSystemTickCount = System.Environment.TickCount;
+                leftOvers = 0.0f;
+
+                if (tick > ticks)
+                    tick = ticks;
+
+                if (tick < 0)
+                    tick = 0;
+            }
+        }
+        public static int Milliseconds
+        {
+            get
+            {
+    
+                float b = Tick / (float)TicksPerBeat;
+                return (int)(b / BPM * 60000);
+            }
+        }
+        #endregion
+
+        #region Private Variables
+        private static bool ticking = false;
+        private static int lastSystemTickCount = 0;
+        private static float leftOvers = 0;
         #endregion
 
         #region Events
@@ -32,104 +123,18 @@ namespace VerkstanEditor.Logic
                 BeatChangedSlowUpdate(beat);
         }
         #endregion
-        /*
-        public static int Beat
-        {
-            set
-            {
-                Verkstan.Metronome.Beat = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.Beat;
-            }
-        }
 
-        public static int Beats
-        {
-            set
-            {
-                Verkstan.Metronome.Beats = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.Beats;
-            }
-        }
-
-        public static int BPM
-        {
-            set
-            {
-                Verkstan.Metronome.BPM = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.BPM;
-            }
-        }
-
-        public static bool Loop
-        {
-            set
-            {
-                Verkstan.Metronome.Loop = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.Loop;
-            }
-        }
-
-        public static int LoopStart
-        {
-            set
-            {
-                Verkstan.Metronome.LoopStart = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.LoopStart;
-            }
-        }
-
-        public static int LoopEnd
-        {
-            set
-            {
-                Verkstan.Metronome.LoopEnd = value;
-            }
-            get
-            {
-                return Verkstan.Metronome.LoopEnd;
-            }
-        }
-
-        public static int TicksPerBeat
-        {
-            get
-            {
-                return Verkstan.Metronome.TicksPerBeat;
-            }
-        }
-
-        public static int Milliseconds
-        {
-            get
-            {
-                return Verkstan.Metronome.Milliseconds;
-            }
-        }
-
+        #region Public Static Methods
         public static void Start()
         {
-            Verkstan.Metronome.Start();
+            ticking = true;
+            lastSystemTickCount = System.Environment.TickCount;
         }
 
         public static void Pause()
         {
-            Verkstan.Metronome.Pause();
+            ticking = false;
         }
-         */
+        #endregion
     }
 }

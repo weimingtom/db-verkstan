@@ -23,7 +23,7 @@ namespace Verkstan
 
         void Boot(void* windowPtr);
         void Shutdown();
-        void Render();
+        void Render(int tick);
         void Resize();
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);

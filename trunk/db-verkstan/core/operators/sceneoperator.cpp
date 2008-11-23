@@ -2,18 +2,18 @@
 
 #include "core/core.hpp"
 
-void SceneOperator::cascadeProcess()
+void SceneOperator::cascadeProcess(int tick)
 {
     for (int i = 0; i < numberOfClips; i++)
     {
         Clip* clip = clips[timelineClips[i]];
 
-        if (clip->start <= beat && clip->end > beat)
-            broadcastChannelValue(clip->channel, clip->getValue(beat - clip->start));
+        if (clip->start <= tick && clip->end > tick)
+            broadcastChannelValue(clip->channel, clip->getValue(tick - clip->start));
     }
 
     for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->cascadeProcess();
+        operators[inputs[i]]->cascadeProcess(tick);
 }
 
 void SceneOperator::render()

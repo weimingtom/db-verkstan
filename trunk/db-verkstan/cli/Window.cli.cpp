@@ -122,7 +122,7 @@ namespace Verkstan
         globalViewMatrixStack->Release();
     }
     
-    void Window::Render()
+    void Window::Render(int tick)
     {
         if (resetDevice)
         {
@@ -131,7 +131,7 @@ namespace Verkstan
         else
         {
 
-            renderer->RenderOperator(viewedOperator);
+            renderer->RenderOperator(viewedOperator, tick);
 
             HRESULT result = globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
 

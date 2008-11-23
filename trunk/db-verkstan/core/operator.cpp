@@ -76,13 +76,13 @@ bool Operator::isDirty()
     return dirty;
 }
 
-void Operator::cascadeProcess()
+void Operator::cascadeProcess(int tick)
 {
     if (!isDirty())
         return;
 
     for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->cascadeProcess();
+        operators[inputs[i]]->cascadeProcess(tick);
 
     process();
     dirty = false;

@@ -5,7 +5,7 @@
 class SceneOperator: public Operator
 {
 public:
-    void cascadeProcess();
+    void cascadeProcess(int tick);
     void process();
     void render();
 };

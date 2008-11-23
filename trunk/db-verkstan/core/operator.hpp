@@ -19,7 +19,7 @@ public:
     Operator();
     virtual ~Operator() {};
     
-    virtual void cascadeProcess();
+    virtual void cascadeProcess(int tick);
     virtual void process() = 0;
     virtual void render() = 0;
 

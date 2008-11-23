@@ -182,6 +182,10 @@ namespace VerkstanEditor.Logic
                     beats = channel.GetBeats();
             return beats;
         }
+        public int GetTicks()
+        {
+            return GetBeats() * Metronome.TicksPerBeat;
+        }
         public void AddChannel(Channel channel)
         {
             int number = 0;

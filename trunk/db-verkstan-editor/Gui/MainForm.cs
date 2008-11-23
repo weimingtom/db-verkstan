@@ -49,11 +49,8 @@ namespace VerkstanEditor.Gui
             if (viewedOperator == null || !viewedOperator.IsProcessable)
                 verkstanWindow.ViewedOperator = null;
 
-            verkstanWindow.Render();
-           
-            /*
-           Metronome.OnBeatChangedFastUpdate(Metronome.Beat);
-            */
+            verkstanWindow.Render(Metronome.Tick);
+            Metronome.OnBeatChangedFastUpdate(Metronome.Tick);
         }
         private void PreviewPanel_SizeChanged(object sender, EventArgs e)
         {
@@ -104,7 +101,7 @@ namespace VerkstanEditor.Gui
         }
         private void slowRenderTimer_Tick(object sender, EventArgs e)
         {
-            //Metronome.OnBeatChangedSlowUpdate(Metronome.Beat);
+            Metronome.OnBeatChangedSlowUpdate(Metronome.Tick);
         }
         private void operatorPageView1_ViewedOperatorChanged(object sender, EventArgs e)
         {
