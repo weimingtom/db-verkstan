@@ -255,6 +255,7 @@
             // 
             this.beatPositionLine1.AutoScroll = true;
             this.beatPositionLine1.BeatWidth = 16;
+            this.beatPositionLine1.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
             this.beatPositionLine1.Location = new System.Drawing.Point(0, 0);
             this.beatPositionLine1.Margin = new System.Windows.Forms.Padding(2);
             this.beatPositionLine1.Name = "beatPositionLine1";

@@ -15,6 +15,11 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class BeatPositionLine : UserControl
     {
+        #region Private Variables
+        private int tick;
+        private bool dragTick = false;
+        #endregion
+
         #region Properties
         private int beatWidth = 16;
         public int BeatWidth
@@ -41,12 +46,11 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Event Handlers
-        public void BeatPositionLine_BeatChangedSlowUpdate(int beat)
+        public void BeatPositionLine_BeatChangedSlowUpdate(int tick)
         {
-            /*
-            int oldBeatInPixels = (int)(beatWidth * (this.beat / (float)Metronome.TicksPerBeat));
-            int newBeatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
-            this.beat = beat;
+            int oldBeatInPixels = (int)(beatWidth * (this.tick / (float)Metronome.TicksPerBeat));
+            int newBeatInPixels = (int)(beatWidth * (tick / (float)Metronome.TicksPerBeat));
+            this.tick = tick;
 
             int x = 0;
             int width = 0;
@@ -62,8 +66,6 @@ namespace VerkstanEditor.Gui
             }
 
             Invalidate(new Rectangle(x, 0, width, Size.Height), false);
-            Update();
-             */
         }
         private void BeatPositionLine_Paint(object sender, PaintEventArgs e)
         {
@@ -92,8 +94,8 @@ namespace VerkstanEditor.Gui
             p.Dispose();
             b.Dispose();
 
-           // int beatInPixels = (int)(beatWidth * (beat / (float)Metronome.TicksPerBeat));
-            //e.Graphics.DrawLine(Pens.Red, new Point(beatInPixels, 0), new Point(beatInPixels, Height));
+            int tickInPixels = (int)(beatWidth * (tick / (float)Metronome.TicksPerBeat));
+            e.Graphics.DrawLine(Pens.Red, new Point(tickInPixels, 0), new Point(tickInPixels, Height));
 
             //Rectangle loopStartRectangle = new Rectangle(Metronome.LoopStart / Metronome.TicksPerBeat * beatWidth, 0, 2, Height);
             //if (!e.ClipRectangle.IntersectsWith(loopStartRectangle))
@@ -112,60 +114,25 @@ namespace VerkstanEditor.Gui
         }
         private void BeatPositionLine_MouseDown(object sender, MouseEventArgs e)
         {
-            /*
-            if (e.Button == MouseButtons.Right)
-            {
-                loopMarker = e.X;
-                changeLoop = true;
-            }
             if (e.Button == MouseButtons.Left)
             {
-                Metronome.Beat = e.X / beatWidth * Metronome.TicksPerBeat;
-                dragBeat = true;
+                if (e.X % beatWidth > beatWidth / 2)
+                    Metronome.Tick = (e.X / beatWidth + 1) * Metronome.TicksPerBeat;
+                else
+                    Metronome.Tick = (e.X / beatWidth) * Metronome.TicksPerBeat;
+                dragTick = true;
             }
-             */
         }
         private void BeatPositionLine_MouseMove(object sender, MouseEventArgs e)
         {
-            /*
-            if (!dragBeat)
+            if (!dragTick)
                 return;
 
-            Metronome.Beat = e.X / beatWidth * Metronome.TicksPerBeat;
-             * */
+            Metronome.Tick = e.X / beatWidth * Metronome.TicksPerBeat;
         }
         private void BeatPositionLine_MouseUp(object sender, MouseEventArgs e)
         {
-            /*
-            dragBeat = false;
-
-            if (changeLoop)
-            {
-                changeLoop = false;
-                int diff = loopMarker - e.X;
-
-                int start;
-                int end;
-
-                if (diff < 0)
-                {
-                    start = loopMarker / beatWidth * Metronome.TicksPerBeat;
-                    end = e.X / beatWidth * Metronome.TicksPerBeat;
-                }
-                else
-                {
-                    start = loopMarker / beatWidth * Metronome.TicksPerBeat;
-                    end = e.X / beatWidth * Metronome.TicksPerBeat;
-                }
-
-                if (start == end)
-                    return;
-
-                Metronome.LoopStart = start;
-                Metronome.LoopEnd = end;
-                Refresh();
-            }
-             * */
+            dragTick = false;
         }
         #endregion
     }

@@ -29,19 +29,22 @@ namespace VerkstanEditor.Gui
         {
             set
             {
-                timeline = value;
-                timelineChannelsView1.Timeline = value;
-                timelineChannelsPropertiesView1.Timeline = value;
+                if (timeline != value)
+                {
+                    timeline = value;
+                    timelineChannelsView1.Timeline = value;
+                    timelineChannelsPropertiesView1.Timeline = value;
 
-                if (timeline != null)
-                {
-                    Metronome.Tick = 0;
-                    Metronome.Ticks = timeline.GetTicks();
-                }
-                else
-                {
-                    Metronome.Tick = 0;
-                    Metronome.Ticks = 0;
+                    if (timeline != null)
+                    {
+                        Metronome.Tick = 0;
+                        Metronome.Ticks = timeline.GetTicks();
+                    }
+                    else
+                    {
+                        Metronome.Tick = 0;
+                        Metronome.Ticks = 0;
+                    }
                 }
             }
             get
@@ -99,6 +102,7 @@ namespace VerkstanEditor.Gui
         {
             UpdateScrollBars();
             beatPositionLine1.Width = timelineChannelsView1.Width;
+            Metronome.Ticks = timeline.GetTicks();
         }
         private void timelineChannels1_Load(object sender, EventArgs e)
         {

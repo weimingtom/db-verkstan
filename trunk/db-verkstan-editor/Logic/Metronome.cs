@@ -27,7 +27,7 @@ namespace VerkstanEditor.Logic
                 return 256;
             }
         }
-        private static int ticks = 0;
+        private static int ticks = 1;
         public static int Ticks
         {
             get
@@ -37,6 +37,9 @@ namespace VerkstanEditor.Logic
             set
             {
                 ticks = value;
+
+                if (ticks < 1)
+                    ticks = 1;
 
                 if (tick > ticks)
                 {

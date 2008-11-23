@@ -24,7 +24,6 @@ namespace VerkstanEditor.Gui
                 timelineView1.ViewedClip = value;
             }
         }
-        private Timeline timeline;
         public Timeline Timeline
         {
             set

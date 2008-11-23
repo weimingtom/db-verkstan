@@ -13,60 +13,60 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class MiniTimeline : UserControl
     {
-        private bool dragBeat = false;
-        private int beat;
+        #region Private Variables
+        private bool dragTick = false;
+        private int tick;
+        #endregion
 
+        #region Constructor
         public MiniTimeline()
         {
             InitializeComponent();
             DoubleBuffered = true;
             Metronome.BeatChangedSlowUpdate += new Metronome.BeatChangedHandler(this.MiniTimeline_BeatChangedSlowUpdate);
         }
+        #endregion
 
-        public void MiniTimeline_BeatChangedSlowUpdate(int beat)
+        #region Event Handlers
+        public void MiniTimeline_BeatChangedSlowUpdate(int tick)
         {
-            this.beat = beat;
+            this.tick = tick;
             Refresh();
         }
-
         private void MiniTimeline_Paint(object sender, PaintEventArgs e)
         {
-            /*
+        
             Pen p = new Pen(ForeColor, 1);
-            float beatPosition = this.beat / (float)Metronome.Beats; 
+            float beatPosition = this.tick / (float)Metronome.Ticks; 
             int beatInPixels = (int)((Size.Width - 1) * beatPosition);
             e.Graphics.DrawLine(p, new Point(beatInPixels, 0), new Point(beatInPixels, Size.Height));
             p.Dispose();
-             */
         }
-
         private void MiniTimeline_MouseDown(object sender, MouseEventArgs e)
         {
-            /*
+            
             if (e.Button != MouseButtons.Left)
                 return;
 
             float beatPosition = e.X / (float)(Size.Width - 1);
-            Metronome.Beat = (int)(Metronome.Beats * beatPosition);
+            Metronome.Tick = (int)(Metronome.Ticks * beatPosition);
 
-            dragBeat = true;
-             */
+            dragTick = true;
         }
-
         private void MiniTimeline_MouseMove(object sender, MouseEventArgs e)
         {
-            /*
-            if (!dragBeat)
+            
+            if (!dragTick)
                 return;
 
             float beatPosition = e.X / (float)(Size.Width - 1);
-            Metronome.Beat = (int)(Metronome.Beats * beatPosition);
-             */
+            Metronome.Tick = (int)(Metronome.Ticks * beatPosition);
+           
         }
-
         private void MiniTimeline_MouseUp(object sender, MouseEventArgs e)
         {
-            dragBeat = false;
+            dragTick = false;
         }
+        #endregion
     }
 }
