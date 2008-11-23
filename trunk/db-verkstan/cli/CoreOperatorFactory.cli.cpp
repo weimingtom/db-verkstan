@@ -57,7 +57,6 @@ categories[category]->Add(name);
     if (typeName == opName)                         \
     {                                               \
         Core::Operator* o = new Core::opClass##();  \
-        System::Console::WriteLine("Instanciating " + opName);\
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
@@ -120,7 +119,6 @@ categories[category]->Add(name);
 
     CoreOperator^ CoreOperatorFactory::Create(String^ typeName)
     {
-        System::Console::WriteLine("Creating " + typeName);
         CoreOperator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Operators.hpp"
