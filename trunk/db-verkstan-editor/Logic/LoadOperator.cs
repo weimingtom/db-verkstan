@@ -62,6 +62,7 @@ namespace VerkstanEditor.Logic
         {
             typeName = "Load";
             stateChangedEventHandler = new Operator.EventHandler(this.load_StateChanged);
+            UniqueName = AllocateUniqueName(TypeName);
         }
         #endregion
 

@@ -56,7 +56,7 @@ namespace VerkstanEditor.Logic
         public PropagateOperator()
             :base()
         {
-          
+            UniqueName = AllocateUniqueName(TypeName);
         }
         #endregion
 

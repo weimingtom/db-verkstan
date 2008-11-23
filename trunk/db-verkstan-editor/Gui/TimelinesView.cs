@@ -24,6 +24,26 @@ namespace VerkstanEditor.Gui
                 timelineView1.ViewedClip = value;
             }
         }
+        private Timeline timeline;
+        public Timeline Timeline
+        {
+            set
+            {
+                timelineView1.Timeline = value;
+            }
+            get
+            {
+                return timelineView1.Timeline;
+            }
+        }
+        private Operator viewedTimelineOperator;
+        public Operator ViewedTimelineOperator
+        {
+            get
+            {
+                return viewedTimelineOperator;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -52,6 +72,26 @@ namespace VerkstanEditor.Gui
         private void timelineView1_ViewedClipChanged(object sender, EventArgs e)
         {
             OnViewedClipChanged();
+        }
+        private void TimelinesView_VisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible)
+            {
+                timelinesComboBox1.Items.Clear();
+                ICollection<Operator> operatorsWithTimeline = Operator.FindAllWithTimeline();
+
+                foreach (Operator op in operatorsWithTimeline)
+                    timelinesComboBox1.Items.Add(op.UniqueName);
+
+                if (viewedTimelineOperator != null)
+                    timelinesComboBox1.SelectedItem = viewedTimelineOperator.UniqueName;
+            }
+        }
+        private void timelinesComboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Operator op = Operator.FindWithUniqueName(timelinesComboBox1.SelectedItem.ToString());
+            Timeline = op.Timeline;
+            viewedTimelineOperator = op;
         }
         #endregion
 

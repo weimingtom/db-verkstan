@@ -79,6 +79,11 @@ namespace VerkstanEditor.Logic
 
             if (selected == null)
                 return;
+
+            controlPoints.Remove(selected);
+            DestroyPreview();
+            UpdateCoreClip();
+            OnRemoved(selected);
         }
         public void MoveSelected(int x, float y)
         {

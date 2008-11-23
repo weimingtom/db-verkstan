@@ -123,6 +123,18 @@ namespace VerkstanEditor.Logic
                 return lastDimension;
             }
         }
+        private String uniqueName;
+        public String UniqueName
+        {
+            set
+            {
+                uniqueName = value;
+            }
+            get
+            {
+                return uniqueName;
+            }
+        }
         private String name;
         public String Name
         {
@@ -135,6 +147,11 @@ namespace VerkstanEditor.Logic
                 if (name != value)
                 {
                     name = value;
+                    if (name != null)
+                        uniqueName = AllocateUniqueName(name);
+                    else
+                        uniqueName = AllocateUniqueName(TypeName);
+
                     OnStateChanged();
                 }
             }
@@ -212,10 +229,38 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Static methods
+        public static String AllocateUniqueName(String name)
+        {
+            String uniqueName = name;
+            int i = 1;
+            while (FindWithUniqueName(uniqueName) != null)
+            {
+                uniqueName = name + i;
+                i++;
+            }
+
+            return uniqueName;
+        }
+        public static ICollection<Operator> FindAllWithTimeline()
+        {
+            ICollection<Operator> result = new List<Operator>();
+
+            foreach (Operator op in instances)
+                if (op.timeline != null)
+                    result.Add(op);
+            return result;
+        }
         public static Operator Find(String name)
         {
             foreach (Operator op in instances)
                 if (op.Name == name)
+                    return op;
+            return null;
+        }
+        public static Operator FindWithUniqueName(String name)
+        {
+            foreach (Operator op in instances)
+                if (op.UniqueName == name)
                     return op;
             return null;
         }
@@ -255,7 +300,7 @@ namespace VerkstanEditor.Logic
             lastDimension = dimension;
             senders = new List<Operator>(); 
             receivers = new List<Operator>(); 
-            loads = new List<Operator>(); 
+            loads = new List<Operator>();
         }
         #endregion
 

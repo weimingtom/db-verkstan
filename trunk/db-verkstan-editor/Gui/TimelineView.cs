@@ -30,6 +30,8 @@ namespace VerkstanEditor.Gui
             set
             {
                 timeline = value;
+                timelineChannelsView1.Timeline = value;
+                timelineChannelsPropertiesView1.Timeline = value;
             }
             get
             {
@@ -54,9 +56,6 @@ namespace VerkstanEditor.Gui
         {
             InitializeComponent();
             this.MouseWheel += new MouseEventHandler(Timeline_MouseWheel);
-            //timeline = OperatorFactory.Create("Scene").Timeline;
-            //timelineChannelsView1.Timeline = timeline;
-            //timelineChannelsPropertiesView1.Timeline = timeline;
            // Metronome.Beats = scene.Beats;
            // Metronome.LoopStart = 0;
            // Metronome.LoopEnd = scene.Beats;

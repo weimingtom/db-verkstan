@@ -60,6 +60,7 @@ namespace VerkstanEditor.Logic
         {
             this.bindedCoreOperator = coreOperator;
             isProcessable = coreOperator.GetNumberOfRequiredInputs() == 0;
+            UniqueName = AllocateUniqueName(TypeName);
         }
         #endregion
 

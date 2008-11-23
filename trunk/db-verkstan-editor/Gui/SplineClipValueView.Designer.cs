@@ -41,6 +41,7 @@
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseMove);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.SplineClipValueView_MouseUp);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.SplineClipValueView_KeyDown);
             this.ResumeLayout(false);
 
         }

@@ -74,7 +74,7 @@ namespace VerkstanEditor.Gui
         #endregion
 
         #region Private Variables
-        private int controlPointSize = 8;
+        private int controlPointSize = 9;
         private bool inMove = false;
         private Clip.EventHandler clipStateChangedHandler;
         private SplineClip.EventHandler splineClipAddedHandler;
@@ -111,8 +111,19 @@ namespace VerkstanEditor.Gui
         {
             Invalidate();
         }
+        private void SplineClipValueView_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (splineClip == null)
+                return;
+
+            if (e.KeyCode == Keys.Delete)
+                splineClip.RemoveSelected();
+        }
         private void SplineClipValueView_MouseDown(object sender, MouseEventArgs e)
         {
+            if (splineClip == null)
+                return;
+
             if (e.Button == MouseButtons.Right)
             {
                 splineClip.Add(new ControlPoint(), PixelXToControlPointX(e.X), PixelYToControlPointY(e.Y));
@@ -131,10 +142,17 @@ namespace VerkstanEditor.Gui
         }
         private void SplineClipValueView_MouseMove(object sender, MouseEventArgs e)
         {
+            if (splineClip == null)
+                return;
+
             if (!inMove)
                 return;
 
             splineClip.MoveSelected(PixelXToControlPointX(e.X), PixelYToControlPointY(e.Y));
+        }
+        private void SplineClipValueView_MouseUp(object sender, MouseEventArgs e)
+        {
+            inMove = false;
         }
         private void splineClip_ControlPointStateChanged(SplineClip.EventArgs e)
         {
@@ -152,10 +170,6 @@ namespace VerkstanEditor.Gui
         private void splineClip_Moved(SplineClip.EventArgs e)
         {
             Invalidate();
-        }
-        private void SplineClipValueView_MouseUp(object sender, MouseEventArgs e)
-        {
-            inMove = false;
         }
         #endregion
 

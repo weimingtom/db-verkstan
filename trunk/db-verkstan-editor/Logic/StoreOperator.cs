@@ -55,7 +55,7 @@ namespace VerkstanEditor.Logic
         public StoreOperator()
             :base()
         {
-          
+            UniqueName = AllocateUniqueName(TypeName);
         }
         #endregion
 

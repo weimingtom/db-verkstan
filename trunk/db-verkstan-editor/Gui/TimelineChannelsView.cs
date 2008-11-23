@@ -115,6 +115,8 @@ namespace VerkstanEditor.Gui
                     timeline.ChannelRemoved += channelRemovedHandler;
                     timeline.ChannelStateChanged += channelStateChangedHandler;
                 }
+
+                UpdateSize();
             }
         }
         private Modes mode;
