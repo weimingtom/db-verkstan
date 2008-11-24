@@ -19,7 +19,7 @@ void TimelineOperator::render(int tick)
     if (startTick == -1)
         startTick = tick;
 
-    int relativeTick = tick % ticks;
+    int relativeTick = tick % (ticks + 1);
 
     for (int i = 0; i < numberOfClips; i++)
     {

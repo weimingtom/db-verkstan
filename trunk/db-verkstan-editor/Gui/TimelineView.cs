@@ -39,6 +39,7 @@ namespace VerkstanEditor.Gui
                     {
                         Metronome.Tick = 0;
                         Metronome.Ticks = timeline.GetTicks();
+
                     }
                     else
                     {
@@ -85,6 +86,7 @@ namespace VerkstanEditor.Gui
             }
             else
             {
+                addChannelToolStripMenuItem.Enabled = true;
                 removeChannelToolStripMenuItem.Enabled = timeline.GetSelectedChannel() != null;
             }
         }

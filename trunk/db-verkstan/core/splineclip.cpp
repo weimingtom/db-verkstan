@@ -10,12 +10,11 @@ type(0)
 
 float SplineClip::getValue(int tick)
 {
-    int index = 0;
-    for (int i = 0; i < numberOfControlPoints; i++)
+    int index;
+    for (index = 0; index < numberOfControlPoints; index++)
     {
-        if (controlPoints[i].tick >= tick)
+        if (controlPoints[index].tick > tick)
         {
-            index = i - 1;
             break;
         }
     }
@@ -34,7 +33,7 @@ float SplineClip::getValue(int tick)
     if (controlPoints[numberOfControlPoints - 1].tick <= tick)  
         return controlPoints[numberOfControlPoints - 1].value;
 
-   
+    index--;
     ControlPoint p2 = getControlPoint(index);
     ControlPoint p3 = getControlPoint(index + 1);
 

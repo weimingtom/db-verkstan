@@ -134,7 +134,7 @@ namespace VerkstanEditor.Gui
             {
                 splineClip.Select(PixelXToControlPointX(e.X),
                                   PixelYToControlPointY(e.Y),
-                                  (int)((float)controlPointSize / beatWidth * Metronome.TicksPerBeat),
+                                  (int)((float)controlPointSize / beatWidth / 8 * Metronome.TicksPerBeat),
                                   (float)controlPointSize / Height);
                 if (splineClip.Selected != null)
                     inMove = true;
@@ -225,7 +225,7 @@ namespace VerkstanEditor.Gui
             float v = splineClip.GetValue(0);
             int lastX = 0;
             int lastY = (int)(middle - v * middle);
-            Pen p = new Pen(Color.FromArgb(45, 45, 255), 2.0f);
+            Pen p = new Pen(Color.FromArgb(45, 45, 255));
             for (int x = 1; x < Width; x++)
             {
                 int beat = (int)((x / (float)Width) * ticks);
@@ -253,6 +253,8 @@ namespace VerkstanEditor.Gui
                     e.Graphics.FillRectangle(Brushes.Red, dim);
                 else
                     e.Graphics.DrawRectangle(Pens.Red, new Rectangle(dim.X, dim.Y, dim.Width - 1, dim.Height - 1));
+                Point p = ControlPointPointToPixelPoint(point.X, point.Y);
+                e.Graphics.DrawLine(Pens.Yellow, p.X, p.Y, p.X + 1, p.Y);
             }
         }
         private void UpdateSize()
@@ -274,7 +276,7 @@ namespace VerkstanEditor.Gui
         private Rectangle ControlPointDimensionToPixelDimension(ControlPoint point)
         {
             Point p = ControlPointPointToPixelPoint(point.X, point.Y);
-            return new Rectangle(p.X - controlPointSize / 2, p.Y - controlPointSize / 2, controlPointSize, controlPointSize);
+            return new Rectangle(p.X - controlPointSize / 2, p.Y - controlPointSize / 2, controlPointSize + 1, controlPointSize + 1);
         }
         private int PixelXToControlPointX(int x)
         {
@@ -308,14 +310,14 @@ namespace VerkstanEditor.Gui
         }
         private Point ControlPointPointToPixelPoint(int x, float y)
         {
-            int newX = (int)(x / (float)Metronome.TicksPerBeat * beatWidth * 4);
+            int newX = (int)(x / (float)Metronome.TicksPerBeat * beatWidth * 4) + 1;
             int newY = 0;
             if (y < 0)
-                newY = (int)(-y * Height / 2 + Height / 2);
+                newY = (int)(-y * Height / 2 + Height / 2) - 1;
             else if (y == 0)
-                newY = Height / 2;
+                newY = Height / 2 - 1;
             else if (y > 0)
-                newY = (int)((1.0f - y) * Height / 2);
+                newY = (int)((1.0f - y) * Height / 2) - 1;
 
             return new Point(newX, newY);
         }

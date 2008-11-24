@@ -65,8 +65,10 @@ namespace VerkstanEditor.Logic
         }
         public void Add(ControlPoint controlPoint, int x, float y)
         {
+            Deselect();
             controlPoint.X = x;
             controlPoint.Y = y;
+            controlPoint.IsSelected = true;
             controlPoints.Add(controlPoint);
             controlPoint.StateChanged += controlPointStateChangedHandler;
             DestroyPreview();
