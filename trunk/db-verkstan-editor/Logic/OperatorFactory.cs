@@ -24,12 +24,13 @@ namespace VerkstanEditor.Logic
             {
                 op = new PropagateOperator();
             }
-            else if (typeName == "Scene")
+            else if (typeName == "Timeline")
             {
                 Verkstan.CoreOperator coreOp = Verkstan.CoreOperatorFactory.Create(typeName);
                 op = new CoreOperator(coreOp);
                 op.Timeline = new Timeline(op);
 
+                /*
                 Channel channel1 = new Channel();
                 op.Timeline.AddChannel(channel1);
                 Channel channel2 = new Channel();
@@ -58,6 +59,7 @@ namespace VerkstanEditor.Logic
                 clip4.SetPeriodInTicks(Metronome.TicksPerBeat / 2);
                 clip4.SetGeneratorType(1);
                 op.Timeline.AddClip(clip4, new Point(0, 3), 40);
+                 */
             }
             else
             {

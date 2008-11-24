@@ -1,6 +1,6 @@
 #include "core/operators/sphereoperator.hpp"
 
-void SphereOperator::render()
+void SphereOperator::render(int tick)
 {
 
 }

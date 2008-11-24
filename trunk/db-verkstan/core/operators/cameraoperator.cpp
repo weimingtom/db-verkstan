@@ -1,6 +1,6 @@
 #include "core/operators/cameraoperator.hpp"
 
-void CameraOperator::render()
+void CameraOperator::render(int tick)
 {
     globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
     globalDirect3DDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
@@ -14,7 +14,7 @@ void CameraOperator::render()
                            0);
 
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render();
+        getInput(i)->render(tick);
 }
 
 void CameraOperator::process()

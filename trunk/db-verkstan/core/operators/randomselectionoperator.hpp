@@ -6,5 +6,5 @@ class RandomSelectionOperator: public Operator
 {
 public:
     void process();
-    void render();
+    void render(int tick);
 };

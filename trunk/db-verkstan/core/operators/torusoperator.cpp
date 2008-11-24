@@ -1,6 +1,6 @@
 #include "core/operators/torusoperator.hpp"
 
-void TorusOperator::render()
+void TorusOperator::render(int tick)
 {
 
 }

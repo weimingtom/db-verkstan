@@ -1,6 +1,6 @@
 #include "core/operators/materialoperator.hpp"
 
-void MaterialOperator::render()
+void MaterialOperator::render(int tick)
 {
     Operator* textureOperator = getInput(1);
     if (textureOperator != 0)

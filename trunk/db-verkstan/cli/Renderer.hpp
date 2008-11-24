@@ -28,11 +28,11 @@ namespace Verkstan
         void ResetCamera();
 
     private:
-        void RenderTextureOperator(CoreOperator^ op);
-        void RenderMeshOperator(CoreOperator^ op);
-        void RenderModelOperator(CoreOperator^ op);
-        void RenderDemoSceneRendererOperator(CoreOperator^ op);
-        void RenderUnknownOperator(CoreOperator^ op);
+        void RenderTextureOperator(CoreOperator^ op, int tick);
+        void RenderMeshOperator(CoreOperator^ op, int tick);
+        void RenderModelOperator(CoreOperator^ op, int tick);
+        void RenderDemoSceneRendererOperator(CoreOperator^ op, int tick);
+        void RenderUnknownOperator(CoreOperator^ op, int tick);
 
         Camera^ camera;
     };

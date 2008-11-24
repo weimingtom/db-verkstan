@@ -16,7 +16,7 @@
 #include "core/operators/lightoperator.hpp"
 #include "core/operators/cameraoperator.hpp"
 #include "core/operators/clonemodeloperator.hpp"
-#include "core/operators/sceneoperator.hpp"
+#include "core/operators/timelineoperator.hpp"
 #include "core/operators/icosahedronoperator.hpp"
 #include "core/operators/subdivideoperator.hpp"
 #include "core/operators/relaxoperator.hpp"
@@ -49,7 +49,7 @@ namespace Verkstan
 		using ::RelaxOperator;
 		using ::RandomSelectionOperator;
 		using ::ExtrudeOperator;
-        using ::SceneOperator;
+        using ::TimelineOperator;
     }
 }
 #endif
@@ -77,8 +77,8 @@ ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
 ADD_OP_TO_CAT("Camera",          "Renderer");
-ADD_OP_TO_CAT("Scene",           "Misc");
-ADD_OP_TO_CAT("Transform Scene", "Misc");
+ADD_OP_TO_CAT("Timeline",        "Renderer");
+ADD_OP_TO_CAT("Transform",       "Renderer");
 #endif
 
 #ifdef OPERATOR_DEFINES
@@ -230,17 +230,17 @@ ADD_COLOR_PROP("Clear color", 255, 0, 255);
 ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -5.0f);
 ADD_VECTOR_PROP("Look at", 0.0f, 0.0f, 0.0f);
 ADD_FLOAT_PROP("Rotation", 0.0f);
-ADD_INFINITE_INPUT(Model);
+ADD_INFINITE_INPUT(Unspecified);
 END_OP();
 
-DEF_OP("Transform Scene", TransformModelOperator, Scene);
+DEF_OP("Transform", TransformModelOperator, Renderer);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Scene);
 END_OP();
 
-DEF_OP("Scene", SceneOperator, Scene);
+DEF_OP("Timeline", TimelineOperator, Renderer);
 ADD_BYTE_PROP("Render", 1);
 ADD_INT_PROP("Time offset", 0);
 ADD_INFINITE_INPUT(Unspecified);

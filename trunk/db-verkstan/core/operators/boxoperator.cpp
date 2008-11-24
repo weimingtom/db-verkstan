@@ -1,6 +1,6 @@
 #include "core/operators/boxoperator.hpp"
 
-void BoxOperator::render()
+void BoxOperator::render(int tick)
 {
 
 }

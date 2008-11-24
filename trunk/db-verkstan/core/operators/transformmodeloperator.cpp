@@ -1,10 +1,10 @@
 #include "core/operators/transformmodeloperator.hpp"
 
-void TransformModelOperator::render()
+void TransformModelOperator::render(int tick)
 {
     globalWorldMatrixStack->Push();
     globalWorldMatrixStack->MultMatrixLocal(&matrix);
-    getInput(0)->render();
+    getInput(0)->render(tick);
     globalWorldMatrixStack->Pop();
 }
 

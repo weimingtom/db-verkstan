@@ -497,14 +497,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\sceneoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sceneoperator.hpp"
-					>
-				</File>
-				<File
 					RelativePath=".\core\operators\sphereoperator.cpp"
 					>
 				</File>
@@ -534,6 +526,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\texturemappingoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\timelineoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\timelineoperator.hpp"
 					>
 				</File>
 				<File

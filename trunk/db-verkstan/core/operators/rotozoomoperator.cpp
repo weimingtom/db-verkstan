@@ -1,6 +1,6 @@
 #include "core/operators/rotozoomoperator.hpp"
 
-void RotozoomOperator::render()
+void RotozoomOperator::render(int tick)
 {
 
 }

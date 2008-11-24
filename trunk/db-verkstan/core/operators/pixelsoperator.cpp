@@ -1,6 +1,6 @@
 #include "core/operators/pixelsoperator.hpp"
 
-void PixelsOperator::render()
+void PixelsOperator::render(int tick)
 {
 
 }

@@ -1,6 +1,6 @@
 #include "core/operators/relaxoperator.hpp"
 
-void RelaxOperator::render()
+void RelaxOperator::render(int tick)
 {
 
 }

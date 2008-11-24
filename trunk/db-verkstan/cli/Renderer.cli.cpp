@@ -28,30 +28,30 @@ namespace Verkstan
             return;
         }
 
-        op->getOperator()->cascadeProcess(tick);
+        op->getOperator()->cascadeProcess();
 
         switch (op->Type)
         {
         case Constants::OperatorTypes::Mesh:
-            RenderMeshOperator(op);
+            RenderMeshOperator(op, tick);
             break;
          case Constants::OperatorTypes::Model:
-            RenderModelOperator(op);
+            RenderModelOperator(op, tick);
             break;
         case Constants::OperatorTypes::Texture:
-            RenderTextureOperator(op);
+            RenderTextureOperator(op, tick);
             break;
         case Constants::OperatorTypes::Scene:
         case Constants::OperatorTypes::Renderer:
-            RenderDemoSceneRendererOperator(op);
+            RenderDemoSceneRendererOperator(op, tick);
             break;
         default:
-            RenderUnknownOperator(op);
+            RenderUnknownOperator(op, tick);
             break;
         }
     }
 
-    void Renderer::RenderTextureOperator(CoreOperator^ op)
+    void Renderer::RenderTextureOperator(CoreOperator^ op, int tick)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -117,7 +117,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderUnknownOperator(CoreOperator^ op)
+    void Renderer::RenderUnknownOperator(CoreOperator^ op, int tick)
     {
         globalDirect3DDevice->Clear(0, 
                    NULL, 
@@ -127,7 +127,7 @@ namespace Verkstan
                    0);
     }
 
-    void Renderer::RenderMeshOperator(CoreOperator^ op)
+    void Renderer::RenderMeshOperator(CoreOperator^ op, int tick)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -178,7 +178,7 @@ namespace Verkstan
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderModelOperator(CoreOperator^ op)
+    void Renderer::RenderModelOperator(CoreOperator^ op, int tick)
     {
         Core::Operator* coreOp = op->getOperator();
 
@@ -269,22 +269,21 @@ namespace Verkstan
         globalWorldMatrixStack->LoadIdentity();
 
         globalDirect3DDevice->BeginScene();
-        coreOp->render();
+        coreOp->render(tick);
         globalDirect3DDevice->EndScene();
     }
 
-    void Renderer::RenderDemoSceneRendererOperator(CoreOperator^ op)
+    void Renderer::RenderDemoSceneRendererOperator(CoreOperator^ op, int tick)
     {
         Core::Operator* coreOp = op->getOperator();
 
-           globalDirect3DDevice->Clear(0, 
-                   NULL, 
-                   D3DCLEAR_TARGET, 
-                   D3DCOLOR_XRGB(0, 0, 0), 
-                   1.0f, 
-                   0);
+        globalDirect3DDevice->Clear(0, 
+               NULL, 
+               D3DCLEAR_TARGET, 
+               D3DCOLOR_XRGB(0, 0, 0), 
+               1.0f, 
+               0);
 
-      
         int height = WINDOW_HEIGHT;
         int width = (int)(height / 3.0f * 4.0f);
         D3DVIEWPORT9 viewport;
@@ -362,7 +361,7 @@ namespace Verkstan
         globalWorldMatrixStack->LoadIdentity();
 
         globalDirect3DDevice->BeginScene();
-        coreOp->render();
+        coreOp->render(tick);
         globalDirect3DDevice->EndScene();
 
         viewport;

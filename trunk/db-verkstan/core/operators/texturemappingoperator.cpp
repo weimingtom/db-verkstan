@@ -1,6 +1,6 @@
 #include "core/operators/texturemappingoperator.hpp"
 
-void TextureMappingOperator::render()
+void TextureMappingOperator::render(int tick)
 {
 
 }

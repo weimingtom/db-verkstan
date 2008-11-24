@@ -2,9 +2,11 @@
 
 #include "core/operator.hpp"
 
-class BoxOperator: public Operator
+class TimelineOperator: public Operator
 {
 public:
+    TimelineOperator();
     void process();
     void render(int tick);
+    int startTick;
 };

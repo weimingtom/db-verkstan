@@ -1,9 +1,9 @@
 #include "core/operators/addmodelsoperator.hpp"
 
-void AddModelsOperator::render()
+void AddModelsOperator::render(int tick)
 {
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render();
+        getInput(i)->render(tick);
 }
 
 void AddModelsOperator::process()

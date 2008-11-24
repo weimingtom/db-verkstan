@@ -19,14 +19,15 @@ public:
     Operator();
     virtual ~Operator() {};
     
-    virtual void cascadeProcess(int tick);
     virtual void process() = 0;
-    virtual void render() = 0;
+    virtual void render(int tick) = 0;
 
     virtual void deviceLost();
 
     Operator* getInput(int index);
     
+    void cascadeProcess();
+
     unsigned char getByteProperty(int index);
     int getIntProperty(int index);
     float getFloatProperty(int index);

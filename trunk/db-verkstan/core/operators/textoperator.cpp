@@ -22,7 +22,7 @@ void TextOperator::deviceLost()
     }
 }
 
-void TextOperator::render()
+void TextOperator::render(int tick)
 {
 
 }

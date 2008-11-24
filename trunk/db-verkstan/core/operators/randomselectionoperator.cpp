@@ -1,6 +1,6 @@
 #include "core/operators/randomselectionoperator.hpp"
 
-void RandomSelectionOperator::render()
+void RandomSelectionOperator::render(int tick)
 {
 
 }

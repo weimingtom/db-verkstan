@@ -1,6 +1,6 @@
 #include "core/operators/lightoperator.hpp"
 
-void LightOperator::render()
+void LightOperator::render(int tick)
 {
     globalDirect3DDevice->SetLight(0, &d3dLight); 
     globalDirect3DDevice->LightEnable(0, TRUE); 

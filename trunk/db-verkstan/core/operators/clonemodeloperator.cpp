@@ -1,16 +1,16 @@
 #include "core/operators/clonemodeloperator.hpp"
 
-void CloneModelOperator::render()
+void CloneModelOperator::render(int tick)
 {
    
     globalWorldMatrixStack->Push();
 
-    getInput(0)->render();
+    getInput(0)->render(tick);
 
     for (int i = 1; i < clones; i++)
     {
         globalWorldMatrixStack->MultMatrixLocal(&matrix);
-        getInput(0)->render();
+        getInput(0)->render(tick);
     }
 
     globalWorldMatrixStack->Pop();

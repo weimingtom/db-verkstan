@@ -1,6 +1,6 @@
 #include "core/operators/extrudeoperator.hpp"
 
-void ExtrudeOperator::render()
+void ExtrudeOperator::render(int tick)
 {
 
 }

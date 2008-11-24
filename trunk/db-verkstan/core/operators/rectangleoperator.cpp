@@ -1,6 +1,6 @@
 #include "core/operators/rectangleoperator.hpp"
 
-void RectangleOperator::render()
+void RectangleOperator::render(int tick)
 {
 
 }

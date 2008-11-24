@@ -1,6 +1,6 @@
 #include "core/operators/icosahedronoperator.hpp"
 
-void IcosahedronOperator::render()
+void IcosahedronOperator::render(int tick)
 {
 
 }

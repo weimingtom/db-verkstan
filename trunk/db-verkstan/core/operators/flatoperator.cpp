@@ -1,6 +1,6 @@
 #include "core/operators/flatoperator.hpp"
 
-void FlatOperator::render()
+void FlatOperator::render(int tick)
 {
 
 }

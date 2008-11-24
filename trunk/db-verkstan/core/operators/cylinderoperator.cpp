@@ -1,6 +1,6 @@
 #include "core/operators/cylinderoperator.hpp"
 
-void CylinderOperator::render()
+void CylinderOperator::render(int tick)
 {
 
 }

@@ -1,6 +1,6 @@
 #include "core/operators/subdivideoperator.hpp"
 
-void SubdivideOperator::render()
+void SubdivideOperator::render(int tick)
 {
 
 }

@@ -6,7 +6,7 @@ class SubdivideOperator: public Operator
 {
 public:
     void process();
-    void render();
+    void render(int tick);
 
 private:
 	Mesh* subdivide(Mesh *srcMesh, bool cleanup);
