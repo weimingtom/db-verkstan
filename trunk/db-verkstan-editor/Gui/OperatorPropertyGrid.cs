@@ -294,10 +294,10 @@ namespace VerkstanEditor.Gui
                 OperatorPropertyAnimationSettings animationSettings = new OperatorPropertyAnimationSettings();
                 animationSettings.AutoSize = true;
                 animationSettings.Visible = false;
-                animationSettings.Channel = op.GetPropertyChannel(0, 0);
-                animationSettings.Amplify =  op.GetPropertyAmplify(0, 0);
+                animationSettings.Channel = op.GetPropertyChannel(prop.Index, 0);
+                animationSettings.Amplify = op.GetPropertyAmplify(prop.Index, 0);
                 animationSettings.SettingsChanged += delegate(object o, EventArgs e)
-                {
+                { 
                     oper.SetPropertyChannel(prop.Index, 0, animationSettings.Channel);
                     oper.SetPropertyAmplify(prop.Index, 0, animationSettings.Amplify);
                 };
@@ -317,8 +317,8 @@ namespace VerkstanEditor.Gui
                 OperatorPropertyAnimationSettings animationSettings1 = new OperatorPropertyAnimationSettings();
                 animationSettings1.AutoSize = true;
                 animationSettings1.Visible = false;
-                animationSettings1.Channel = op.GetPropertyChannel(0, 0);
-                animationSettings1.Amplify = op.GetPropertyAmplify(0, 0);
+                animationSettings1.Channel = op.GetPropertyChannel(prop.Index, 0);
+                animationSettings1.Amplify = op.GetPropertyAmplify(prop.Index, 0);
                 animationSettings1.SettingsChanged += delegate(object o, EventArgs e)
                 {
                     oper.SetPropertyChannel(prop.Index, 0, animationSettings1.Channel);

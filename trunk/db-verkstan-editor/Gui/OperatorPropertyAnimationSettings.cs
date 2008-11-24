@@ -35,7 +35,6 @@ namespace VerkstanEditor.Gui
         }
 
         public event EventHandler SettingsChanged;
-
         public void OnSettingsChanged()
         {
             if (SettingsChanged != null)
