@@ -6,27 +6,25 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using VerkstanEditor.Logic;
 
 namespace VerkstanEditor.Gui
 {
-    public partial class MainForm : Form
+    public partial class ProjectView : Form
     {
         #region Private Variables
         private Verkstan.Window verkstanWindow;
-        private OperatorPage page;
         private Operator viewedOperator;
+        private Project project;
         #endregion
 
         #region Constructor
-        public MainForm()
+        public ProjectView()
         {
             InitializeComponent();
             verkstanWindow = new Verkstan.Window();
             verkstanWindow.ClearColor = Color.DarkCyan.ToArgb();
-           // Operators.ViewedOperatorChanged += new Operators.ViewedOperatorChangedHandler(this.Operators_ViewedOperatorChanged); 
-           // Operators.ViewedOperatorPropertiesChanged += new Operators.ViewedOperatorPropertiesChangedHandler(this.Operators_ViewedOperatorPropertiesChanged);
-
             unsafe
             {
                 verkstanWindow.Boot(previewPanel.Handle.ToPointer());
@@ -35,7 +33,9 @@ namespace VerkstanEditor.Gui
             fastRenderTimer.Enabled = true;
             slowRenderTimer.Enabled = true;
 
-            page = new OperatorPage();
+            project = new Project();
+            OperatorPage page = new OperatorPage();
+            project.OperatorPages.Add(page);
             operatorPageView1.Page = page;
         }
         #endregion
@@ -118,6 +118,30 @@ namespace VerkstanEditor.Gui
                 clipView1.Clip = timelinesView1.ViewedClip;
                 tabControl1.SelectedTab = clipTab;
             }
+        }
+        private void saveMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Filename == null)
+                return;
+
+            XmlDocument doc = new XmlDocument();
+            doc.AppendChild(project.ToXmlElement(doc));
+            doc.Save(project.Filename);
+        }
+        private void saveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Filename != null)
+                saveFileDialog1.FileName = project.Filename;
+            else
+                saveFileDialog1.FileName = "demo.dbv";
+            saveFileDialog1.ShowDialog();
+        }
+        private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            project.Filename = saveFileDialog1.FileName;
+            XmlDocument doc = new XmlDocument();
+            doc.AppendChild(project.ToXmlElement(doc));
+            doc.Save(project.Filename);
         }
         #endregion
     }

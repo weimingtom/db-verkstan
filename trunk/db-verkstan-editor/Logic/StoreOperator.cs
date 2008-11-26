@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -93,9 +94,29 @@ namespace VerkstanEditor.Logic
 
             OnStateChanged();
         }
-        public override System.Xml.XmlElement ToXmlElement(System.Xml.XmlDocument doc)
+        public override XmlElement ToXmlElement(XmlDocument doc)
         {
-            return doc.CreateElement("Store");
+            XmlElement root = doc.CreateElement("operator");
+            XmlElement typeElement = doc.CreateElement("type");
+            typeElement.InnerText = "Store";
+            root.AppendChild(typeElement);
+            XmlElement nameElement = doc.CreateElement("name");
+            nameElement.InnerText = Name;
+            root.AppendChild(nameElement);
+            XmlElement xElement = doc.CreateElement("x");
+            xElement.InnerText = Left.ToString();
+            root.AppendChild(xElement);
+            XmlElement yElement = doc.CreateElement("y");
+            yElement.InnerText = Top.ToString();
+            root.AppendChild(yElement);
+            XmlElement widthElement = doc.CreateElement("width");
+            widthElement.InnerText = Width.ToString();
+            root.AppendChild(widthElement);
+            XmlElement heightElement = doc.CreateElement("height");
+            heightElement.InnerText = Height.ToString();
+            root.AppendChild(heightElement);
+
+            return root;
         }
         #endregion
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -89,6 +90,20 @@ namespace VerkstanEditor.Logic
         {
             if (StateChanged != null)
                 StateChanged(new ControlPoint.EventArgs(this));
+        }
+        #endregion
+
+        #region Public Methods
+        public XmlElement ToXmlElement(XmlDocument doc)
+        {
+            XmlElement root = doc.CreateElement("controlpoint");
+            XmlElement xElement = doc.CreateElement("x");
+            xElement.InnerText = x.ToString();
+            root.AppendChild(xElement);
+            XmlElement yElement = doc.CreateElement("y");
+            yElement.InnerText = y.ToString();
+            root.AppendChild(yElement);
+            return root;
         }
         #endregion
     }

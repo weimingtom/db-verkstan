@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -256,6 +257,18 @@ namespace VerkstanEditor.Logic
             Channel channel = GetSelectedChannel();
             if (channel != null)
                 RemoveChannel(channel);
+        }
+        public XmlElement ToXmlElement(XmlDocument doc)
+        {
+            XmlElement root = doc.CreateElement("timeline");
+
+            foreach (Channel channel in channels)
+            {
+                XmlElement channelElement = channel.ToXmlElement(doc);
+                root.AppendChild(channelElement);
+            }
+
+            return root;
         }
         #endregion
 

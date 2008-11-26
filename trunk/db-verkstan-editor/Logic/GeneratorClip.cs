@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -62,6 +63,29 @@ namespace VerkstanEditor.Logic
         public int GetPeriodInBeats()
         {
             return bindedCoreGeneratorClip.GetPeriod() / Metronome.TicksPerBeat;
+        }
+        public override XmlElement ToXmlElement(XmlDocument doc)
+        {
+            XmlElement root = doc.CreateElement("clip");
+            XmlElement typeElement = doc.CreateElement("type");
+            typeElement.InnerText = "generator";
+            root.AppendChild(typeElement);
+            XmlElement xElement = doc.CreateElement("x");
+            xElement.InnerText = Dimension.X.ToString();
+            root.AppendChild(xElement);
+            XmlElement yElement = doc.CreateElement("y");
+            yElement.InnerText = Dimension.Y.ToString();
+            root.AppendChild(yElement);
+            XmlElement beatsElement = doc.CreateElement("beats");
+            beatsElement.InnerText = Dimension.Width.ToString();
+            root.AppendChild(beatsElement);
+            XmlElement generatorTypeElement = doc.CreateElement("generatortype");
+            generatorTypeElement.InnerText = GetGeneratorType().ToString();
+            root.AppendChild(generatorTypeElement);
+            XmlElement periodElement = doc.CreateElement("period");
+            periodElement.InnerText = GetPeriodInTicks().ToString();
+            root.AppendChild(periodElement);
+            return root;
         }
         #endregion
     }

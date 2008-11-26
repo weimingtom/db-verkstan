@@ -206,6 +206,12 @@ namespace VerkstanEditor.Logic
                 }
             }
 
+            if (Timeline != null)
+            {
+                XmlElement timelineElement = Timeline.ToXmlElement(doc);
+                root.AppendChild(timelineElement);
+            }
+
             return root;
         }
         #endregion

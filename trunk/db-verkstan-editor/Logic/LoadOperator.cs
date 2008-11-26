@@ -76,10 +76,6 @@ namespace VerkstanEditor.Logic
                 OnStateChanged();
             }
         }
-        public override XmlElement ToXmlElement(System.Xml.XmlDocument doc)
-        {
-            return doc.CreateElement("Load");
-        }
         public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
         {
             return new List<Verkstan.CoreOperator>();
@@ -145,6 +141,30 @@ namespace VerkstanEditor.Logic
 
                 CascadeStackConnectChangedDownwards();
             }
+        }
+        public override XmlElement ToXmlElement(System.Xml.XmlDocument doc)
+        {
+            XmlElement root = doc.CreateElement("operator");
+            XmlElement typeElement = doc.CreateElement("type");
+            typeElement.InnerText = "Load";
+            root.AppendChild(typeElement);
+            XmlElement nameElement = doc.CreateElement("name");
+            nameElement.InnerText = Name;
+            root.AppendChild(nameElement);
+            XmlElement xElement = doc.CreateElement("x");
+            xElement.InnerText = Left.ToString();
+            root.AppendChild(xElement);
+            XmlElement yElement = doc.CreateElement("y");
+            yElement.InnerText = Top.ToString();
+            root.AppendChild(yElement);
+            XmlElement widthElement = doc.CreateElement("width");
+            widthElement.InnerText = Width.ToString();
+            root.AppendChild(widthElement);
+            XmlElement heightElement = doc.CreateElement("height");
+            heightElement.InnerText = Height.ToString();
+            root.AppendChild(heightElement);
+
+            return root;
         }
         #endregion
 

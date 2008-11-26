@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -97,6 +98,7 @@ namespace VerkstanEditor.Logic
 
         #region Public Abstract Methods
         public abstract void Dispose();
+        public abstract XmlElement ToXmlElement(XmlDocument doc);
         #endregion
 
         #region Public Methods

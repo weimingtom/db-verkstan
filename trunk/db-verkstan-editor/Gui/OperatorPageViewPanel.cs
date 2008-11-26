@@ -299,12 +299,6 @@ namespace VerkstanEditor.Gui
         {
             if (e.KeyCode == Keys.Delete)
                 page.RemoveSelected();
-            if (e.KeyCode == Keys.S)
-            {
-                XmlDocument doc = new XmlDocument();
-                doc.AppendChild(page.ToXmlElement(doc));
-                doc.Save("d:/temp/verkstan-page.xml");
-            }
         }
         private void OperatorPage_Load(object sender, EventArgs e)
         {

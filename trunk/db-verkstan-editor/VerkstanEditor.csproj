@@ -211,15 +211,16 @@
     <Compile Include="Logic\CoreOperator.cs" />
     <Compile Include="Logic\GeneratorClip.cs" />
     <Compile Include="Logic\LoadOperator.cs" />
+    <Compile Include="Logic\Project.cs" />
     <Compile Include="Logic\PropagateOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\OperatorFactory.cs" />
     <Compile Include="Logic\OperatorPage.cs" />
-    <Compile Include="Gui\MainForm.cs">
+    <Compile Include="Gui\ProjectView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\MainForm.Designer.cs">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <Compile Include="Gui\ProjectView.Designer.cs">
+      <DependentUpon>ProjectView.cs</DependentUpon>
     </Compile>
     <Compile Include="Logic\Metronome.cs" />
     <Compile Include="Logic\SplineClip.cs" />
@@ -231,8 +232,8 @@
     <EmbeddedResource Include="Gui\ColorProperty.resx">
       <DependentUpon>ColorProperty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\MainForm.resx">
-      <DependentUpon>MainForm.cs</DependentUpon>
+    <EmbeddedResource Include="Gui\ProjectView.resx">
+      <DependentUpon>ProjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\OperatorPropertyGrid.resx">
       <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>

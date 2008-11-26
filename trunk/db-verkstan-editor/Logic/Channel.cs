@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
@@ -103,6 +104,20 @@ namespace VerkstanEditor.Logic
         public void RemoveCip(Clip clip)
         {
             clips.Remove(clip);
+        }
+        public XmlElement ToXmlElement(XmlDocument doc)
+        {
+            XmlElement root = doc.CreateElement("channel");
+            XmlElement channelNumber = doc.CreateElement("channelnumber");
+            channelNumber.InnerText = ChannelNumber.ToString();
+            root.AppendChild(channelNumber);
+
+            foreach (Clip clip in clips)
+            {
+                XmlElement clipElement = clip.ToXmlElement(doc);
+                root.AppendChild(clipElement);
+            }
+            return root;
         }
         #endregion
 
