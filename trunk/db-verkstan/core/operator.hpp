@@ -38,7 +38,7 @@ public:
     bool isDirty();
     void setDirty(bool dirty);
     
-    void broadcastChannelValue(int channel, float value);
+    virtual void broadcastChannelValue(int channel, float value);
 
     Mesh* mesh;
     Texture* texture;

@@ -9,4 +9,5 @@ public:
     void process();
     void render(int tick);
     int startTick;
+    void broadcastChannelValue(int channel, float value);
 };
