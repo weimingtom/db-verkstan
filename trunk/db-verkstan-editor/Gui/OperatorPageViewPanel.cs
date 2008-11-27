@@ -30,16 +30,16 @@ namespace VerkstanEditor.Gui
         private Rectangle lastMoveRectangle;
         private Rectangle resizeRectangle;
         private Rectangle lastResizeRectangle;
-        private OperatorPage.EventHandler addedHandler;
-        private OperatorPage.EventHandler removedHandler;
-        private OperatorPage.EventHandler movedHandler;
-        private OperatorPage.EventHandler stateChangedHandler;
-        private OperatorPage.EventHandler resizedHandler;
+        private Page.EventHandler addedHandler;
+        private Page.EventHandler removedHandler;
+        private Page.EventHandler movedHandler;
+        private Page.EventHandler stateChangedHandler;
+        private Page.EventHandler resizedHandler;
         #endregion
 
         #region Properties
-        private OperatorPage page;
-        public OperatorPage Page
+        private Page page;
+        public Page Page
         {
             get
             {
@@ -146,11 +146,11 @@ namespace VerkstanEditor.Gui
                 }            
             }
 
-            addedHandler = new OperatorPage.EventHandler(this.page_Added);
-            removedHandler = new OperatorPage.EventHandler(this.page_Removed);
-            movedHandler = new OperatorPage.EventHandler(this.page_Moved);
-            stateChangedHandler = new OperatorPage.EventHandler(this.page_StateChanged);
-            resizedHandler = new OperatorPage.EventHandler(this.page_Resized);
+            addedHandler = new Page.EventHandler(this.page_Added);
+            removedHandler = new Page.EventHandler(this.page_Removed);
+            movedHandler = new Page.EventHandler(this.page_Moved);
+            stateChangedHandler = new Page.EventHandler(this.page_StateChanged);
+            resizedHandler = new Page.EventHandler(this.page_Resized);
         }
         #endregion
 
@@ -304,27 +304,17 @@ namespace VerkstanEditor.Gui
         {
             UpdateSize();
         }
-        private void page_Added(OperatorPage.EventArgs e)
+        private void page_Added(Page.EventArgs e)
         {
             foreach (Operator op in e.Operators)
                 Invalidate(op.Dimension);
         }
-        private void page_Removed(OperatorPage.EventArgs e)
+        private void page_Removed(Page.EventArgs e)
         {
             foreach (Operator op in e.Operators)
                 Invalidate(op.Dimension);
         }
-        private void page_Moved(OperatorPage.EventArgs e)
-        {
-            foreach (Operator op in e.Operators)
-            {
-                Invalidate(op.LastDimension);
-                Invalidate(op.Dimension);
-            }
-
-            UpdateSize();
-        }
-        private void page_Resized(OperatorPage.EventArgs e)
+        private void page_Moved(Page.EventArgs e)
         {
             foreach (Operator op in e.Operators)
             {
@@ -334,7 +324,17 @@ namespace VerkstanEditor.Gui
 
             UpdateSize();
         }
-        private void page_StateChanged(OperatorPage.EventArgs e)
+        private void page_Resized(Page.EventArgs e)
+        {
+            foreach (Operator op in e.Operators)
+            {
+                Invalidate(op.LastDimension);
+                Invalidate(op.Dimension);
+            }
+
+            UpdateSize();
+        }
+        private void page_StateChanged(Page.EventArgs e)
         {
             foreach (Operator op in e.Operators)
                 Invalidate(new Rectangle(op.Left, op.Top, op.Width + 1, op.Height + 1));

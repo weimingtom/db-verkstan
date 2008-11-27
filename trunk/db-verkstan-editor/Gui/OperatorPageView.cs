@@ -12,8 +12,8 @@ namespace VerkstanEditor.Gui
     public partial class OperatorPageView : UserControl
     {
         #region Properties
-        private OperatorPage page;
-        public OperatorPage Page
+        private Page page;
+        public Page Page
         {
             set
             {

@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
-    public class OperatorPage
+    public class Page
     {
         #region Private Variables
         Operator.EventHandler stateChangedHandler;
@@ -38,13 +38,13 @@ namespace VerkstanEditor.Logic
         protected void OnAdded(ICollection<Operator> operators)
         {
             if (Added != null)
-                Added(new OperatorPage.EventArgs(operators));
+                Added(new Page.EventArgs(operators));
         }
         public event EventHandler Removed;
         protected void OnRemoved(ICollection<Operator> operators)
         {
             if (Removed != null)
-                Removed(new OperatorPage.EventArgs(operators));
+                Removed(new Page.EventArgs(operators));
         }
         public event EventHandler Moved;
         protected void OnMoved(Operator op)
@@ -52,7 +52,7 @@ namespace VerkstanEditor.Logic
             ICollection<Operator> operators = new List<Operator>();
             operators.Add(op);
             if (Moved != null)
-                Moved(new OperatorPage.EventArgs(operators));
+                Moved(new Page.EventArgs(operators));
         }
         public event EventHandler StateChanged;
         protected void OnStateChanged(Operator op)
@@ -60,7 +60,7 @@ namespace VerkstanEditor.Logic
             ICollection<Operator> operators = new List<Operator>();
             operators.Add(op);
             if (StateChanged != null)
-                StateChanged(new OperatorPage.EventArgs(operators));
+                StateChanged(new Page.EventArgs(operators));
         }
         public event EventHandler Resized;
         protected void OnResized(Operator op)
@@ -68,12 +68,12 @@ namespace VerkstanEditor.Logic
             ICollection<Operator> operators = new List<Operator>();
             operators.Add(op);
             if (Resized != null)
-                Resized(new OperatorPage.EventArgs(operators));
+                Resized(new Page.EventArgs(operators));
         }
         #endregion
 
         #region Constructors
-        public OperatorPage()
+        public Page()
         {
             operators = new List<Operator>();
             stateChangedHandler = new Operator.EventHandler(this.operator_StateChanged);
@@ -84,6 +84,7 @@ namespace VerkstanEditor.Logic
         public bool Add(Operator op, Point point)
         {
             Point p = Operator.QuantizeLocation(point);
+            System.Console.WriteLine("Trying to add at p = " + point + " qp = " + p);
             op.Dimension = new Rectangle(p.X, p.Y, op.Width, op.Height);
             foreach (Operator presentOp in operators)
             {
@@ -282,12 +283,25 @@ namespace VerkstanEditor.Logic
         public XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("page");
-            foreach (Operator op in operators)
+            foreach (Operator op in Operators)
                 root.AppendChild(op.ToXmlElement(doc));
 
             return root;
         }
-        #endregion    
+        public void FromXmlElement(XmlElement root)
+        {
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "operator")
+                {
+                    XmlElement opElement = (XmlElement)node;
+                    Operator op = OperatorFactory.Create(opElement.GetAttribute("type"));
+                    op.FromXmlElement(opElement);
+                    Add(op, op.Location);
+                }
+            }
+        }
+        #endregion
 
         #region Event Handlers
         public void operator_StateChanged(Operator.EventArgs e)

@@ -34,7 +34,7 @@ namespace VerkstanEditor.Gui
             slowRenderTimer.Enabled = true;
 
             project = new Project();
-            OperatorPage page = new OperatorPage();
+            Page page = new Page();
             project.OperatorPages.Add(page);
             operatorPageView1.Page = page;
         }
@@ -119,6 +119,10 @@ namespace VerkstanEditor.Gui
                 tabControl1.SelectedTab = clipTab;
             }
         }
+        private void openMenuItem_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.ShowDialog();
+        }
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             if (project.Filename == null)
@@ -142,6 +146,16 @@ namespace VerkstanEditor.Gui
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(project.ToXmlElement(doc));
             doc.Save(project.Filename);
+        }
+        private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            String filename = openFileDialog1.FileName;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filename);
+            XmlElement rootElement = doc.DocumentElement;
+            project = new Project();
+            project.FromXmlElement(rootElement);
+            operatorPageView1.Page = project.OperatorPages.First();
         }
         #endregion
     }

@@ -45,8 +45,8 @@ namespace VerkstanEditor.Logic
                 bpm = value;
             }
         }   
-        private List<OperatorPage> operatorPages;
-        public ICollection<OperatorPage> OperatorPages
+        private List<Page> operatorPages;
+        public ICollection<Page> OperatorPages
         {
             get
             {
@@ -58,7 +58,7 @@ namespace VerkstanEditor.Logic
         #region Constructors
         public Project()
         {
-            operatorPages = new List<OperatorPage>();
+            operatorPages = new List<Page>();
         }
         #endregion
 
@@ -66,17 +66,35 @@ namespace VerkstanEditor.Logic
         public XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("project");
-            XmlElement versionElement = doc.CreateElement("version");
-            versionElement.InnerText = version.ToString();
-            root.AppendChild(versionElement);
-            XmlElement bpmElement = doc.CreateElement("bpm");
-            bpmElement.InnerText = bpm.ToString();
-            root.AppendChild(bpmElement);
+            XmlElement version = doc.CreateElement("version");
+            version.InnerText = Version.ToString();
+            root.AppendChild(version);
+            XmlElement bpm = doc.CreateElement("bpm");
+            bpm.InnerText = BPM.ToString();
+            root.AppendChild(bpm);
 
-            foreach (OperatorPage page in operatorPages)
+            foreach (Page page in OperatorPages)
+            {
                 root.AppendChild(page.ToXmlElement(doc));
+            }
 
             return root;
+        }
+        public void FromXmlElement(XmlElement root)
+        {
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "version")
+                    Version = int.Parse(node.InnerText);
+                else if (node.Name == "bpm")
+                    BPM = int.Parse(node.InnerText);
+                else if (node.Name == "page")
+                {
+                    Page page = new Page();
+                    page.FromXmlElement((XmlElement)node);
+                    OperatorPages.Add(page);
+                }
+            }
         }
         #endregion
     }

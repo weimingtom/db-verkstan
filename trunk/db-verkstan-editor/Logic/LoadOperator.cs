@@ -166,6 +166,10 @@ namespace VerkstanEditor.Logic
 
             return root;
         }
+        public override void FromXmlElement(XmlElement root)
+        {
+
+        }
         #endregion
 
         #region Event Handlers

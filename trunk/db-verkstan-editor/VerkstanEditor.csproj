@@ -215,7 +215,7 @@
     <Compile Include="Logic\PropagateOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\OperatorFactory.cs" />
-    <Compile Include="Logic\OperatorPage.cs" />
+    <Compile Include="Logic\Page.cs" />
     <Compile Include="Gui\ProjectView.cs">
       <SubType>Form</SubType>
     </Compile>

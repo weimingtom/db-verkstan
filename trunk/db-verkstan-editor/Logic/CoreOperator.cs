@@ -111,108 +111,42 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("operator");
-            XmlElement typeElement = doc.CreateElement("type");
-            typeElement.InnerText = TypeName;
-            root.AppendChild(typeElement);
-            XmlElement nameElement = doc.CreateElement("name");
-            nameElement.InnerText = Name;
-            root.AppendChild(nameElement);
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = Left.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = Top.ToString();
-            root.AppendChild(yElement);
-            XmlElement widthElement = doc.CreateElement("width");
-            widthElement.InnerText = Width.ToString();
-            root.AppendChild(widthElement);
-            XmlElement heightElement = doc.CreateElement("height");
-            heightElement.InnerText = Height.ToString();
-            root.AppendChild(heightElement);
-            XmlElement propertiesElement = doc.CreateElement("properties");
-            root.AppendChild(propertiesElement);
+            PopulateXmlElementWithBasicOperatorInformation(root, doc);
 
-            if (bindedCoreOperator == null)
-                return root;
+            XmlElement properties = doc.CreateElement("properties");
+            root.AppendChild(properties);
 
             foreach (Verkstan.CoreOperatorProperty property in bindedCoreOperator.Properties)
             {
                 if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Byte)
-                {
-                    XmlElement byteElement = doc.CreateElement("byte");
-                    byteElement.InnerText = GetByteProperty(property.Index).ToString();
-                    propertiesElement.AppendChild(byteElement);
-                }
+                    properties.AppendChild(FromBytePropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Color)
-                {
-                    Color color = GetColorProperty(property.Index);
-                    XmlElement colorElement = doc.CreateElement("color");
-                    propertiesElement.AppendChild(colorElement);
-                    XmlElement rElement = doc.CreateElement("r");
-                    rElement.InnerText = color.R.ToString();
-                    colorElement.AppendChild(rElement);
-                    XmlElement gElement = doc.CreateElement("g");
-                    gElement.InnerText = color.G.ToString();
-                    colorElement.AppendChild(gElement);
-                    XmlElement bElement = doc.CreateElement("b");
-                    bElement.InnerText = color.B.ToString();
-                    colorElement.AppendChild(bElement);
-                }
+                    properties.AppendChild(FromColorPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Enum)
-                {
-                    int index = GetByteProperty(property.Index);
-                    XmlElement enumElement = doc.CreateElement("enum");
-                    enumElement.InnerText = property.EnumValues[index];
-                    propertiesElement.AppendChild(enumElement);
-                }
+                    properties.AppendChild(FromEnumPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Float)
-                {
-                    XmlElement floatElement = doc.CreateElement("float");
-                    floatElement.InnerText = GetFloatProperty(property.Index).ToString();
-                    propertiesElement.AppendChild(floatElement);
-                }
+                    properties.AppendChild(FromFloatPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Int)
-                {
-                    XmlElement intElement = doc.CreateElement("int");
-                    intElement.InnerText = GetIntProperty(property.Index).ToString();
-                    propertiesElement.AppendChild(intElement);
-                }
+                    properties.AppendChild(FromIntPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.String)
-                {
-                    XmlElement stringElement = doc.CreateElement("string");
-                    stringElement.InnerText = GetStringProperty(property.Index);
-                    propertiesElement.AppendChild(stringElement);
-                }
+                    properties.AppendChild(FromStringPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Text)
-                {
-                    XmlElement textElement = doc.CreateElement("text");
-                    textElement.InnerText = GetStringProperty(property.Index);
-                    propertiesElement.AppendChild(textElement);
-                }
+                    properties.AppendChild(FromTextPropertyToXmlElement(doc, property.Index));
                 else if (property.Type == Verkstan.Constants.OperatorPropertyTypes.Vector)
-                {
-                    Verkstan.Vector vector = GetVectorProperty(property.Index);
-                    XmlElement vectorElement = doc.CreateElement("vector");
-                    propertiesElement.AppendChild(vectorElement);
-                    XmlElement vectorXElement = doc.CreateElement("x");
-                    vectorXElement.InnerText = vector.X.ToString();
-                    vectorElement.AppendChild(vectorXElement);
-                    XmlElement vectorYElement = doc.CreateElement("y");
-                    vectorYElement.InnerText = vector.Y.ToString();
-                    vectorElement.AppendChild(vectorYElement);
-                    XmlElement vectorZElement = doc.CreateElement("z");
-                    vectorZElement.InnerText = vector.Z.ToString();
-                    vectorElement.AppendChild(vectorZElement);
-                }
+                    properties.AppendChild(FromVectorPropertyToXmlElement(doc, property.Index));
             }
 
             if (Timeline != null)
             {
-                XmlElement timelineElement = Timeline.ToXmlElement(doc);
-                root.AppendChild(timelineElement);
+                XmlElement timline = Timeline.ToXmlElement(doc);
+                root.AppendChild(timline);
             }
 
             return root;
+        }
+        public override void FromXmlElement(XmlElement root)
+        {
+            PopulateOperatorWithBasicXmlElementInformation(root);
         }
         #endregion
 
@@ -312,6 +246,149 @@ namespace VerkstanEditor.Logic
             }
 
             bindedCoreOperator.SetNumberOfOutputConnections(numberOfOutputs);
+        }
+        private XmlElement FromBytePropertyToXmlElement(XmlDocument doc, int index)
+        {
+            XmlElement byteElement = doc.CreateElement("byte");
+            byteElement.SetAttribute("value", GetByteProperty(index).ToString());
+            byteElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return byteElement;
+        }
+        private void FromXmlElementToByteProperty(XmlElement byteElement, int index)
+        {
+            byte value = byte.Parse(byteElement.GetAttribute("value"));
+            SetByteProperty(index, value);
+            FromXmlElementToPropertyAnimation((XmlElement)byteElement.ChildNodes[0], index, 0);
+        }
+        private XmlElement FromColorPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            Color color = GetColorProperty(index);
+            XmlElement colorElement = doc.CreateElement("color");
+            XmlElement r = doc.CreateElement("r");
+            colorElement.SetAttribute("r", color.R.ToString());
+            colorElement.SetAttribute("g", color.G.ToString());
+            colorElement.SetAttribute("b", color.B.ToString());
+            colorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            colorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 1));
+            colorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 2));
+            return colorElement;
+        }
+        private void FromXmlElementToColorProperty(XmlElement colorElement, int index)
+        {
+            int r = int.Parse(colorElement.GetAttribute("r"));
+            int g = int.Parse(colorElement.GetAttribute("g"));
+            int b = int.Parse(colorElement.GetAttribute("b"));
+            Color color = Color.FromArgb(r, g, b);
+            SetColorProperty(index, color);
+            FromXmlElementToPropertyAnimation((XmlElement)colorElement.ChildNodes[0], index, 0);
+            FromXmlElementToPropertyAnimation((XmlElement)colorElement.ChildNodes[1], index, 1);
+            FromXmlElementToPropertyAnimation((XmlElement)colorElement.ChildNodes[2], index, 2);
+        }
+        private XmlElement FromEnumPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            byte enumIndex = GetByteProperty(index);
+            XmlElement enumElement = doc.CreateElement("enum");
+            enumElement.SetAttribute("value", enumIndex.ToString());
+            enumElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return enumElement;
+        }
+        private void FromXmlElementToEnumProperty(XmlElement enumElement, int index)
+        {
+            byte enumIndex = byte.Parse(enumElement.GetAttribute("value"));
+            SetByteProperty(index, enumIndex);
+            FromXmlElementToPropertyAnimation((XmlElement)enumElement.ChildNodes[0], index, 0);
+        }
+        private XmlElement FromFloatPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            float f = GetFloatProperty(index);
+            XmlElement floatElement = doc.CreateElement("float");
+            floatElement.SetAttribute("value", f.ToString());
+            floatElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return floatElement;
+        }
+        private void FromXmlElementToProperty(XmlElement floatElement, int index)
+        {
+            float f = float.Parse(floatElement.GetAttribute("value"));
+            FromXmlElementToPropertyAnimation((XmlElement)floatElement.ChildNodes[0], index, 0);
+        }
+        private XmlElement FromIntPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            int i = GetIntProperty(index);
+            XmlElement intElement = doc.CreateElement("int");
+            intElement.SetAttribute("value", i.ToString());
+            intElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return intElement;
+        }
+        private void FromXmlElementToIntProperty(XmlElement intElement, int index)
+        {
+            int i = int.Parse(intElement.GetAttribute("value"));
+            SetIntProperty(index, i);
+            FromXmlElementToPropertyAnimation((XmlElement)intElement.ChildNodes[0], index, 0);
+        }
+        private XmlElement FromStringPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            String value = GetStringProperty(index);
+            XmlElement stringElement = doc.CreateElement("string");
+            stringElement.SetAttribute("value", value);
+            stringElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return stringElement;
+        }
+        private void FromXmlElementToStringProperty(XmlElement stringElement, int index)
+        {
+            String value = stringElement.GetAttribute("value");
+            SetStringProperty(index, value);
+            FromXmlElementToPropertyAnimation((XmlElement)stringElement.ChildNodes[0], index, 0);
+
+        }
+        private XmlElement FromTextPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            XmlElement textElement = doc.CreateElement("text");
+            textElement.InnerText = GetStringProperty(index);
+            textElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            return textElement;
+        }
+        private void FromXmlElementToTextProperty(XmlElement textElement, int index)
+        {
+            String text = textElement.InnerText;
+            SetStringProperty(index, text);
+            FromXmlElementToPropertyAnimation((XmlElement)textElement.ChildNodes[0], index, 0);
+        }
+        private XmlElement FromVectorPropertyToXmlElement(XmlDocument doc, int index)
+        {
+            Verkstan.Vector vector = GetVectorProperty(index);
+            XmlElement vectorElement = doc.CreateElement("vector");
+            vectorElement.SetAttribute("x", vector.X.ToString());
+            vectorElement.SetAttribute("y", vector.Y.ToString());
+            vectorElement.SetAttribute("z", vector.Z.ToString());
+            vectorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
+            vectorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 1));
+            vectorElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 2));
+            return vectorElement;
+        }
+        private void FromXmlElementToVectorProperty(XmlElement vectorElement, int index)
+        {
+            float x = float.Parse(vectorElement.GetAttribute("x"));
+            float y = float.Parse(vectorElement.GetAttribute("y"));
+            float z = float.Parse(vectorElement.GetAttribute("z"));
+            Verkstan.Vector vector = new Verkstan.Vector(x, y, z);
+            SetVectorProperty(index, vector);
+            FromXmlElementToPropertyAnimation((XmlElement)vectorElement.ChildNodes[0], index, 0);
+            FromXmlElementToPropertyAnimation((XmlElement)vectorElement.ChildNodes[1], index, 1);
+            FromXmlElementToPropertyAnimation((XmlElement)vectorElement.ChildNodes[2], index, 2);
+        }
+        private XmlElement FromPropertyAnimationToXmlElement(XmlDocument doc, int index, int valueIndex)
+        {
+            XmlElement animationElement = doc.CreateElement("animation");
+            animationElement.SetAttribute("channel", GetPropertyChannel(index, valueIndex).ToString());
+            animationElement.SetAttribute("amplify", GetPropertyAmplify(index, valueIndex).ToString());
+            return animationElement;
+        }
+        private void FromXmlElementToPropertyAnimation(XmlElement animationElement, int index, int valueIndex)
+        {
+            int channel = int.Parse(animationElement.GetAttribute("channel"));
+            float amplify = float.Parse(animationElement.GetAttribute("amplify"));
+            SetPropertyChannel(index, valueIndex, channel);
+            SetPropertyAmplify(index, valueIndex, amplify);
         }
         #endregion
     }

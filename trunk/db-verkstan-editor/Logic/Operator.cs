@@ -312,9 +312,10 @@ namespace VerkstanEditor.Logic
         public abstract void StackConnectChangedUpwards();
         public abstract void CascadeStackConnectChangedDownwards();
         public abstract XmlElement ToXmlElement(XmlDocument doc);
+        public abstract void FromXmlElement(XmlElement root);
         #endregion
 
-        #region Public methods
+        #region Public Methods
         public virtual void Dispose()
         {
             instances.Remove(this);
@@ -457,6 +458,44 @@ namespace VerkstanEditor.Logic
                                  Top, 
                                  15,
                                  20);
+        }
+        #endregion
+
+        #region Protected Methods
+        protected void PopulateXmlElementWithBasicOperatorInformation(XmlElement root, XmlDocument doc)
+        {
+            root.SetAttribute("type", TypeName);
+            XmlElement name = doc.CreateElement("name");
+            name.InnerText = Name;
+            root.AppendChild(name);
+            XmlElement dimension = doc.CreateElement("dimension");
+            dimension.SetAttribute("x", Dimension.X.ToString());
+            dimension.SetAttribute("y", Dimension.Y.ToString());
+            dimension.SetAttribute("width", Dimension.Width.ToString());
+            dimension.SetAttribute("height", Dimension.Height.ToString());
+            root.AppendChild(dimension);
+        }
+        protected void PopulateOperatorWithBasicXmlElementInformation(XmlElement root)
+        {
+            root.SetAttribute("type", TypeName);
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "name")
+                {
+                    Name = node.InnerText;
+                }
+                else if (node.Name == "dimension")
+                {
+                    XmlElement element = (XmlElement)node;
+                    int x = int.Parse(element.GetAttribute("x"));
+                    int y = int.Parse(element.GetAttribute("y"));
+                    int width = int.Parse(element.GetAttribute("width"));
+                    int height = int.Parse(element.GetAttribute("height"));
+                    Dimension = new Rectangle(x, y, width, height);
+                    System.Console.WriteLine("Dimension=" + dimension);
+                }
+            }           
         }
         #endregion
 
