@@ -109,6 +109,7 @@
             this.newMenuItem.Name = "newMenuItem";
             this.newMenuItem.Size = new System.Drawing.Size(152, 22);
             this.newMenuItem.Text = "New";
+            this.newMenuItem.Click += new System.EventHandler(this.newMenuItem_Click);
             // 
             // openMenuItem
             // 
@@ -381,7 +382,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mainMenu;
             this.Name = "ProjectView";
-            this.Text = "db - Verkstan 1";
+            this.Text = "db verkstan 1";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.mainMenu.ResumeLayout(false);
             this.mainMenu.PerformLayout();

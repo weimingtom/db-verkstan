@@ -67,18 +67,10 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("clip");
-            XmlElement typeElement = doc.CreateElement("type");
-            typeElement.InnerText = "generator";
-            root.AppendChild(typeElement);
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = Dimension.X.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = Dimension.Y.ToString();
-            root.AppendChild(yElement);
-            XmlElement beatsElement = doc.CreateElement("beats");
-            beatsElement.InnerText = Dimension.Width.ToString();
-            root.AppendChild(beatsElement);
+            root.SetAttribute("type", "generator");
+
+            PopulateXmlElementWithBasicClipInformation(root, doc);
+
             XmlElement generatorTypeElement = doc.CreateElement("generatortype");
             generatorTypeElement.InnerText = GetGeneratorType().ToString();
             root.AppendChild(generatorTypeElement);
@@ -86,6 +78,24 @@ namespace VerkstanEditor.Logic
             periodElement.InnerText = GetPeriodInTicks().ToString();
             root.AppendChild(periodElement);
             return root;
+        }
+        public override void FromXmlElement(XmlElement root)
+        {
+            PopulateClipWithBasicInformationFromXmlElement(root);
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "generatortype")
+                {
+                    int type = int.Parse(node.InnerText);
+                    SetGeneratorType(type);
+                }
+                else if (node.Name == "period")
+                {
+                    int period = int.Parse(node.InnerText);
+                    SetPeriodInTicks(period);
+                }
+            }
         }
         #endregion
     }

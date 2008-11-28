@@ -29,6 +29,7 @@ namespace VerkstanEditor.Gui
             set
             {
                 timelineView1.Timeline = value;
+                viewedTimelineOperator = null;
             }
             get
             {
@@ -75,16 +76,7 @@ namespace VerkstanEditor.Gui
         private void TimelinesView_VisibleChanged(object sender, EventArgs e)
         {
             if (Visible)
-            {
-                timelinesComboBox1.Items.Clear();
-                ICollection<Operator> operatorsWithTimeline = Operator.FindAllWithTimeline();
-
-                foreach (Operator op in operatorsWithTimeline)
-                    timelinesComboBox1.Items.Add(op.UniqueName);
-
-                if (viewedTimelineOperator != null)
-                    timelinesComboBox1.SelectedItem = viewedTimelineOperator.UniqueName;
-            }
+                Reset();
         }
         private void timelinesComboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -100,6 +92,20 @@ namespace VerkstanEditor.Gui
         {
             if (ViewedClipChanged != null)
                 ViewedClipChanged(this, new EventArgs());
+        }
+        #endregion
+
+        #region Public Methods
+        public void Reset()
+        {
+            timelinesComboBox1.Items.Clear();
+            ICollection<Operator> operatorsWithTimeline = Operator.FindAllWithTimeline();
+
+            foreach (Operator op in operatorsWithTimeline)
+                timelinesComboBox1.Items.Add(op.UniqueName);
+
+            if (viewedTimelineOperator != null)
+                timelinesComboBox1.SelectedItem = viewedTimelineOperator.UniqueName;
         }
         #endregion
     }

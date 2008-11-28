@@ -125,31 +125,43 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("clip");
-            XmlElement typeElement = doc.CreateElement("type");
-            typeElement.InnerText = "spline";
-            root.AppendChild(typeElement);
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = Dimension.X.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = Dimension.Y.ToString();
-            root.AppendChild(yElement);
-            XmlElement beatsElement = doc.CreateElement("beats");
-            beatsElement.InnerText = Dimension.Width.ToString();
-            root.AppendChild(beatsElement);
+            root.SetAttribute("type", "spline");
+
+            PopulateXmlElementWithBasicClipInformation(root, doc);
+        
             XmlElement splineTypeElement = doc.CreateElement("splinetype");
             splineTypeElement.InnerText = GetSplineType().ToString();
             root.AppendChild(splineTypeElement);
+
             XmlElement controlPointsElement = doc.CreateElement("controlpoints");
             root.AppendChild(controlPointsElement);
 
             foreach (ControlPoint controlPoint in controlPoints)
-            {
-                XmlElement controlPointElement = controlPoint.ToXmlElement(doc);
-                controlPointsElement.AppendChild(controlPointElement);
-            }
+                controlPointsElement.AppendChild(controlPoint.ToXmlElement(doc));
 
             return root;
+        }
+        public override void FromXmlElement(XmlElement root)
+        {
+            PopulateClipWithBasicInformationFromXmlElement(root);
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "splinetype")
+                {
+                    int type = int.Parse(node.InnerText);
+                    SetSplineType(type);
+                }
+                else if (node.Name == "controlpoints")
+                {
+                    foreach (XmlNode subnode in node.ChildNodes)
+                    {
+                        ControlPoint controlPoint = new ControlPoint();
+                        controlPoint.FromXmlElement((XmlElement)subnode);
+                        Add(controlPoint, controlPoint.X, controlPoint.Y);
+                    }
+                }
+            }
         }
         #endregion
 

@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
-    public class Page
+    public class Page: IDisposable
     {
         #region Private Variables
         Operator.EventHandler stateChangedHandler;
@@ -81,10 +81,14 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public void Dispose()
+        {
+            foreach (Operator op in operators)
+                op.Dispose();
+        }
         public bool Add(Operator op, Point point)
         {
             Point p = Operator.QuantizeLocation(point);
-            System.Console.WriteLine("Trying to add at p = " + point + " qp = " + p);
             op.Dimension = new Rectangle(p.X, p.Y, op.Width, op.Height);
             foreach (Operator presentOp in operators)
             {

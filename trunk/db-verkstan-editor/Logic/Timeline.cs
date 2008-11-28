@@ -7,7 +7,7 @@ using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
-    public class Timeline
+    public class Timeline: IDisposable
     {
         #region Properties
         private List<Channel> channels;
@@ -44,6 +44,11 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public void Dispose()
+        {
+            foreach (Channel channel in channels)
+                channel.Dispose();
+        }
         public void SelectClips(Rectangle rectangle)
         {
             ICollection<Clip> oldSelection = GetSelectedClips();
@@ -263,12 +268,18 @@ namespace VerkstanEditor.Logic
             XmlElement root = doc.CreateElement("timeline");
 
             foreach (Channel channel in channels)
-            {
-                XmlElement channelElement = channel.ToXmlElement(doc);
-                root.AppendChild(channelElement);
-            }
+                root.AppendChild(FromChannelToXmlElement(channel, doc));
 
             return root;
+        }
+        public void FromXmlElement(XmlElement root)
+        {
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                XmlElement element = (XmlElement)node;
+                if (element.Name == "channel")
+                    FromXmlElementToChannel(element);
+            }
         }
         #endregion
 
@@ -310,6 +321,46 @@ namespace VerkstanEditor.Logic
             clip.Dimension = new Rectangle(dim.X, dim.Y, dim.Width, dim.Height);
 
             return true;
+        }
+        private XmlElement FromChannelToXmlElement(Channel channel, XmlDocument doc)
+        {
+            XmlElement channelElement = doc.CreateElement("channel");
+            XmlElement number = doc.CreateElement("number");
+            number.InnerText = channel.ChannelNumber.ToString();
+            channelElement.AppendChild(number);
+
+            foreach (Clip clip in channel.Clips)
+                channelElement.AppendChild(clip.ToXmlElement(doc));
+            
+            return channelElement;
+        }
+        private void FromXmlElementToChannel(XmlElement channelElement)
+        {
+            Channel channel = new Channel();
+            AddChannel(channel);
+            foreach (XmlNode node in channelElement.ChildNodes)
+            {
+                if (node.Name == "number")
+                {
+                    channel.ChannelNumber = int.Parse(node.InnerText);
+                }
+                else if (node.Name == "clip")
+                {
+                    XmlElement element = (XmlElement)node;
+                    if (element.GetAttribute("type") == "spline")
+                    {
+                        SplineClip clip = new SplineClip();
+                        clip.FromXmlElement(element);
+                        AddClip(clip, clip.Location, clip.Dimension.Width);
+                    }
+                    else if (element.GetAttribute("type") == "generator")
+                    {
+                        GeneratorClip clip = new GeneratorClip();
+                        clip.FromXmlElement(element);
+                        AddClip(clip, clip.Location, clip.Dimension.Width);
+                    }
+                }
+            }
         }
         #endregion
 

@@ -147,6 +147,14 @@ namespace VerkstanEditor.Logic
                 if (name != value)
                 {
                     name = value;
+
+                    if (name != null)
+                    {
+                        name.Trim();
+                        if (name == "")
+                            name = null;
+                    }
+
                     if (name != null)
                         uniqueName = AllocateUniqueName(name);
                     else
@@ -493,7 +501,6 @@ namespace VerkstanEditor.Logic
                     int width = int.Parse(element.GetAttribute("width"));
                     int height = int.Parse(element.GetAttribute("height"));
                     Dimension = new Rectangle(x, y, width, height);
-                    System.Console.WriteLine("Dimension=" + dimension);
                 }
             }           
         }

@@ -81,6 +81,13 @@ namespace VerkstanEditor.Logic
                 return lastDimension;
             }
         }
+        public Point Location
+        {
+            get
+            {
+                return new Point(dimension.X, dimension.Y);
+            }
+        }
         #endregion
 
         #region Private Variables
@@ -99,6 +106,7 @@ namespace VerkstanEditor.Logic
         #region Public Abstract Methods
         public abstract void Dispose();
         public abstract XmlElement ToXmlElement(XmlDocument doc);
+        public abstract void FromXmlElement(XmlElement root);
         #endregion
 
         #region Public Methods
@@ -146,6 +154,28 @@ namespace VerkstanEditor.Logic
         public void DestroyPreview()
         {
             preview = null;
+        }
+        public void PopulateXmlElementWithBasicClipInformation(XmlElement element, XmlDocument doc)
+        {
+            XmlElement dimension = doc.CreateElement("dimension");
+            dimension.SetAttribute("x", Dimension.X.ToString());
+            dimension.SetAttribute("y", Dimension.Y.ToString());
+            dimension.SetAttribute("width", Dimension.Width.ToString());
+            element.AppendChild(dimension);
+        }
+        public void PopulateClipWithBasicInformationFromXmlElement(XmlElement root)
+        {
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "dimension")
+                {
+                    XmlElement element = (XmlElement)node;
+                    int x = int.Parse(element.GetAttribute("x"));
+                    int y = int.Parse(element.GetAttribute("y"));
+                    int width = int.Parse(element.GetAttribute("width"));
+                    Dimension = new Rectangle(x, y, width, 1);
+                }
+            }
         }
         #endregion
 

@@ -97,13 +97,23 @@ namespace VerkstanEditor.Logic
         public XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("controlpoint");
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = x.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = y.ToString();
-            root.AppendChild(yElement);
+            XmlElement dimension = doc.CreateElement("dimension");
+            dimension.SetAttribute("x", x.ToString());
+            dimension.SetAttribute("y", y.ToString());
+            root.AppendChild(dimension);
             return root;
+        }
+        public void FromXmlElement(XmlElement root)
+        {
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "dimension")
+                {
+                    XmlElement element = (XmlElement)node;
+                    X = int.Parse(element.GetAttribute("x"));
+                    Y = float.Parse(element.GetAttribute("y"));
+                }
+            }
         }
         #endregion
     }

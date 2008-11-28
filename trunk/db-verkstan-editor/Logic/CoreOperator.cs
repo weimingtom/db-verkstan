@@ -147,6 +147,43 @@ namespace VerkstanEditor.Logic
         public override void FromXmlElement(XmlElement root)
         {
             PopulateOperatorWithBasicXmlElementInformation(root);
+
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "properties")
+                {
+                    for (int i = 0; i < node.ChildNodes.Count; i++)
+                    {
+                        XmlElement element = (XmlElement)node.ChildNodes[i];
+                        if (element.Name == "byte")
+                            FromXmlElementToByteProperty(element, i);
+                        else if (element.Name == "color")
+                            FromXmlElementToColorProperty(element, i);
+                        else if (element.Name == "enum")
+                            FromXmlElementToEnumProperty(element, i);
+                        else if (element.Name == "float")
+                            FromXmlElementToFloatProperty(element, i);
+                        else if (element.Name == "int")
+                            FromXmlElementToIntProperty(element, i);
+                        else if (element.Name == "string")
+                            FromXmlElementToStringProperty(element, i);
+                        else if (element.Name == "text")
+                            FromXmlElementToTextProperty(element, i);
+                        else if (element.Name == "vector")
+                            FromXmlElementToVectorProperty(element, i);
+                    }
+                }
+
+                if (node.Name == "timeline")
+                {
+                    if (Timeline != null)
+                        Timeline.Dispose();
+
+                    Timeline timeline = new Timeline(this);
+                    timeline.FromXmlElement((XmlElement)node);
+                    Timeline = timeline;
+                }
+            }
         }
         #endregion
 
@@ -306,7 +343,7 @@ namespace VerkstanEditor.Logic
             floatElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
             return floatElement;
         }
-        private void FromXmlElementToProperty(XmlElement floatElement, int index)
+        private void FromXmlElementToFloatProperty(XmlElement floatElement, int index)
         {
             float f = float.Parse(floatElement.GetAttribute("value"));
             FromXmlElementToPropertyAnimation((XmlElement)floatElement.ChildNodes[0], index, 0);

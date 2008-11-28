@@ -6,7 +6,7 @@ using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
-    public class Project
+    public class Project: IDisposable
     {
         #region Properties
         private String filename;
@@ -45,12 +45,12 @@ namespace VerkstanEditor.Logic
                 bpm = value;
             }
         }   
-        private List<Page> operatorPages;
+        private List<Page> pages;
         public ICollection<Page> OperatorPages
         {
             get
             {
-                return operatorPages;
+                return pages;
             }
         }
         #endregion
@@ -58,11 +58,16 @@ namespace VerkstanEditor.Logic
         #region Constructors
         public Project()
         {
-            operatorPages = new List<Page>();
+            pages = new List<Page>();
         }
         #endregion
 
         #region Public Methods
+        public void Dispose()
+        {
+            foreach (Page page in pages)
+                page.Dispose();
+        }
         public XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("project");

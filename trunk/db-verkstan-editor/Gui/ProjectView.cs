@@ -43,12 +43,18 @@ namespace VerkstanEditor.Gui
         #region Event Handlers
         private void FastRenderTimer_Tick(object sender, EventArgs e)
         {
-            if (viewedOperator != null && viewedOperator.IsProcessable)
-                verkstanWindow.ViewedOperator = viewedOperator.BindedCoreOperator;
+            Verkstan.CoreOperator coreOp = null;
 
-            if (viewedOperator == null || !viewedOperator.IsProcessable)
-                verkstanWindow.ViewedOperator = null;
+            if (tabControl1.SelectedTab == stacksTab
+                && viewedOperator != null
+                && viewedOperator.IsProcessable)
+                coreOp = viewedOperator.BindedCoreOperator;
+            else if (tabControl1.SelectedTab == timelinesTab
+                    && timelinesView1.ViewedTimelineOperator != null
+                    && timelinesView1.ViewedTimelineOperator.IsProcessable)
+                coreOp = timelinesView1.ViewedTimelineOperator.BindedCoreOperator;
 
+            verkstanWindow.ViewedOperator = coreOp;
             verkstanWindow.Render(Metronome.Tick);
             Metronome.OnBeatChangedFastUpdate(Metronome.Tick);
         }
@@ -119,6 +125,17 @@ namespace VerkstanEditor.Gui
                 tabControl1.SelectedTab = clipTab;
             }
         }
+        private void newMenuItem_Click(object sender, EventArgs e)
+        {
+            project = new Project();
+            Page page = new Page();
+            project.OperatorPages.Add(page);
+            operatorPageView1.Page = page;
+            Metronome.BPM = 120;
+            timelinesView1.Timeline = null;
+            timelinesView1.Reset();
+            Text = "db verkstan 1 - untitled.dbv"; 
+        }
         private void openMenuItem_Click(object sender, EventArgs e)
         {
             openFileDialog1.ShowDialog();
@@ -126,8 +143,12 @@ namespace VerkstanEditor.Gui
         private void saveMenuItem_Click(object sender, EventArgs e)
         {
             if (project.Filename == null)
+            {
+                saveFileDialog1.FileName = "demo.dbv";
+                saveFileDialog1.ShowDialog();
                 return;
-
+            }
+                
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(project.ToXmlElement(doc));
             doc.Save(project.Filename);
@@ -146,6 +167,9 @@ namespace VerkstanEditor.Gui
             XmlDocument doc = new XmlDocument();
             doc.AppendChild(project.ToXmlElement(doc));
             doc.Save(project.Filename);
+
+            string[] splitted = project.Filename.Split(new Char[] { '\\', '/', });
+            Text = "db verkstan 1 - " + splitted[splitted.Count() - 1]; 
         }
         private void openFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -153,9 +177,19 @@ namespace VerkstanEditor.Gui
             XmlDocument doc = new XmlDocument();
             doc.Load(filename);
             XmlElement rootElement = doc.DocumentElement;
+
+            if (project != null)
+                project.Dispose();
+
             project = new Project();
+            project.Filename = filename;
             project.FromXmlElement(rootElement);
             operatorPageView1.Page = project.OperatorPages.First();
+            Metronome.BPM = project.BPM;
+            timelinesView1.Timeline = null;
+            timelinesView1.Reset();
+            string[] splitted = project.Filename.Split(new Char [] {'\\', '/',});
+            Text = "db verkstan 1 - " + splitted[splitted.Count() - 1]; 
         }
         #endregion
     }
