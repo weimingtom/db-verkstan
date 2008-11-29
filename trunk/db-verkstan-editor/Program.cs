@@ -15,7 +15,19 @@ namespace VerkstanEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Gui.ProjectView());
+            Gui.ExceptionForm exceptionForm = new Gui.ExceptionForm(); 
+            Gui.ProjectView projectView = new Gui.ProjectView();
+
+            try
+            {
+                Application.Run(projectView);
+            }
+            catch (Exception e)
+            {
+                exceptionForm.BackupFilename = projectView.SaveBackup();
+                exceptionForm.Stacktrace = e.StackTrace;
+                Application.Run(exceptionForm);
+            }
         }
     }
 }

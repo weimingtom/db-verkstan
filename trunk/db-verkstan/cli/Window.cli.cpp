@@ -98,10 +98,7 @@ namespace Verkstan
         
         if (result == D3DERR_INVALIDCALL)
         {
-            MessageBoxA(NULL, 
-                        "blabal",
-                       "ERROR", 
-                       MB_OK | MB_ICONEXCLAMATION );
+            throw gcnew Exception("Unable to reset the direct3d device!");
         }
 
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);

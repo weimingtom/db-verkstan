@@ -92,6 +92,12 @@
     <Compile Include="Gui\ClipValueVerticalLine.Designer.cs">
       <DependentUpon>ClipValueVerticalLine.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\ExceptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\ExceptionForm.Designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gui\GeneratorClipPropertiesView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -316,6 +322,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\ClipView.resx">
       <DependentUpon>ClipView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Gui\GeneratorClipPropertiesView.resx">
       <DependentUpon>GeneratorClipPropertiesView.cs</DependentUpon>

@@ -40,6 +40,25 @@ namespace VerkstanEditor.Gui
         }
         #endregion
 
+        #region Public Methods
+        public String SaveBackup()
+        {
+            String filename;
+
+            if (project.Filename == null)
+                filename = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\demo-backup";
+            else
+                filename = project.Filename + "-backup";
+
+            filename += "-"+DateTime.Now.ToShortTimeString().Replace(":", "_")+"_"+DateTime.Now.ToShortDateString().Replace(":", "_");
+            XmlDocument doc = new XmlDocument();
+            doc.AppendChild(project.ToXmlElement(doc));
+            doc.Save(filename);
+
+            return filename;
+        }
+        #endregion
+
         #region Event Handlers
         private void FastRenderTimer_Tick(object sender, EventArgs e)
         {
@@ -190,6 +209,10 @@ namespace VerkstanEditor.Gui
             timelinesView1.Reset();
             string[] splitted = project.Filename.Split(new Char [] {'\\', '/',});
             Text = "db verkstan 1 - " + splitted[splitted.Count() - 1]; 
+        }
+        private void aboutMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new Exception("balbal");
         }
         #endregion
     }

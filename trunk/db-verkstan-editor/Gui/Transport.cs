@@ -25,8 +25,11 @@ namespace VerkstanEditor.Gui
             set
             {
                 project = value;
-                bpm.Value = project.BPM;
-                Metronome.BPM = project.BPM;
+                if (project != null)
+                {
+                    bpm.Value = project.BPM;
+                    Metronome.BPM = project.BPM;
+                }
             }
         }
         #endregion
