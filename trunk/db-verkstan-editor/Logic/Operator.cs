@@ -313,7 +313,7 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Abstract Methods
-        public abstract void Disposed(Operator op);
+        public abstract void OnDisposed(Operator op);
         public abstract List<Verkstan.CoreOperator> GetReceiverCoreOperators();
         public abstract List<Verkstan.CoreOperator> GetSenderCoreOperators();
         public abstract List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad();
@@ -328,7 +328,7 @@ namespace VerkstanEditor.Logic
         {
             instances.Remove(this);
             foreach (Operator op in loads)
-                op.Disposed(this);
+                op.OnDisposed(this);
         }
         public virtual void ConnectWithOperatorAsReceiver(Operator op)
         {
@@ -472,7 +472,6 @@ namespace VerkstanEditor.Logic
         #region Protected Methods
         protected void PopulateXmlElementWithBasicOperatorInformation(XmlElement root, XmlDocument doc)
         {
-            root.SetAttribute("type", TypeName);
             XmlElement name = doc.CreateElement("name");
             name.InnerText = Name;
             root.AppendChild(name);
@@ -485,8 +484,6 @@ namespace VerkstanEditor.Logic
         }
         protected void PopulateOperatorWithBasicXmlElementInformation(XmlElement root)
         {
-            root.SetAttribute("type", TypeName);
-
             foreach (XmlNode node in root.ChildNodes)
             {
                 if (node.Name == "name")

@@ -71,7 +71,7 @@ namespace VerkstanEditor.Logic
                 bindedCoreOperator.Dispose();
             base.Dispose();
         }
-        public override void Disposed(Operator op)
+        public override void OnDisposed(Operator op)
         {
 
         }
@@ -111,6 +111,8 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("operator");
+            root.SetAttribute("type", TypeName);
+            
             PopulateXmlElementWithBasicOperatorInformation(root, doc);
 
             XmlElement properties = doc.CreateElement("properties");
@@ -367,28 +369,23 @@ namespace VerkstanEditor.Logic
             String value = GetStringProperty(index);
             XmlElement stringElement = doc.CreateElement("string");
             stringElement.SetAttribute("value", value);
-            stringElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
             return stringElement;
         }
         private void FromXmlElementToStringProperty(XmlElement stringElement, int index)
         {
             String value = stringElement.GetAttribute("value");
             SetStringProperty(index, value);
-            FromXmlElementToPropertyAnimation((XmlElement)stringElement.ChildNodes[0], index, 0);
-
         }
         private XmlElement FromTextPropertyToXmlElement(XmlDocument doc, int index)
         {
             XmlElement textElement = doc.CreateElement("text");
             textElement.InnerText = GetStringProperty(index);
-            textElement.AppendChild(FromPropertyAnimationToXmlElement(doc, index, 0));
             return textElement;
         }
         private void FromXmlElementToTextProperty(XmlElement textElement, int index)
         {
             String text = textElement.InnerText;
             SetStringProperty(index, text);
-            FromXmlElementToPropertyAnimation((XmlElement)textElement.ChildNodes[0], index, 0);
         }
         private XmlElement FromVectorPropertyToXmlElement(XmlDocument doc, int index)
         {

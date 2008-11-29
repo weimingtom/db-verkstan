@@ -62,7 +62,7 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
-        public override void Disposed(Operator op)
+        public override void OnDisposed(Operator op)
         {
 
         }
@@ -115,30 +115,15 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("operator");
-            XmlElement typeElement = doc.CreateElement("type");
-            typeElement.InnerText = "Propagate";
-            root.AppendChild(typeElement);
-            XmlElement nameElement = doc.CreateElement("name");
-            nameElement.InnerText = Name;
-            root.AppendChild(nameElement);
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = Left.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = Top.ToString();
-            root.AppendChild(yElement);
-            XmlElement widthElement = doc.CreateElement("width");
-            widthElement.InnerText = Width.ToString();
-            root.AppendChild(widthElement);
-            XmlElement heightElement = doc.CreateElement("height");
-            heightElement.InnerText = Height.ToString();
-            root.AppendChild(heightElement);
+            root.SetAttribute("type", "Propagate");
+
+            PopulateXmlElementWithBasicOperatorInformation(root, doc);
 
             return root;
         }
         public override void FromXmlElement(XmlElement root)
         {
-           
+            PopulateOperatorWithBasicXmlElementInformation(root);
         }
         #endregion
     }

@@ -102,6 +102,11 @@ namespace VerkstanEditor.Logic
             OnAdded(added);
             Connect(op);
             op.StateChanged += stateChangedHandler;
+
+            // As present load operators might have this operator as target
+            // we have to tell all load operators that an operator has been added.
+            LoadOperator.PropagateOnOperatorAdded(op);
+
             return true;
         }
         public void Remove(Operator op)

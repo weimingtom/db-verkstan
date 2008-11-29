@@ -131,7 +131,7 @@ namespace VerkstanEditor.Gui
             Page page = new Page();
             project.OperatorPages.Add(page);
             operatorPageView1.Page = page;
-            Metronome.BPM = 120;
+            transport1.Project = project;
             timelinesView1.Timeline = null;
             timelinesView1.Reset();
             Text = "db verkstan 1 - untitled.dbv"; 
@@ -185,7 +185,7 @@ namespace VerkstanEditor.Gui
             project.Filename = filename;
             project.FromXmlElement(rootElement);
             operatorPageView1.Page = project.OperatorPages.First();
-            Metronome.BPM = project.BPM;
+            transport1.Project = project;
             timelinesView1.Timeline = null;
             timelinesView1.Reset();
             string[] splitted = project.Filename.Split(new Char [] {'\\', '/',});

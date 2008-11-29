@@ -52,14 +52,20 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Private Variables
+        private String targetName;
         private Operator target;
         private Operator.EventHandler stateChangedEventHandler;
+        #endregion
+
+        #region Private Static Variables
+        private static List<LoadOperator> instances = new List<LoadOperator>();
         #endregion
 
         #region Constructors
         public LoadOperator()
             : base()
         {
+            instances.Add(this);
             typeName = "Load";
             stateChangedEventHandler = new Operator.EventHandler(this.load_StateChanged);
             UniqueName = AllocateUniqueName(TypeName);
@@ -67,7 +73,12 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
-        public override void Disposed(Operator op)
+        public override void Dispose()
+        {
+            instances.Remove(this);
+            base.Dispose();
+        }
+        public override void OnDisposed(Operator op)
         {
             if (target == op)
             {
@@ -116,6 +127,8 @@ namespace VerkstanEditor.Logic
         {
             if (index == 0)
             {
+                targetName = value;
+
                 Operator newTarget = Operator.Find(value);
 
                 if (newTarget == target)
@@ -129,14 +142,14 @@ namespace VerkstanEditor.Logic
 
                 target = newTarget;
                 if (target != null)
-                    typeName = "L<" + target.Name + ">";
-                else
-                    typeName = "Load";
-
-                if (target != null)
                 {
+                    typeName = "L<" + target.Name + ">";
                     target.ConnectWithLoadOperator(this);
                     target.StateChanged += stateChangedEventHandler;
+                }
+                else
+                {
+                    typeName = "Load";
                 }
 
                 CascadeStackConnectChangedDownwards();
@@ -145,30 +158,53 @@ namespace VerkstanEditor.Logic
         public override XmlElement ToXmlElement(System.Xml.XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("operator");
-            XmlElement typeElement = doc.CreateElement("type");
-            typeElement.InnerText = "Load";
-            root.AppendChild(typeElement);
-            XmlElement nameElement = doc.CreateElement("name");
-            nameElement.InnerText = Name;
-            root.AppendChild(nameElement);
-            XmlElement xElement = doc.CreateElement("x");
-            xElement.InnerText = Left.ToString();
-            root.AppendChild(xElement);
-            XmlElement yElement = doc.CreateElement("y");
-            yElement.InnerText = Top.ToString();
-            root.AppendChild(yElement);
-            XmlElement widthElement = doc.CreateElement("width");
-            widthElement.InnerText = Width.ToString();
-            root.AppendChild(widthElement);
-            XmlElement heightElement = doc.CreateElement("height");
-            heightElement.InnerText = Height.ToString();
-            root.AppendChild(heightElement);
+            root.SetAttribute("type", "Load");
+
+            PopulateXmlElementWithBasicOperatorInformation(root, doc);
+
+            XmlElement target = doc.CreateElement("target");
+            target.InnerText = GetStringProperty(0);
+
+            root.AppendChild(target);
 
             return root;
         }
         public override void FromXmlElement(XmlElement root)
         {
+            PopulateOperatorWithBasicXmlElementInformation(root);
 
+            foreach (XmlNode node in root.ChildNodes)
+            {
+                if (node.Name == "target")
+                {
+                    XmlElement element = (XmlElement)node;
+                    String target = element.InnerText;
+                    target.Trim();
+                    targetName = target;
+                    if (target == "")
+                        target = null;
+                    SetStringProperty(0, target);
+                }
+            }
+        }
+        #endregion
+
+        #region Public Static Methods
+        public static void PropagateOnOperatorAdded(Operator op)
+        {
+            foreach (LoadOperator loadOp in instances)
+                loadOp.OnOperatorAdded(op);
+        }
+        #endregion
+
+        #region Private Methods
+        private void OnOperatorAdded(Operator op)
+        {
+            System.Console.WriteLine("OnOperatorAdded. op.Name="+op.Name+" targetName="+targetName);
+            // Check if this load operator has the operator as target.
+            // If so, update the target reference.
+            if (op.Name == targetName)
+                SetStringProperty(0, targetName);
         }
         #endregion
 

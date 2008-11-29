@@ -53,8 +53,9 @@ categories[category]->Add(name);
         return categories[category];
     }
 
-#define DEF_OP(opName, opClass, opType)             \
-    if (typeName == opName)                         \
+#define DEF_OP(opNameChars, opClass, opType)        \
+    opName = gcnew String(opNameChars);             \
+    if (name->ToLower() == opName->ToLower())   \
     {                                               \
         Core::Operator* o = new Core::opClass##();  \
         int id;                                     \
@@ -117,8 +118,9 @@ categories[category]->Add(name);
     op->AddInput(Constants::OperatorTypes::##inType, false, true);
 #define END_OP() }
 
-    CoreOperator^ CoreOperatorFactory::Create(String^ typeName)
+    CoreOperator^ CoreOperatorFactory::Create(String^ name)
     {
+        String^ opName;
         CoreOperator^ op;
 #define OPERATOR_DEFINES 1
 #include "cli/Operators.hpp"

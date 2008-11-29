@@ -14,6 +14,23 @@ namespace VerkstanEditor.Gui
     [ToolboxItem(true)]
     public partial class Transport : UserControl
     {
+        #region Properties
+        private Project project;
+        public Project Project
+        {
+            get
+            {
+                return project;
+            }
+            set
+            {
+                project = value;
+                bpm.Value = project.BPM;
+                Metronome.BPM = project.BPM;
+            }
+        }
+        #endregion
+
         #region Private Variables
         private bool showClockAsBeats = true;
         private int tick;
@@ -57,6 +74,8 @@ namespace VerkstanEditor.Gui
         private void bpm_ValueChanged(object sender, EventArgs e)
         {
             Metronome.BPM = Convert.ToInt32(this.bpm.Value);
+            if (project != null)
+                project.BPM = Metronome.BPM;
         }
         private void beatsOrTime_SelectedValueChanged(object sender, EventArgs e)
         {
