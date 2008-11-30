@@ -8,7 +8,10 @@ Channel::Channel(int sampleRate) :
 	//currentNote(0),
 	//currentPitch(0.0f),
 	lastPitchWheelPos(0.0f),
-	currentPitchWheelPos(0.0f)
+	currentPitchWheelPos(0.0f),
+	voiceBufferLength(0),
+	voiceLeft(0),
+	voiceRight(0)
 {
 	this->sampleRate = sampleRate;
 
@@ -54,6 +57,9 @@ Channel::~Channel()
 	{
 		delete voices[i];
 	}
+
+	delete[] voiceLeft;
+	delete[] voiceRight;
 }
 
 void Channel::noteOn(int note, float velocity)
@@ -100,10 +106,6 @@ void Channel::noteOff(int note, float velocity)
 			voices[i]->noteOff();
 		}
 	}
-	/*
-	if (note == currentNote) {
-		ampEnvelope.gateOff();
-	}*/
 }
 
 void Channel::controllerChange(int controller, float value)
@@ -118,6 +120,8 @@ void Channel::pitchWheelChange(float value)
 
 void Channel::render(float *left, float *right, int length)
 {
+	allocateVoiceBuffers(length);
+
 	float dt = length / (float)sampleRate;
 
 	lastPitchWheelPos = currentPitchWheelPos;
@@ -125,99 +129,30 @@ void Channel::render(float *left, float *right, int length)
 
 	float lastLFO = lfo.get();
 	float currentLFO = lfo.increment(controllers[MODWHEEL] * 7.0f + 4.0f, controllers[MODWHEEL] * 0.5f, dt);
+	
+	bool silence = true;
 
-	float *voiceLeft = new float[length];
-	float *voiceRight = new float[length];
 	for (int v = 0; v < NUM_VOICES; v++)
 	{
-		ZeroMemory(voiceLeft, sizeof(float) * length); 
-		ZeroMemory(voiceRight, sizeof(float) * length);
-
-		voices[v]->render(voiceLeft, voiceRight, length, dt, lastLFO, currentLFO);
-		
-		for (int i = 0; i < length; i++)
+		if (voices[v]->isActive())
 		{
-			left[i] += voiceLeft[i];
-			right[i] += voiceRight[i];
-		}
-	}
-	delete[] voiceLeft;
-	delete[] voiceRight;
+			silence = false;
 
-/*
-	float lastPitch = currentPitch;
-	{
-		float notesPerSec = 20.0f / (controllers[GLIDE] + 0.001f);
-		if (currentPitch < (float)currentNote)
-		{
-			currentPitch = __min((float)currentNote, currentPitch + notesPerSec * dt);
-		}
-		else if (currentPitch > (float)currentNote)
-		{
-			currentPitch = __max((float)currentNote, currentPitch - notesPerSec * dt);
-		}
-	}
-	
+			ZeroMemory(voiceLeft, sizeof(float) * length); 
+			ZeroMemory(voiceRight, sizeof(float) * length);
 
-	float startModValue = modValue;
-	modValue *= 1.0f - (float)pow(2, -controllers[MOD_DECAY] * dt * 1500.0);
-	float modToPitch = 0.0f;
-	float modToFilter = 0.0f;
-	
-	if (controllers[MOD_AMT] < 0.495f)
-	{
-		modToPitch = (0.5f - controllers[MOD_AMT]) * 2.0f;
-		modToPitch = modToPitch * modToPitch * 48.0f;
-	} 
-	else if (controllers[MOD_AMT] > 0.505f) 
-	{
-		modToFilter = (controllers[MOD_AMT] - 0.5f) * 2.0f;
-	}
-
-	lastPitchWheelPos = currentPitchWheelPos;
-	currentPitchWheelPos += (float)((controllers[PITCHWHEEL] - currentPitchWheelPos) * pow(2, -dt * 400.0));
-	
-	// Oscillator & amp envelope
-	float startAmp = ampEnvelope.currentValue;
-	float endAmp = ampEnvelope.process(controllers[ATTACK] * controllers[ATTACK], controllers[DECAY], controllers[SUSTAIN], controllers[RELEASE], dt);
-	
-	if (startAmp > (1.0f / 65536.0f) || endAmp > (1.0f / 65536.0f))
-	{
-		float lastLFO = lfo.get();
-		float currentLFO = lfo.increment(controllers[MODWHEEL] * 7.0f + 4.0f, controllers[MODWHEEL] * 0.5f, dt);
-
-		float startFreq = pitchToFreq(lastPitch + lastPitchWheelPos * 7.0f + modToPitch * startModValue + lastLFO);
-		float endFreq = pitchToFreq(currentPitch + currentPitchWheelPos * 7.0f + modToPitch * modValue + currentLFO);
-		float startPhasePerSample = startFreq / sampleRate;
-		float endPhasePerSample = endFreq / sampleRate;			
-
-		float phaseOffset = controllers[WAVEFORM];
-		float pulseFade = __min(controllers[WAVEFORM] * 2.0f, 1.0f);
-		
-		if (controllers[WAVEFORM] >= 1.0f)
-		{
-			// Noise
-			for (int i = 0; i < length; i++) {
-				float amp = (i * endAmp + (length - i) * startAmp) / length;				
-				left[i] = ((rand() / (float)RAND_MAX) - 0.5f) * amp * 2.0f;
-			}
-		}
-		else
-		{
-			// Waveform
-			for (int i = 0; i < length; i++) {
-				float amp = (i * endAmp + (length - i) * startAmp) / length;
-				float pps = (startPhasePerSample * (length - i) + endPhasePerSample * i) / length;
-				left[i] = oscillator.get(pps, phaseOffset, pulseFade) * amp;
+			voices[v]->render(voiceLeft, voiceRight, length, dt, lastLFO, currentLFO);
+			
+			for (int i = 0; i < length; i++)
+			{
+				left[i] += voiceLeft[i];
+				right[i] += voiceRight[i];
 			}
 		}
 	}
 
-	// Filter
-	filter.process(left, length, pow(16.0f, __min(controllers[CUTOFF] + modToFilter * modValue, 1.2f)) * 2000.0f / sampleRate, (float)sqrt(controllers[RESONANCE]) * 0.98f);
-*/
 	// Distortion
-	if (controllers[DISTORTION] > 0.0f)
+	if (!silence && controllers[DISTORTION] > 0.0f)
 	{
 		float fade = __min(controllers[DISTORTION] * 2.0f, 1.0f);
 		for (int i = 0; i < length; i++) {
@@ -230,6 +165,10 @@ void Channel::render(float *left, float *right, int length)
 	float leftGain = volume * sqrt(1.0f - controllers[PAN]);
 	float rightGain = volume * sqrt(controllers[PAN]);
 	
+	// TODO: Turn off chorus and delay if unneeded.
+	// a simple silence check is not enough since they may
+	// have data in their buffers
+
 	if (controllers[CHORUS_AMT] > 0.0f)
 	{
 		// Chorus
@@ -238,7 +177,7 @@ void Channel::render(float *left, float *right, int length)
 		float rate = (controllers[CHORUS_AMT] * controllers[CHORUS_AMT] + 0.5f) / sampleRate;
 		chorus.process(left, right, length, depth, rate, wet, leftGain, rightGain);
 	}
-	else
+	else if (!silence)
 	{
 		// Volume, pan. Done by chorus effect if enabled.
 		for (int i = 0; i < length; i++) {
@@ -256,6 +195,22 @@ void Channel::render(float *left, float *right, int length)
 	}
 }
 
+void Channel::allocateVoiceBuffers(int length)
+{
+	if (length == voiceBufferLength)
+	{
+		return;
+	}
+
+	voiceBufferLength = length;
+
+	delete[] voiceLeft;
+	delete[] voiceRight;
+
+	voiceLeft = new float[length];
+	voiceRight = new float[length];
+}
+
 Channel::Voice::Voice(Channel *channel_) :
 	channel(channel_)
 {
@@ -267,6 +222,7 @@ void Channel::Voice::noteOn(int note, float velocity, float startPitch)
 	currentPitch = startPitch;
 	ampEnvelope.gateOn();
 	modValue = 1.0f;	
+	filter.reset();
 }
 
 void Channel::Voice::noteOff()
@@ -344,5 +300,5 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 
 bool Channel::Voice::isActive()
 {
-	return ampEnvelope.state != ampEnvelope.RELEASE || ampEnvelope.currentValue > (1.0f / 65536.0f);
+	return ampEnvelope.state != ampEnvelope.RELEASE || ampEnvelope.currentValue > (1.0f / 65536.0f) || filter.isActive();
 }

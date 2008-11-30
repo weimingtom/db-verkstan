@@ -8,6 +8,10 @@ public:
 
 	void process(float *buffer, int length, float f, float q);
 
+	bool isActive();
+
+	void reset();
+
 private:
 	float buf0, buf1;
 };

@@ -1,5 +1,7 @@
 #include "filter.h"
 
+#include <math.h>
+
 void Filter::process(float *buffer, int length, float f, float q)
 {
 	//set feedback amount given f and q between 0 and 1
@@ -12,4 +14,15 @@ void Filter::process(float *buffer, int length, float f, float q)
 		buf1 = buf1 + f * (buf0 - buf1);
 		buffer[i] = buf1;
 	}
+}
+
+bool Filter::isActive()
+{
+	float ep = (1.0f / 65536.0f);
+	return abs(buf0) > ep || abs(buf1) > ep;
+}
+
+void Filter::reset()
+{
+	buf0 = buf1 = 0.0f;
 }
