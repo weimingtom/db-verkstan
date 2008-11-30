@@ -1,10 +1,5 @@
 #include "core/operators/torusoperator.hpp"
 
-void TorusOperator::render(int tick)
-{
-
-}
-
 void TorusOperator::process()
 {/*
     if (mesh != 0)

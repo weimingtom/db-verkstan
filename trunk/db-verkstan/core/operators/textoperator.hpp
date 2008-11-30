@@ -7,7 +7,6 @@ class TextOperator: public Operator
 public:
     TextOperator();
     ~TextOperator();
-    void render(int tick);
     void process();
     void deviceLost();
     LPDIRECT3DTEXTURE9 d3d9RenderTargetTexture;

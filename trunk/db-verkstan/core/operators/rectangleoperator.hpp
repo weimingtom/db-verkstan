@@ -5,6 +5,5 @@
 class RectangleOperator: public Operator
 {
 public:
-    void render(int tick);
     void process();
 };

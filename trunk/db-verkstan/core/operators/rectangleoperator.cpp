@@ -1,10 +1,5 @@
 #include "core/operators/rectangleoperator.hpp"
 
-void RectangleOperator::render(int tick)
-{
-
-}
-
 void RectangleOperator::process()
 {    
     if (texture == 0)

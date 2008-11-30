@@ -196,26 +196,35 @@ namespace VerkstanEditor.Logic
 
             List<Verkstan.CoreOperator> inputOperators = new List<Verkstan.CoreOperator>();
             foreach (Operator op in senders)
+            {
                 foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
                     inputOperators.Add(coreOp);
-
+            }
             int numberOfInputs = 0;
             int numberOfRequiredInputs = 0;
 
+            List<Boolean> inputAccepted = new List<bool>();
+            foreach (Verkstan.CoreOperatorInput input in bindedCoreOperator.Inputs)
+                inputAccepted.Add(false);
+           
             foreach (Verkstan.CoreOperator coreOp in inputOperators)
             {
                 if (coreOp.Id == bindedCoreOperator.Id)
                     continue;
 
                 bool accepted = false;
-                for (int i = numberOfInputs; i < bindedCoreOperator.Inputs.Count; i++)
+                for (int i = 0; i < bindedCoreOperator.Inputs.Count; i++)
                 {
+                    if (inputAccepted[i])
+                        continue;
+
                     Verkstan.CoreOperatorInput input = bindedCoreOperator.Inputs[i];
                     if ((input.Type == coreOp.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
                         && bindedCoreOperator.GetInputConnectionId(i) == -1)
                     {
                         bindedCoreOperator.SetInputConnectionId(i, coreOp.Id);
                         accepted = true;
+                        inputAccepted[i] = true;
                         numberOfInputs++;
                         if (!input.Optional)
                             numberOfRequiredInputs++;
@@ -232,7 +241,7 @@ namespace VerkstanEditor.Logic
                     && lastInput.Infinite
                     && (lastInput.Type == coreOp.Type || lastInput.Type == Verkstan.Constants.OperatorTypes.Unspecified))
                 {
-                    for (int i = numberOfInputs; i < bindedCoreOperator.GetMaxInputConnections(); i++)
+                    for (int i = 0; i < bindedCoreOperator.GetMaxInputConnections(); i++)
                     {
                         if (bindedCoreOperator.GetInputConnectionId(i) == -1)
                         {

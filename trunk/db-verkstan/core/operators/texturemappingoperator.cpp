@@ -1,10 +1,5 @@
 #include "core/operators/texturemappingoperator.hpp"
 
-void TextureMappingOperator::render(int tick)
-{
-
-}
-
 void TextureMappingOperator::process()
 {
     //if (mesh != 0)

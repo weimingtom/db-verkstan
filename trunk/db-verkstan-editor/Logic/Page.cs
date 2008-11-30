@@ -178,11 +178,16 @@ namespace VerkstanEditor.Logic
         }
         public ICollection<Operator> GetIn(Rectangle rectangle)
         {
-            ICollection<Operator> result = new List<Operator>();
+            List<Operator> result = new List<Operator>();
 
             foreach (Operator op in operators)
                 if (rectangle.IntersectsWith(op.Dimension))
                     result.Add(op);
+
+            result.Sort(delegate(Operator op1, Operator op2)
+            {
+                return op1.Dimension.X.CompareTo(op2.Dimension.X);
+            });
 
             return result;
         }

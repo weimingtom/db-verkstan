@@ -1,10 +1,5 @@
 #include "core/operators/cylinderoperator.hpp"
 
-void CylinderOperator::render(int tick)
-{
-
-}
-
 void CylinderOperator::process()
 {/*
     if (mesh != 0)

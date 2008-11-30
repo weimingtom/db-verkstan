@@ -22,11 +22,6 @@ void TextOperator::deviceLost()
     }
 }
 
-void TextOperator::render(int tick)
-{
-
-}
-
 void TextOperator::process()
 {   
     if (d3d9RenderTargetTexture == 0)

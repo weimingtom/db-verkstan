@@ -6,5 +6,4 @@ class TorusOperator: public Operator
 {
 public:
     void process();
-    void render(int tick);
 };

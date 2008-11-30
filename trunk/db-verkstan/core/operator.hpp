@@ -20,7 +20,9 @@ public:
     virtual ~Operator() {};
     
     virtual void process() = 0;
-    virtual void render(int tick) = 0;
+
+    virtual void preRender(int tick);
+    virtual void render(int tick);
 
     virtual void deviceLost();
 

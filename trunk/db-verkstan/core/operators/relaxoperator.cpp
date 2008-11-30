@@ -1,10 +1,5 @@
 #include "core/operators/relaxoperator.hpp"
 
-void RelaxOperator::render(int tick)
-{
-
-}
-
 void RelaxOperator::process()
 {
     if (mesh != 0)

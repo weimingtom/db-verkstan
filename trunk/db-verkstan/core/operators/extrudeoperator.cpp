@@ -1,10 +1,5 @@
 #include "core/operators/extrudeoperator.hpp"
 
-void ExtrudeOperator::render(int tick)
-{
-
-}
-
 void ExtrudeOperator::process()
 {
     if (mesh != 0)

@@ -2,6 +2,10 @@
 
 void CameraOperator::render(int tick)
 {
+    D3DXMATRIX lastProjectionMatrix;
+    D3DXMATRIX lastViewMatrix;
+    globalDirect3DDevice->GetTransform(D3DTS_PROJECTION, &lastProjectionMatrix);
+    globalDirect3DDevice->GetTransform(D3DTS_VIEW, &lastViewMatrix);
     globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
     globalDirect3DDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
 
@@ -15,6 +19,9 @@ void CameraOperator::render(int tick)
 
     for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->render(tick);
+
+    globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &lastProjectionMatrix);
+    globalDirect3DDevice->SetTransform(D3DTS_VIEW, &lastViewMatrix);
 }
 
 void CameraOperator::process()

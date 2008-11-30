@@ -7,7 +7,7 @@ void MaterialOperator::render(int tick)
         globalDirect3DDevice->SetTexture(0, textureOperator->texture->getD3D9Texture());
     globalDirect3DDevice->SetMaterial(&d3d9Material);
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
-	getInput(0)->mesh->render();
+    getInput(0)->mesh->render();
     globalDirect3DDevice->SetTexture(0, 0);	
 }
 

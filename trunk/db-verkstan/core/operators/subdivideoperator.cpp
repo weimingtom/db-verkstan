@@ -1,10 +1,5 @@
 #include "core/operators/subdivideoperator.hpp"
 
-void SubdivideOperator::render(int tick)
-{
-
-}
-
 void SubdivideOperator::process()
 {
     if (mesh != 0)

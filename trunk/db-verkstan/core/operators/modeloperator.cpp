@@ -2,9 +2,8 @@
 
 void ModelOperator::render(int tick)
 {
-    Operator* input = getInput(0);
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
-	input->mesh->render();
+    getInput(0)->mesh->render();
 }
 
 void ModelOperator::process()

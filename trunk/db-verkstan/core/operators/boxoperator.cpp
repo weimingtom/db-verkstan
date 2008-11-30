@@ -1,10 +1,5 @@
 #include "core/operators/boxoperator.hpp"
 
-void BoxOperator::render(int tick)
-{
-
-}
-
 void BoxOperator::process()
 {
 	if (mesh != 0)

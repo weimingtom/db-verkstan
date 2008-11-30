@@ -54,9 +54,7 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
-        D3DXCreateMatrixStack(0, &globalProjectionMatrixStack);
         D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
-        D3DXCreateMatrixStack(0, &globalViewMatrixStack);
     }
 
     void Window::Resize()
@@ -114,9 +112,7 @@ namespace Verkstan
     {
         globalDirect3DDevice->Release();
         globalDirect3D->Release();
-        globalProjectionMatrixStack->Release();
         globalWorldMatrixStack->Release();
-        globalViewMatrixStack->Release();
     }
     
     void Window::Render(int tick)

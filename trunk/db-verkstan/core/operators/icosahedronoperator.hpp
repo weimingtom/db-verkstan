@@ -6,5 +6,4 @@ class IcosahedronOperator: public Operator
 {
 public:
     void process();
-    void render(int tick);
 };

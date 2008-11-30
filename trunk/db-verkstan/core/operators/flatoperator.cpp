@@ -1,10 +1,5 @@
 #include "core/operators/flatoperator.hpp"
 
-void FlatOperator::render(int tick)
-{
-
-}
-
 void FlatOperator::process()
 {
     if (texture == 0)

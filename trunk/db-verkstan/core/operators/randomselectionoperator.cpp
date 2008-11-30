@@ -1,10 +1,5 @@
 #include "core/operators/randomselectionoperator.hpp"
 
-void RandomSelectionOperator::render(int tick)
-{
-
-}
-
 void RandomSelectionOperator::process()
 {
     if (mesh != 0)

@@ -1,10 +1,5 @@
 #include "core/operators/sphereoperator.hpp"
 
-void SphereOperator::render(int tick)
-{
-
-}
-
 void SphereOperator::process()
 {
 	if (mesh != 0)

@@ -18,6 +18,8 @@ namespace VerkstanEditor
             Gui.ExceptionForm exceptionForm = new Gui.ExceptionForm(); 
             Gui.ProjectView projectView = new Gui.ProjectView();
 
+            Application.Run(projectView);
+            /*
             try
             {
                 Application.Run(projectView);
@@ -28,6 +30,7 @@ namespace VerkstanEditor
                 exceptionForm.Stacktrace = e.StackTrace;
                 Application.Run(exceptionForm);
             }
+             */ 
         }
     }
 }

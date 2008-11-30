@@ -134,6 +134,17 @@ Operator* Operator::getInput(int index)
     return operators[inputs[index]];
 }
 
+void Operator::preRender(int tick)
+{
+    for (int i = 0; i < numberOfInputs; i++)
+       getInput(i)->preRender(tick);
+}
+
+void Operator::render(int tick)
+{
+
+}
+
 void Operator::deviceLost()
 {
     if (texture != 0)

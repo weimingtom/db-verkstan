@@ -2,7 +2,6 @@
 
 void CloneModelOperator::render(int tick)
 {
-   
     globalWorldMatrixStack->Push();
 
     getInput(0)->render(tick);

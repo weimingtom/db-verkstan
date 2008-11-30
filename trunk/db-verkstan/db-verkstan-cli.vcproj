@@ -489,6 +489,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\rendertotextureoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rendertotextureoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\rotozoomoperator.cpp"
 					>
 				</File>

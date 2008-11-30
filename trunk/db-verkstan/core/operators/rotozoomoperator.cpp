@@ -1,10 +1,5 @@
 #include "core/operators/rotozoomoperator.hpp"
 
-void RotozoomOperator::render(int tick)
-{
-
-}
-
 void RotozoomOperator::process()
 {    
     if (texture == 0)

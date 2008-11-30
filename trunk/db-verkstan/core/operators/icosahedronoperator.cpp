@@ -1,10 +1,5 @@
 #include "core/operators/icosahedronoperator.hpp"
 
-void IcosahedronOperator::render(int tick)
-{
-
-}
-
 void IcosahedronOperator::process()
 {
 	if (mesh != 0)

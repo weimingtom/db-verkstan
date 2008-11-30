@@ -30,7 +30,7 @@ void TimelineOperator::render(int tick)
     }
 
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(relativeTick);
+        getInput(i)->render(tick);
 }
 
 void TimelineOperator::process()

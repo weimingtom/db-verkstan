@@ -22,6 +22,7 @@
 #include "core/operators/relaxoperator.hpp"
 #include "core/operators/randomselectionoperator.hpp"
 #include "core/operators/extrudeoperator.hpp"
+#include "core/operators/rendertotextureoperator.hpp"
 
 namespace Verkstan
 {
@@ -50,6 +51,7 @@ namespace Verkstan
 		using ::RandomSelectionOperator;
 		using ::ExtrudeOperator;
         using ::TimelineOperator;
+        using ::RenderToTextureOperator;
     }
 }
 #endif
@@ -60,6 +62,7 @@ ADD_OP_TO_CAT("Flat",            "Texture");
 ADD_OP_TO_CAT("Text",            "Texture");
 ADD_OP_TO_CAT("Rectangle",       "Texture");
 ADD_OP_TO_CAT("Rotozoom",        "Texture");
+ADD_OP_TO_CAT("Render To",       "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -242,7 +245,11 @@ END_OP();
 
 DEF_OP("Timeline", TimelineOperator, Renderer);
 ADD_BYTE_PROP("Render", 1);
-ADD_INT_PROP("Time offset", 0);
+ADD_FLOAT_PROP("Time offset", 0);
+ADD_INFINITE_INPUT(Unspecified);
+END_OP();
+
+DEF_OP("Render To", RenderToTextureOperator, Texture);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP();
 

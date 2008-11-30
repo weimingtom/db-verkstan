@@ -1,10 +1,5 @@
 #include "core/operators/pixelsoperator.hpp"
 
-void PixelsOperator::render(int tick)
-{
-
-}
-
 void PixelsOperator::process()
 {
     if (texture == 0)
