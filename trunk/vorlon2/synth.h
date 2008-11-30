@@ -19,6 +19,7 @@ public:
 private:
 	static const int NUM_CHANNELS = 16;
 	class Machine *channels[NUM_CHANNELS];				
+	class Compressor *compressor;
 	class SoundDevice *device;
 	float *channelLeft, *channelRight;
 	float *masterLeft, *masterRight;	

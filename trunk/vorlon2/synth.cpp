@@ -5,14 +5,17 @@
 #include "sounddevice.h"
 #include "channel.h"
 #include "drumbox.h"
+#include "compressor.h"
 
 Synth::Synth(HWND hwnd) :
 	frameCounter(0)
 {
-	device = new SoundDevice(hwnd, 44100, 1024 * 8);
+	int samplerate = 44100;
+
+	device = new SoundDevice(hwnd, samplerate, 1024 * 8);
 
 	for (int i = 0; i < NUM_CHANNELS - 1; i++) {
-		channels[i] = new Channel(44100);
+		channels[i] = new Channel(samplerate);
 	}
 	channels[NUM_CHANNELS - 1] = new DrumBox();
 
@@ -21,6 +24,8 @@ Synth::Synth(HWND hwnd) :
 
 	masterLeft = new float[frameSize];
 	masterRight = new float[frameSize];
+
+	compressor = new Compressor(samplerate);
 }
 
 Synth::~Synth()
@@ -35,6 +40,8 @@ Synth::~Synth()
 		delete channels[i];
 	}
 
+	delete compressor;
+
 	delete device;
 }
 
@@ -45,7 +52,7 @@ int Synth::playFrame()
 
 	for (int i = 0; i < NUM_CHANNELS; i++)
 	{
-		ZeroMemory(channelLeft, sizeof(float) * frameSize);   // TODO: really clear?
+		ZeroMemory(channelLeft, sizeof(float) * frameSize); 
 		ZeroMemory(channelRight, sizeof(float) * frameSize);
 		
 		channels[i]->render(channelLeft, channelRight, frameSize);
@@ -57,7 +64,7 @@ int Synth::playFrame()
 		}
 	}
 	
-	// TODO: compressor.process(masterLeft, masterRight, frameSize);
+	compressor->process(masterLeft, masterRight, frameSize, 0.5f, 1.0f, 50.0f, 500.0f);
 	// TODO: limiter.process(masterLeft, masterRight, frameSize);
 
 	device->play(masterLeft, masterRight, frameSize);

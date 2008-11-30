@@ -199,6 +199,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\compressor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\drumbox.cpp"
 				>
 			</File>
@@ -230,6 +234,10 @@
 			</File>
 			<File
 				RelativePath=".\chorus.h"
+				>
+			</File>
+			<File
+				RelativePath=".\compressor.h"
 				>
 			</File>
 			<File

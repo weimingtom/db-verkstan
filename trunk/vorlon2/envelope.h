@@ -49,7 +49,6 @@ public:
 	
 	float currentValue;	
 
-private:
 	enum State {
 		ATTACK,
 		DECAY,

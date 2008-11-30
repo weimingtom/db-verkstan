@@ -205,7 +205,7 @@ void DrumBox::noteOn(int note, float velocity)
 	int s = (note % 12) % NUM_SAMPLES;	
 	samples[s].readCursor = 0;
 	samples[s].playing = true;
-	samples[s].volume = velocity * velocity * 1.0f;
+	samples[s].volume = velocity * velocity * 2.0f;
 }
 
 void DrumBox::noteOff(int note, float velocity)

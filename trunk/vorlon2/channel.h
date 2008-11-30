@@ -25,7 +25,7 @@ public:
 	void render(float *left, float *right, int length);	
 
 private:
-	float pitchToFreq(float pitch)
+	static float pitchToFreq(float pitch)
 	{
 		return pow(2.0f, (pitch - 69.0f) / 12.0f) * 440.0f;
 	}
@@ -60,19 +60,45 @@ private:
 		MAX_CONTROLLER = 129
 	};
 
+	class Voice
+	{
+	public:
+		Voice(Channel *channel);
+
+		void noteOn(int note, float velocity, float startPitch);
+
+		void noteOff();
+
+		void render(float *left, float *right, int length, float dt, float lastLFO, float currentLFO);
+
+		bool isActive();
+
+		Channel *channel;
+		int currentNote;
+		float currentPitch;
+		
+		float modValue;
+
+		Oscillator oscillator;
+		Envelope ampEnvelope;
+		Filter filter;
+	};
+
 	int sampleRate;
 	float controllers[MAX_CONTROLLER];
 
-	int currentNote;
-	float currentPitch;
+	//int currentNote;
+	//float currentPitch;
 	float currentPitchWheelPos;
 	float lastPitchWheelPos;
 
-	float modValue;
+	//float modValue;
 
-	Oscillator oscillator;
-	Envelope ampEnvelope;
-	Filter filter;
+	//Oscillator oscillator;
+	//Envelope ampEnvelope;
+	//Filter filter;
+	static const int NUM_VOICES = 8;
+	Voice *voices[NUM_VOICES];
 	Chorus chorus;
 	Delay delay;
 	LFO lfo;
