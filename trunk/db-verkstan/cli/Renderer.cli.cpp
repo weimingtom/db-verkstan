@@ -268,7 +268,7 @@ namespace Verkstan
                                    1.0f, 
                                    0);
 
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);

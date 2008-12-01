@@ -34,12 +34,30 @@ void RotozoomOperator::process()
             
             u *= fzoom;
             v *= fzoom;
+
+            int u1 = ((int)u + 2560) % 256;
+            int u2 =  u1 + 1;
+            int v1 = ((int)v + 2560) % 256;
+            int v2 =  v1 + 1;
+            float u1w = u - (int)u;
+            float u2w = 1.0f - u1w;
+            float v1w = v - (int)v;
+            float v2w = 1.0f - v1w;
+
+            dstPixels[dstPitch * y + x] = 
+                srcPixels[srcPitch * v1 + u1] * u1w * v1w +
+                srcPixels[srcPitch * v1 + u2] * u2w * v1w +
+                srcPixels[srcPitch * v2 + u1] * u1w * v2w +
+                srcPixels[srcPitch * v2 + u2] * u2w * v2w;
+            /*
             u += 256.0f * 10.0f;
             v += 256.0f * 10.0f;
-            u = ((int)u % 256) + (u - floor(u));
-            v = ((int)v % 256) + (v - floor(v)); 
 
-            dstPixels[dstPitch * y + x] = srcPixels[srcPitch * (int)v + (int)u];
+            u = ((int)u % 256);
+            v = ((int)v % 256);*/
+            
+
+           // dstPixels[dstPitch * y + x] = srcPixels[srcPitch * (int)v + (int)u];
         }
     }
 

@@ -409,6 +409,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\distortoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\distortoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\extrudeoperator.cpp"
 					>
 				</File>
