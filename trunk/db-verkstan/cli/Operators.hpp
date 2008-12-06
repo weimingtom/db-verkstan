@@ -23,6 +23,7 @@
 #include "core/operators/randomselectionoperator.hpp"
 #include "core/operators/extrudeoperator.hpp"
 #include "core/operators/rendertotextureoperator.hpp"
+#include "core/operators/bluroperator.hpp"
 
 namespace Verkstan
 {
@@ -52,6 +53,7 @@ namespace Verkstan
 		using ::ExtrudeOperator;
         using ::TimelineOperator;
         using ::RenderToTextureOperator;
+        using ::BlurOperator;
     }
 }
 #endif
@@ -62,6 +64,7 @@ ADD_OP_TO_CAT("Flat",            "Texture");
 ADD_OP_TO_CAT("Text",            "Texture");
 ADD_OP_TO_CAT("Rectangle",       "Texture");
 ADD_OP_TO_CAT("Rotozoom",        "Texture");
+ADD_OP_TO_CAT("Blur",            "Texture");
 ADD_OP_TO_CAT("Render To",       "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
@@ -251,6 +254,14 @@ END_OP();
 
 DEF_OP("Render To", RenderToTextureOperator, Texture);
 ADD_INFINITE_INPUT(Unspecified);
+END_OP();
+
+DEF_OP("Blur", BlurOperator, Texture);
+ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
+ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
+ADD_BYTE_PROP("Width", 1);
+ADD_BYTE_PROP("Amplify", 5);
+ADD_INPUT(Texture);
 END_OP();
 
 #endif

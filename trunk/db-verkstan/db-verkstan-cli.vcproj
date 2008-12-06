@@ -377,6 +377,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\bluroperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\bluroperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\boxoperator.cpp"
 					>
 				</File>

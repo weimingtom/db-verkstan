@@ -93,6 +93,7 @@ categories[category]->Add(name);
     op->AddProperty(name, Constants::OperatorPropertyTypes::Vector);  \
     op->SetVectorProperty(op->Properties->Count - 1, gcnew Vector(x, y, z));
 #define ADD_ENUM_PROP(name, enumValues, value) \
+    {\
     String^ tmpEnumValues = gcnew String(enumValues); \
     array<String^>^ splitted = tmpEnumValues->Split(gcnew array<Char>{','}); \
     List<String^>^ enumValuesList = gcnew List<String^>();  \
@@ -109,7 +110,8 @@ categories[category]->Add(name);
             break;\
         }\
     }\
-    op->SetByteProperty(op->Properties->Count - 1, defaultValue);
+    op->SetByteProperty(op->Properties->Count - 1, defaultValue); \
+    }
 #define ADD_INPUT(inType) \
     op->AddInput(Constants::OperatorTypes::##inType, false, false);
 #define ADD_INFINITE_INPUT(inType) \

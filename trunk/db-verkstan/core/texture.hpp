@@ -3,6 +3,11 @@
 #include <d3d9.h>
 #include <d3dx9.h>
 
+#define D3DCOLOR_A(c) (((c)&0xff000000)>>24)
+#define D3DCOLOR_R(c) (((c)&0x00ff0000)>>16)
+#define D3DCOLOR_G(c) (((c)&0x0000ff00)>>8)
+#define D3DCOLOR_B(c) ((c)&0x000000ff)
+
 /**
  * Helper class that wraps a D3D9 texture.
  */
