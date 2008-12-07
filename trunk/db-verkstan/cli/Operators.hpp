@@ -24,6 +24,7 @@
 #include "core/operators/extrudeoperator.hpp"
 #include "core/operators/rendertotextureoperator.hpp"
 #include "core/operators/bluroperator.hpp"
+#include "core/operators/cloudsoperator.hpp"
 
 namespace Verkstan
 {
@@ -54,6 +55,7 @@ namespace Verkstan
         using ::TimelineOperator;
         using ::RenderToTextureOperator;
         using ::BlurOperator;
+        using ::CloudsOperator;
     }
 }
 #endif
@@ -65,6 +67,7 @@ ADD_OP_TO_CAT("Text",            "Texture");
 ADD_OP_TO_CAT("Rectangle",       "Texture");
 ADD_OP_TO_CAT("Rotozoom",        "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
+ADD_OP_TO_CAT("Clouds",          "Texture");
 ADD_OP_TO_CAT("Render To",       "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
@@ -262,6 +265,12 @@ ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
 ADD_BYTE_PROP("Width", 1);
 ADD_BYTE_PROP("Amplify", 5);
 ADD_INPUT(Texture);
+END_OP();
+
+DEF_OP("Clouds", CloudsOperator, Texture);
+ADD_COLOR_PROP("Color 1", 0, 0, 255);
+ADD_COLOR_PROP("Color 2", 255, 255, 255);
+ADD_BYTE_PROP("Seed", 1);
 END_OP();
 
 #endif

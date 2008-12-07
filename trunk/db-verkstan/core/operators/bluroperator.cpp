@@ -1,5 +1,12 @@
 #include "core/operators/bluroperator.hpp"
 
+// Some thoughts and ideas about enhancing the code.
+// Different was of handling edges could be handled,
+// like CLAMP, WRAP and ZERO.
+// As the vertical and horizontal bluring is almost
+// identicall it could be done with a single loop
+// if the loop transposes each pixel so it's ready
+// for the next blur.
 void BlurOperator::process()
 {
     if (texture != 0)

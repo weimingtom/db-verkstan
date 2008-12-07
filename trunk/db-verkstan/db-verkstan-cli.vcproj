@@ -409,6 +409,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\cloudsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cloudsoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\cylinderoperator.cpp"
 					>
 				</File>
