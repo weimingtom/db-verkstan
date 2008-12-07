@@ -31,7 +31,7 @@ Channel::Channel(int sampleRate) :
 
 	controllers[PAN] = 0.5f;
 	controllers[WAVEFORM] = 0.0f;
-	controllers[CUTOFF] = 0.9f;
+	controllers[CUTOFF] = 0.45f;
 	controllers[RESONANCE] = 0.1f;
 			
 	controllers[DISTORTION] = 0.0f;
@@ -295,7 +295,29 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 	}
 
 	// Filter
-	filter.process(left, length, pow(16.0f, __min(channel->controllers[CUTOFF] + modToFilter * modValue, 1.2f)) * 2000.0f / channel->sampleRate, sqrtf(channel->controllers[RESONANCE]) * 0.98f);
+	{
+		float co;		
+		bool highpass;
+
+		if (channel->controllers[CUTOFF] > 0.5f)
+		{
+			highpass = true;
+			co = (channel->controllers[CUTOFF] - 0.5f) * 2.0f + modToFilter * modValue;
+		}
+		else
+		{
+			highpass = false;
+			co = channel->controllers[CUTOFF] * 2.0f + modToFilter * modValue;
+		}
+
+		float f = pow(16.0f, __max(__min(co, 1.2f), 0.0f)) * 2000.0f / channel->sampleRate;
+		float q = sqrtf(channel->controllers[RESONANCE]) * 0.98f;
+
+		System::Console::WriteLine(f);
+
+		filter.process(left, length, f, q, highpass);
+	}
+	
 }
 
 bool Channel::Voice::isActive()

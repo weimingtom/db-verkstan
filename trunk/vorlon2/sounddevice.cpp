@@ -117,16 +117,18 @@ void SoundDevice::lock(void **ptr1, unsigned long *bytes1, void **ptr2, unsigned
 {
 	if (dsBuffer) 
 	{		
-		// TODO: Understand why this happens to work. Make it better.
 		while (true) {
 			unsigned long playPosition;
 			dsBuffer->GetCurrentPosition(&playPosition, NULL);
 			int r1 = playPosition;
 			int r2 = playPosition + bufferSize;
-			if (((r1 > writeOffset) && (r1 < writeOffset + length)) || (r2 < writeOffset + length)) {
+			int w1 = writeOffset;
+			int w2 = writeOffset + length;
+
+			if ((w2 < r1) || (w1 > r1 && w2 < r2)) {
 				break;
 			} else {
-				Sleep(1);
+				Sleep(__max((500 * length) / sampleRate, 1));
 			}
 		};
 
