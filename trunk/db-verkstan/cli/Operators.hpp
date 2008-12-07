@@ -25,6 +25,7 @@
 #include "core/operators/rendertotextureoperator.hpp"
 #include "core/operators/bluroperator.hpp"
 #include "core/operators/cloudsoperator.hpp"
+#include "core/operators/glowoperator.hpp"
 
 namespace Verkstan
 {
@@ -56,18 +57,20 @@ namespace Verkstan
         using ::RenderToTextureOperator;
         using ::BlurOperator;
         using ::CloudsOperator;
+        using ::GlowOperator;
     }
 }
 #endif
 
 #ifdef OPERATOR_CATEGORY_DEFINES
+ADD_OP_TO_CAT("Clouds",          "Texture");
 ADD_OP_TO_CAT("Pixels",          "Texture");
 ADD_OP_TO_CAT("Flat",            "Texture");
 ADD_OP_TO_CAT("Text",            "Texture");
 ADD_OP_TO_CAT("Rectangle",       "Texture");
+ADD_OP_TO_CAT("Glow",            "Texture");
 ADD_OP_TO_CAT("Rotozoom",        "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
-ADD_OP_TO_CAT("Clouds",          "Texture");
 ADD_OP_TO_CAT("Render To",       "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
@@ -271,6 +274,17 @@ DEF_OP("Clouds", CloudsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 0, 0, 255);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_BYTE_PROP("Seed", 1);
+END_OP();
+
+DEF_OP("Glow", GlowOperator, Texture);
+ADD_COLOR_PROP("Color", 255, 0, 0);
+ADD_BYTE_PROP("Center X", 128);
+ADD_BYTE_PROP("Center Y", 128);
+ADD_BYTE_PROP("Radius X", 128);
+ADD_BYTE_PROP("Radius Y", 128);
+ADD_BYTE_PROP("Gamma", 1);
+ADD_BYTE_PROP("Alpha", 255);
+ADD_OPTIONAL_INPUT(Texture);
 END_OP();
 
 #endif

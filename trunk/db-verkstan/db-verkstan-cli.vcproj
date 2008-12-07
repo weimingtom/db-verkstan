@@ -449,6 +449,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\glowoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\glowoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\icosahedronoperator.cpp"
 					>
 				</File>
