@@ -1,6 +1,6 @@
 #pragma once
 
-#include <math.h>
+#include "util.h"
 
 class Envelope {
 public:
@@ -24,14 +24,16 @@ public:
 
 		case DECAY:
 			{
-				float toSustain = currentValue - s;
-				currentValue -= (float)(toSustain * pow(2, -d * dt * 1000.0));
+				currentValue = expFalloff(currentValue, s, 2.0f / (d + 0.001f), dt);
+			//	float toSustain = currentValue - s;
+			//	currentValue -= (toSustain * powf(2.0f, -d * dt * 1000.0f));
 			}
 			break;
 
 		case RELEASE:
 			{
-				currentValue *= 1.0f - (float)pow(2, -r * dt * 1000.0);
+				currentValue = expFalloff(currentValue, 0.0f, 2.0f / (r + 0.001f), dt);
+				//currentValue *= 1.0f - powf(2.0f, -r * dt * 1000.0f);
 			}
 			break;
 		}

@@ -175,21 +175,19 @@ DrumBox::DrumBox()
 	// Hat closed
 	generateSample(samples[3], sampleKeysSilent, noiseKeysHatClosed, 0.0f, 0.1f);
 
-	{		
-		Filter filter;
-		// Kick
-		filter.process(samples[0].data, samples[0].length, 0.80f, 0.20f);
-		
-		// Snare
-		filter.process(samples[1].data, samples[1].length, 0.80f, 0.20f);
+	// Kick
+	Filter().process(samples[0].data, samples[0].length, 0.80f, 0.20f);
+	
+	// Snare
+	Filter().process(samples[1].data, samples[1].length, 0.80f, 0.20f);
 
-		// Clap
-		filter.process(samples[2].data, samples[2].length, 0.50f, 0.20f);
+	// Clap
+	Filter().process(samples[2].data, samples[2].length, 0.50f, 0.20f);
 
-		// Hat closed
-		filter.process(samples[3].data, samples[3].length, 0.85f, 0.30f);		
-		filter.process(samples[3].data,               130, 0.60f, 0.30f);		
-	}
+	// Hat closed
+	cymbalFilter(samples[3].data, samples[3].length);
+	Filter().process(samples[3].data, samples[3].length, 0.75f, 0.30f);		
+	Filter().process(samples[3].data,               130, 0.60f, 0.30f);	
 }
 
 DrumBox::~DrumBox()
@@ -249,6 +247,10 @@ void DrumBox::render(float *left, float *right, int length)
 	{
 		right[i] = left[i];
 	}
+}
+
+void DrumBox::reset()
+{
 }
 
 void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, const KeyPosition *noiseKeys, float sampleGain, float noiseGain, float f, float q)
@@ -321,6 +323,7 @@ void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, c
 
 	float max = 0.0f;
 
+	// TODO: Replace with a highpass filter
 	for(int i = 0; i < numNoiseKeys - 1; i++)
 	{
 		KeyPosition start = noiseKeys[i];
@@ -350,5 +353,21 @@ void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, c
 	for (int i = 0; i < outSample.length; i++)
 	{
 		outSample.data[i] /= max;
+	}
+}
+
+void DrumBox::cymbalFilter(float *data, int length)
+{
+	static const int NUM_PASSES = 20;
+
+	srand(3);
+
+	for (int i = 0; i < NUM_PASSES; i++)
+	{
+		float co = rand() / (float)RAND_MAX;
+		float f = pow(16.0f, co * 190.0f / 44100.0f);
+		float q = 0.8f + (1.0f - co) * 0.19f;
+
+		Filter().process(data, length, f, q, Filter::RESONANT);
 	}
 }

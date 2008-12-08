@@ -2,7 +2,7 @@
 
 #include <math.h>
 
-void Filter::process(float *buffer, int length, float f, float q, bool highpass)
+void Filter::process(float *buffer, int length, float f, float q, Mode mode)
 {
 	//set feedback amount given f and q between 0 and 1
 	float fb = q + q/(1.0f - f);
@@ -13,13 +13,20 @@ void Filter::process(float *buffer, int length, float f, float q, bool highpass)
 		buf0 = buf0 + f * (buffer[i] - buf0 + fb * (buf0 - buf1));
 		buf1 = buf1 + f * (buf0 - buf1);
 
-		if (highpass)
+		switch (mode)
 		{
-			buffer[i] = buffer[i] - buf1;
-		}
-		else
-		{
+		case LOWPASS:
 			buffer[i] = buf1;
+			break;
+		case HIGHPASS:
+			buffer[i] = buffer[i] - buf1;
+			break;		
+		//case BANDPASS:
+		//	buffer[i] = buf0 - buf1;
+		//	break;
+		case RESONANT:
+			buffer[i] = buffer[i] - buf0 + buf1;
+			break;
 		}
 	}
 }

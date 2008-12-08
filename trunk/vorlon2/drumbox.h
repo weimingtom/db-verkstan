@@ -17,7 +17,9 @@ public:
 
 	void pitchWheelChange(float value);
 
-	void render(float *left, float *right, int length);	
+	void render(float *left, float *right, int length);
+
+	void reset();
 
 private:
 	class Sample
@@ -47,6 +49,7 @@ private:
 
 	static void generateSample(Sample &outSample, const KeyPosition *sampleKeys, const KeyPosition *noiseKeys, float sampleGain, float noiseGain, float f = 0.5f, float q = 0.3f);
 	//static void ringmodSample(Sample &outSample, const Sample &inSample, float freq);
+	static void cymbalFilter(float *data, int length);
 
 	static const int NUM_SAMPLES = 4;
 	static const KeyPosition sampleKeysSilent[];

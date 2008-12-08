@@ -6,7 +6,15 @@ public:
 	  buf0(0.0f), buf1(0.0f)
 	{}
 
-	void process(float *buffer, int length, float f, float q, bool highpass = false);
+	enum Mode
+	{
+		LOWPASS,
+		HIGHPASS,
+		RESONANT
+	};
+
+	// TODO: Add freq2f : f = 2.0*sin(pi*freq/samplerate);
+	void process(float *buffer, int length, float f, float q, Mode mode = LOWPASS);
 
 	bool isActive();
 

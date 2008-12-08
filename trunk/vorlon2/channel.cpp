@@ -125,7 +125,7 @@ void Channel::render(float *left, float *right, int length)
 	float dt = length / (float)sampleRate;
 
 	lastPitchWheelPos = currentPitchWheelPos;
-	currentPitchWheelPos += (float)((controllers[PITCHWHEEL] - currentPitchWheelPos) * pow(2, -dt * 400.0));
+	currentPitchWheelPos += (controllers[PITCHWHEEL] - currentPitchWheelPos) * powf(2, -dt * 400.0f);
 
 	float lastLFO = lfo.get();
 	float currentLFO = lfo.increment(controllers[MODWHEEL] * 7.0f + 4.0f, controllers[MODWHEEL] * 0.5f, dt);
@@ -195,6 +195,14 @@ void Channel::render(float *left, float *right, int length)
 	}
 }
 
+void Channel::reset()
+{
+	for (int i = 0; i < NUM_VOICES; i++)
+	{
+		voices[i]->noteOff();
+	}
+}
+
 void Channel::allocateVoiceBuffers(int length)
 {
 	if (length == voiceBufferLength)
@@ -247,7 +255,12 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 	
 
 	float startModValue = modValue;
-	modValue *= 1.0f - (float)pow(2, -channel->controllers[MOD_DECAY] * dt * 1500.0);
+	
+	{
+		float d = channel->controllers[MOD_DECAY];
+		modValue = expFalloff(modValue, 0.0f, 1.0f / (d * d + 0.001f), dt);
+	}
+
 	float modToPitch = 0.0f;
 	float modToFilter = 0.0f;
 	
@@ -263,7 +276,15 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 	
 	// Oscillator & amp envelope
 	float startAmp = ampEnvelope.currentValue;
-	float endAmp = ampEnvelope.process(channel->controllers[ATTACK] * channel->controllers[ATTACK], channel->controllers[DECAY], channel->controllers[SUSTAIN], channel->controllers[RELEASE], dt);
+	float endAmp;
+
+	{
+		float a = channel->controllers[ATTACK];
+		float d = channel->controllers[DECAY];
+		float s = channel->controllers[SUSTAIN];
+		float r = channel->controllers[RELEASE];
+		endAmp = ampEnvelope.process(a * a, d * d, s, r * r, dt);
+	}
 	
 	if (startAmp > (1.0f / 65536.0f) || endAmp > (1.0f / 65536.0f))
 	{
@@ -297,25 +318,23 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 	// Filter
 	{
 		float co;		
-		bool highpass;
+		Filter::Mode mode;
 
 		if (channel->controllers[CUTOFF] > 0.5f)
 		{
-			highpass = true;
+			mode = Filter::HIGHPASS;
 			co = (channel->controllers[CUTOFF] - 0.5f) * 2.0f + modToFilter * modValue;
 		}
 		else
 		{
-			highpass = false;
+			mode = Filter::LOWPASS;			
 			co = channel->controllers[CUTOFF] * 2.0f + modToFilter * modValue;
 		}
 
 		float f = pow(16.0f, __max(__min(co, 1.2f), 0.0f)) * 2000.0f / channel->sampleRate;
 		float q = sqrtf(channel->controllers[RESONANCE]) * 0.98f;
 
-		System::Console::WriteLine(f);
-
-		filter.process(left, length, f, q, highpass);
+		filter.process(left, length, f, q, mode);
 	}
 	
 }

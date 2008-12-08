@@ -24,10 +24,12 @@ public:
 
 	void render(float *left, float *right, int length);	
 
+	void reset();
+
 private:
 	static float pitchToFreq(float pitch)
 	{
-		return pow(2.0f, (pitch - 69.0f) / 12.0f) * 440.0f;
+		return powf(2.0f, (pitch - 69.0f) / 12.0f) * 440.0f;
 	}
 
 	void allocateVoiceBuffers(int length);

@@ -14,4 +14,6 @@ public:
 	virtual void pitchWheelChange(float value) = 0;
 
 	virtual void render(float *left, float *right, int length) = 0;
+
+	virtual void reset() = 0;
 };

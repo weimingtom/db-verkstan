@@ -179,7 +179,7 @@ LPDIRECTSOUNDBUFFER SoundDevice::createBasicBuffer(int sampleRate, int bps, int 
  
   memset(&dsbdesc, 0, sizeof(DSBUFFERDESC)); 
   dsbdesc.dwSize = sizeof(DSBUFFERDESC); 
-  dsbdesc.dwFlags = DSBCAPS_GLOBALFOCUS; 
+  dsbdesc.dwFlags = DSBCAPS_GLOBALFOCUS | DSBCAPS_GETCURRENTPOSITION2; 
   dsbdesc.dwBufferBytes = bufferSize; 
   dsbdesc.lpwfxFormat = &wfx; 
  
