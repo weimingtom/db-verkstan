@@ -56,3 +56,9 @@ float frand(float min, float max)
 {
 	return frand() * (max - min) + min;
 }
+
+// Number crunching helpers
+float clamp(float a, float min, float max)
+{
+	return a < min ? min : (a > max ? max : a);
+}

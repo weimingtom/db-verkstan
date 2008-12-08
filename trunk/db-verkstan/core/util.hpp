@@ -35,3 +35,12 @@ float frand();
 
 // Returns random float in [min, max]
 float frand(float min, float max);
+
+
+////////////////////////////////////////////////////////////////////
+// Number crunching helpers
+////////////////////////////////////////////////////////////////////
+
+float clamp(float a, float min, float max);
+
+inline float saturate(float a) { return clamp(a, 0.0f, 1.0f); }

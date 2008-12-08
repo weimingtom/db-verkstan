@@ -165,6 +165,7 @@ END_OP();
 
 DEF_OP("Subdivide", SubdivideOperator, Mesh);
 ADD_BYTE_PROP("Repetitions", 1);
+ADD_FLOAT_PROP("Smoothness", 0.5f);
 ADD_INPUT(Mesh);
 END_OP();
 
@@ -271,8 +272,9 @@ ADD_INPUT(Texture);
 END_OP();
 
 DEF_OP("Clouds", CloudsOperator, Texture);
-ADD_COLOR_PROP("Color 1", 0, 0, 255);
+ADD_COLOR_PROP("Color 1", 0, 0, 0);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
+ADD_BYTE_PROP("Size", 1);
 ADD_BYTE_PROP("Seed", 1);
 END_OP();
 

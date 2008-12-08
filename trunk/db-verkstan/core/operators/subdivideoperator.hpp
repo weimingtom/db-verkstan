@@ -8,5 +8,5 @@ public:
     void process();
 
 private:
-	Mesh* subdivide(Mesh *srcMesh, bool cleanup);
+	Mesh* subdivide(Mesh *srcMesh, bool cleanup, float smoothness);
 };

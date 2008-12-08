@@ -8,6 +8,7 @@ void SubdivideOperator::process()
 	Mesh *inputMesh = getInput(0)->mesh;
 
 	int repetitions = getByteProperty(0);
+	float smoothness = getFloatProperty(1);
 
 	if (repetitions == 0)
 	{
@@ -18,13 +19,14 @@ void SubdivideOperator::process()
 		Mesh *srcMesh = inputMesh;
 		for(int i = 0; i < repetitions; i++)
 		{
-			srcMesh = subdivide(srcMesh, srcMesh != inputMesh);
+			srcMesh = subdivide(srcMesh, srcMesh != inputMesh, smoothness);			
 		}
 		mesh = srcMesh;
+		mesh->recalculateNormals();
 	}
 }
 
-Mesh* SubdivideOperator::subdivide(Mesh *srcMesh, bool cleanup)
+Mesh* SubdivideOperator::subdivide(Mesh *srcMesh, bool cleanup, float smoothness)
 {
 	Mesh *dstMesh = 0;
 
@@ -58,8 +60,11 @@ Mesh* SubdivideOperator::subdivide(Mesh *srcMesh, bool cleanup)
 	{
 		int e0 = edgeInfo->getEdge(i)[0];
 		int e1 = edgeInfo->getEdge(i)[1];
-		dstMesh->pos(startEdgeSplits + i) = (srcMesh->pos(e0) + srcMesh->pos(e1)) / 2;
-		dstMesh->normal(startEdgeSplits + i) = normalize(srcMesh->normal(e0) + srcMesh->normal(e1));
+		dstMesh->pos(startEdgeSplits + i) = (srcMesh->pos(e0) + srcMesh->pos(e1)) / 2.0f;
+		dstMesh->normal(startEdgeSplits + i) = (srcMesh->normal(e0) + srcMesh->normal(e1)) / 2.0f;
+		float recLen = 1.0f / length(dstMesh->normal(startEdgeSplits + i));
+		dstMesh->normal(startEdgeSplits + i) *= recLen;
+		dstMesh->pos(startEdgeSplits + i) += dstMesh->normal(startEdgeSplits + i) * logf(recLen) * length(srcMesh->pos(e0) - srcMesh->pos(e1)) * smoothness;
 
 		for (int j = 0; j < srcMesh->getNumUVSets(); j++)
 		{
