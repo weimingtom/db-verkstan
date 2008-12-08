@@ -274,7 +274,7 @@ END_OP();
 DEF_OP("Clouds", CloudsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 0, 0, 0);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
-ADD_BYTE_PROP("Size", 1);
+ADD_ENUM_PROP("Size", "1,2,4,8,16,32,64,128", "2");
 ADD_BYTE_PROP("Seed", 1);
 END_OP();
 
