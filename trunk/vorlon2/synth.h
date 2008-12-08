@@ -5,7 +5,7 @@
 public class Synth
 {
 public:
-	static const int frameSize = 128;
+	static const int frameSize = 256;
 	static const int sampleRate = 44100;
 
 	Synth(HWND hwnd);

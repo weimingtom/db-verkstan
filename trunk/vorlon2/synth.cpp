@@ -12,7 +12,7 @@ Synth::Synth(HWND hwnd) :
 {
 	int samplerate = 44100;
 
-	device = new SoundDevice(hwnd, samplerate, 1024 * 8);
+	device = new SoundDevice(hwnd, samplerate, 1024 * 16);
 
 	for (int i = 0; i < NUM_CHANNELS - 1; i++) {
 		channels[i] = new Channel(samplerate);

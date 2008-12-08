@@ -128,7 +128,7 @@ void SoundDevice::lock(void **ptr1, unsigned long *bytes1, void **ptr2, unsigned
 			if ((w2 < r1) || (w1 > r1 && w2 < r2)) {
 				break;
 			} else {
-				Sleep(__max((500 * length) / sampleRate, 1));
+				Sleep(1);//__max((500 * length) / sampleRate, 1));
 			}
 		};
 
