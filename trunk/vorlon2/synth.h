@@ -2,7 +2,7 @@
 
 #include <windows.h>
 
-public class Synth
+class Synth
 {
 public:
 	static const int frameSize = 256;

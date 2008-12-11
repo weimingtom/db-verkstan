@@ -55,6 +55,15 @@ namespace Verkstan
         globalDirect3DDevice->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
 
         D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
+
+        unsigned char data[5] = { 0xff, 0x00, 0x00, 0x00, 0x01 };
+
+        unsigned char* dp = data;
+
+        unsigned char b = *dp++;
+        int i = *(reinterpret_cast<int *>(dp));
+        dp++;
+        System::Console::WriteLine("b="+b+" i="+i); 
     }
 
     void Window::Resize()

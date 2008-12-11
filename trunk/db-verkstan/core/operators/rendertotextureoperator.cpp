@@ -15,19 +15,6 @@ RenderToTextureOperator::~RenderToTextureOperator()
         d3d9RenderToSurface->Release();
 }
 
-void RenderToTextureOperator::deviceLost()
-{
-    if (d3d9RenderToSurface != 0)
-        d3d9RenderToSurface->OnLostDevice();
-
-	if (d3d9RenderTargetTexture != 0)
-    {
-		d3d9RenderTargetTexture->Release();
-        d3d9RenderTargetTexture = 0;
-    }
-    Operator::deviceLost();
-}
-
 void RenderToTextureOperator::process()
 {  
    
@@ -88,3 +75,18 @@ void RenderToTextureOperator::preRender(int tick)
     d3d9RenderToSurface->EndScene(0);
     texture->d3d9TextureDirty = false;
 }
+
+#ifdef DB_VERKSTAN_EDITOR
+void RenderToTextureOperator::deviceLost()
+{
+    if (d3d9RenderToSurface != 0)
+        d3d9RenderToSurface->OnLostDevice();
+
+	if (d3d9RenderTargetTexture != 0)
+    {
+		d3d9RenderTargetTexture->Release();
+        d3d9RenderTargetTexture = 0;
+    }
+    Operator::deviceLost();
+}
+#endif

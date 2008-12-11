@@ -21,7 +21,7 @@
 			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -64,7 +64,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib user32.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib user32.lib $(NOINHERIT)"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -97,7 +97,7 @@
 			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -121,6 +121,85 @@
 				EnableIntrinsicFunctions="true"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
+				AdditionalIncludeDirectories="&quot;../db-verkstan&quot;;../vorlon2/"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib user32.lib $(NOINHERIT)"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="TinyRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="1"
+			CharacterSet="0"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalOptions="/Zp[1]"
+				Optimization="1"
+				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
+				OmitFramePointers="true"
 				AdditionalIncludeDirectories="../db-verkstan"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
@@ -140,12 +219,15 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/ALIGN:512"
 				AdditionalDependencies="d3d9.lib d3dx9.lib user32.lib"
 				LinkIncremental="1"
+				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
+				OptimizeForWindows98="1"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -206,6 +288,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\core\loader.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\core\mesh.cpp"
 				>
 			</File>
@@ -219,6 +305,10 @@
 			</File>
 			<File
 				RelativePath=".\core\operator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\operators.hpp"
 				>
 			</File>
 			<File
@@ -257,6 +347,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\bluroperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\bluroperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\boxoperator.cpp"
 					>
 				</File>
@@ -281,11 +379,27 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\cloudsoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\cloudsoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\cylinderoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\cylinderoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\distortoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\distortoperator.hpp"
 					>
 				</File>
 				<File
@@ -302,6 +416,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\flatoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\glowoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\glowoperator.hpp"
 					>
 				</File>
 				<File
@@ -369,19 +491,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\rendertotextureoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\rendertotextureoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\rotozoomoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\rotozoomoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sceneoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sceneoperator.hpp"
 					>
 				</File>
 				<File
@@ -409,11 +531,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\texturemappingoperator.cpp"
+					RelativePath=".\core\operators\timelineoperator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\texturemappingoperator.hpp"
+					RelativePath=".\core\operators\timelineoperator.hpp"
 					>
 				</File>
 				<File
@@ -434,6 +556,94 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="vorlon"
+			>
+			<File
+				RelativePath="..\vorlon2\channel.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\channel.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\chorus.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\compressor.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\compressor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\delay.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\drumbox.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\drumbox.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\envelope.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\filter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\filter.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\lfo.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\machine.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\oscillator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\sounddevice.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\sounddevice.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\synth.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\synth.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\util.h"
+				>
+			</File>
+			<File
+				RelativePath="..\vorlon2\vorlonutil.cpp"
+				>
+			</File>
+		</Filter>
+		<File
+			RelativePath=".\64k\data.hpp"
+			>
+		</File>
 		<File
 			RelativePath=".\64k\main.cpp"
 			>

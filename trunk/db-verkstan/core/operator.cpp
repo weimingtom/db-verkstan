@@ -145,6 +145,7 @@ void Operator::render(int tick)
 
 }
 
+#ifdef DB_VERKSTAN_EDITOR
 void Operator::deviceLost()
 {
     if (texture != 0)
@@ -160,3 +161,4 @@ void Operator::deviceLost()
 
     dirty = true;
 }
+#endif

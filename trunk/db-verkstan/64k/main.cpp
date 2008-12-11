@@ -1,34 +1,14 @@
 #include "core/core.hpp"
-#include "core/operators/addmodelsoperator.hpp"
-#include "core/operators/boxoperator.hpp"
-#include "core/operators/cameraoperator.hpp"
-#include "core/operators/clonemodeloperator.hpp"
-#include "core/operators/cylinderoperator.hpp"
-#include "core/operators/flatoperator.hpp"
-#include "core/operators/rotozoomoperator.hpp"
-#include "core/operators/extrudeoperator.hpp"
-#include "core/operators/icosahedronoperator.hpp"
-#include "core/operators/lightoperator.hpp"
-#include "core/operators/materialoperator.hpp"
-#include "core/operators/pixelsoperator.hpp"
-#include "core/operators/randomselectionoperator.hpp"
-#include "core/operators/rectangleoperator.hpp"
-#include "core/operators/sphereoperator.hpp"
-#include "core/operators/relaxoperator.hpp"
-#include "core/operators/textoperator.hpp"
-#include "core/operators/torusoperator.hpp"
-#include "core/operators/texturemappingoperator.hpp"
+#include "synth.h"
+#define OPERATOR_HEADERS 1
+#include "core/operators.hpp"
+#undef OPERATOR_HEADERS
 #include "core/globals.hpp"
 #include <windows.h>
 
 LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
-    if (msg == WM_DESTROY)
-    {
-        PostQuitMessage(0);
-        return FALSE;
-    }
-    else if (msg == WM_CLOSE)
+    if (msg == WM_KEYDOWN && VK_ESCAPE == wParam)
     {
         PostQuitMessage(0);
         return FALSE;
@@ -52,14 +32,12 @@ int WINAPI WinMain(HINSTANCE instance,
     windowClass.hInstance = instance;
     windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
     windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW);
-    windowClass.lpszClassName = L"db";
+    windowClass.lpszClassName = "db";
     RegisterClassEx(&windowClass);
-
-    DWORD style = WS_MINIMIZEBOX | WS_BORDER | WS_VISIBLE;// WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
  
-    globalWindow = CreateWindow(L"db",
-                                L"db - alpha",
-                                style,
+    globalWindow = CreateWindow("db",
+                                "db - alpha",
+                                WS_VISIBLE,
                                 20, 
                                 0, 
                                 640, 
@@ -91,25 +69,10 @@ int WINAPI WinMain(HINSTANCE instance,
                                  &d3dPresentParameters,
                                  &globalDirect3DDevice);
 
-    AddModelsOperator* addModelsOperator = new AddModelsOperator();
-    BoxOperator* boxOperator = new BoxOperator();
-    CameraOperator* cameraOperator = new CameraOperator();
-    RotozoomOperator* rotozoomOperator = new RotozoomOperator();
-    IcosahedronOperator* icosahedronoperator = new IcosahedronOperator();
-    ExtrudeOperator* extrudeOperator = new ExtrudeOperator();
-    CloneModelOperator* cloneModelOperator = new CloneModelOperator();
-    FlatOperator* flatOperator = new FlatOperator();
-    CylinderOperator* cylinderOperator = new CylinderOperator();
-    LightOperator* lightOperator = new LightOperator();
-    MaterialOperator* materialOperator = new MaterialOperator();
-    PixelsOperator* pixelsOperator = new PixelsOperator();
-    RandomSelectionOperator* randomSelectionOperator = new RandomSelectionOperator();
-    RectangleOperator* rectangleOperator = new RectangleOperator();
-    RelaxOperator* relaxOperator = new RelaxOperator();
-    SphereOperator* sphereOperator = new SphereOperator();
-    TextOperator* textOperator = new TextOperator();
-    TorusOperator* torusOperator = new TorusOperator();
-    TextureMappingOperator* textureMappingOperator = new TextureMappingOperator();
+    Synth* synth = new Synth(globalWindow);
+
+#include "data.hpp"
+#include "core/loader.hpp"
 
     bool running = true;
     while (running)
@@ -139,8 +102,9 @@ int WINAPI WinMain(HINSTANCE instance,
         }
     }
 
+    delete synth;
     globalDirect3DDevice->Release();
     globalDirect3D->Release();
-    UnregisterClass(L"db", GetModuleHandle(NULL));
+    UnregisterClass("db", GetModuleHandle(NULL));
 	return 0;
 }

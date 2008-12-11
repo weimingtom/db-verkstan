@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../db-verkstan"
-				PreprocessorDefinitions="WIN32;_DEBUG"
+				PreprocessorDefinitions="DB_VERKSTAN_EDITOR"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -115,7 +115,77 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../db-verkstan"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				PreprocessorDefinitions="DB_VERKSTAN_EDITOR"
+				RuntimeLibrary="2"
+				UsePrecompiledHeader="0"
+				WarningLevel="3"
+				DebugInformationFormat="3"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr.lib user32.lib"
+				LinkIncremental="1"
+				GenerateDebugInformation="true"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="TinyRelease|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			ManagedExtensions="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="../db-verkstan"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -266,10 +336,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cli\Operators.hpp"
-				>
-			</File>
-			<File
 				RelativePath=".\cli\Renderer.cli.cpp"
 				>
 			</File>
@@ -339,6 +405,10 @@
 			</File>
 			<File
 				RelativePath=".\core\operator.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\operators.hpp"
 				>
 			</File>
 			<File
@@ -558,14 +628,6 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\textoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\texturemappingoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\texturemappingoperator.hpp"
 					>
 				</File>
 				<File

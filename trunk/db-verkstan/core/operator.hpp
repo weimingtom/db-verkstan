@@ -13,18 +13,18 @@
 #define DB_MAX_TIMELINE_CLIPS 64
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
 
+#define WRITE_BYTE_PROP(byte, dp) *dp++ = byte;
+
 class Operator
 {
 public:
     Operator();
     virtual ~Operator() {};
-    
+
     virtual void process() = 0;
 
     virtual void preRender(int tick);
     virtual void render(int tick);
-
-    virtual void deviceLost();
 
     Operator* getInput(int index);
     
@@ -51,8 +51,8 @@ public:
     struct Property
     {
         unsigned char byteValue;
-        float floatValue;
         int intValue;
+        float floatValue;
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
         D3DXCOLOR colorValue;
         D3DXVECTOR3 vectorValue;
@@ -73,4 +73,8 @@ public:
     int numberOfInputs;
     int numberOfOutputs;
     bool dirty;
+
+#ifdef DB_VERKSTAN_EDITOR
+    virtual void deviceLost();
+#endif
 };

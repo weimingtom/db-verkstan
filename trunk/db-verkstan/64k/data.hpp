@@ -1,0 +1,12 @@
+int dataOffset = 0;
+int dataSize = 30;
+unsigned char data[30] = { 0x00, // Type
+                           0x02, // Number of instances
+                           0xff, 0xff, 0xff, // Color 1
+                           0x00, 0x00, 0xff, // Color 2
+                           0x00, 0x00, 0x01, 0xff, // Count
+                           0x00, 0x00, 0x00, 0x03, // Seed
+                           0xff, 0xff, 0xff, // Color 1
+                           0x00, 0x00, 0xff, // Color 2
+                           0x00, 0x00, 0x01, 0xff, // Count
+                           0x00, 0x00, 0x00, 0x03 };// Seed

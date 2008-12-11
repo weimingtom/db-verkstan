@@ -12,16 +12,6 @@ TextOperator::~TextOperator()
 		d3d9RenderTargetTexture->Release();
 }
 
-void TextOperator::deviceLost()
-{
-    Operator::deviceLost();
-    if (d3d9RenderTargetTexture != 0)
-    {
-        d3d9RenderTargetTexture->Release();
-        d3d9RenderTargetTexture = 0;
-    }
-}
-
 void TextOperator::process()
 {   
     if (d3d9RenderTargetTexture == 0)
@@ -105,3 +95,15 @@ void TextOperator::process()
     renderTargetSurface->Release();
     texture->d3d9TextureDirty = true;
 }
+
+#ifdef DB_VERKSTAN_EDITOR
+void TextOperator::deviceLost()
+{
+    Operator::deviceLost();
+    if (d3d9RenderTargetTexture != 0)
+    {
+        d3d9RenderTargetTexture->Release();
+        d3d9RenderTargetTexture = 0;
+    }
+}
+#endif

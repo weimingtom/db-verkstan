@@ -8,6 +8,9 @@ public:
     TextOperator();
     ~TextOperator();
     void process();
-    void deviceLost();
     LPDIRECT3DTEXTURE9 d3d9RenderTargetTexture;
+
+#ifdef DB_VERKSTAN_EDITOR
+    void deviceLost();
+#endif
 };

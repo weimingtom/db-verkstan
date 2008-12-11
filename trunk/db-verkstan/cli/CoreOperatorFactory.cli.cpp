@@ -1,6 +1,8 @@
 #define OPERATOR_HEADERS 1
-#include "cli/Operators.hpp"
+#define OPERATORS_IN_NAMESPACE_CORE 1
+#include "core/operators.hpp"
 #undef OPERATOR_HEADERS
+#undef OPERATORS_IN_NAMESPACE_CORE
 
 #include "cli/CoreOperatorFactory.hpp"
 #include "cli/CoreOperator.hpp"
@@ -18,7 +20,7 @@ categories[category]->Add(name);
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
-#include "cli/Operators.hpp"
+#include "core/operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
 
         if (!categories->ContainsKey("Misc"))
@@ -53,7 +55,9 @@ categories[category]->Add(name);
         return categories[category];
     }
 
-#define DEF_OP(opNameChars, opClass, opType)        \
+#define DEF_OP_FOR_LOADER(opClass, numberOfProps, propTypes) 
+#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opClass) 
+#define DEF_OP_FOR_EDITOR(opNameChars, opClass, opType)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \
     {                                               \
@@ -118,14 +122,14 @@ categories[category]->Add(name);
     op->AddInput(Constants::OperatorTypes::##inType, true, false);
 #define ADD_OPTIONAL_INPUT(inType) \
     op->AddInput(Constants::OperatorTypes::##inType, false, true);
-#define END_OP() }
+#define END_OP_FOR_EDITOR() }
 
     CoreOperator^ CoreOperatorFactory::Create(String^ name)
     {
         String^ opName;
         CoreOperator^ op;
 #define OPERATOR_DEFINES 1
-#include "cli/Operators.hpp"
+#include "core/operators.hpp"
 #undef OPERATOR_DEFINES
 
         return op;
