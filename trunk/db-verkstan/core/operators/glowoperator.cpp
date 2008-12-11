@@ -17,7 +17,7 @@ void GlowOperator::process()
     unsigned char centery = getByteProperty(2);
     unsigned char radiusx = getByteProperty(3);
     unsigned char radiusy = getByteProperty(4);
-    float gamma = getByteProperty(5) / 256.0f;
+    float gamma = 1.0f - getByteProperty(5) / 256.0f;
     float alpha = 1.0f - getByteProperty(6) / 256.0f;
 
     unsigned char r = D3DCOLOR_R(color);
@@ -54,11 +54,17 @@ void GlowOperator::process()
             if (d > 1.0f)		
                 d = 1.0f;
 			d = 1.0f - d;
-             
-            float a = d - alpha;
             
+            float a;
             if (d != 0.0f)
-                a += gamma;
+            {
+                d = pow(d, gamma);
+                a = d - alpha;
+            }
+            else
+            {
+                a = 0.0f;
+            }
 
             D3DXCOLOR resultColor;
             D3DXCOLOR inputColor = inputPixels[pitch * y + x];
