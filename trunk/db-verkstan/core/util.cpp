@@ -49,7 +49,8 @@ float lengthSq(const Vec2 &v)
 // Random numbers, wraps rand so you can reset seed with srand
 float frand()
 {
-	return rand() / (float)RAND_MAX;
+	//return rand() / (float)RAND_MAX;
+    return 0.0f;
 }
 
 float frand(float min, float max)

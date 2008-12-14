@@ -1,8 +1,6 @@
 #include "channel.h"
 
 #include <windows.h>
-#include <math.h>
-#include <stdlib.h>
 
 Channel::Channel(int sampleRate) :
 	//currentNote(0),
@@ -97,6 +95,10 @@ void Channel::noteOn(int note, float velocity)
 		}
 	}
 
+	int last = -1;
+	while(unison)
+	{
+		int v = rand() % NUM_VOICES; 
 	int last = -1;
 	while(unison)
 	{
@@ -308,7 +310,7 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 			// Noise
 			for (int i = 0; i < length; i++) {
 				float amp = (i * endAmp + (length - i) * startAmp) / length;				
-				left[i] = ((rand() / (float)RAND_MAX) - 0.5f) * amp * 2.0f;
+				//left[i] = ((rand() / (float)RAND_MAX) - 0.5f) * amp * 2.0f;
 			}
 		}
 		else

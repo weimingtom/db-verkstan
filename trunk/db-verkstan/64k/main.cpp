@@ -102,9 +102,57 @@ int WINAPI WinMain(HINSTANCE instance,
         }
     }
 
-    delete synth;
+    //delete synth;
     globalDirect3DDevice->Release();
     globalDirect3D->Release();
     UnregisterClass("db", GetModuleHandle(NULL));
-	return 0;
+
+    return 0;
+}
+
+int WINAPI WinMainCRTStartup(void)
+{
+    
+    STARTUPINFO				StartupInfo={sizeof(STARTUPINFO),0};
+ 
+    int				        mainret;
+    char				*lpszCommandLine = GetCommandLine();
+    
+      
+    // skip past program name (first token in command line).
+    if( *lpszCommandLine == '"' )  // check for and handle quoted program name
+    {
+        // scan, and skip over, subsequent characters until  another
+        // double-quote or a null is encountered
+        while( *lpszCommandLine && (*lpszCommandLine != '"') )
+            lpszCommandLine++;
+
+        // if we stopped on a double-quote (usual case), skip over it.
+        if( *lpszCommandLine == '"' )
+            lpszCommandLine++;
+    }
+    
+    else    
+    {
+        // first token wasn't a quote
+        while ( *lpszCommandLine > ' ' )
+            lpszCommandLine++;
+    }
+
+    // skip past any white space preceeding the second token.
+    while ( *lpszCommandLine && (*lpszCommandLine <= ' ') )
+        lpszCommandLine++;
+
+    
+    GetStartupInfo(&StartupInfo);
+ 
+    mainret = WinMain( GetModuleHandle(NULL),
+                       NULL,
+                       lpszCommandLine,
+                       StartupInfo.dwFlags & STARTF_USESHOWWINDOW
+                            ? StartupInfo.wShowWindow : SW_SHOWDEFAULT );
+
+    ExitProcess(mainret);
+    
+    return mainret;
 }

@@ -18,14 +18,14 @@ void PixelsOperator::process()
     int seed = getIntProperty(3);
 
     texture->lock();
-    srand(seed);
+    //srand(seed);
     DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
     int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
     D3DXCOLOR color;
     for (int i = 0; i < count; i++)
     {
         D3DXColorLerp(&color, &color1, &color2, frand());
-        pixels[pitch * (rand()%256) + (rand()%256)] = color; 
+      //  pixels[pitch * (rand()%256) + (rand()%256)] = color; 
     }
     texture->unlock();
 }

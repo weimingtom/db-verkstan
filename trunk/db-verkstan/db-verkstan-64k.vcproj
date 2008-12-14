@@ -97,6 +97,7 @@
 			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
+			UseOfMFC="0"
 			CharacterSet="0"
 			WholeProgramOptimization="1"
 			>
@@ -123,7 +124,7 @@
 				OmitFramePointers="true"
 				AdditionalIncludeDirectories="&quot;../db-verkstan&quot;;../vorlon2/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -142,6 +143,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib user32.lib $(NOINHERIT)"
 				LinkIncremental="1"
+				IgnoreAllDefaultLibraries="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -172,8 +174,8 @@
 		</Configuration>
 		<Configuration
 			Name="TinyRelease|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
+			IntermediateDirectory="$(ProjectDir)$(ProjectName)-$(ConfigurationName)"
 			ConfigurationType="1"
 			CharacterSet="0"
 			WholeProgramOptimization="1"
@@ -195,18 +197,25 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalOptions="/Zp[1]"
+				UseUnicodeResponseFiles="false"
 				Optimization="1"
-				EnableIntrinsicFunctions="true"
+				InlineFunctionExpansion="2"
+				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
-				AdditionalIncludeDirectories="../db-verkstan"
+				WholeProgramOptimization="false"
+				AdditionalIncludeDirectories="&quot;../db-verkstan&quot;;../vorlon2/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				RuntimeLibrary="2"
+				ExceptionHandling="0"
+				RuntimeLibrary="0"
+				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
+				FloatingPointModel="2"
+				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
-				DebugInformationFormat="3"
+				DebugInformationFormat="0"
+				CallingConvention="0"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -219,15 +228,16 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalOptions="/ALIGN:512"
-				AdditionalDependencies="d3d9.lib d3dx9.lib user32.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib"
 				LinkIncremental="1"
-				IgnoreAllDefaultLibraries="false"
-				GenerateDebugInformation="true"
+				IgnoreAllDefaultLibraries="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				OptimizeForWindows98="1"
+				OptimizeForWindows98="2"
+				LinkTimeCodeGeneration="0"
+				EntryPointSymbol=""
 				TargetMachine="1"
 			/>
 			<Tool
@@ -269,6 +279,18 @@
 			</File>
 			<File
 				RelativePath=".\core\core.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\dbmath.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\dbmath.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\dbstdlib.cpp"
 				>
 			</File>
 			<File
@@ -555,90 +577,98 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="vorlon"
+				>
+				<File
+					RelativePath="..\vorlon2\channel.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\channel.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\chorus.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\compressor.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\compressor.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\delay.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\drumbox.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\drumbox.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\envelope.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\filter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\filter.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\lfo.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\machine.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\oscillator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\resource.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\sounddevice.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\sounddevice.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\synth.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\synth.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\util.h"
+					>
+				</File>
+				<File
+					RelativePath="..\vorlon2\vorlonutil.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="vorlon"
 			>
-			<File
-				RelativePath="..\vorlon2\channel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\channel.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\chorus.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\compressor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\compressor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\delay.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\drumbox.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\drumbox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\envelope.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\filter.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\filter.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\lfo.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\machine.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\oscillator.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\sounddevice.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\sounddevice.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\synth.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\synth.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\util.h"
-				>
-			</File>
-			<File
-				RelativePath="..\vorlon2\vorlonutil.cpp"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath=".\64k\data.hpp"

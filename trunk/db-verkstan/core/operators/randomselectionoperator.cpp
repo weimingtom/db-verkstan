@@ -10,11 +10,11 @@ void RandomSelectionOperator::process()
 	int probability = getByteProperty(0);
 	int seed = getByteProperty(0);
 
-	srand(seed);
+	//srand(seed);
 
 	for (int i = 0; i < mesh->getNumFaces(); i++)
 	{
-		mesh->faceSelected(i) = (rand() % 255) < probability;
+//		mesh->faceSelected(i) = (rand() % 255) < probability;
 /*
 		if (mesh->faceSelected(i)) 
 		{

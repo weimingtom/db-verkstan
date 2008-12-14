@@ -230,7 +230,7 @@ Mesh::EdgeInfo *Mesh::constructEdgeInfo()
 	}
 
 	// Sort the edges
-	qsort((void *)duplicatedEdges, numDuplicatedEdges, sizeof(int) * 2, edgeComparator);
+	//qsort((void *)duplicatedEdges, numDuplicatedEdges, sizeof(int) * 2, edgeComparator);
 	
 	int numEdges = 0;
 	

@@ -6,25 +6,21 @@
 
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <math.h>
 
 #define DB_MAX_OPERATOR_CONNECTIONS 32
 #define DB_MAX_OPERATOR_PROPERTIES 32
 #define DB_MAX_TIMELINE_CLIPS 64
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
 
-#define WRITE_BYTE_PROP(byte, dp) *dp++ = byte;
-
 class Operator
 {
 public:
     Operator();
-    virtual ~Operator() {};
 
-    virtual void process() = 0;
+    void process() {};
 
-    virtual void preRender(int tick);
-    virtual void render(int tick);
+    void preRender(int tick);
+    void render(int tick);
 
     Operator* getInput(int index);
     
@@ -40,7 +36,7 @@ public:
     bool isDirty();
     void setDirty(bool dirty);
     
-    virtual void broadcastChannelValue(int channel, float value);
+    void broadcastChannelValue(int channel, float value);
 
     Mesh* mesh;
     Texture* texture;

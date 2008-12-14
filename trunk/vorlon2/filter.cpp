@@ -1,6 +1,6 @@
 #include "filter.h"
 
-#include <math.h>
+#include "core/dbmath.hpp"
 
 void Filter::process(float *buffer, int length, float f, float q, Mode mode)
 {

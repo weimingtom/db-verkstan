@@ -1,7 +1,7 @@
 #include "drumbox.h"
-#include "stdlib.h"
 #include "filter.h"
-#include "math.h"
+
+#include "core/dbmath.hpp"
 
 const DrumBox::KeyPosition DrumBox::sampleKeysSilent[] =
 {
@@ -333,14 +333,17 @@ void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, c
 		for(int p = 0; p < distance; p++)
 		{
 			float val = (start.value * (distance - p) + end.value * p) / distance;
-			float noiseIn = ((rand() / (float)RAND_MAX) - 0.5f) * 2.0f;
+		
+            /* TODO Remove this comment when rand is in place.
+            float noiseIn = ((rand() / (float)RAND_MAX) - 0.5f) * 2.0f;
 
 			buf0 = buf0 + f * (noiseIn - buf0 + fb * (buf0 - buf1));
 			buf1 = buf1 + f * (buf0 - buf1);
 
 			float noiseOut = noiseIn - buf1;
 
-			outSample.data[p + start.position] += val * noiseOut * noiseGain;			
+	        outSample.data[p + start.position] += val * noiseOut * noiseGain;	
+            */
 		}
 	}
 
@@ -360,14 +363,16 @@ void DrumBox::cymbalFilter(float *data, int length)
 {
 	static const int NUM_PASSES = 20;
 
-	srand(3);
+	//srand(3);
 
 	for (int i = 0; i < NUM_PASSES; i++)
 	{
+        /* TODO Remove this comment when rand is in place.
 		float co = rand() / (float)RAND_MAX;
 		float f = pow(16.0f, co * 190.0f / 44100.0f);
 		float q = 0.8f + (1.0f - co) * 0.19f;
 
 		Filter().process(data, length, f, q, Filter::RESONANT);
+        */
 	}
 }

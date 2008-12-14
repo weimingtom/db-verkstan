@@ -1,6 +1,5 @@
 #include "util.h"
-
-#include <math.h>
+#include "core/dbmath.hpp"
 
 float expFalloff(float current, float target, float rate, float dt)
 {
