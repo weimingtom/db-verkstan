@@ -224,11 +224,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\util.cpp"
+				RelativePath=".\vorlon2.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\vorlon2.cpp"
+				RelativePath=".\vorlonutil.cpp"
 				>
 			</File>
 		</Filter>

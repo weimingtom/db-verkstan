@@ -59,7 +59,7 @@ private:
 		MOD_DECAY = 17,
 		MOD_AMT = 93,		
 				
-		GLIDE = 18,
+		DETUNE = 18,
 
 		MAX_CONTROLLER = 129
 	};
@@ -69,7 +69,7 @@ private:
 	public:
 		Voice(Channel *channel);
 
-		void noteOn(int note, float velocity, float startPitch);
+		void noteOn(int note, float velocity, float detune);
 
 		void noteOff();
 

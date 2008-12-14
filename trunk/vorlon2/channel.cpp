@@ -43,7 +43,7 @@ Channel::Channel(int sampleRate) :
 	controllers[MOD_DECAY] = 0.5f;
 	controllers[MOD_AMT] = 0.5f;
 
-	controllers[GLIDE] = 0.0f;
+	controllers[DETUNE] = 0.0f;
 
 	for (int i = 0; i < NUM_VOICES; i++)
 	{
@@ -64,14 +64,21 @@ Channel::~Channel()
 
 void Channel::noteOn(int note, float velocity)
 {
-	float startPitch = (float)note;
+	float detune = controllers[DETUNE] / 4.0f;
+	int unison = detune == 0.0f ? 1 : 2;
 
 	for (int i = 0; i < NUM_VOICES; i++)
 	{
 		if (voices[i]->currentNote == note)
 		{
-			voices[i]->noteOn(note, velocity, startPitch);
-			return;
+			voices[i]->noteOn(note, velocity, unison & 1 ? detune : -detune);
+			
+			unison--;
+
+			if (!unison)
+			{
+				return;
+			}
 		}
 	}
 
@@ -79,22 +86,29 @@ void Channel::noteOn(int note, float velocity)
 	{
 		if (!voices[i]->isActive())
 		{
-			voices[i]->noteOn(note, velocity, startPitch);
-			return;
+			voices[i]->noteOn(note, velocity, unison & 1 ? detune : -detune);
+			
+			unison--;
+
+			if (!unison)
+			{
+				return;
+			}
 		}
 	}
 
-	voices[rand() % NUM_VOICES]->noteOn(note, velocity, startPitch);
+	int last = -1;
+	while(unison)
+	{
+		int v = rand() % NUM_VOICES; 
 
-	
-	/*
-	currentNote = note;
-	ampEnvelope.gateOn();
-	modValue = 1.0f;
-
-	if (controllers[GLIDE] == 0.0f) {
-		currentPitch = (float)currentNote;
-	}*/
+		if (v != last)
+		{
+			voices[v]->noteOn(note, velocity, unison & 1 ? detune : -detune);
+			last = v;
+			unison--;
+		}
+	}
 }
 
 void Channel::noteOff(int note, float velocity)
@@ -151,15 +165,7 @@ void Channel::render(float *left, float *right, int length)
 		}
 	}
 
-	// Distortion
-	if (!silence && controllers[DISTORTION] > 0.0f)
-	{
-		float fade = __min(controllers[DISTORTION] * 2.0f, 1.0f);
-		for (int i = 0; i < length; i++) {
-			float distorted = tanh(left[i] * 8.0f * controllers[DISTORTION]);
-			left[i] = fade * distorted + (1.0f - fade) * left[i];
-		}
-	}
+
 
 	float volume = (controllers[VOLUME] * 1.5f) * (controllers[VOLUME] * 1.5f);
 	float leftGain = volume * sqrt(1.0f - controllers[PAN]);
@@ -224,10 +230,10 @@ Channel::Voice::Voice(Channel *channel_) :
 {
 }
 
-void Channel::Voice::noteOn(int note, float velocity, float startPitch)
+void Channel::Voice::noteOn(int note, float velocity, float detune)
 {
 	currentNote = note;
-	currentPitch = startPitch;
+	currentPitch = note + detune;
 	ampEnvelope.gateOn();
 	modValue = 1.0f;	
 	filter.reset();
@@ -241,6 +247,7 @@ void Channel::Voice::noteOff()
 void Channel::Voice::render(float *left, float *right, int length, float dt, float lastLFO, float currentLFO)
 {
 	float lastPitch = currentPitch;
+	/*
 	{
 		float notesPerSec = 20.0f / (channel->controllers[GLIDE] + 0.001f);
 		if (currentPitch < (float)currentNote)
@@ -252,7 +259,7 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 			currentPitch = __max((float)currentNote, currentPitch - notesPerSec * dt);
 		}
 	}
-	
+	*/
 
 	float startModValue = modValue;
 	
@@ -336,7 +343,16 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 
 		filter.process(left, length, f, q, mode);
 	}
-	
+
+	// Distortion
+	if (channel->controllers[DISTORTION] > 0.0f)
+	{
+		float fade = __min(channel->controllers[DISTORTION] * 2.0f, 1.0f);
+		for (int i = 0; i < length; i++) {
+			float distorted = tanh(left[i] * 8.0f * channel->controllers[DISTORTION]);
+			left[i] = fade * distorted + (1.0f - fade) * left[i];
+		}
+	}
 }
 
 bool Channel::Voice::isActive()

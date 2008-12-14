@@ -12,7 +12,7 @@ Synth::Synth(HWND hwnd) :
 {
 	int samplerate = 44100;
 
-	device = new SoundDevice(hwnd, samplerate, 1024 * 16);
+	device = new SoundDevice(hwnd, samplerate, 1024 * 8);
 
 	for (int i = 0; i < NUM_CHANNELS - 1; i++) {
 		channels[i] = new Channel(samplerate);
@@ -64,7 +64,7 @@ int Synth::playFrame()
 		}
 	}
 	
-	compressor->process(masterLeft, masterRight, frameSize, 0.5f, 1.0f, 50.0f, 500.0f);
+	compressor->process(masterLeft, masterRight, frameSize, 0.5f, 0.7f, 50.0f, 500.0f);
 	// TODO: limiter.process(masterLeft, masterRight, frameSize);
 
 	device->play(masterLeft, masterRight, frameSize);
