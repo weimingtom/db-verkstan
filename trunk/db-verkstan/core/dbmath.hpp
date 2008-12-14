@@ -1,5 +1,7 @@
 #pragma once
 
+// TODO: Remove *f-variants, implement stuff. Merge with util.hpp
+
 extern "C"
 {
     float sin(float x);

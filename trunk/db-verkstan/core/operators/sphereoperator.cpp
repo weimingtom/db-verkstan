@@ -9,6 +9,19 @@ void SphereOperator::process()
     unsigned char slices = getByteProperty(1);
     unsigned char stacks = getByteProperty(2);
 
+
+	int numVertices = (slices + 1) * stacks - 2;
+	int numTriangles = 2 * slices;
+	int numQuads = slices * (stacks - 2);
+
+	for (int x = 0; x < slices; x++)
+	{
+		for (int y = 1; y < stacks; y++)
+		{
+			
+		}
+	}
+/*
 	int numVertices = 2 + slices * stacks;
 	int numQuads = slices * (stacks - 1);
     int numTriangles = slices * 2;
@@ -36,7 +49,7 @@ void SphereOperator::process()
 			v++; t++;
 		}
 	}
-
+*/
 	/*
     if (mesh != 0)
         delete mesh;

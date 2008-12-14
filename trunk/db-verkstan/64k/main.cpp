@@ -4,6 +4,10 @@
 #include "core/operators.hpp"
 #undef OPERATOR_HEADERS
 #include "core/globals.hpp"
+
+#define WIN32_LEAN_AND_MEAN
+#define _INC_STDLIB // To get rid of stdlib.h included by windows.h
+#define NOMINMAX
 #include <windows.h>
 
 LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 

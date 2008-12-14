@@ -1,10 +1,11 @@
-#define WINDOWS_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#define _INC_STDLIB // To get rid of stdlib.h included by windows.h
+#define NOMINMAX
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 
 #include "cli/Window.cli.hpp"
-
 #include "cli/Constants.hpp"
 #include "cli/CoreOperator.hpp"
 #include "cli/Renderer.hpp"

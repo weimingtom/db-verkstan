@@ -47,19 +47,26 @@ float lengthSq(const Vec2 &v)
 }
 
 // Random numbers, wraps rand so you can reset seed with srand
+//const int RAND_MAX = 0xffffff;
+static unsigned int currentRandom = 1;
+
+void srand(int seed)
+{
+	currentRandom = seed;
+}
+
+int rand()
+{
+	currentRandom = 1103515245 * currentRandom + 12345;
+	return (int)((currentRandom >> 8) & RAND_MAX);
+}
+
 float frand()
 {
-	//return rand() / (float)RAND_MAX;
-    return 0.0f;
+	return rand() / (float)RAND_MAX;
 }
 
 float frand(float min, float max)
 {
 	return frand() * (max - min) + min;
-}
-
-// Number crunching helpers
-float clamp(float a, float min, float max)
-{
-	return a < min ? min : (a > max ? max : a);
 }

@@ -185,7 +185,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../db-verkstan"
+				AdditionalIncludeDirectories="&quot;../db-verkstan&quot;"
+				IgnoreStandardIncludePath="false"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

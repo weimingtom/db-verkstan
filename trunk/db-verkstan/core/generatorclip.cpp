@@ -1,7 +1,7 @@
 #include "core/generatorclip.hpp"
 #include "core/core.hpp"
 
-#include <math.h>
+//#include <math.h>
 
 float GeneratorClip::getValue(int tick)
 {

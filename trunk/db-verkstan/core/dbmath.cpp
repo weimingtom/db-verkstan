@@ -60,11 +60,6 @@ extern "C"
         return v;
     }
 
-    float fabsf(float v)
-    {
-        return v;
-    }
-
     float fabs(float v)
     {
         return v;

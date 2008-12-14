@@ -1,5 +1,5 @@
-#include <stdio.h> 
-#include <stdlib.h>
+//#include <stdio.h> 
+//#include <stdlib.h>
 #include <vcclr.h>
 #include "cli/Core.hpp"
 #include "cli/Color.hpp"

@@ -1,4 +1,8 @@
+#define WIN32_LEAN_AND_MEAN
+#define _INC_STDLIB // To get rid of stdlib.h included by windows.h
+#define NOMINMAX
 #include <windows.h>
+#include <mmreg.h>
 #include <dsound.h>
 
 #include "sounddevice.h"
