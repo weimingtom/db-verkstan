@@ -6,6 +6,7 @@ extern "C"
 {
     float sin(float x);
     float cos(float x);
+	void sincos(float v, float &outSin, float &outCos);
     float sqrt(float x);
     float pow(float x, float y);
     float powf(float x, float y);

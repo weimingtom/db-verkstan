@@ -16,9 +16,20 @@ extern "C"
         return v;
     }
 
-    float sqrt(float x)
+	void sincos(float v, float &outSin, float &outCos)
     {
-        return x;
+        __asm fld v;
+        __asm fcos;
+        __asm fstp outSin;
+		__asm fstp outCos;
+    }
+
+    float sqrt(float v)
+    {
+        __asm fld v;
+        __asm fsqrt;
+        __asm fstp v;
+        return v;
     }
 
     float pow(float x, float y)
