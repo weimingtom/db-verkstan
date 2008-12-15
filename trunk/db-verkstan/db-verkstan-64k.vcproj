@@ -294,6 +294,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\core\externals.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\core\generatorclip.cpp"
 				>
 			</File>
@@ -665,10 +669,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="vorlon"
-			>
 		</Filter>
 		<File
 			RelativePath=".\64k\data.hpp"

@@ -1,6 +1,6 @@
 extern "C"
 {
-    float sin(float v)
+    float __cdecl sin(float v)
     {
         __asm fld v;
         __asm fsin;
@@ -8,7 +8,7 @@ extern "C"
         return v;
     }
 
-    float cos(float v)
+    float __cdecl cos(float v)
     {
         __asm fld v;
         __asm fcos;
@@ -16,7 +16,7 @@ extern "C"
         return v;
     }
 
-	void sincos(float v, float &outSin, float &outCos)
+	void __cdecl sincos(float v, float &outSin, float &outCos)
     {
         __asm fld v;
         __asm fcos;
@@ -24,7 +24,7 @@ extern "C"
 		__asm fstp outCos;
     }
 
-    float sqrt(float v)
+    float __cdecl sqrt(float v)
     {
         __asm fld v;
         __asm fsqrt;
@@ -32,56 +32,46 @@ extern "C"
         return v;
     }
 
-    float pow(float x, float y)
+    float __cdecl pow(float x, float y)
     {
         return x;
     }
 
-    float powf(float x, float y)
+    float _powf(float x, float y)
     {
         return x;
     }
 
-    float log(float x)
+    float __cdecl log(float x)
     {
         return x;
     }
 
-    int _ftol2(float f)
+    int __cdecl _ftol2(float f)
     {
         volatile int result;
         __asm fistp result;
         return result;
     }
 
-    int _ftol2_sse(float f)
+    int __cdecl _ftol2_sse(float f)
     {
         volatile int result;
         __asm fistp result;
         return result;
     }
 
-    float fmodf(float x, float y)
+    float __cdecl fmod(float x, float y)
     {
         return 0.0f;
     }
 
-    float tanhf(float v)
+    float __cdecl tanh(float v)
     {
         return v;
     }
 
-    float fabs(float v)
-    {
-        return v;
-    }
-
-    float __max(float v1, float v2)
-    {
-        return 0.0f;
-    }
-
-    float abs(float v)
+    float __cdecl fabs(float v)
     {
         return v;
     }

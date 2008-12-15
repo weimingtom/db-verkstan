@@ -1,6 +1,6 @@
 #include "compressor.h"
 
-#include "core/dbmath.hpp"
+#include "core/externals.hpp"
 
 Compressor::Compressor(int samplerate_) :
 	samplerate(samplerate_),

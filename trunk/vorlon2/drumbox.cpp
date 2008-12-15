@@ -1,7 +1,6 @@
 #include "drumbox.h"
 #include "filter.h"
-
-#include "core/dbmath.hpp"
+#include "core/externals.hpp"
 
 const DrumBox::KeyPosition DrumBox::sampleKeysSilent[] =
 {

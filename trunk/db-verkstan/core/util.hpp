@@ -31,12 +31,13 @@ float lengthSq(const Vec2 &v);
 // Random numbers
 ////////////////////////////////////////////////////////////////////
 
+/*
 #ifdef RAND_MAX
 #error "RAND_MAX defined"
 #else
 // Highest number returned by rand, inclusive
 #define RAND_MAX 0xffffff
-#endif
+#endif*/
 
 // Seed RNG
 void srand(int seed);
@@ -55,12 +56,14 @@ float frand(float min, float max);
 // Number crunching helpers
 ////////////////////////////////////////////////////////////////////
 
+/*
 template<typename T> inline T abs(T a) { return a < 0 ? -a : a; }
 
 template<typename T> inline T min(T a, T b) { return a < b ? a : b; }
 
 template<typename T> inline T max(T a, T b) { return a > b ? a : b; }
-
+*/
 template<typename T> inline T clamp(T a, T min, T max) { return a < min ? min : (a > max ? max : a); }
+
 
 inline float saturate(float a) { return clamp(a, 0.0f, 1.0f); }

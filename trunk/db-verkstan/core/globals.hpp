@@ -1,14 +1,6 @@
 #pragma once
 
-#define WIN32_LEAN_AND_MEAN
-#define _INC_STDLIB // To get rid of stdlib.h included by windows.h
-#define NOMINMAX
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-
-//#define _USE_MATH_DEFINES
-//#include <math.h>
+#include "core/externals.hpp"
 
 extern HWND globalWindow;
 extern LPDIRECT3D9 globalDirect3D;

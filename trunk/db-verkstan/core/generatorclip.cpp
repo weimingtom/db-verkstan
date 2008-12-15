@@ -1,8 +1,6 @@
 #include "core/generatorclip.hpp"
 #include "core/core.hpp"
 
-//#include <math.h>
-
 float GeneratorClip::getValue(int tick)
 {
     switch (type)
