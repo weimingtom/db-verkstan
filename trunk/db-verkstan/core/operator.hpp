@@ -15,10 +15,10 @@ class Operator
 public:
     Operator();
 
-    void process() {};
+    virtual void process() = 0;
 
-    void preRender(int tick);
-    void render(int tick);
+    virtual void preRender(int tick);
+    virtual void render(int tick);
 
     Operator* getInput(int index);
     
@@ -34,7 +34,7 @@ public:
     bool isDirty();
     void setDirty(bool dirty);
     
-    void broadcastChannelValue(int channel, float value);
+    virtual void broadcastChannelValue(int channel, float value);
 
     Mesh* mesh;
     Texture* texture;

@@ -69,7 +69,6 @@ int WINAPI WinMain(HINSTANCE instance,
                                  &globalDirect3DDevice);
 
     Synth* synth = new Synth(globalWindow);
-
 #include "data.hpp"
 #include "core/loader.hpp"
 
@@ -101,7 +100,7 @@ int WINAPI WinMain(HINSTANCE instance,
         }
     }
 
-    //delete synth;
+    delete synth;
     globalDirect3DDevice->Release();
     globalDirect3D->Release();
     UnregisterClass("db", GetModuleHandle(NULL));
