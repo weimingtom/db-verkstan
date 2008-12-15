@@ -19,7 +19,7 @@ extern "C"
 	void __cdecl sincos(float v, float &outSin, float &outCos)
     {
         __asm fld v;
-        __asm fcos;
+        __asm fsincos;
         __asm fstp outSin;
 		__asm fstp outCos;
     }
@@ -37,14 +37,13 @@ extern "C"
         return x;
     }
 
-    float _powf(float x, float y)
+    float __cdecl log(float v)
     {
-        return x;
-    }
-
-    float __cdecl log(float x)
-    {
-        return x;
+        __asm fld1;
+        __asm fld v;
+        __asm fyl2x;
+        __asm fstp v;
+        return v;
     }
 
     int __cdecl _ftol2(float f)
@@ -73,6 +72,9 @@ extern "C"
 
     float __cdecl fabs(float v)
     {
-        return v;
+        float register result = v;
+        __asm fld result;
+        __asm fstp result;
+        return result;
     }
 }

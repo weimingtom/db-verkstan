@@ -1,3 +1,6 @@
+#pragma comment (linker, "/MERGE:.rdate=.data")
+#pragma comment (linker, "/MERGE:.text=.data") 
+
 #include "core/core.hpp"
 #include "synth.h"
 #define OPERATOR_HEADERS 1
@@ -72,6 +75,11 @@ int WINAPI WinMain(HINSTANCE instance,
 #include "data.hpp"
 #include "core/loader.hpp"
 
+    float s = fabs(1.0f);
+
+    if (s == 1.0f)
+        return 0;
+
     bool running = true;
     while (running)
     {
@@ -110,6 +118,9 @@ int WINAPI WinMain(HINSTANCE instance,
 
 int WINAPI WinMainCRTStartup(void)
 {
+      static unsigned short ctrl = 0x177F;
+    __asm fldcw ctrl; 
+
     
     STARTUPINFO				StartupInfo={sizeof(STARTUPINFO),0};
  
