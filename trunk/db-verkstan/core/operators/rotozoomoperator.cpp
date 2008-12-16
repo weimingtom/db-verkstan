@@ -17,8 +17,8 @@ void RotozoomOperator::process()
 
     float frotate = rotation / 256.0f * D3DX_PI * 2.0f;
     float fzoom = zoom;
-    float co = cos(frotate);
-    float si = sin(frotate);
+    float co = cosf(frotate);
+    float si = sinf(frotate);
     
     DWORD* srcPixels = (DWORD*)source->d3d9LockedRect.pBits;
     DWORD* dstPixels = (DWORD*)texture->d3d9LockedRect.pBits;

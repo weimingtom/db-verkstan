@@ -37,13 +37,13 @@ float lengthSq(const Vec2 &v);
 #else
 // Highest number returned by rand, inclusive
 #define RAND_MAX 0xffffff
-#endif*/
-
+#endif
+*/
 // Seed RNG
-void srand(int seed);
+//void srand(int seed);
 
 // Get next random number
-int rand();
+//int rand();
 
 // Returns random float in [0, 1]
 float frand();

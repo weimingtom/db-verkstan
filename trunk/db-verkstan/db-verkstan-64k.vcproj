@@ -199,7 +199,7 @@
 				Name="VCCLCompilerTool"
 				UseUnicodeResponseFiles="false"
 				Optimization="1"
-				InlineFunctionExpansion="2"
+				InlineFunctionExpansion="0"
 				EnableIntrinsicFunctions="false"
 				FavorSizeOrSpeed="2"
 				OmitFramePointers="true"
@@ -207,8 +207,8 @@
 				AdditionalIncludeDirectories="&quot;../db-verkstan&quot;;../vorlon2/"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				ExceptionHandling="0"
-				RuntimeLibrary="0"
-				StructMemberAlignment="1"
+				RuntimeLibrary="2"
+				StructMemberAlignment="0"
 				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
 				FloatingPointModel="2"
@@ -229,7 +229,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib msvcrt.lib"
 				LinkIncremental="1"
 				IgnoreAllDefaultLibraries="true"
 				GenerateDebugInformation="false"

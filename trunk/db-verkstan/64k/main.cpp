@@ -75,9 +75,9 @@ int WINAPI WinMain(HINSTANCE instance,
 #include "data.hpp"
 #include "core/loader.hpp"
 
-    float s = fabs(1.0f);
+    float s = sinf(-2.0f);
 
-    if (s == 1.0f)
+    if (s == 0.0f)
         return 0;
 
     bool running = true;
@@ -118,8 +118,8 @@ int WINAPI WinMain(HINSTANCE instance,
 
 int WINAPI WinMainCRTStartup(void)
 {
-      static unsigned short ctrl = 0x177F;
-    __asm fldcw ctrl; 
+    //  static unsigned short ctrl = 0x177F;
+    //__asm fldcw ctrl; 
 
     
     STARTUPINFO				StartupInfo={sizeof(STARTUPINFO),0};

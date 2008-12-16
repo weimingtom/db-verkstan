@@ -1,10 +1,21 @@
+/*
 extern "C"
 {
+    float __cdecl sinf(float v)
+    {
+        _asm fld dword ptr [v]
+        _asm fsin;
+        _asm fstp dword ptr [v]
+
+        return v;
+    }
+
     float __cdecl sin(float v)
     {
-        __asm fld v;
-        __asm fsin;
-        __asm fstp v;
+        _asm fld dword ptr [v]
+        _asm fsin;
+        _asm fstp dword ptr [v]
+
         return v;
     }
 
@@ -46,20 +57,6 @@ extern "C"
         return v;
     }
 
-    int __cdecl _ftol2(float f)
-    {
-        volatile int result;
-        __asm fistp result;
-        return result;
-    }
-
-    int __cdecl _ftol2_sse(float f)
-    {
-        volatile int result;
-        __asm fistp result;
-        return result;
-    }
-
     float __cdecl fmod(float x, float y)
     {
         return 0.0f;
@@ -72,9 +69,10 @@ extern "C"
 
     float __cdecl fabs(float v)
     {
-        float register result = v;
-        __asm fld result;
-        __asm fstp result;
-        return result;
+        __asm fld v;
+        __asm fabs;
+        __asm fstp v;
+        return v;
     }
 }
+*/
