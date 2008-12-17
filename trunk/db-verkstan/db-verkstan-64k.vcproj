@@ -375,18 +375,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\core\dbmath.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\core\dbmath.hpp"
-				>
-			</File>
-			<File
-				RelativePath=".\core\dbstdlib.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\core\externals.hpp"
 				>
 			</File>

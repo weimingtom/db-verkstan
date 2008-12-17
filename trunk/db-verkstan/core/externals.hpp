@@ -6,3 +6,5 @@
 #include <d3dx9.h>
 #include <stdlib.h>
 #include <math.h>
+#undef max
+#undef min
