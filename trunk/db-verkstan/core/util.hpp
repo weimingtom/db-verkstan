@@ -31,20 +31,6 @@ float lengthSq(const Vec2 &v);
 // Random numbers
 ////////////////////////////////////////////////////////////////////
 
-/*
-#ifdef RAND_MAX
-#error "RAND_MAX defined"
-#else
-// Highest number returned by rand, inclusive
-#define RAND_MAX 0xffffff
-#endif
-*/
-// Seed RNG
-//void srand(int seed);
-
-// Get next random number
-//int rand();
-
 // Returns random float in [0, 1]
 float frand();
 

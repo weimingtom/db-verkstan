@@ -49,7 +49,7 @@ void GlowOperator::process()
         for (int x = 0; x < 256; x++)
         {
             float dx = (float)(x-centerx) * fradiusx;
-			float d = sqrt(dx*dx + dy_2);
+			float d = sqrtf(dx*dx + dy_2);
            
             if (d > 1.0f)		
                 d = 1.0f;
@@ -58,7 +58,7 @@ void GlowOperator::process()
             float a;
             if (d != 0.0f)
             {
-                d = pow(d, gamma);
+                d = powf(d, gamma);
                 a = d - alpha;
             }
             else
