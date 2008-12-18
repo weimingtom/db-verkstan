@@ -333,7 +333,6 @@ void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, c
 		{
 			float val = (start.value * (distance - p) + end.value * p) / distance;
 		
-            /* TODO Remove this comment when rand is in place.
             float noiseIn = ((rand() / (float)RAND_MAX) - 0.5f) * 2.0f;
 
 			buf0 = buf0 + f * (noiseIn - buf0 + fb * (buf0 - buf1));
@@ -342,7 +341,6 @@ void DrumBox::generateSample(Sample &outSample, const KeyPosition *sampleKeys, c
 			float noiseOut = noiseIn - buf1;
 
 	        outSample.data[p + start.position] += val * noiseOut * noiseGain;	
-            */
 		}
 	}
 

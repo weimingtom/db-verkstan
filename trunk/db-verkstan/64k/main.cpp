@@ -89,11 +89,6 @@ int WINAPI WinMain(HINSTANCE instance,
 #include "data.hpp"
 #include "core/loader.hpp"
 
-    float s = sinf(-2.0f);
-
-    if (s == 0.0f)
-        return 0;
-
     bool running = true;
     while (running)
     {

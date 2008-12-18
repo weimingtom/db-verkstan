@@ -32,8 +32,8 @@ Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets) :
 	faceSelection = new bool[getNumFaces()];
 	ZeroMemory(faceSelection, sizeof(bool) * getNumFaces());
 
-//	vertexSelection = new bool[numVertices];
-//	ZeroMemory(vertexSelection, sizeof(bool) * numVertices);
+    //vertexSelection = new bool[numVertices];
+    //ZeroMemory(vertexSelection, sizeof(bool) * numVertices);
 }
 
 
@@ -68,8 +68,8 @@ Mesh::Mesh(const Mesh& mesh) :
 	faceSelection = new bool[getNumFaces()];
 	memcpy(faceSelection, mesh.faceSelection, sizeof(bool) * getNumFaces());
 
-//	vertexSelection = new bool[numVertices];
-//	memcpy(vertexSelection, mesh.vertexSelection, sizeof(bool) * numVertices);
+  //  vertexSelection = new bool[numVertices];
+  //  memcpy(vertexSelection, mesh.vertexSelection, sizeof(bool) * numVertices);
 }
 
 
@@ -230,7 +230,7 @@ Mesh::EdgeInfo *Mesh::constructEdgeInfo()
 	}
 
 	// Sort the edges
-	//qsort((void *)duplicatedEdges, numDuplicatedEdges, sizeof(int) * 2, edgeComparator);
+	qsort((void *)duplicatedEdges, numDuplicatedEdges, sizeof(int) * 2, edgeComparator);
 	
 	int numEdges = 0;
 	

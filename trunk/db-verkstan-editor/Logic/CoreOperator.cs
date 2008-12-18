@@ -357,6 +357,7 @@ namespace VerkstanEditor.Logic
         private void FromXmlElementToFloatProperty(XmlElement floatElement, int index)
         {
             float f = float.Parse(floatElement.GetAttribute("value"));
+            SetFloatProperty(index, f);
             FromXmlElementToPropertyAnimation((XmlElement)floatElement.ChildNodes[0], index, 0);
         }
         private XmlElement FromIntPropertyToXmlElement(XmlDocument doc, int index)

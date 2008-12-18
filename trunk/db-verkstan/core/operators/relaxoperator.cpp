@@ -25,7 +25,7 @@ void RelaxOperator::process()
 void RelaxOperator::relax(Mesh::EdgeInfo *edgeInfo, float strength)
 {
 	Vec3 *force = new Vec3[mesh->getNumVertices()];
-//	ZeroMemory(force, sizeof(float) * mesh->getNumVertices());
+    ZeroMemory(force, sizeof(float) * mesh->getNumVertices());
 
 	for(int i = 0; i < mesh->getNumVertices(); i++)
 	{

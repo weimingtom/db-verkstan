@@ -1,5 +1,6 @@
 #include "channel.h"
 #include "core/externals.hpp"
+#include "core/util.hpp"
 
 Channel::Channel(int sampleRate) :
 	//currentNote(0),
@@ -244,19 +245,20 @@ void Channel::Voice::noteOff()
 void Channel::Voice::render(float *left, float *right, int length, float dt, float lastLFO, float currentLFO)
 {
 	float lastPitch = currentPitch;
-	/*
+    /*
 	{
 		float notesPerSec = 20.0f / (channel->controllers[GLIDE] + 0.001f);
 		if (currentPitch < (float)currentNote)
 		{
-			currentPitch = __min((float)currentNote, currentPitch + notesPerSec * dt);
+			currentPitch = min((float)currentNote, currentPitch + notesPerSec * dt);
 		}
 		else if (currentPitch > (float)currentNote)
 		{
-			currentPitch = __max((float)currentNote, currentPitch - notesPerSec * dt);
+			currentPitch = max((float)currentNote, currentPitch - notesPerSec * dt);
 		}
 	}
-	*/
+    */
+
 
 	float startModValue = modValue;
 	
@@ -305,7 +307,7 @@ void Channel::Voice::render(float *left, float *right, int length, float dt, flo
 			// Noise
 			for (int i = 0; i < length; i++) {
 				float amp = (i * endAmp + (length - i) * startAmp) / length;				
-				//left[i] = ((rand() / (float)RAND_MAX) - 0.5f) * amp * 2.0f;
+			    left[i] = ((rand() / (float)RAND_MAX) - 0.5f) * amp * 2.0f;
 			}
 		}
 		else
