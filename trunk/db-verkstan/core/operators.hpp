@@ -101,6 +101,15 @@ ADD_OP_TO_CAT("Transform",       "Renderer");
 // 0x05 String
 
 #ifdef OPERATOR_DEFINES
+// The timeline operator has to be defined first as it will always
+// be the root of the demo.
+DEF_OP_FOR_LOADER(TimelineOperator, 2, {(0x00, 0x02)});
+DEF_OP_FOR_EDITOR("Timeline", TimelineOperator, Renderer);
+ADD_BYTE_PROP("Render", 1);
+ADD_FLOAT_PROP("Time offset", 0);
+ADD_INFINITE_INPUT(Unspecified);
+END_OP_FOR_EDITOR();
+
 DEF_OP_FOR_LOADER(PixelsOperator, 4, {(0x03, 0x03, 0x01, 0x01)});
 DEF_OP_FOR_EDITOR("Pixels", PixelsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 255, 255, 255);
@@ -272,13 +281,6 @@ ADD_COLOR_PROP("Clear color", 255, 0, 255);
 ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -5.0f);
 ADD_VECTOR_PROP("Look at", 0.0f, 0.0f, 0.0f);
 ADD_FLOAT_PROP("Rotation", 0.0f);
-ADD_INFINITE_INPUT(Unspecified);
-END_OP_FOR_EDITOR();
-
-DEF_OP_FOR_LOADER(TimelineOperator, 2, {(0x00, 0x02)});
-DEF_OP_FOR_EDITOR("Timeline", TimelineOperator, Renderer);
-ADD_BYTE_PROP("Render", 1);
-ADD_FLOAT_PROP("Time offset", 0);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 

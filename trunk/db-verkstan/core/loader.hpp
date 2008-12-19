@@ -43,16 +43,18 @@
     operatorType++;
 
 int id = 0;
+int dataOffset = 0;
 while (dataOffset < dataSize)
 {
-    unsigned char type = data[dataOffset++];
     unsigned char instances = data[dataOffset++];
-
+    unsigned char type = data[dataOffset++];
+   
+    unsigned char numberOfProperties;
+    unsigned char* propertyTypes;
+    int startId = id;
     for (unsigned char i = 0; i < instances; i++)
     {
         Operator* op;
-        unsigned char numberOfProperties;
-        unsigned char* propertyTypes;
         unsigned char operatorType = 0;
 
 #define OPERATOR_DEFINES 1
@@ -60,33 +62,43 @@ while (dataOffset < dataSize)
 #undef OPERATOR_DEFINES       
 
         operators[id++] = op;
+    }
 
-        for (unsigned char p = 0; p < numberOfProperties; p++)
+    for (unsigned char p = 0; p < numberOfProperties; p++)
+    {
+        for (unsigned char i = 0; i < instances; i++)
         {
+            Operator* currentOp =  operators[startId + i];
             switch (propertyTypes[p])
             {
             case 0: // Byte
-                op->properties[p].byteValue = data[dataOffset++];
+                currentOp->properties[p].byteValue = data[dataOffset++];
                 break;
             case 1: // Int
-                {
-                    int intValue = 0;
-                    intValue |= data[dataOffset++] << 6;
-                    intValue |= data[dataOffset++] << 4;
-                    intValue |= data[dataOffset++] << 2;
-                    intValue |= data[dataOffset++];
-                    op->properties[p].intValue = intValue;
-                    break;
-                }
+                currentOp->properties[p].intValue = (reinterpret_cast<int*>(data))[dataOffset];
+                dataOffset += 4;
+                break;
             case 2: // Float
+                currentOp->properties[p].floatValue = (reinterpret_cast<float*>(data))[dataOffset];
                 dataOffset += 4;
                 break;
             case 3: // Color
-                dataOffset += 3;
+                currentOp->properties[p].colorValue = D3DXCOLOR(255, 
+                                                                data[dataOffset++], 
+                                                                data[dataOffset++], 
+                                                                data[dataOffset++]);
                 break;
             case 4: // Vector
-                dataOffset += 4*3;
+                {
+                float x = (reinterpret_cast<float*>(data))[dataOffset];
+                dataOffset += 4;
+                float y = (reinterpret_cast<float*>(data))[dataOffset];
+                dataOffset += 4;
+                float z = (reinterpret_cast<float*>(data))[dataOffset];
+                dataOffset += 4;
+                currentOp->properties[p].vectorValue = D3DXVECTOR3(x, y, z);
                 break;
+                }
             case 5: // String
                 break;
             }

@@ -57,14 +57,20 @@ namespace Verkstan
 
         D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
-        unsigned char data[5] = { 0xff, 0x00, 0x00, 0x00, 0x01 };
+        unsigned char data[9] = { 0xff, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00 };
 
         unsigned char* dp = data;
 
-        unsigned char b = *dp++;
-        int i = *(reinterpret_cast<int *>(dp));
+        unsigned char b = *dp;
         dp++;
-        System::Console::WriteLine("b="+b+" i="+i); 
+        int i = *(reinterpret_cast<int *>(dp));
+        dp+=4;
+        float* dpf = (float*)dp;
+        *dpf = 0.5f;
+
+        float f = *(reinterpret_cast<float *>(dp));
+
+        System::Console::WriteLine("b="+b+" i="+i+" f="+f); 
     }
 
     void Window::Resize()
