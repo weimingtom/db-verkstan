@@ -96,7 +96,7 @@ void TextOperator::process()
     texture->d3d9TextureDirty = true;
 }
 
-#ifdef DB_VERKSTAN_EDITOR
+#ifdef DB_EDITOR
 void TextOperator::deviceLost()
 {
     Operator::deviceLost();

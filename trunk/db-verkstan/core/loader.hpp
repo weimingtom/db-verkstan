@@ -1,3 +1,5 @@
+// We define a couple of macros we don't need (they are used
+// for the editor) to do nothing.
 #define DEF_OP_FOR_EDITOR(opNameChars, opClass, opType)
 #define ADD_BYTE_PROP(name, value)
 #define ADD_INT_PROP(name, value)
@@ -12,96 +14,117 @@
 #define ADD_OPTIONAL_INPUT(inType)
 #define END_OP_FOR_EDITOR()
 
-// First version of macros
-#define DEF_OP_FOR_LOADER(opClass, numberOfProps, propTypes) \
-    int opClass##NumberOfProperties = numberOfProps; \
-    unsigned char opClass##PropertyTypes[numberOfProps] = propTypes;
-#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opClass)
+// We define the DEF_OP_LOADER macro to retrieve information about operators,
+// such as number of properties, property types etc...
+#define DEF_OP_FOR_LOADER(opId, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
+    unsigned char opClass##NumberOfProperties = _numberOfProperties; \
+    unsigned char opClass##PropertyTypes[_numberOfProperties] = {__VA_ARGS__}; \
+    char opClass##NumberOfConstantInputs = _numberOfConstantInputs;
+#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, _numberOfConstantInputs) \
+     char opClass##NumberOfConstantInputs = _numberOfConstantInputs;
+// We includes all operator defines to create the variables.
+#define OPERATOR_DEFINES 1
+#include "core/operators.hpp"
+#undef OPERATOR_DEFINES 
 
+unsigned char* dataptr = data;
+
+/////////////////////////
+// Instanciate operators.
+/////////////////////////
+int instances = *dataptr++;
+unsigned char* instanceNumberOfProperties = new unsigned char[instances];
+int* instancePropertyTypes = new int[instances];
+char* instanceNumberOfConstantInputs = new char[instances];
+for (unsigned char operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+{
+    unsigned char id = *dataptr++;
+    // We redefine the macros to instanciate operators and fill the instance variables with values.
+#undef DEF_OP_FOR_LOADER
+#undef DEF_OP_FOR_LOADER_WITH_NO_PROPS
+#define DEF_OP_FOR_LOADER(opId, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
+    if (opId == id) \
+    {\
+        operators[operatorIndex] = new opClass##();\
+        instanceNumberOfProperties[operatorIndex] = opClass##NumberOfProperties;\
+        instancePropertyTypes[operatorIndex] =  (int)opClass##PropertyTypes;\
+        instanceNumberOfConstantInputs[operatorIndex] = opClass##NumberOfConstantInputs;\
+    }
+#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, _numberOfConstantInputs)\
+    if (opId == id) \
+    {\
+        operators[operatorIndex] = new opClass##();\
+        instanceNumberOfProperties[operatorIndex] = 0;\
+        instanceNumberOfConstantInputs[operatorIndex] = opClass##NumberOfConstantInputs;\
+    }
 #define OPERATOR_DEFINES 1
 #include "core/operators.hpp"
 #undef OPERATOR_DEFINES
-
-#undef DEF_OP_FOR_LOADER
-#undef DEF_OP_FOR_LOADER_WITH_NO_PROPS
-
-// Second version of macros
-#define DEF_OP_FOR_LOADER(opClass, numberOfProps, propTypes)\
-    if (operatorType == type) \
-    {\
-        op = new opClass##();\
-        numberOfProperties = opClass##NumberOfProperties;\
-        propertyTypes = opClass##PropertyTypes;\
-    }\
-    operatorType++;
-#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opClass)\
-    if (operatorType == type) \
-    {\
-        op = new opClass##();\
-        numberOfProperties = 0;\
-    }\
-    operatorType++;
-
-int id = 0;
-int dataOffset = 0;
-while (dataOffset < dataSize)
+}
+////////////////////////////
+// Load operator properties.
+////////////////////////////
+for (unsigned char operatorIndex = 0; operatorIndex < instances; operatorIndex++)
 {
-    unsigned char instances = data[dataOffset++];
-    unsigned char type = data[dataOffset++];
-   
-    unsigned char numberOfProperties;
-    unsigned char* propertyTypes;
-    int startId = id;
-    for (unsigned char i = 0; i < instances; i++)
+    unsigned int numberOfProperties = instanceNumberOfProperties[operatorIndex];
+    for (unsigned char propertyIndex = 0; propertyIndex < numberOfProperties; propertyIndex++)
     {
-        Operator* op;
-        unsigned char operatorType = 0;
-
-#define OPERATOR_DEFINES 1
-#include "core/operators.hpp"
-#undef OPERATOR_DEFINES       
-
-        operators[id++] = op;
-    }
-
-    for (unsigned char p = 0; p < numberOfProperties; p++)
-    {
-        for (unsigned char i = 0; i < instances; i++)
+        Operator* currentOp =  operators[operatorIndex];
+        unsigned char* propertyTypes = (unsigned char*)instancePropertyTypes[operatorIndex];
+        unsigned char type = propertyTypes[propertyIndex];
+        switch (type)
         {
-            Operator* currentOp =  operators[startId + i];
-            switch (propertyTypes[p])
+        case 0: // Byte
+            currentOp->properties[propertyIndex].byteValue = *dataptr++;
+            break;
+        case 1: // Int
+            currentOp->properties[propertyIndex].intValue = *(reinterpret_cast<short*>(dataptr));
+            dataptr += 2;
+            break;
+        case 2: // Float
+            currentOp->properties[propertyIndex].floatValue = *(reinterpret_cast<float*>(dataptr));
+            dataptr += 4;
+            break;
+        case 3: // Color
+            currentOp->properties[propertyIndex].colorValue.r = *dataptr++;
+            currentOp->properties[propertyIndex].colorValue.g = *dataptr++;
+            currentOp->properties[propertyIndex].colorValue.b = *dataptr++;
+            break;
+        case 4: // Vector
             {
-            case 0: // Byte
-                currentOp->properties[p].byteValue = data[dataOffset++];
-                break;
-            case 1: // Int
-                currentOp->properties[p].intValue = (reinterpret_cast<int*>(data))[dataOffset];
-                dataOffset += 4;
-                break;
-            case 2: // Float
-                currentOp->properties[p].floatValue = (reinterpret_cast<float*>(data))[dataOffset];
-                dataOffset += 4;
-                break;
-            case 3: // Color
-                currentOp->properties[p].colorValue = D3DXCOLOR(255, 
-                                                                data[dataOffset++], 
-                                                                data[dataOffset++], 
-                                                                data[dataOffset++]);
-                break;
-            case 4: // Vector
-                {
-                float x = (reinterpret_cast<float*>(data))[dataOffset];
-                dataOffset += 4;
-                float y = (reinterpret_cast<float*>(data))[dataOffset];
-                dataOffset += 4;
-                float z = (reinterpret_cast<float*>(data))[dataOffset];
-                dataOffset += 4;
-                currentOp->properties[p].vectorValue = D3DXVECTOR3(x, y, z);
-                break;
-                }
-            case 5: // String
-                break;
+            float x = *(reinterpret_cast<float*>(dataptr));
+            dataptr += 4;
+            float y = *(reinterpret_cast<float*>(dataptr));
+            dataptr += 4;
+            float z = *(reinterpret_cast<float*>(dataptr));
+            dataptr += 4;
+            currentOp->properties[propertyIndex].vectorValue = D3DXVECTOR3(x, y, z);
+            break;
             }
+        case 5: // String
+            break;
         }
+    }
+}
+////////////////////////////
+// Load inputs.
+////////////////////////////
+for (unsigned char operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+{
+    unsigned char numberOfInputs;
+    if (instanceNumberOfConstantInputs[operatorIndex] == -1)
+        numberOfInputs = *dataptr++;
+    else
+        numberOfInputs = instanceNumberOfConstantInputs[operatorIndex];
+
+    while(numberOfInputs > 0)
+    {
+        int inputIndex = (*dataptr) + operatorIndex;
+        dataptr++;
+        operators[operatorIndex]->inputs[operators[operatorIndex]->numberOfInputs] = inputIndex;
+        operators[operatorIndex]->numberOfInputs++;
+        operators[inputIndex]->outputs[operators[inputIndex]->numberOfOutputs] = operatorIndex;
+        operators[inputIndex]->numberOfOutputs++;
+        numberOfInputs--;
     }
 }

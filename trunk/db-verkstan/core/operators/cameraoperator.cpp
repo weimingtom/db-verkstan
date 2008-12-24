@@ -2,13 +2,6 @@
 
 void CameraOperator::render(int tick)
 {
-    D3DXMATRIX lastProjectionMatrix;
-    D3DXMATRIX lastViewMatrix;
-    globalDirect3DDevice->GetTransform(D3DTS_PROJECTION, &lastProjectionMatrix);
-    globalDirect3DDevice->GetTransform(D3DTS_VIEW, &lastViewMatrix);
-    globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
-    globalDirect3DDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
-
     D3DXCOLOR color = getColorProperty(3);
     globalDirect3DDevice->Clear(0, 
                            NULL, 
@@ -16,6 +9,13 @@ void CameraOperator::render(int tick)
                            color, 
                            1.0f, 
                            0);
+
+    D3DXMATRIX lastProjectionMatrix;
+    D3DXMATRIX lastViewMatrix;
+    globalDirect3DDevice->GetTransform(D3DTS_PROJECTION, &lastProjectionMatrix);
+    globalDirect3DDevice->GetTransform(D3DTS_VIEW, &lastViewMatrix);
+    globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
+    globalDirect3DDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
 
     for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->render(tick);

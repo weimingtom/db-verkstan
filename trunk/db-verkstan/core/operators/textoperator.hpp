@@ -10,7 +10,7 @@ public:
     void process();
     LPDIRECT3DTEXTURE9 d3d9RenderTargetTexture;
 
-#ifdef DB_VERKSTAN_EDITOR
+#ifdef DB_EDITOR
     void deviceLost();
 #endif
 };

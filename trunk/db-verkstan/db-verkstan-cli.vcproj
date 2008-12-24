@@ -43,7 +43,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="../db-verkstan"
-				PreprocessorDefinitions="DB_VERKSTAN_EDITOR"
+				PreprocessorDefinitions="DB_EDITOR"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -115,7 +115,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalIncludeDirectories="../db-verkstan"
-				PreprocessorDefinitions="DB_VERKSTAN_EDITOR"
+				PreprocessorDefinitions="DB_EDITOR"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"

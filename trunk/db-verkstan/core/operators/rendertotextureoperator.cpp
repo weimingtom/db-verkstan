@@ -76,7 +76,7 @@ void RenderToTextureOperator::preRender(int tick)
     texture->d3d9TextureDirty = false;
 }
 
-#ifdef DB_VERKSTAN_EDITOR
+#ifdef DB_EDITOR
 void RenderToTextureOperator::deviceLost()
 {
     if (d3d9RenderToSurface != 0)

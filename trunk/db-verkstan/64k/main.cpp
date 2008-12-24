@@ -84,6 +84,25 @@ int WINAPI WinMain(HINSTANCE instance,
                                  D3DCREATE_HARDWARE_VERTEXPROCESSING,
                                  &d3dPresentParameters,
                                  &globalDirect3DDevice);
+    globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+    globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+    globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+    globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
+    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
+    globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
+
+    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
+    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
+    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
+
+    globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+    globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+    globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+
+    D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
     Synth* synth = new Synth(globalWindow);
 #include "data.hpp"
@@ -105,14 +124,40 @@ int WINAPI WinMain(HINSTANCE instance,
         }
         else
         {  
-            globalDirect3DDevice->Clear(0, 
-                                        NULL, 
-                                        D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
-                                        D3DCOLOR_XRGB(0, 0, 0), 
-                                        1.0f, 
-                                        0);
+            operators[0]->cascadeProcess();
+            D3DLIGHT9 d3dLight;
+            ZeroMemory(&d3dLight, sizeof(d3dLight));
+            d3dLight.Type = D3DLIGHT_DIRECTIONAL;
+          
+            d3dLight.Diffuse.r = 1.0f;
+            d3dLight.Diffuse.g = 1.0f;
+            d3dLight.Diffuse.b = 1.0f;
+            d3dLight.Diffuse.a = 1.0f;
+
+            D3DVECTOR position;
+            position.x = -1.0f;
+            position.y = -1.0f;
+            position.z = -1.0f;
+            d3dLight.Position = position;
+
+            D3DVECTOR direction;
+            direction.x = 1.0f;
+            direction.y = 0.0f;
+            direction.z = 0.0f;
+            d3dLight.Direction = direction;
+
+            globalDirect3DDevice->SetLight(0, &d3dLight); 
+            globalDirect3DDevice->LightEnable(0, TRUE);
+
+            operators[0]->preRender(0);
+
+            globalWorldMatrixStack->LoadIdentity();
+            globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
+            
             globalDirect3DDevice->BeginScene();
+            operators[0]->render(0);
             globalDirect3DDevice->EndScene();
+
             globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
         }
     }
@@ -120,7 +165,7 @@ int WINAPI WinMain(HINSTANCE instance,
     delete synth;
     globalDirect3DDevice->Release();
     globalDirect3D->Release();
-    UnregisterClass("db", GetModuleHandle(NULL));
+    ExitProcess(0);
 
     return 0;
 }

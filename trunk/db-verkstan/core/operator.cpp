@@ -21,6 +21,9 @@ dirty(true)
         properties[i].channel1 = -1;
         properties[i].channel2 = -1;
         properties[i].channel3 = -1;
+        properties[i].channelValue1 = 0.0f;
+        properties[i].channelValue2 = 0.0f;
+        properties[i].channelValue3 = 0.0f;
         properties[i].amplify1 = 1.0f;
         properties[i].amplify2 = 1.0f;
         properties[i].amplify3 = 1.0f;
@@ -145,7 +148,7 @@ void Operator::render(int tick)
 
 }
 
-#ifdef DB_VERKSTAN_EDITOR
+#ifdef DB_EDITOR
 void Operator::deviceLost()
 {
     if (texture != 0)

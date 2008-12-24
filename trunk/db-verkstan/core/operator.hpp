@@ -68,7 +68,7 @@ public:
     int numberOfOutputs;
     bool dirty;
 
-#ifdef DB_VERKSTAN_EDITOR
+#ifdef DB_EDITOR
     virtual void deviceLost();
 #endif
 };
