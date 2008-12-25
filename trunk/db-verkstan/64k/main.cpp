@@ -16,11 +16,10 @@ extern "C"
 }
 
 #include "core/core.hpp"
-#include "synth.h"
-#define OPERATOR_HEADERS 1
-#include "core/operators.hpp"
-#undef OPERATOR_HEADERS
 #include "core/globals.hpp"
+#include "core/loader.hpp"
+#include "core/metronome.hpp"
+#include "synth.h"
 
 LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
@@ -105,12 +104,17 @@ int WINAPI WinMain(HINSTANCE instance,
     D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
     Synth* synth = new Synth(globalWindow);
-#include "data.hpp"
-#include "core/loader.hpp"
 
-    bool running = true;
-    while (running)
+    loadDemo();
+    startMetronome();
+
+    while (true)
     {
+        int tick = getTick();
+
+        if (operators[0]->ticks < tick)
+            break;
+
         MSG msg;
         if (PeekMessage(&msg, globalWindow, 0, 0, PM_REMOVE))
         {
@@ -149,13 +153,13 @@ int WINAPI WinMain(HINSTANCE instance,
             globalDirect3DDevice->SetLight(0, &d3dLight); 
             globalDirect3DDevice->LightEnable(0, TRUE);
 
-            operators[0]->preRender(0);
+            operators[0]->preRender(tick);
 
             globalWorldMatrixStack->LoadIdentity();
             globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
             
             globalDirect3DDevice->BeginScene();
-            operators[0]->render(0);
+            operators[0]->render(tick);
             globalDirect3DDevice->EndScene();
 
             globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);

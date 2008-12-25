@@ -367,7 +367,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_GLOWOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(25, GlowOperator, -1, 7, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+DEF_OP_FOR_LOADER(25, GlowOperator, -1, 7, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
 DEF_OP_FOR_EDITOR("Glow", GlowOperator, Texture);
 ADD_COLOR_PROP("Color", 255, 0, 0);
 ADD_BYTE_PROP("Center X", 128);

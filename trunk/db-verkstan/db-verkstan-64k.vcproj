@@ -395,6 +395,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\core\loader.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\core\loader.hpp"
 				>
 			</File>
@@ -404,6 +408,14 @@
 			</File>
 			<File
 				RelativePath=".\core\mesh.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\metronome.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\metronome.hpp"
 				>
 			</File>
 			<File
