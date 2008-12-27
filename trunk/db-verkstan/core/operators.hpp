@@ -25,6 +25,7 @@
 #include "core/operators/bluroperator.hpp"
 #include "core/operators/cloudsoperator.hpp"
 #include "core/operators/glowoperator.hpp"
+#include "core/operators/normalsshaderoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -58,6 +59,7 @@ namespace Verkstan
         using ::BlurOperator;
         using ::CloudsOperator;
         using ::GlowOperator;
+        using ::NormalsShaderOperator;
     }
 }
 #endif
@@ -87,6 +89,7 @@ ADD_OP_TO_CAT("Light",           "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
+ADD_OP_TO_CAT("Normals Shader",  "Model");
 ADD_OP_TO_CAT("Camera",          "Renderer");
 ADD_OP_TO_CAT("Timeline",        "Renderer");
 ADD_OP_TO_CAT("Transform",       "Renderer");
@@ -380,4 +383,10 @@ ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 
+#if defined(DB_NORMALSSHADEROPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(26, NormalsShaderOperator, 1);
+DEF_OP_FOR_EDITOR("Normals Shader", NormalsShaderOperator, Model);
+ADD_INPUT(Model);
+END_OP_FOR_EDITOR();
+#endif
 #endif

@@ -578,6 +578,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\normalsshaderoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\normalsshaderoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\pixelsoperator.cpp"
 					>
 				</File>
