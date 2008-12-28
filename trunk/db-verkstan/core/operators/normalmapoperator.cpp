@@ -2,9 +2,8 @@
 
 void NormalMapOperator::process()
 {
-    if (texture != 0)
-        delete texture;
-    texture = new Texture();
+    if (texture == 0)
+        texture = new Texture();
 
     D3DXComputeNormalMap(texture->getD3D9Texture(),
                          getInput(0)->texture->getD3D9Texture(),
