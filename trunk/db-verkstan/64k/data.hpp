@@ -24,6 +24,8 @@
 #define DB_RECTANGLEOPERATOR 1
 #define DB_TEXTOPERATOR 1
 #define DB_FLATOPERATOR 1
+#define DB_NORMALSSHADEROPERATOR 1
+#define DB_NORMALMAPOPERATOR 1
 
 unsigned char data[155] = 
 {   

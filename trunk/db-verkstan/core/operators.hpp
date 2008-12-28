@@ -26,6 +26,7 @@
 #include "core/operators/cloudsoperator.hpp"
 #include "core/operators/glowoperator.hpp"
 #include "core/operators/normalsshaderoperator.hpp"
+#include "core/operators/normalmapoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -60,6 +61,7 @@ namespace Verkstan
         using ::CloudsOperator;
         using ::GlowOperator;
         using ::NormalsShaderOperator;
+        using ::NormalMapOperator;
     }
 }
 #endif
@@ -74,6 +76,7 @@ ADD_OP_TO_CAT("Glow",            "Texture");
 ADD_OP_TO_CAT("Rotozoom",        "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
 ADD_OP_TO_CAT("Render To",       "Texture");
+ADD_OP_TO_CAT("Normal Map",      "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -389,4 +392,13 @@ DEF_OP_FOR_EDITOR("Normals Shader", NormalsShaderOperator, Model);
 ADD_INPUT(Model);
 END_OP_FOR_EDITOR();
 #endif
+
+#if defined(DB_NORMALMAPOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(27, NormalMapOperator, 1, 1, 0x00);
+DEF_OP_FOR_EDITOR("Normal Map", NormalMapOperator, Texture);
+ADD_BYTE_PROP("Amplify", 16);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
 #endif

@@ -49,7 +49,7 @@ void CloudsOperator::process()
     
     color1 = getColorProperty(0);
     color2 = getColorProperty(1);
-   // srand(getByteProperty(3));
+    srand(getByteProperty(3));
     texture->lock();
 
     pixels = (DWORD*)texture->d3d9LockedRect.pBits;

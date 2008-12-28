@@ -631,6 +631,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\normalmapoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\normalmapoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\normalsshaderoperator.cpp"
 					>
 				</File>
