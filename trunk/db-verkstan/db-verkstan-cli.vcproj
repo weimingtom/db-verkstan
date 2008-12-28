@@ -519,6 +519,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\blendoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\blendoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\bluroperator.cpp"
 					>
 				</File>
@@ -556,6 +564,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\cloudsoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\colorizeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\colorizeoperator.hpp"
 					>
 				</File>
 				<File
@@ -604,6 +620,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\icosahedronoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\invertoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\invertoperator.hpp"
 					>
 				</File>
 				<File

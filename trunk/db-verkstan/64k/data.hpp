@@ -26,8 +26,11 @@
 #define DB_FLATOPERATOR 1
 #define DB_NORMALSSHADEROPERATOR 1
 #define DB_NORMALMAPOPERATOR 1
+#define DB_BLENDOPERATOR 1
+#define DB_COLORIZEOPERATOR 1
+#define DB_INVERTOPERATOR 1
 
-unsigned char data[155] = 
+unsigned char data[] = 
 {   
     // Operators
     0x06, 0x00, // Number of operators

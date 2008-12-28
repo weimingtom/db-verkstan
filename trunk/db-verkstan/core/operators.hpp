@@ -27,6 +27,9 @@
 #include "core/operators/glowoperator.hpp"
 #include "core/operators/normalsshaderoperator.hpp"
 #include "core/operators/normalmapoperator.hpp"
+#include "core/operators/blendoperator.hpp"
+#include "core/operators/colorizeoperator.hpp"
+#include "core/operators/invertoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -62,6 +65,9 @@ namespace Verkstan
         using ::GlowOperator;
         using ::NormalsShaderOperator;
         using ::NormalMapOperator;
+        using ::BlendOperator;
+        using ::ColorizeOperator;
+        using ::InvertOperator;
     }
 }
 #endif
@@ -77,6 +83,9 @@ ADD_OP_TO_CAT("Rotozoom",        "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
 ADD_OP_TO_CAT("Render To",       "Texture");
 ADD_OP_TO_CAT("Normal Map",      "Texture");
+ADD_OP_TO_CAT("Blend",           "Texture");
+ADD_OP_TO_CAT("Colorize",        "Texture");
+ADD_OP_TO_CAT("Invert",          "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -397,6 +406,31 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(27, NormalMapOperator, 1, 1, 0x00);
 DEF_OP_FOR_EDITOR("Normal Map", NormalMapOperator, Texture);
 ADD_BYTE_PROP("Amplify", 16);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_BLENDOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(28, BlendOperator, -1);
+DEF_OP_FOR_EDITOR("Blend", BlendOperator, Texture);
+ADD_INPUT(Texture);
+ADD_INFINITE_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_COLORIZEOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(29, ColorizeOperator, 1, 3, 0x00, 0x00, 0x00);
+DEF_OP_FOR_EDITOR("Colorize", ColorizeOperator, Texture);
+ADD_BYTE_PROP("Hue", 0);
+ADD_BYTE_PROP("Saturation", 255);
+ADD_BYTE_PROP("Value", 128);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_INVERTOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(29, InvertOperator, 1);
+DEF_OP_FOR_EDITOR("Invert", InvertOperator, Texture);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

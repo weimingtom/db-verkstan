@@ -55,16 +55,14 @@ void GlowOperator::process()
                 d = 1.0f;
 			d = 1.0f - d;
             
-            float a;
+            float a = -1.0f;;
             if (d != 0.0f)
             {
                 d = powf(d, gamma);
                 a = d - alpha;
             }
-            else
-            {
-                a = 0.0f;
-            }
+            
+            a = a < 0.0f ? 0.0f : a;
 
             D3DXCOLOR resultColor;
             D3DXCOLOR inputColor = inputPixels[pitch * y + x];
