@@ -29,6 +29,7 @@
 #define DB_BLENDOPERATOR 1
 #define DB_COLORIZEOPERATOR 1
 #define DB_INVERTOPERATOR 1
+#define DB_CONTRASTOPERATOR 1
 
 unsigned char data[] = 
 {   
