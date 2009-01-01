@@ -522,6 +522,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\contrastoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\contrastoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\cylinderoperator.cpp"
 					>
 				</File>

@@ -2,7 +2,7 @@
 
 #include "core/operator.hpp"
 
-class DistortOperator: public Operator
+class DistortionOperator: public Operator
 {
 public:
     void process();

@@ -31,6 +31,8 @@
 #include "core/operators/colorizeoperator.hpp"
 #include "core/operators/invertoperator.hpp"
 #include "core/operators/contrastoperator.hpp"
+#include "core/operators/mergetexturesoperator.hpp"
+#include "core/operators/distortionoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -70,6 +72,8 @@ namespace Verkstan
         using ::ColorizeOperator;
         using ::InvertOperator;
         using ::ContrastOperator;
+        using ::MergeTexturesOperator;
+        using ::DistortionOperator;
     }
 }
 #endif
@@ -89,6 +93,8 @@ ADD_OP_TO_CAT("Blend",           "Texture");
 ADD_OP_TO_CAT("Colorize",        "Texture");
 ADD_OP_TO_CAT("Invert",          "Texture");
 ADD_OP_TO_CAT("Contrast",        "Texture");
+ADD_OP_TO_CAT("Merge Textures",  "Texture");
+ADD_OP_TO_CAT("Distortion",      "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -442,6 +448,25 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(31, ContrastOperator, 1, 1, 0x00);
 DEF_OP_FOR_EDITOR("Contrast", ContrastOperator, Texture);
 ADD_BYTE_PROP("Contrast", 128);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_MERGETEXTURESOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(32, MergeTexturesOperator, 1, 1, 0x00);
+DEF_OP_FOR_EDITOR("Merge Textures", MergeTexturesOperator, Texture);
+ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult", "Add Clamp");
+ADD_INPUT(Texture);
+ADD_INFINITE_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_DISTORTIONOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(33, DistortionOperator, 1, 1, 0x00);
+DEF_OP_FOR_EDITOR("Distortion", DistortionOperator, Texture);
+ADD_ENUM_PROP("Mode", "Green-Blue,Normal Map", "Green-Blue");
+ADD_BYTE_PROP("Amount", 0);
+ADD_INPUT(Texture);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

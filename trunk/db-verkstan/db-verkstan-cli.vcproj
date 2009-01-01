@@ -591,11 +591,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\distortoperator.cpp"
+					RelativePath=".\core\operators\distortionoperator.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\distortoperator.hpp"
+					RelativePath=".\core\operators\distortionoperator.hpp"
 					>
 				</File>
 				<File
@@ -652,6 +652,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\materialoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\mergetexturesopeartor.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\mergetexturesoperator.hpp"
 					>
 				</File>
 				<File
