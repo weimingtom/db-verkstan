@@ -5,44 +5,41 @@ void BlendOperator::process()
     if (texture == 0)
        texture = new Texture();
 
-    texture->lock();
-    for (int i = 0; i < numberOfInputs; i++)
-    getInput(i)->texture->lock();
+    Operator* inputToBlend1 = getInput(0);
+    Operator* inputToBlend2 = getInput(1);
+    Operator* inputAlpha = getInput(2);
 
-    float a = 1.0f / numberOfInputs;
-    
-    DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
+    texture->lock();
+    inputToBlend1->texture->lock();
+    inputToBlend2->texture->lock();
+    inputAlpha->texture->lock();
+
+    DWORD* dstPixels = (DWORD*)texture->d3d9LockedRect.pBits;
+    DWORD* src1Pixels = (DWORD*)inputToBlend1->texture->d3d9LockedRect.pBits;
+    DWORD* src2Pixels = (DWORD*)inputToBlend2->texture->d3d9LockedRect.pBits;
+    DWORD* alphaPixels = (DWORD*)inputAlpha->texture->d3d9LockedRect.pBits;
+ 
     int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
 
     for (int y = 0; y < 256; y++)
     {
         for (int x = 0; x < 256; x++)
         {
-            float r = 0;
-            float g = 0;
-            float b = 0;
+            float a = D3DCOLOR_R(alphaPixels[x + y * pitch]) / 255.0f;
+            float oneMinusA = 1.0f - a;
+            D3DCOLOR c1 = src1Pixels[x + y * pitch];
+            D3DCOLOR c2 = src2Pixels[x + y * pitch];
 
-            for (int i = 0; i < numberOfInputs; i++)
-            {
-                 DWORD* srcPixels = (DWORD*)getInput(i)->texture->d3d9LockedRect.pBits;
-                 D3DCOLOR c = srcPixels[x + y * pitch];
-                 r += D3DCOLOR_R(c) * a;
-                 g += D3DCOLOR_G(c) * a;
-                 b += D3DCOLOR_B(c) * a;
-            }
-            
-            int ri = (int)r;
-            int gi = (int)g;
-            int bi = (int)b;
-            ri = ri > 255 ? 255 : ri;
-            gi = gi > 255 ? 255 : gi;
-            bi = bi > 255 ? 255 : bi;
-
-            pixels[x + y * pitch] = D3DCOLOR_XRGB(ri, gi, bi);
+            float r = D3DCOLOR_R(c1) * a + D3DCOLOR_R(c2) * oneMinusA;
+            float g = D3DCOLOR_G(c1) * a + D3DCOLOR_G(c2) * oneMinusA;
+            float b = D3DCOLOR_B(c1) * a + D3DCOLOR_B(c2) * oneMinusA;
+           
+            dstPixels[x + y * pitch] = D3DCOLOR_XRGB((int)r, (int)g, (int)b);
         }
     }
 
     texture->unlock();
-    for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->texture->unlock();
+    inputToBlend1->texture->unlock();
+    inputToBlend2->texture->unlock();
+    inputAlpha->texture->unlock();
 }

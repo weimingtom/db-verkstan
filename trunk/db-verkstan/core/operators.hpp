@@ -423,7 +423,8 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(28, BlendOperator, -1);
 DEF_OP_FOR_EDITOR("Blend", BlendOperator, Texture);
 ADD_INPUT(Texture);
-ADD_INFINITE_INPUT(Texture);
+ADD_INPUT(Texture);
+ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 
