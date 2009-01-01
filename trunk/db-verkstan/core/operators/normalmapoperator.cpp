@@ -29,6 +29,7 @@ void NormalMapOperator::process()
                                NULL, 
                                D3DX_FILTER_NONE,
                                0);
+    normalMapTexture->getD3D9Texture()->Release();
 }
 
 #ifdef DB_EDITOR

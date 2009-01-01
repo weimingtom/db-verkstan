@@ -455,7 +455,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_MERGETEXTURESOPERATOR) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(32, MergeTexturesOperator, 1, 1, 0x00);
 DEF_OP_FOR_EDITOR("Merge Textures", MergeTexturesOperator, Texture);
-ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult", "Add Clamp");
+ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
 ADD_INPUT(Texture);
 ADD_INFINITE_INPUT(Texture);
 END_OP_FOR_EDITOR();

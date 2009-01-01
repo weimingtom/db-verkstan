@@ -24,6 +24,7 @@ void MergeTexturesOperator::process()
             int r = D3DCOLOR_R(dstColor);
             int g = D3DCOLOR_G(dstColor);
             int b = D3DCOLOR_B(dstColor);
+            int a = 255;
             float rf = r / 255.0f;
             float gf = g / 255.0f;
             float bf = b / 255.0f;
@@ -75,10 +76,13 @@ void MergeTexturesOperator::process()
                     g = (int)(gf * 255.0f);
                     b = (int)(bf * 255.0f);
                     break;
+                case 5: // Alpha
+                    a = D3DCOLOR_R(c);
+                    break;
                  }
             }
             
-            pixels[x + y * pitch] = D3DCOLOR_XRGB(r, g, b);
+            pixels[x + y * pitch] = D3DCOLOR_ARGB(a, r, g, b);
         }
     }
 

@@ -77,13 +77,13 @@ namespace Verkstan
         }
 
         globalDirect3DDevice->Clear(0, 
-                   NULL, 
-                   D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
-                   ClearColor, 
-                   1.0f, 
-                   0);
+                                    NULL, 
+                                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                                    ClearColor, 
+                                    1.0f, 
+                                    0);
 
-               globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
         globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
@@ -91,11 +91,14 @@ namespace Verkstan
         globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
 	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
+        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+        globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+        globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+        globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
 
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
-
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
 	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
@@ -142,11 +145,7 @@ namespace Verkstan
         if (coreOp->texture == 0)
             return;
 
-        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
         globalWorldMatrixStack->LoadIdentity();
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
