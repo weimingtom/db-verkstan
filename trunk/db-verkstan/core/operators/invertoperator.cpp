@@ -17,7 +17,7 @@ void InvertOperator::process()
     {
         for (int x = 0; x < 256; x++)
         {
-             destPixels[x + y * pitch] = ~srcPixels[x + y * pitch];
+             destPixels[x + y * pitch] = (~srcPixels[x + y * pitch]) | 0xff000000;
         }
     }
 

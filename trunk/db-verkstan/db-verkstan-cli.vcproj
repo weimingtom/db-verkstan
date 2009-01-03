@@ -591,6 +591,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\darkbitslogooperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\darkbitslogooperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\distortionoperator.cpp"
 					>
 				</File>

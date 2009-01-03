@@ -33,6 +33,7 @@
 #include "core/operators/contrastoperator.hpp"
 #include "core/operators/mergetexturesoperator.hpp"
 #include "core/operators/distortionoperator.hpp"
+#include "core/operators/darkbitslogooperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -74,6 +75,7 @@ namespace Verkstan
         using ::ContrastOperator;
         using ::MergeTexturesOperator;
         using ::DistortionOperator;
+        using ::DarkbitsLogoOperator;
     }
 }
 #endif
@@ -95,6 +97,7 @@ ADD_OP_TO_CAT("Invert",          "Texture");
 ADD_OP_TO_CAT("Contrast",        "Texture");
 ADD_OP_TO_CAT("Merge Textures",  "Texture");
 ADD_OP_TO_CAT("Distortion",      "Texture");
+ADD_OP_TO_CAT("Darkbits Logo",   "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -469,6 +472,13 @@ ADD_ENUM_PROP("Mode", "Green-Blue,Normal Map", "Green-Blue");
 ADD_BYTE_PROP("Amount", 0);
 ADD_INPUT(Texture);
 ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_DARKBITSLOGOOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(34, DarkbitsLogoOperator, -1);
+DEF_OP_FOR_EDITOR("Darkbits Logo", DarkbitsLogoOperator, Texture);
+ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 

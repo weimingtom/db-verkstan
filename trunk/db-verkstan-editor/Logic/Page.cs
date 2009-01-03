@@ -364,7 +364,22 @@ namespace VerkstanEditor.Logic
 
             ICollection<Operator> outConnections = GetIn(op.GetAreaForOutConnections());
             foreach (Operator outOperator in outConnections)
-                Operator.Connect(op, outOperator);
+            {
+                // Here we do a special trick with the outOperator.
+                // Instead of simply connection the op operator we
+                // disconnect the outOperator and reconnect it so it will
+                // refresh it's input connection. By doing this we know
+                // the order of inputs for the outOperator will stay fixed,
+                // i.e. the left most input operator will be the first input
+                // and the right most input operator will be the last input.
+                // This is very important for operators that rely on a certain
+                // order of inputs (like the distortion operator that takes
+                // a texture to distort as the first input and a texture telling
+                // the distortion operator how to the distort the first input as
+                // second input).
+                Disconnect(outOperator);
+                Connect(outOperator);
+            }
         }
         #endregion
     }

@@ -15,17 +15,10 @@ void GlowOperator::process()
     D3DXCOLOR color = getColorProperty(0);
     unsigned char centerx = getByteProperty(1);
     unsigned char centery = getByteProperty(2);
-    unsigned char radiusx = getByteProperty(3);
-    unsigned char radiusy = getByteProperty(4);
+    float radiusx = 1.0f / getByteProperty(3);
+    float radiusy = 1.0f / getByteProperty(4);
     float gamma = 1.0f - getByteProperty(5) / 256.0f;
     float alpha = 1.0f - getByteProperty(6) / 256.0f;
-
-    unsigned char r = D3DCOLOR_R(color);
-    unsigned char g = D3DCOLOR_G(color);
-    unsigned char b = D3DCOLOR_B(color);
-    
-    float fradiusx = 1.0f / (float)radiusx;
-	float fradiusy = 1.0f / (float)radiusy;
  
     D3DXCOLOR blackColor = D3DCOLOR_ARGB(0, 0, 0, 0);
 
@@ -43,12 +36,12 @@ void GlowOperator::process()
     
     for (int y = 0; y < 256; y++)
     {
-        float dy = (float)(y - centery) * fradiusy;
+        float dy = (float)(y - centery) * radiusy;
 		float dy_2 = dy*dy;
 
         for (int x = 0; x < 256; x++)
         {
-            float dx = (float)(x-centerx) * fradiusx;
+            float dx = (float)(x-centerx) * radiusx;
 			float d = sqrtf(dx*dx + dy_2);
            
             if (d > 1.0f)		
