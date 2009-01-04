@@ -214,6 +214,38 @@ namespace VerkstanEditor.Gui
         {
             throw new Exception("balbal");
         }
+        private void exportAsHeaderMenuItem_Click(object sender, EventArgs e)
+        {
+            Operator root = operatorPropertyGrid.Operator;
+
+            if (root == null)
+            {
+                MessageBox.Show("A root operator must be selected!",
+                                "Unable to export project!",
+                                MessageBoxButtons.OK);
+                return;
+            }
+
+            if (!root.IsProcessable)
+            {
+                MessageBox.Show("The root operator must be processable!",
+                                "Unable to export project!",
+                                MessageBoxButtons.OK);
+                return;
+            }
+
+            DialogResult result = MessageBox.Show("The project will be exported with operator '" + root.UniqueName + "' as the root operator.",
+                                                  "Export as header",
+                                                  MessageBoxButtons.OKCancel);
+            if (result == DialogResult.Cancel)
+                return;
+
+            exportAsHeaderSaveFileDialog.ShowDialog();                     
+        }
+        private void exportAsHeaderSaveFileDialog_FileOk(object sender, CancelEventArgs e)
+        {
+            Exporter.Export(operatorPropertyGrid.Operator, exportAsHeaderSaveFileDialog.FileName);
+        }
         #endregion
     }
 }

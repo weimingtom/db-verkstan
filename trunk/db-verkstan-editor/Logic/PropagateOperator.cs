@@ -13,11 +13,11 @@ namespace VerkstanEditor.Logic
         {
             get 
             {
-                List<Verkstan.CoreOperator> senderCores = GetSenderCoreOperators();
-                if (senderCores.Count == 0)
+                List<Operator> senders = GetSenderOperators();
+                if (senders.Count == 0)
                     return null;
                 else
-                    return senderCores.First();
+                    return senders.First().BindedCoreOperator;
             }
         }
         public override Verkstan.Constants.OperatorTypes Type
@@ -62,35 +62,39 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public override List<Operator> GetInputs()
+        {
+            throw new NotImplementedException();
+        }
         public override void OnDisposed(Operator op)
         {
 
         }
-        public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
+        public override List<Operator> GetReceiverOperators()
         {
-            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            List<Operator> result = new List<Operator>();
             foreach (Operator op in receivers)
-                foreach (Verkstan.CoreOperator coreOp in op.GetReceiverCoreOperators())
-                    result.Add(coreOp);
+                foreach (Operator opp in op.GetReceiverOperators())
+                    result.Add(op);
 
             return result;
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
+        public override List<Operator> GetSenderOperators()
         {
-            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            List<Operator> result = new List<Operator>();
             foreach (Operator op in senders)
-                foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
-                    result.Add(coreOp);
+                foreach (Operator opp in op.GetSenderOperators())
+                    result.Add(opp);
 
             return result;
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
+        public override List<Operator> GetSenderOperatorsForLoad()
         {
-            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
+            List<Operator> result = new List<Operator>();
 
             foreach (Operator op in senders)
-                foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
-                    result.Add(coreOp);
+                foreach (Operator opp in op.GetSenderOperators())
+                    result.Add(opp);
            
             return result;
         }

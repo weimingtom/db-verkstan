@@ -313,10 +313,11 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Abstract Methods
+        public abstract List<Operator> GetInputs();
         public abstract void OnDisposed(Operator op);
-        public abstract List<Verkstan.CoreOperator> GetReceiverCoreOperators();
-        public abstract List<Verkstan.CoreOperator> GetSenderCoreOperators();
-        public abstract List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad();
+        public abstract List<Operator> GetReceiverOperators();
+        public abstract List<Operator> GetSenderOperators();
+        public abstract List<Operator> GetSenderOperatorsForLoad();
         public abstract void StackConnectChangedUpwards();
         public abstract void CascadeStackConnectChangedDownwards();
         public abstract XmlElement ToXmlElement(XmlDocument doc);

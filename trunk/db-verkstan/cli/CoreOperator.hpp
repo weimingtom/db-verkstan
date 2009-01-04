@@ -20,12 +20,15 @@ namespace Verkstan
     public:
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property String^ Name { String^ get(); }
-        property int Id { int get(); }
+        property unsigned short Id { unsigned short get(); }
+        property unsigned char Number { unsigned char get(); }
+        property short NumberOfConstantInputs { short get(); }
         property List<CoreOperatorProperty^>^ Properties { List<CoreOperatorProperty^>^ get(); }
         property List<CoreOperatorInput^>^ Inputs { List<CoreOperatorInput^>^ get(); }
 
-        CoreOperator(String^ name,
-                     int operatorId,
+        CoreOperator(unsigned char number, 
+                     String^ name,
+                     unsigned short operatorId,
                      Constants::OperatorTypes type);
         virtual ~CoreOperator();
 
@@ -76,8 +79,10 @@ namespace Verkstan
         bool IsDirty();
 
     private:
+        unsigned char number;
         String^ name;
-        int id;
+        unsigned short id;
+        short numberOfConstantInputs;
         Constants::OperatorTypes type;
         List<CoreOperatorProperty^>^ properties;
         List<CoreOperatorInput^>^ inputs;

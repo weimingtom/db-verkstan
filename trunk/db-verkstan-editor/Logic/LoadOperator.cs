@@ -73,6 +73,10 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public override List<Operator> GetInputs()
+        {
+            throw new NotImplementedException();
+        }
         public override void Dispose()
         {
             instances.Remove(this);
@@ -87,20 +91,20 @@ namespace VerkstanEditor.Logic
                 OnStateChanged();
             }
         }
-        public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
+        public override List<Operator> GetReceiverOperators()
         {
-            return new List<Verkstan.CoreOperator>();
+            return new List<Operator>();
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
+        public override List<Operator> GetSenderOperators()
         {
             if (target == null)
-                return new List<Verkstan.CoreOperator>();
+                return new List<Operator>();
             else
-                return target.GetSenderCoreOperatorsForLoad();
+                return target.GetSenderOperatorsForLoad();
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
+        public override List<Operator> GetSenderOperatorsForLoad()
         {
-            return new List<Verkstan.CoreOperator>();
+            return new List<Operator>();
         }
         public override void StackConnectChangedUpwards()
         {

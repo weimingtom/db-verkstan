@@ -55,9 +55,9 @@ categories[category]->Add(name);
         return categories[category];
     }
 
-#define DEF_OP_FOR_LOADER(opId, opClass, numberOfConstantInputs, numberOfProps, ...) 
+#define DEF_OP_FOR_LOADER(opNumber, opClass, numberOfConstantInputs, numberOfProps, ...) 
 #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, numberOfConstantInputs) 
-#define DEF_OP_FOR_EDITOR(opNameChars, opClass, opType)\
+#define DEF_OP_FOR_EDITOR(opNumber, opNameChars, opClass, opType)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \
     {                                               \
@@ -72,7 +72,8 @@ categories[category]->Add(name);
                 break;                              \
             }                                       \
         }                                           \
-        op = gcnew CoreOperator(opName,             \
+        op = gcnew CoreOperator(opNumber,           \
+                                opName,             \
                                 id,                 \
                                 Constants::OperatorTypes::##opType);
 #define ADD_BYTE_PROP(name, value) \

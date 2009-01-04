@@ -10,10 +10,12 @@
 
 namespace Verkstan
 {
-    CoreOperator::CoreOperator(String^ name,
-                               int operatorId,
+    CoreOperator::CoreOperator(unsigned char number,
+                               String^ name,
+                               unsigned short operatorId,
                                Constants::OperatorTypes type)
     {
+        this->number = number;
         this->name = name;
         this->id = operatorId;
         this->type = type;
@@ -27,7 +29,12 @@ namespace Verkstan
         Core::operators[id] = 0;
     }
 
-    int CoreOperator::Id::get()
+    unsigned char CoreOperator::Number::get()
+    {
+        return number;
+    }
+
+    unsigned short CoreOperator::Id::get()
     {
         return id;
     }
@@ -35,6 +42,22 @@ namespace Verkstan
     String^ CoreOperator::Name::get()
     {
         return name;
+    }
+
+    short CoreOperator::NumberOfConstantInputs::get()
+    {
+        short result = 0;
+        for (int i = 0; i < inputs->Count; i++)
+        {
+            CoreOperatorInput^ input = inputs[i];
+
+            if (input->Infinite || input->Optional)
+                return -1;
+
+            result++;
+        }
+
+        return result;
     }
 
     List<CoreOperatorProperty^>^ CoreOperator::Properties::get() 

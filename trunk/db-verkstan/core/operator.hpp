@@ -62,10 +62,10 @@ public:
     };
 
     Property properties[DB_MAX_OPERATOR_PROPERTIES];
-    int inputs[DB_MAX_OPERATOR_CONNECTIONS];
-    int outputs[DB_MAX_OPERATOR_CONNECTIONS];
-    int numberOfInputs;
-    int numberOfOutputs;
+    short inputs[DB_MAX_OPERATOR_CONNECTIONS];
+    short outputs[DB_MAX_OPERATOR_CONNECTIONS];
+    unsigned char numberOfInputs;
+    unsigned char numberOfOutputs;
     bool dirty;
 
 #ifdef DB_EDITOR

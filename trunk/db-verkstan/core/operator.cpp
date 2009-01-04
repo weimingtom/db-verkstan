@@ -14,9 +14,8 @@ dirty(true)
 {
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
         inputs[i] = -1;
-    for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
-        outputs[i] = -1;
-    for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
+
+    for (unsigned short i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
     {
         properties[i].channel1 = -1;
         properties[i].channel2 = -1;
@@ -28,10 +27,6 @@ dirty(true)
         properties[i].amplify2 = 1.0f;
         properties[i].amplify3 = 1.0f;
     }
-
-  
-    for (int i = 0; i < DB_MAX_TIMELINE_CLIPS; i++)
-        timelineClips[i] = -1;
 }
 
 unsigned char Operator::getByteProperty(int index)

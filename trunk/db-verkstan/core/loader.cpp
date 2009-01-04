@@ -11,7 +11,7 @@
 
 // We define a couple of macros we don't need (they are used
 // for the editor) to do nothing.
-#define DEF_OP_FOR_EDITOR(opNameChars, opClass, opType)
+#define DEF_OP_FOR_EDITOR(opNumber, opNameChars, opClass, opType)
 #define ADD_BYTE_PROP(name, value)
 #define ADD_INT_PROP(name, value)
 #define ADD_FLOAT_PROP(name, value)
@@ -27,11 +27,11 @@
 
 // We define the DEF_OP_LOADER macro to retrieve information about operators,
 // such as number of properties, property types etc...
-#define DEF_OP_FOR_LOADER(opId, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
+#define DEF_OP_FOR_LOADER(opNumber, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
     unsigned char opClass##NumberOfProperties = _numberOfProperties; \
     unsigned char opClass##PropertyTypes[_numberOfProperties] = {__VA_ARGS__}; \
     char opClass##NumberOfConstantInputs = _numberOfConstantInputs;
-#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, _numberOfConstantInputs) \
+#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opNumber, opClass, _numberOfConstantInputs) \
      char opClass##NumberOfConstantInputs = _numberOfConstantInputs;
 // We includes all operator defines to create the variables.
 #define OPERATOR_DEFINES 1
@@ -87,16 +87,16 @@ void loadDemo()
         // We redefine the macros to instanciate operators and fill the instance variables with values.
     #undef DEF_OP_FOR_LOADER
     #undef DEF_OP_FOR_LOADER_WITH_NO_PROPS
-    #define DEF_OP_FOR_LOADER(opId, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
-        if (opId == id) \
+    #define DEF_OP_FOR_LOADER(opNumber, opClass, _numberOfConstantInputs, _numberOfProperties, ...) \
+        if (opNumber == id) \
         {\
             operators[operatorIndex] = new opClass##();\
             instanceNumberOfProperties[operatorIndex] = opClass##NumberOfProperties;\
             instancePropertyTypes[operatorIndex] =  (int)opClass##PropertyTypes;\
             instanceNumberOfConstantInputs[operatorIndex] = opClass##NumberOfConstantInputs;\
         }
-    #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, _numberOfConstantInputs)\
-        if (opId == id) \
+    #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opNumber, opClass, _numberOfConstantInputs)\
+        if (opNumber == id) \
         {\
             operators[operatorIndex] = new opClass##();\
             instanceNumberOfProperties[operatorIndex] = 0;\
@@ -171,7 +171,7 @@ void loadDemo()
     }
     // Load the operators inputs
     unsigned char* instanceNumberOfInputs = new unsigned char[instances];
-    for (short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+    for (unsigned short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
     {
         if (instanceNumberOfConstantInputs[operatorIndex] == -1)
             instanceNumberOfInputs[operatorIndex] = *dataptr++;
@@ -179,17 +179,17 @@ void loadDemo()
             instanceNumberOfInputs[operatorIndex] = instanceNumberOfConstantInputs[operatorIndex];
     }
    
-    for (short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+    for (unsigned short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
     {
         unsigned char numberOfInputs = instanceNumberOfInputs[operatorIndex];
-        short inputIndex;
+        unsigned short inputIndex;
 
         while(numberOfInputs > 0)
         {
             if (numberOfInputs == instanceNumberOfInputs[operatorIndex])
-                inputIndex = (*(reinterpret_cast<short*>(dataptr))) + operatorIndex;
+                inputIndex = (*(reinterpret_cast<unsigned short*>(dataptr))) + operatorIndex;
             else
-                inputIndex += *(reinterpret_cast<short*>(dataptr));
+                inputIndex += *(reinterpret_cast<unsigned short*>(dataptr));
 
             dataptr+=2;
             operators[operatorIndex]->inputs[operators[operatorIndex]->numberOfInputs] = inputIndex;
@@ -201,85 +201,85 @@ void loadDemo()
     }
 
     // Load the operator's animations
-    short numberOfAnimations = *(reinterpret_cast<short*>(dataptr));
+    unsigned short numberOfAnimations = *(reinterpret_cast<unsigned short*>(dataptr));
     dataptr+=2;
-    short* animationOperatorIndexes = new short[numberOfAnimations];
+    unsigned short* animationOperatorIndexes = new unsigned short[numberOfAnimations];
     unsigned char* animationPropertyIndexes = new unsigned char[numberOfAnimations];
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
-        short index = *(reinterpret_cast<short*>(dataptr));
+        unsigned short index = *(reinterpret_cast<unsigned short*>(dataptr));
         animationOperatorIndexes[animationIndex] = index;
         dataptr+=2;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         unsigned char index = *dataptr++;
         animationPropertyIndexes[animationIndex] = index;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].channel1 = *dataptr++;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].channel2 = *dataptr++;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].channel3 = *dataptr++;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].amplify1 = *(reinterpret_cast<float*>(dataptr));
         dataptr += 4;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].amplify2 = *(reinterpret_cast<float*>(dataptr));
         dataptr += 4;
     }
-    for (short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
+    for (unsigned short animationIndex = 0; animationIndex < numberOfAnimations; animationIndex++)
     {
         Operator* op = operators[animationOperatorIndexes[animationIndex]];
-        short propertyIndex = animationPropertyIndexes[animationIndex];
+        unsigned char propertyIndex = animationPropertyIndexes[animationIndex];
         op->properties[propertyIndex].amplify3 = *(reinterpret_cast<float*>(dataptr));
         dataptr += 4;
     }
 
     // Load timelines
-    short numberOfTimelines = *(reinterpret_cast<short*>(dataptr));
+    unsigned short numberOfTimelines = *(reinterpret_cast<unsigned short*>(dataptr));
     dataptr+=2;
 
-    short* timelineOperatorIndexes = new short[numberOfAnimations];
-    for (short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    unsigned short* timelineOperatorIndexes = new unsigned short[numberOfAnimations];
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
-        short index = *(reinterpret_cast<short*>(dataptr));
+        unsigned short index = *(reinterpret_cast<unsigned short*>(dataptr));
         timelineOperatorIndexes[timelineIndex] = index;
         dataptr+=2;
     }
-    for (short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
-        short beats = *(reinterpret_cast<short*>(dataptr));
+        unsigned short beats = *(reinterpret_cast<unsigned short*>(dataptr));
         operators[timelineOperatorIndexes[timelineIndex]]->ticks = beats * DB_TICKS_PER_BEAT;
         dataptr+=2;
     }
-    short numberOfClips = 0;
+    unsigned short numberOfClips = 0;
     unsigned char* timelineNumberOfGenerators = new unsigned char[numberOfAnimations];
-    for (short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
         unsigned char numberOfGenerators = *dataptr++;
         timelineNumberOfGenerators[timelineIndex] = numberOfGenerators;
-        for (int i = 0; i < numberOfGenerators; i++)
+        for (unsigned short i = 0; i < numberOfGenerators; i++)
         {
             GeneratorClip* clip = new GeneratorClip();
             clips[numberOfClips] = clip;
@@ -289,11 +289,11 @@ void loadDemo()
         }
     }
     unsigned char* timelineNumberOfSplines = new unsigned char[numberOfAnimations];
-    for (short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
         unsigned char numberOfSplines = *dataptr++;
         timelineNumberOfSplines[timelineIndex] = numberOfSplines;
-        for (int i = 0; i < numberOfSplines; i++)
+        for (unsigned short i = 0; i < numberOfSplines; i++)
         {
             SplineClip* clip = new SplineClip();
             clips[numberOfClips] = clip;
@@ -303,37 +303,37 @@ void loadDemo()
         }
     }
 
-    for (short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
         unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
         unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
-        for (int i = 0; i < numberOfGenerators + numberOfSplines; i++)
+        for (unsigned short i = 0; i < numberOfGenerators + numberOfSplines; i++)
         {
-            short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
-            clips[clipId]->start = *(reinterpret_cast<short*>(dataptr)) * DB_TICKS_PER_BEAT;
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
+            clips[clipId]->start = *(reinterpret_cast<unsigned short*>(dataptr)) * DB_TICKS_PER_BEAT;
             dataptr += 2;
         }
-        for (int i = 0; i < numberOfGenerators + numberOfSplines; i++)
+        for (unsigned short i = 0; i < numberOfGenerators + numberOfSplines; i++)
         {
-            short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
-            clips[clipId]->end = *(reinterpret_cast<short*>(dataptr)) * DB_TICKS_PER_BEAT;
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
+            clips[clipId]->end = *(reinterpret_cast<unsigned short*>(dataptr)) * DB_TICKS_PER_BEAT;
             dataptr += 2;   
         }
-        for (int i = 0; i < numberOfGenerators + numberOfSplines; i++)
+        for (unsigned short i = 0; i < numberOfGenerators + numberOfSplines; i++)
         {
-            short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             unsigned char channel = *dataptr++;
             clips[clipId]->channel = channel;
         }
-        for (int i = 0; i < numberOfGenerators; i++)
+        for (unsigned short i = 0; i < numberOfGenerators; i++)
         {
-            short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             ((GeneratorClip*)clips[clipId])->type = *dataptr++;   
         }
-        for (int i = 0; i < numberOfGenerators; i++)
+        for (unsigned short i = 0; i < numberOfGenerators; i++)
         {
-            short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
-            ((GeneratorClip*)clips[clipId])->period = *(reinterpret_cast<short*>(dataptr));
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
+            ((GeneratorClip*)clips[clipId])->period = *(reinterpret_cast<unsigned short*>(dataptr));
             dataptr += 2;
         }
     }

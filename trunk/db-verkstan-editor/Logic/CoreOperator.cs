@@ -9,6 +9,10 @@ namespace VerkstanEditor.Logic
 {
     class CoreOperator: Operator
     {
+        #region Private Variables
+        private List<Operator> inputs;
+        #endregion
+
         #region Properties
         public override Verkstan.Constants.OperatorTypes Type
         {
@@ -61,10 +65,15 @@ namespace VerkstanEditor.Logic
             this.bindedCoreOperator = coreOperator;
             isProcessable = coreOperator.GetNumberOfRequiredInputs() == 0;
             UniqueName = AllocateUniqueName(TypeName);
+            inputs = new List<Operator>();
         }
         #endregion
 
         #region Public Methods
+        public override List<Operator> GetInputs()
+        {
+            return inputs;
+        }
         public override void Dispose()
         {
             if (bindedCoreOperator != null)
@@ -75,21 +84,21 @@ namespace VerkstanEditor.Logic
         {
 
         }
-        public override List<Verkstan.CoreOperator> GetReceiverCoreOperators()
+        public override List<Operator> GetReceiverOperators()
         {
-            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
-            result.Add(bindedCoreOperator);
+            List<Operator> result = new List<Operator>();
+            result.Add(this);
             return result;
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperators()
+        public override List<Operator> GetSenderOperators()
         {
-            List<Verkstan.CoreOperator> result = new List<Verkstan.CoreOperator>();
-            result.Add(bindedCoreOperator);
+            List<Operator> result = new List<Operator>();
+            result.Add(this);
             return result;
         }
-        public override List<Verkstan.CoreOperator> GetSenderCoreOperatorsForLoad()
+        public override List<Operator> GetSenderOperatorsForLoad()
         {
-            return GetSenderCoreOperators();
+            return GetSenderOperators();
         }
         public override void StackConnectChangedUpwards()
         {
@@ -192,13 +201,14 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreInputConnections()
         {
+            inputs.Clear();
             bindedCoreOperator.ClearInputConnections();
 
-            List<Verkstan.CoreOperator> inputOperators = new List<Verkstan.CoreOperator>();
+            List<Operator> sendersToConsiderAsInput = new List<Operator>();
             foreach (Operator op in senders)
             {
-                foreach (Verkstan.CoreOperator coreOp in op.GetSenderCoreOperators())
-                    inputOperators.Add(coreOp);
+                foreach (Operator opp in op.GetSenderOperators())
+                    sendersToConsiderAsInput.Add(opp);
             }
             int numberOfInputs = 0;
             int numberOfRequiredInputs = 0;
@@ -207,8 +217,10 @@ namespace VerkstanEditor.Logic
             foreach (Verkstan.CoreOperatorInput input in bindedCoreOperator.Inputs)
                 inputAccepted.Add(false);
            
-            foreach (Verkstan.CoreOperator coreOp in inputOperators)
+            foreach (Operator op in sendersToConsiderAsInput)
             {
+                Verkstan.CoreOperator coreOp = op.BindedCoreOperator;
+
                 if (coreOp.Id == bindedCoreOperator.Id)
                     continue;
 
@@ -228,6 +240,7 @@ namespace VerkstanEditor.Logic
                         numberOfInputs++;
                         if (!input.Optional)
                             numberOfRequiredInputs++;
+                        inputs.Add(op);
                         break;
                     }
                 }
@@ -248,6 +261,7 @@ namespace VerkstanEditor.Logic
                             bindedCoreOperator.SetInputConnectionId(i, coreOp.Id);
                             accepted = true;
                             numberOfInputs++;
+                            inputs.Add(op);
                             break;
                         }
                     }
@@ -271,14 +285,16 @@ namespace VerkstanEditor.Logic
         {
             bindedCoreOperator.ClearOutputConnections();
 
-            List<Verkstan.CoreOperator> outputOperators = new List<Verkstan.CoreOperator>();
+            List<Operator> receiversToConsiderAsOutput = new List<Operator>();
             foreach (Operator op in receivers)
-                foreach (Verkstan.CoreOperator coreOp in op.GetReceiverCoreOperators())
-                    outputOperators.Add(coreOp);
+                foreach (Operator opp in op.GetReceiverOperators())
+                    receiversToConsiderAsOutput.Add(opp);
 
             int numberOfOutputs = 0;
-            foreach (Verkstan.CoreOperator coreOp in outputOperators)
+            foreach (Operator op in receiversToConsiderAsOutput)
             {
+                Verkstan.CoreOperator coreOp = op.BindedCoreOperator;
+
                 if (coreOp == null)
                     continue;
 

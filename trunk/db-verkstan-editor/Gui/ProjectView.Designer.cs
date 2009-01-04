@@ -47,17 +47,19 @@
             this.previewPanel = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.stacksTab = new System.Windows.Forms.TabPage();
-            this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.timelinesTab = new System.Windows.Forms.TabPage();
-            this.timelinesView1 = new VerkstanEditor.Gui.TimelinesView();
             this.clipTab = new System.Windows.Forms.TabPage();
-            this.clipView1 = new VerkstanEditor.Gui.ClipView();
-            this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
-            this.transport1 = new VerkstanEditor.Gui.Transport();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.slowRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.exportAsHeaderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsHeaderSaveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
+            this.timelinesView1 = new VerkstanEditor.Gui.TimelinesView();
+            this.clipView1 = new VerkstanEditor.Gui.ClipView();
+            this.operatorPropertyGrid = new VerkstanEditor.Gui.OperatorPropertyGrid();
+            this.transport1 = new VerkstanEditor.Gui.Transport();
             this.mainMenu.SuspendLayout();
             this.toolStripContainer1.ContentPanel.SuspendLayout();
             this.toolStripContainer1.SuspendLayout();
@@ -99,6 +101,7 @@
             this.openMenuItem,
             this.saveMenuItem,
             this.saveAsMenuItem,
+            this.exportAsHeaderMenuItem,
             this.exitMenuItem});
             this.mainMenuFile.Name = "mainMenuFile";
             this.mainMenuFile.Size = new System.Drawing.Size(35, 20);
@@ -107,35 +110,35 @@
             // newMenuItem
             // 
             this.newMenuItem.Name = "newMenuItem";
-            this.newMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.newMenuItem.Size = new System.Drawing.Size(169, 22);
             this.newMenuItem.Text = "New";
             this.newMenuItem.Click += new System.EventHandler(this.newMenuItem_Click);
             // 
             // openMenuItem
             // 
             this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.openMenuItem.Size = new System.Drawing.Size(169, 22);
             this.openMenuItem.Text = "Open";
             this.openMenuItem.Click += new System.EventHandler(this.openMenuItem_Click);
             // 
             // saveMenuItem
             // 
             this.saveMenuItem.Name = "saveMenuItem";
-            this.saveMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.saveMenuItem.Size = new System.Drawing.Size(169, 22);
             this.saveMenuItem.Text = "Save";
             this.saveMenuItem.Click += new System.EventHandler(this.saveMenuItem_Click);
             // 
             // saveAsMenuItem
             // 
             this.saveAsMenuItem.Name = "saveAsMenuItem";
-            this.saveAsMenuItem.Size = new System.Drawing.Size(121, 22);
-            this.saveAsMenuItem.Text = "Save As..";
+            this.saveAsMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.saveAsMenuItem.Text = "Save As...";
             this.saveAsMenuItem.Click += new System.EventHandler(this.saveAsMenuItem_Click);
             // 
             // exitMenuItem
             // 
             this.exitMenuItem.Name = "exitMenuItem";
-            this.exitMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.exitMenuItem.Size = new System.Drawing.Size(169, 22);
             this.exitMenuItem.Text = "Exit";
             // 
             // mainMenuHelp
@@ -149,7 +152,7 @@
             // aboutMenuItem
             // 
             this.aboutMenuItem.Name = "aboutMenuItem";
-            this.aboutMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutMenuItem.Size = new System.Drawing.Size(103, 22);
             this.aboutMenuItem.Text = "About";
             this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
@@ -265,6 +268,64 @@
             this.stacksTab.Text = "Stacks";
             this.stacksTab.UseVisualStyleBackColor = true;
             // 
+            // timelinesTab
+            // 
+            this.timelinesTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.timelinesTab.Controls.Add(this.timelinesView1);
+            this.timelinesTab.Location = new System.Drawing.Point(4, 25);
+            this.timelinesTab.Name = "timelinesTab";
+            this.timelinesTab.Size = new System.Drawing.Size(548, 90);
+            this.timelinesTab.TabIndex = 1;
+            this.timelinesTab.Text = "Timelines";
+            this.timelinesTab.UseVisualStyleBackColor = true;
+            // 
+            // clipTab
+            // 
+            this.clipTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.clipTab.Controls.Add(this.clipView1);
+            this.clipTab.Location = new System.Drawing.Point(4, 25);
+            this.clipTab.Name = "clipTab";
+            this.clipTab.Size = new System.Drawing.Size(548, 90);
+            this.clipTab.TabIndex = 3;
+            this.clipTab.Text = "Clip";
+            this.clipTab.UseVisualStyleBackColor = true;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // slowRenderTimer
+            // 
+            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "db verkstan files|*.dbv|All files|*.*";
+            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "demo.dbv";
+            this.openFileDialog1.Filter = "db verkstan files|*.dbv|All files|*.*";
+            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
+            // 
+            // exportAsHeaderMenuItem
+            // 
+            this.exportAsHeaderMenuItem.Name = "exportAsHeaderMenuItem";
+            this.exportAsHeaderMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.exportAsHeaderMenuItem.Text = "Export as header...";
+            this.exportAsHeaderMenuItem.Click += new System.EventHandler(this.exportAsHeaderMenuItem_Click);
+            // 
+            // exportAsHeaderSaveFileDialog
+            // 
+            this.exportAsHeaderSaveFileDialog.FileName = "graphicsdata.hpp";
+            this.exportAsHeaderSaveFileDialog.Filter = "C++ header files|*.hpp";
+            this.exportAsHeaderSaveFileDialog.FileOk += new System.ComponentModel.CancelEventHandler(this.exportAsHeaderSaveFileDialog_FileOk);
+            // 
             // operatorPageView1
             // 
             this.operatorPageView1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -280,17 +341,6 @@
             this.operatorPageView1.ViewedOperatorPropertiesChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorPropertiesChanged);
             this.operatorPageView1.ViewedOperatorChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorChanged);
             // 
-            // timelinesTab
-            // 
-            this.timelinesTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.timelinesTab.Controls.Add(this.timelinesView1);
-            this.timelinesTab.Location = new System.Drawing.Point(4, 25);
-            this.timelinesTab.Name = "timelinesTab";
-            this.timelinesTab.Size = new System.Drawing.Size(548, 90);
-            this.timelinesTab.TabIndex = 1;
-            this.timelinesTab.Text = "Timelines";
-            this.timelinesTab.UseVisualStyleBackColor = true;
-            // 
             // timelinesView1
             // 
             this.timelinesView1.BackColor = System.Drawing.SystemColors.Control;
@@ -302,17 +352,6 @@
             this.timelinesView1.Timeline = null;
             this.timelinesView1.ViewedClip = null;
             this.timelinesView1.ViewedClipChanged += new System.EventHandler(this.timelinesView1_ViewedClipChanged);
-            // 
-            // clipTab
-            // 
-            this.clipTab.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.clipTab.Controls.Add(this.clipView1);
-            this.clipTab.Location = new System.Drawing.Point(4, 25);
-            this.clipTab.Name = "clipTab";
-            this.clipTab.Size = new System.Drawing.Size(548, 90);
-            this.clipTab.TabIndex = 3;
-            this.clipTab.Text = "Clip";
-            this.clipTab.UseVisualStyleBackColor = true;
             // 
             // clipView1
             // 
@@ -348,29 +387,6 @@
             this.transport1.Project = null;
             this.transport1.Size = new System.Drawing.Size(766, 64);
             this.transport1.TabIndex = 0;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 355);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(766, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // slowRenderTimer
-            // 
-            this.slowRenderTimer.Tick += new System.EventHandler(this.slowRenderTimer_Tick);
-            // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.Filter = "db verkstan files|*.dbv|All files|*.*";
-            this.saveFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveFileDialog1_FileOk);
-            // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "demo.dbv";
-            this.openFileDialog1.Filter = "db verkstan files|*.dbv|All files|*.*";
-            this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
             // ProjectView
             // 
@@ -440,6 +456,8 @@
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem saveAsMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem exportAsHeaderMenuItem;
+        private System.Windows.Forms.SaveFileDialog exportAsHeaderSaveFileDialog;
     }
 }
 
