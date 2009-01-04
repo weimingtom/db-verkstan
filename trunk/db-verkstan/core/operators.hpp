@@ -34,6 +34,7 @@
 #include "core/operators/mergetexturesoperator.hpp"
 #include "core/operators/distortionoperator.hpp"
 #include "core/operators/darkbitslogooperator.hpp"
+#include "core/operators/weldoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -76,6 +77,7 @@ namespace Verkstan
         using ::MergeTexturesOperator;
         using ::DistortionOperator;
         using ::DarkbitsLogoOperator;
+		using ::WeldOperator;
     }
 }
 #endif
@@ -107,6 +109,7 @@ ADD_OP_TO_CAT("Subdivide",       "Mesh");
 ADD_OP_TO_CAT("Relax",	         "Mesh");
 ADD_OP_TO_CAT("Random Selection","Mesh");
 ADD_OP_TO_CAT("Extrude",		 "Mesh");
+ADD_OP_TO_CAT("Weld",			 "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -483,6 +486,13 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(34, DarkbitsLogoOperator, -1);
 DEF_OP_FOR_EDITOR(34, "Darkbits Logo", DarkbitsLogoOperator, Texture);
 ADD_OPTIONAL_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_WELDOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(35, WeldOperator, -1);
+DEF_OP_FOR_EDITOR(35, "Weld", WeldOperator, Mesh);
+ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
 

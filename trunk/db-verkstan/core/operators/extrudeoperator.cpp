@@ -6,7 +6,7 @@ void ExtrudeOperator::process()
         delete mesh;
 
 	float distance = getFloatProperty(0);
-	Mesh *srcMesh = getInput(0)->mesh->clone();
+	Mesh *srcMesh = getInput(0)->mesh;
 
 	Mesh::EdgeInfo *edgeInfo = srcMesh->constructEdgeInfo();
 

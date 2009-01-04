@@ -32,6 +32,7 @@
 #define DB_CONTRASTOPERATOR 1
 #define DB_MERGETEXTURESOPERATOR 1
 #define DB_DISTORTIONOPERATOR 1
+#define DB_WELDOPERATOR 1
 
 unsigned char data[] = 
 {   

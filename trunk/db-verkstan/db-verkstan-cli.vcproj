@@ -790,6 +790,14 @@
 					RelativePath=".\core\operators\transformmodeloperator.hpp"
 					>
 				</File>
+				<File
+					RelativePath=".\core\operators\weldoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\weldoperator.hpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 	</Files>
