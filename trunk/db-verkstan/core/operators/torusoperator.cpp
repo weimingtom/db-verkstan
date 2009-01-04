@@ -27,7 +27,7 @@ void TorusOperator::process()
 		{
 			float v = y / (float)sides;
 
-			Vec3 toInner = (1.0f - cosf(v * 2 * M_PI)) * toOuter + sinf(v * 2 * M_PI) * Vec3(0.0f, 1.0f, 0.0f);
+			Vec3 toInner = -cosf(v * 2 * M_PI) * toOuter + sinf(v * 2 * M_PI) * Vec3(0.0f, 1.0f, 0.0f);
 
 			mesh->pos(vert) = toOuter * outerRadius + toInner * innerRadius;
 			mesh->normal(vert) = toInner;
