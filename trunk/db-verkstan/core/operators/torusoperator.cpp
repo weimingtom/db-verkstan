@@ -1,40 +1,45 @@
 #include "core/operators/torusoperator.hpp"
 
 void TorusOperator::process()
-{/*
+{
     if (mesh != 0)
         delete mesh;
-
-    mesh = new Mesh();
 
     float innerRadius = getFloatProperty(0);
     float outerRadius = getFloatProperty(1);
     unsigned char sides = getByteProperty(2);
     unsigned char rings = getByteProperty(3);
 
-    LPD3DXMESH tmpMesh;
-    D3DXCreateTorus(globalDirect3DDevice, 
-                    innerRadius, 
-                    outerRadius, 
-                    (int)sides, 
-                    (int)rings, 
-                    &tmpMesh, 
-                    NULL);
-    tmpMesh->CloneMeshFVF(NULL, 
-                          FVF_VERTEX,
-                          globalDirect3DDevice,
-                          &mesh->d3d9Mesh);
-    tmpMesh->Release();
+	int numVertices = (sides + 1) * (rings + 1);
+	int numTriangles = 0;
+	int numQuads = sides * rings;
 
-    Vertex* vertices;
-    mesh->d3d9Mesh->LockVertexBuffer(0,(void**)&vertices);
+	mesh = new Mesh(numVertices, numTriangles, numQuads);
 
-    int numberOfVertices =  mesh->d3d9Mesh->GetNumVertices();
+	int vert = 0, quad = 0;
 
-    for (int i = 0; i < numberOfVertices; i++) 
-    {
-        vertices->v = acosf(vertices->position.y / innerRadius) / 2 * D3DX_PI;
-        vertices->u = (acosf(vertices->position.x / (innerRadius + outerRadius * cos(2 * D3DX_PI * vertices->v)))) * 2 * D3DX_PI;
-        vertices++;
-    }*/
+	for (int x = 0; x <= rings; x++)
+	{
+		float u = x / (float)rings;
+		Vec3 toOuter(cosf(u * 2 * M_PI), 0.0f, sinf(u * 2 * M_PI));
+
+		for (int y = 0; y <= sides; y++)
+		{
+			float v = y / (float)sides;
+
+			Vec3 toInner = (1.0f - cosf(v * 2 * M_PI)) * toOuter + sinf(v * 2 * M_PI) * Vec3(0.0f, 1.0f, 0.0f);
+
+			mesh->pos(vert) = toOuter * outerRadius + toInner * innerRadius;
+			mesh->normal(vert) = toInner;
+			mesh->uv(vert) = Vec2(u, v);
+
+			if (y != sides && x != rings)
+			{
+				mesh->setQuad(quad, vert, vert + sides + 1, vert + sides + 2, vert + 1);
+				quad++;
+			}
+
+			vert++;
+		}
+	}
 }
