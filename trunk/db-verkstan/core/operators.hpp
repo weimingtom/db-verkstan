@@ -240,6 +240,9 @@ DEF_OP_FOR_EDITOR(9, "Box", BoxOperator, Mesh);
 ADD_FLOAT_PROP("Width",  1.0f);
 ADD_FLOAT_PROP("Height", 1.0f);
 ADD_FLOAT_PROP("Depth",  1.0f);
+ADD_BYTE_PROP("X Slices", 1);
+ADD_BYTE_PROP("Y Slices", 1);
+ADD_BYTE_PROP("Z Slices", 1);
 END_OP_FOR_EDITOR();
 #endif
 
