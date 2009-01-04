@@ -56,3 +56,9 @@ template<typename T> inline T max(T a, T b) { return a > b ? a : b; }
 template<typename T> inline T clamp(T a, T min, T max) { return a < min ? min : (a > max ? max : a); }
 
 inline float saturate(float a) { return clamp(a, 0.0f, 1.0f); }
+
+
+
+#ifndef M_PI
+#define M_PI 3.141592f
+#endif

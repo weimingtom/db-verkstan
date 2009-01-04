@@ -76,9 +76,9 @@ Mesh::Mesh(const Mesh& mesh) :
 Mesh::~Mesh()
 {
 	destroyD3DBuffers();
-	delete vertexData;
-	delete triangleData;
-	delete quadData;
+	delete[] vertexData;
+	delete[] triangleData;
+	delete[] quadData;
 }
 
 

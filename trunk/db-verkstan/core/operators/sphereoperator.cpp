@@ -1,4 +1,5 @@
 #include "core/operators/sphereoperator.hpp"
+#include "../util.hpp"
 
 void SphereOperator::process()
 {
@@ -9,16 +10,62 @@ void SphereOperator::process()
     unsigned char slices = getByteProperty(1);
     unsigned char stacks = getByteProperty(2);
 
+	int numVertices = (stacks + 1) * (slices + 1) + slices * 2;
+	int numTriangles = slices * 2;
+	int numQuads = slices * stacks;
 
-	int numVertices = (slices + 1) * stacks - 2;
-	int numTriangles = 2 * slices;
-	int numQuads = slices * (stacks - 2);
+	mesh = new Mesh(numVertices, numTriangles, numQuads);
 
-	for (int x = 0; x < slices; x++)
+	int vert = 0, tri = 0, quad = 0;
+	int cvert = (stacks + 1) * (slices + 1);
+
+	for (int x = 0; x <= slices; x++)
 	{
-		for (int y = 1; y < stacks; y++)
+		float u = x / (float)slices;
+
+		for (int y = 0; y <= stacks; y++)
 		{
+			float v = (y + 1.0f) / (stacks + 2.0f);
+			Vec3 p = Vec3(cosf(u * M_PI * 2) * sinf(v * M_PI),
+				          cosf(v * M_PI),
+					      sinf(u * M_PI * 2) * sinf(v * M_PI));
+
+			mesh->pos(vert) = p * radius;
+			mesh->normal(vert) = p;
+			mesh->uv(vert) = Vec2(u, v);
 			
+			if (y == 0 && x != slices)
+			{
+				mesh->pos(cvert) = Vec3(0.0f, radius, 0.0f);
+				mesh->normal(cvert) = Vec3(0.0f, 1.0f, 0.0f);
+				mesh->uv(cvert) = Vec2((x + 0.5f) / slices, 0.0f);
+
+				mesh->setTriangle(tri, vert, cvert, vert + stacks + 1);
+
+				cvert++;
+				tri++;
+			}
+
+			if (y == stacks && x != slices)
+			{
+				mesh->pos(cvert) = Vec3(0.0f, -radius, 0.0f);
+				mesh->normal(cvert) = Vec3(0.0f, -1.0f, 0.0f);
+				mesh->uv(cvert) = Vec2((x + 0.5f) / slices, 1.0f);
+
+				mesh->setTriangle(tri, cvert, vert, vert + stacks + 1);
+
+				cvert++;
+				tri++;
+			}
+
+
+			if (y != stacks && x != slices)
+			{
+				mesh->setQuad(quad, vert, vert + stacks + 1, vert + stacks + 2, vert + 1);
+				quad++;
+			}
+
+			vert++;
 		}
 	}
 /*
