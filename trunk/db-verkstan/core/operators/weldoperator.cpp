@@ -19,6 +19,8 @@ static int projectedComparator(const void *_i1, const void *_i2)
 
 void WeldOperator::process()
 {
+	// TODO: Weld away triangles and quads properly
+
     if (mesh != 0)
         delete mesh;
 

@@ -264,9 +264,11 @@ DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 5,
 DEF_OP_FOR_EDITOR(8, "Cylinder", CylinderOperator, Mesh);
 ADD_FLOAT_PROP("Radius 1", 1.0f);
 ADD_FLOAT_PROP("Radius 2", 1.0f);
-ADD_FLOAT_PROP("Length",   5.0f);
+ADD_FLOAT_PROP("Length",   1.0f);
 ADD_BYTE_PROP("Slices",    10);
-ADD_BYTE_PROP("Stacks",    3);
+ADD_BYTE_PROP("Stacks",    1);
+ADD_BYTE_PROP("Bottom Rings",1);
+ADD_BYTE_PROP("Top Rings",1);
 END_OP_FOR_EDITOR();
 #endif
 

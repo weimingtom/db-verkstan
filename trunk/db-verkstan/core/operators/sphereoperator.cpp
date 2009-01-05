@@ -7,8 +7,8 @@ void SphereOperator::process()
         delete mesh;
     
 	float radius = getFloatProperty(0);
-    unsigned char slices = getByteProperty(1);
-    unsigned char stacks = getByteProperty(2);
+    int slices = getByteProperty(1);
+    int stacks = getByteProperty(2);
 
 	int numVertices = (stacks + 1) * (slices + 1) + slices * 2;
 	int numTriangles = slices * 2;
