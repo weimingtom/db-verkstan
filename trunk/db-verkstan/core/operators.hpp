@@ -35,6 +35,7 @@
 #include "core/operators/distortionoperator.hpp"
 #include "core/operators/darkbitslogooperator.hpp"
 #include "core/operators/weldoperator.hpp"
+#include "core/operators/displacementmapoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -78,6 +79,7 @@ namespace Verkstan
         using ::DistortionOperator;
         using ::DarkbitsLogoOperator;
 		using ::WeldOperator;
+		using ::DisplacementMapOperator;
     }
 }
 #endif
@@ -110,6 +112,7 @@ ADD_OP_TO_CAT("Relax",	         "Mesh");
 ADD_OP_TO_CAT("Random Selection","Mesh");
 ADD_OP_TO_CAT("Extrude",		 "Mesh");
 ADD_OP_TO_CAT("Weld",			 "Mesh");
+ADD_OP_TO_CAT("Displacement Map","Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -588,6 +591,15 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(35, WeldOperator, -1);
 DEF_OP_FOR_EDITOR(35, "Weld", WeldOperator, Mesh);
 ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_DISPLACEMENTMAPOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(35, DisplacementMapOperator, -1);
+DEF_OP_FOR_EDITOR(35, "Displacement Map", DisplacementMapOperator, Mesh);
+ADD_INPUT(Mesh);
+ADD_INPUT(Texture);
+ADD_FLOAT_PROP("Distance", 0.25f);
 END_OP_FOR_EDITOR();
 #endif
 

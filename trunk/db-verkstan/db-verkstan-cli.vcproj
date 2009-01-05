@@ -599,6 +599,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\displacementmap.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\displacementmapoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\distortionoperator.cpp"
 					>
 				</File>

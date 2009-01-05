@@ -33,6 +33,7 @@
 #define DB_MERGETEXTURESOPERATOR 1
 #define DB_DISTORTIONOPERATOR 1
 #define DB_WELDOPERATOR 1
+#define DB_DISPLACEMENTMAPOPERATOR 1
 
 unsigned char data[] = 
 {   
