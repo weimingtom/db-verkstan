@@ -27,11 +27,11 @@ float SplineClip::getValue(int tick)
     if (numberOfControlPoints == 0)
         return 0.0f;
     if (numberOfControlPoints == 1)
-        return controlPoints[0].value;
+        return controlPoints[0].value / 128.0f;
     if (controlPoints[0].tick >= tick)
-        return controlPoints[0].value;
+        return controlPoints[0].value / 128.0f;
     if (controlPoints[numberOfControlPoints - 1].tick <= tick)  
-        return controlPoints[numberOfControlPoints - 1].value;
+        return controlPoints[numberOfControlPoints - 1].value  / 128.0f;
 
     index--;
     ControlPoint p2 = getControlPoint(index);
@@ -41,7 +41,7 @@ float SplineClip::getValue(int tick)
 
     if (type == 1) // Linear
     {
-        return  (1.0f - t) * p2.value + p3.value * t;
+        return  (1.0f - t) * (p2.value  / 128.0f) + (p3.value  / 128.0f) * t;
     }
 
     ControlPoint p1 = getControlPoint(index - 1);
@@ -49,15 +49,15 @@ float SplineClip::getValue(int tick)
 
     if (type == 0) // Catmull-Rom
     {
-        float t2 = 0.5f * (p3.value - p1.value);
-        float t3 = 0.5f * (p4.value - p2.value);
+        float t2 = 0.5f * (p3.value - p1.value) / 128.0f;
+        float t3 = 0.5f * (p4.value - p2.value) / 128.0f;
             
         float h1 = 2.0f*t*t*t - 3.0f*t*t + 1.0f;
         float h2 = -2.0f*t*t*t + 3.0f*t*t;
         float h3 = t*t*t - 2.0f*t*t + t;
         float h4 = t*t*t - t*t; 
 
-        return h1*p2.value + h2*p3.value + h3*t2 + h4*t3;
+        return h1*p2.value/128.0f + h2*p3.value/128.0f + h3*t2 + h4*t3;
     }
 }
 

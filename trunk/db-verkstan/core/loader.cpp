@@ -267,7 +267,7 @@ void loadGraphics()
     // Load timelines
     unsigned short numberOfTimelines = *(reinterpret_cast<unsigned short*>(dataptr));
     dataptr+=2;
-
+    // Timeline indexes
     unsigned short* timelineOperatorIndexes = new unsigned short[numberOfAnimations];
     for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
@@ -275,6 +275,7 @@ void loadGraphics()
         timelineOperatorIndexes[timelineIndex] = index;
         dataptr+=2;
     }
+    // Timeline ticks
     for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
         unsigned short beats = *(reinterpret_cast<unsigned short*>(dataptr));
@@ -282,6 +283,7 @@ void loadGraphics()
         dataptr+=2;
     }
     unsigned short numberOfClips = 0;
+    // Creating generators
     unsigned char* timelineNumberOfGenerators = new unsigned char[numberOfAnimations];
     for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
@@ -296,6 +298,7 @@ void loadGraphics()
             numberOfClips++;
         }
     }
+    // Creating splines
     unsigned char* timelineNumberOfSplines = new unsigned char[numberOfAnimations];
     for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
@@ -310,7 +313,7 @@ void loadGraphics()
             numberOfClips++;
         }
     }
-
+    // Clip start
     for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
     {
         unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
@@ -321,28 +324,109 @@ void loadGraphics()
             clips[clipId]->start = *(reinterpret_cast<unsigned short*>(dataptr)) * DB_TICKS_PER_BEAT;
             dataptr += 2;
         }
+    }
+    // Clip end
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
         for (unsigned short i = 0; i < numberOfGenerators + numberOfSplines; i++)
         {
             unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             clips[clipId]->end = *(reinterpret_cast<unsigned short*>(dataptr)) * DB_TICKS_PER_BEAT;
             dataptr += 2;   
         }
+    }
+    // Clip channels
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
         for (unsigned short i = 0; i < numberOfGenerators + numberOfSplines; i++)
         {
             unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             unsigned char channel = *dataptr++;
             clips[clipId]->channel = channel;
         }
+    }
+    // Generator type
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
         for (unsigned short i = 0; i < numberOfGenerators; i++)
         {
             unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             ((GeneratorClip*)clips[clipId])->type = *dataptr++;   
         }
+    }
+    // Generator period
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
         for (unsigned short i = 0; i < numberOfGenerators; i++)
         {
             unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i];
             ((GeneratorClip*)clips[clipId])->period = *(reinterpret_cast<unsigned short*>(dataptr));
             dataptr += 2;
+        }
+    }
+    // Spline type
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
+        for (unsigned short i = 0; i < numberOfSplines; i++)
+        {
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[numberOfGenerators + i];
+            ((SplineClip*)clips[clipId])->type = *dataptr++;   
+        }
+    }
+    // Spline number of control points
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
+        for (unsigned short i = 0; i < numberOfSplines; i++)
+        {
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[numberOfGenerators + i];
+            ((SplineClip*)clips[clipId])->numberOfControlPoints = *dataptr++;   
+        }
+    }
+     // Spline ticks
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
+        for (unsigned short i = 0; i < numberOfSplines; i++)
+        {
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[numberOfGenerators + i];
+            SplineClip* clip = (SplineClip*)clips[clipId]; 
+
+            int lastTick = 0;
+            for (unsigned char controlPointIndex = 0; controlPointIndex < clip->numberOfControlPoints; controlPointIndex++)
+            {
+                clip->controlPoints[controlPointIndex].tick = *(reinterpret_cast<int*>(dataptr)) + lastTick;
+                lastTick = clip->controlPoints[controlPointIndex].tick;
+                dataptr += 4;
+            }
+        }
+    }
+    // Spline values
+    for (unsigned short timelineIndex = 0; timelineIndex < numberOfTimelines; timelineIndex++)
+    {
+        unsigned char numberOfGenerators = timelineNumberOfGenerators[timelineIndex];
+        unsigned char numberOfSplines = timelineNumberOfSplines[timelineIndex];
+        for (unsigned short i = 0; i < numberOfSplines; i++)
+        {
+            unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[i + numberOfGenerators];
+            SplineClip* clip = (SplineClip*)clips[clipId]; 
+
+            short lastValue = 0;
+            for (unsigned char controlPointIndex = 0; controlPointIndex < clip->numberOfControlPoints; controlPointIndex++)
+            {
+                clip->controlPoints[controlPointIndex].value = *dataptr++ + lastValue; 
+                lastValue = clip->controlPoints[controlPointIndex].value;
+            }
         }
     }
 }

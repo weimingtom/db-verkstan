@@ -39,7 +39,7 @@ namespace Verkstan
         return coreSplineClip->numberOfControlPoints;
     }
 
-    void CoreSplineClip::SetControlPoint(int index, int tick, float value)
+    void CoreSplineClip::SetControlPoint(int index, int tick, char value)
     {
         coreSplineClip->controlPoints[index].tick = tick;
         coreSplineClip->controlPoints[index].value = value;

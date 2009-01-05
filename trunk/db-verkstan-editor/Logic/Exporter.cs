@@ -276,7 +276,7 @@ namespace VerkstanEditor.Logic
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
-                    AddToData((short)clip.GetChannel());
+                    AddToData((byte)clip.GetChannel());
                 }
             }
             foreach (Operator op in timelines)
@@ -286,6 +286,10 @@ namespace VerkstanEditor.Logic
                 {
                     AddToData((byte)clip.GetGeneratorType());
                 }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
                 foreach (GeneratorClip clip in generatorClips)
                 {
                     System.Console.WriteLine("Perdiod = " + (short)clip.GetPeriodInTicks() + " and " + clip.GetPeriodInTicks());
@@ -293,8 +297,58 @@ namespace VerkstanEditor.Logic
                 }
             }
 
-            // TODO Splines!
-           
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    AddToData((byte)clip.GetSplineType());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    AddToData((byte)clip.BindedSplineCoreClip.GetNumberOfControlPoints());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
+                    {
+                        // Write only the control points that are actually needed.
+                        int lastTick = 0; // Used for delta encoding.
+                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
+                        {
+                            int tick = clip.BindedSplineCoreClip.GetControlPointTick(i) - lastTick;
+                            AddToData(tick);
+                            lastTick = clip.BindedSplineCoreClip.GetControlPointTick(i);
+                        }
+                    }  
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
+                    {
+                        // Write only the control points that are actually needed.
+                        sbyte lastValue = 0; // Used for delta encoding.
+                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
+                        {
+                            sbyte value = (sbyte)(clip.BindedSplineCoreClip.GetControlPointValue(i) * 128 - lastValue);
+                            AddToData(value);
+                            value = (sbyte)(clip.BindedSplineCoreClip.GetControlPointValue(i) * 128);
+                        }
+                    }
+                }
+            }
         }
         private static void AddToData(byte b)
         {
@@ -316,6 +370,13 @@ namespace VerkstanEditor.Logic
         private static void AddToData(ushort s)
         {
             byte[] array = BitConverter.GetBytes(s);
+
+            foreach (byte arrayByte in array)
+                bytes.Add(arrayByte);
+        }
+        private static void AddToData(int i)
+        {
+            byte[] array = BitConverter.GetBytes(i);
 
             foreach (byte arrayByte in array)
                 bytes.Add(arrayByte);

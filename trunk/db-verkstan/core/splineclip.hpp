@@ -12,7 +12,7 @@ public:
     
     struct ControlPoint
     {
-        float value;
+        char value;
         int tick;
     };
     ControlPoint controlPoints[DB_MAX_SPLINE_CONTROL_POINTS];

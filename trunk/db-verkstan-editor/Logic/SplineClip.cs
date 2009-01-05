@@ -10,6 +10,13 @@ namespace VerkstanEditor.Logic
     public class SplineClip: Clip
     {
         #region Properties
+        public Verkstan.CoreSplineClip BindedSplineCoreClip
+        {
+            get
+            {
+                return bindedSplineCoreClip;
+            }
+        }
         public override ushort Id
         {
             get { return bindedSplineCoreClip.Id; }
@@ -174,7 +181,7 @@ namespace VerkstanEditor.Logic
             });
 
             for(int i = 0; i < controlPoints.Count; i++)
-                bindedSplineCoreClip.SetControlPoint(i, controlPoints[i].X, controlPoints[i].Y);
+                bindedSplineCoreClip.SetControlPoint(i, controlPoints[i].X, (sbyte)(128 * controlPoints[i].Y));
 
             bindedSplineCoreClip.SetNumberOfControlPoints(controlPoints.Count);
         }

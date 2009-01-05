@@ -263,6 +263,8 @@ DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 5,
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP, 
                   DB_BYTE_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
                   DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(8, "Cylinder", CylinderOperator, Mesh);
 ADD_FLOAT_PROP("Radius 1", 1.0f);
@@ -276,10 +278,13 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_BOXOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(9, BoxOperator, 0, 3, 
+DEF_OP_FOR_LOADER(9, BoxOperator, 0, 6, 
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP, 
-                  DB_FLOAT_PROP);
+                  DB_FLOAT_PROP,
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(9, "Box", BoxOperator, Mesh);
 ADD_FLOAT_PROP("Width",  1.0f);
 ADD_FLOAT_PROP("Height", 1.0f);
