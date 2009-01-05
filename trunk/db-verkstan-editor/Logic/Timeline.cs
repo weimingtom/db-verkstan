@@ -44,6 +44,28 @@ namespace VerkstanEditor.Logic
         #endregion
 
         #region Public Methods
+        public List<GeneratorClip> GetGeneratorClips()
+        {
+            List<GeneratorClip> result = new List<GeneratorClip>();
+
+            foreach (Channel channel in channels)
+                foreach (Clip clip in channel.Clips)
+                    if (typeof(GeneratorClip) == clip.GetType())
+                        result.Add((GeneratorClip)clip);
+
+            return result;
+        }
+        public List<SplineClip> GetSplineClips()
+        {
+            List<SplineClip> result = new List<SplineClip>();
+
+            foreach (Channel channel in channels)
+                foreach (Clip clip in channel.Clips)
+                    if (typeof(SplineClip) == clip.GetType())
+                        result.Add((SplineClip)clip);
+
+            return result;
+        }
         public void Dispose()
         {
             foreach (Channel channel in channels)

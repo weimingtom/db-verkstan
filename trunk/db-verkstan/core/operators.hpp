@@ -122,20 +122,21 @@ ADD_OP_TO_CAT("Timeline",        "Renderer");
 ADD_OP_TO_CAT("Transform",       "Renderer");
 #endif
 
-// Property codes
-// 0x00 Byte
-// 0x01 Integer
-// 0x02 Float
-// 0x03 Color
-// 0x04 Vector
-// 0x05 String
+#define DB_BYTE_PROP 0x00
+#define DB_ENUM_PROP 0x00
+#define DB_INT_PROP  0x01
+#define DB_FLOAT_PROP 0x02
+#define DB_COLOR_PROP 0x03
+#define DB_VECTOR_PROP 0x04
+#define DB_STRING_PROP 0x05
+#define DB_TEXT_PROP 0x05
 
 //DEF_OP_FOR_LOADER params
 // Id, e.i 0
 // Class, e.i TimelineOperator
 // Number of constant inputs, e.i -1 for no constant inputs or 2 for two constant inputs
 // Number of properties, e.i 2
-// Property types, e.i {(0x00, 0x02)} for a byte property and a float property. See property codes.
+// Property types, e.i DB_BYTE_PROP, DB_FLOAT_PROP for a byte property and a float property. 
 
 
 //DEF_OP_FOR_LOADER_WITH_NO_PROPS params
@@ -145,7 +146,7 @@ ADD_OP_TO_CAT("Transform",       "Renderer");
 
 #ifdef OPERATOR_DEFINES
 #if defined(DB_TIMELINEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(0, TimelineOperator, -1, 2, 0x00, 0x02);
+DEF_OP_FOR_LOADER(0, TimelineOperator, -1, 2, DB_BYTE_PROP, DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(0, "Timeline", TimelineOperator, Renderer);
 ADD_BYTE_PROP("Render", 1);
 ADD_FLOAT_PROP("Time offset", 0);
@@ -153,8 +154,12 @@ ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
 
-#if  defined(DB_PIXELSOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(1, PixelsOperator, -1, 4, 0x03, 0x03, 0x01, 0x01);
+#if defined(DB_PIXELSOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(1, PixelsOperator, -1, 4, 
+                  DB_COLOR_PROP, 
+                  DB_COLOR_PROP, 
+                  DB_INT_PROP, 
+                  DB_INT_PROP);
 DEF_OP_FOR_EDITOR(1, "Pixels", PixelsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 255, 255, 255);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
@@ -165,14 +170,21 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_FLATOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(2, FlatOperator, 0, 1, 0x03);
+DEF_OP_FOR_LOADER(2, FlatOperator, 0, 1, 
+                  DB_COLOR_PROP);
 DEF_OP_FOR_EDITOR(2, "Flat", FlatOperator, Texture);
 ADD_COLOR_PROP("Color", 255, 255, 255);
 END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_TEXTOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(3, TextOperator, -1, 6, 0x03, 0x00, 0x00, 0x00, 0x05, 0x05);
+DEF_OP_FOR_LOADER(3, TextOperator, -1, 6, 
+                  DB_COLOR_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_STRING_PROP, 
+                  DB_TEXT_PROP);
 DEF_OP_FOR_EDITOR(3, "Text", TextOperator, Texture);
 ADD_COLOR_PROP("Color", 255, 255, 255);
 ADD_BYTE_PROP("Height", 30);
@@ -185,7 +197,12 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_RECTANGLEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(4, RectangleOperator, -1, 5, 0x03, 0x00, 0x00, 0x00, 0x00);
+DEF_OP_FOR_LOADER(4, RectangleOperator, -1, 5, 
+                  DB_COLOR_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(4, "Rectangle", RectangleOperator, Texture);
 ADD_COLOR_PROP("Color", 255, 255, 0);
 ADD_BYTE_PROP("X",      10);
@@ -197,7 +214,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_ROTOZOOMOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(5, RotozoomOperator, 1, 4, 0x00, 0x00, 0x00, 0x02);
+DEF_OP_FOR_LOADER(5, RotozoomOperator, 1, 4, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(5, "Rotozoom", RotozoomOperator, Texture);
 ADD_BYTE_PROP("Center X", 128);
 ADD_BYTE_PROP("Center Y", 128);
@@ -208,7 +229,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_TORUSOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(6, TorusOperator, 0, 4, 0x02, 0x02, 0x00, 0x00);
+DEF_OP_FOR_LOADER(6, TorusOperator, 0, 4, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(6, "Torus", TorusOperator, Mesh);
 ADD_FLOAT_PROP("Inner radius", 0.3f);
 ADD_FLOAT_PROP("Outer radius", 0.7f);
@@ -218,7 +243,10 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_SPHEREOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(7, SphereOperator, 0, 3, 0x02, 0x00, 0x00);
+DEF_OP_FOR_LOADER(7, SphereOperator, 0, 3, 
+                  DB_FLOAT_PROP,
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(7, "Sphere", SphereOperator, Mesh);
 ADD_FLOAT_PROP("Radius", 1.0f);
 ADD_BYTE_PROP("Slices",  10);
@@ -227,7 +255,12 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CYLINDEROPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 5, 0x02, 0x02, 0x02, 0x00, 0x00);
+DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 5, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(8, "Cylinder", CylinderOperator, Mesh);
 ADD_FLOAT_PROP("Radius 1", 1.0f);
 ADD_FLOAT_PROP("Radius 2", 1.0f);
@@ -238,7 +271,10 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_BOXOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(9, BoxOperator, 0, 3, 0x02, 0x02, 0x02);
+DEF_OP_FOR_LOADER(9, BoxOperator, 0, 3, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(9, "Box", BoxOperator, Mesh);
 ADD_FLOAT_PROP("Width",  1.0f);
 ADD_FLOAT_PROP("Height", 1.0f);
@@ -256,7 +292,9 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_SUBDIVIDEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(11, SubdivideOperator, 1, 2, 0x00, 0x02);
+DEF_OP_FOR_LOADER(11, SubdivideOperator, 1, 2, 
+                  DB_BYTE_PROP,
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(11, "Subdivide", SubdivideOperator, Mesh);
 ADD_BYTE_PROP("Repetitions", 1);
 ADD_FLOAT_PROP("Smoothness", 0.5f);
@@ -265,7 +303,9 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_RELAXOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(12, RelaxOperator, 1, 2, 0x00, 0x02);
+DEF_OP_FOR_LOADER(12, RelaxOperator, 1, 2, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(12, "Relax", RelaxOperator, Mesh);
 ADD_FLOAT_PROP("Strength", 0.1f);
 ADD_BYTE_PROP("Repetitions", 2);
@@ -274,7 +314,9 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_RANDOMSELECTIONOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(13, RandomSelectionOperator, 1, 2, 0x00, 0x00);
+DEF_OP_FOR_LOADER(13, RandomSelectionOperator, 1, 2, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(13, "Random Selection", RandomSelectionOperator, Mesh);
 ADD_BYTE_PROP("Probablility", 128);
 ADD_BYTE_PROP("Seed", 1);
@@ -283,7 +325,8 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_EXTRUDOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(14, ExtrudeOperator, 1, 1, 0x02);
+DEF_OP_FOR_LOADER(14, ExtrudeOperator, 1, 1,
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(14, "Extrude", ExtrudeOperator, Mesh);
 ADD_FLOAT_PROP("Distance", 0.1f);
 ADD_INPUT(Mesh);
@@ -298,7 +341,10 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_TRANSFORMMODELOPERATOR) || defined(DB_TRANSFORMOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(16, TransformModelOperator, 1, 3, 0x02, 0x02, 0x02);
+DEF_OP_FOR_LOADER(16, TransformModelOperator, 1, 3, 
+                  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP);
 DEF_OP_FOR_EDITOR(16, "Transform Model", TransformModelOperator, Model);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
@@ -321,7 +367,20 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_LIGHTOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(18, LightOperator, 0, 13, 0x00, 0x03, 0x03, 0x03, 0x04, 0x04, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02);
+DEF_OP_FOR_LOADER(18, LightOperator, 0, 13, 
+                  DB_ENUM_PROP,
+                  DB_COLOR_PROP, 
+                  DB_COLOR_PROP,
+                  DB_COLOR_PROP,
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP, 
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(18, "Light", LightOperator, Model);
 ADD_ENUM_PROP("Type", "Point,Spot,Directional", "Point");
 ADD_COLOR_PROP("Diffuse", 255, 255, 0);
@@ -348,7 +407,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CLONEMODELOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(20, CloneModelOperator, 1, 4, 0x02, 0x04, 0x04, 0x04);
+DEF_OP_FOR_LOADER(20, CloneModelOperator, 1, 4, 
+                  DB_BYTE_PROP,
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP);
 DEF_OP_FOR_EDITOR(20, "Clone Model", CloneModelOperator, Model);
 ADD_BYTE_PROP("Clones",      2);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
@@ -359,7 +422,14 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CAMERAOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(21, CameraOperator, -1, 7, 0x02, 0x01, 0x01, 0x03, 0x04, 0x04, 0x02);
+DEF_OP_FOR_LOADER(21, CameraOperator, -1, 7, 
+                  DB_FLOAT_PROP,
+                  DB_INT_PROP, 
+                  DB_INT_PROP, 
+                  DB_COLOR_PROP, 
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP, 
+                  DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(21, "Camera", CameraOperator, Renderer);
 ADD_FLOAT_PROP("Angle", 45.0f);
 ADD_INT_PROP("Aspect width", 1024);
@@ -380,7 +450,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_BLUROPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(23, BlurOperator, 1, 4, 0x00, 0x00, 0x00, 0x00);
+DEF_OP_FOR_LOADER(23, BlurOperator, 1, 4, 
+                  DB_ENUM_PROP, 
+                  DB_ENUM_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(23, "Blur", BlurOperator, Texture);
 ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
 ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
@@ -391,7 +465,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CLOUDSOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(24, CloudsOperator, 0, 4, 0x03, 0x03, 0x00, 0x00);
+DEF_OP_FOR_LOADER(24, CloudsOperator, 0, 4, 
+                  DB_COLOR_PROP, 
+                  DB_COLOR_PROP, 
+                  DB_ENUM_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(24, "Clouds", CloudsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 0, 0, 0);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
@@ -401,7 +479,14 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_GLOWOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(25, GlowOperator, -1, 7, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+DEF_OP_FOR_LOADER(25, GlowOperator, -1, 7, 
+                  DB_COLOR_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(25, "Glow", GlowOperator, Texture);
 ADD_COLOR_PROP("Color", 255, 0, 0);
 ADD_BYTE_PROP("Center X", 128);
@@ -422,7 +507,8 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_NORMALMAPOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(27, NormalMapOperator, 1, 1, 0x00);
+DEF_OP_FOR_LOADER(27, NormalMapOperator, 1, 1, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(27, "Normal Map", NormalMapOperator, Texture);
 ADD_BYTE_PROP("Amplify", 16);
 ADD_INPUT(Texture);
@@ -439,7 +525,10 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_COLORIZEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(29, ColorizeOperator, 1, 3, 0x00, 0x00, 0x00);
+DEF_OP_FOR_LOADER(29, ColorizeOperator, 1, 3, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(29, "Colorize", ColorizeOperator, Texture);
 ADD_BYTE_PROP("Hue", 0);
 ADD_BYTE_PROP("Saturation", 255);
@@ -456,7 +545,8 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CONTRASTOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(31, ContrastOperator, 1, 1, 0x00);
+DEF_OP_FOR_LOADER(31, ContrastOperator, 1, 1, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(31, "Contrast", ContrastOperator, Texture);
 ADD_BYTE_PROP("Contrast", 128);
 ADD_INPUT(Texture);
@@ -464,7 +554,8 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MERGETEXTURESOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(32, MergeTexturesOperator, 1, 1, 0x00);
+DEF_OP_FOR_LOADER(32, MergeTexturesOperator, 1, 1, 
+                  DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(32, "Merge Textures", MergeTexturesOperator, Texture);
 ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
 ADD_INPUT(Texture);
@@ -473,7 +564,9 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_DISTORTIONOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(33, DistortionOperator, 1, 1, 0x00);
+DEF_OP_FOR_LOADER(33, DistortionOperator, 1, 1, 
+                  DB_ENUM_PROP,
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(33, "Distortion", DistortionOperator, Texture);
 ADD_ENUM_PROP("Mode", "Green-Blue,Normal Map", "Green-Blue");
 ADD_BYTE_PROP("Amount", 0);

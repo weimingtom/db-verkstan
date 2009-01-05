@@ -24,7 +24,7 @@ namespace Verkstan
        delete coreSplineClip;
     }
 
-    int CoreSplineClip::Id::get()
+    unsigned short CoreSplineClip::Id::get()
     {
         return id;
     }

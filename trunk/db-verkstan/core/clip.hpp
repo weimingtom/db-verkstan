@@ -6,5 +6,5 @@ public:
     virtual float getValue(int tick) = 0;
     int start;
     int end;
-    int channel;
+    unsigned char channel;
 };

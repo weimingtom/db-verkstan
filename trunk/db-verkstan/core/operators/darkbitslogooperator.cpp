@@ -1,3 +1,4 @@
+#if defined(DB_DARKBITSLOGOOPERATOR) || defined(DB_EDITOR)
 #include "core/operators/darkbitslogooperator.hpp"
 
 // This is a lot of data, but we don't have to worry
@@ -6703,3 +6704,4 @@ void DarkbitsLogoOperator::process()
    
     texture->unlock();
 }
+#endif

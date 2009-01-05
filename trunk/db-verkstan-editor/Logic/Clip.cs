@@ -10,7 +10,7 @@ namespace VerkstanEditor.Logic
     public abstract class Clip: IDisposable
     {
         #region Properties
-        public abstract int Id { get; }
+        public abstract ushort Id { get; }
         private bool selected = false;
         public bool Selected
         {
@@ -47,7 +47,11 @@ namespace VerkstanEditor.Logic
         {
             set
             {
-                bindedCoreClip.SetChannel(value);
+                if (value > 255)
+                    value = 255;
+                if (value < 0)
+                    value = 0;
+                bindedCoreClip.SetChannel((byte)value);
             }
             get
             {
@@ -143,6 +147,18 @@ namespace VerkstanEditor.Logic
         public float GetValue(int tick)
         {
             return bindedCoreClip.GetValue(tick);
+        }
+        public int GetStartBeat()
+        {
+            return bindedCoreClip.GetStart();
+        }
+        public int GetEndBeat()
+        {
+            return bindedCoreClip.GetEnd();
+        }
+        public int GetChannel()
+        {
+            return bindedCoreClip.GetChannel();
         }
         #endregion
 

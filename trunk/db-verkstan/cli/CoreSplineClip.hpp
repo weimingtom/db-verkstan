@@ -12,9 +12,9 @@ namespace Verkstan
     public:
         CoreSplineClip();
         ~CoreSplineClip();
-        property int Id
+        property unsigned short Id
         {
-            int get();
+            unsigned short get();
         }
         void SetNumberOfControlPoints(int number);
         int GetNumberOfControlPoints();
@@ -26,6 +26,6 @@ namespace Verkstan
 
     private:
         Core::SplineClip* coreSplineClip;
-        int id;
+        unsigned short id;
     };
 }

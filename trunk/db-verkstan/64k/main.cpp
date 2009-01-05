@@ -105,7 +105,7 @@ int WINAPI WinMain(HINSTANCE instance,
 
     Synth* synth = new Synth(globalWindow);
 
-    loadDemo();
+    loadGraphics();
     startMetronome();
 
     while (true)

@@ -9,7 +9,7 @@ namespace VerkstanEditor.Logic
     public class GeneratorClip: Clip
     {
         #region Properties
-        public override int Id
+        public override ushort Id
         {
             get { return bindedCoreGeneratorClip.Id; }
         }

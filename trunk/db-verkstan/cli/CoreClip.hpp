@@ -16,8 +16,8 @@ namespace Verkstan
         int GetEnd();
         void SetEnd(int end);
         float GetValue(int tick);
-        int GetChannel();
-        void SetChannel(int channel);
+        unsigned char GetChannel();
+        void SetChannel(unsigned char channel);
     protected:
         void SetCoreClip(Core::Clip* coreClip);
 

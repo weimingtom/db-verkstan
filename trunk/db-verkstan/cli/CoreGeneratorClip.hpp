@@ -12,9 +12,9 @@ namespace Verkstan
     public:
         CoreGeneratorClip();
         ~CoreGeneratorClip();
-        property int Id
+        property unsigned short Id
         {
-            int get();
+            unsigned short get();
         }
 
         int GetPeriod();
@@ -24,6 +24,6 @@ namespace Verkstan
 
     private:
         Core::GeneratorClip* coreGeneratorClip;
-        int id;
+        unsigned short id;
     };
 }

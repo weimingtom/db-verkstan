@@ -24,23 +24,14 @@ namespace VerkstanEditor.Logic
             bytes.Clear();
             operatorDefines.Clear();
 
-            System.Console.WriteLine("Populating id directory.");
             PopulateOldIdToNewIdAndOperatorsSortedOnNewId(root, 0);
-            System.Console.WriteLine("Populating operator defines.");
             PopulateOperatorDefines(root);
             
             AddOperatorInstances();
             AddOperatorProperties();
             AddOperatorConnections();
-            // 5. Write the operators connections.
-
-            // 6. Write property animations
-
-            // 7. Write the number of timelines.
-
-            // 8. Write timelines.
-
-            // 9. Be happy!
+            AddOperatorPropertyAnimations();
+            AddTimelineOperators();
 
             WriteToFile(filename);
         }
@@ -146,12 +137,164 @@ namespace VerkstanEditor.Logic
             foreach (Operator op in operatorsSortedOnNewId)
             {
                 ushort opId = oldIdToNewId[op.BindedCoreOperator.Id];
-                foreach (Operator input in op.GetInputs())
+                ushort lastId = 0; // Used for delta encoding
+                for (int i = 0; i < op.BindedCoreOperator.GetNumberOfInputConnections(); i++)
                 {
-                    ushort id = (ushort)(oldIdToNewId[input.BindedCoreOperator.Id] - opId);
+                    // When getting input ids, it's important to use the CoreOperator.GetInputConnectionId
+                    // and not rely on the Operator.GetInputs method as the Operator.GetInputs method
+                    // isn't sorted correctly.
+                    ushort inputId = oldIdToNewId[(ushort)op.BindedCoreOperator.GetInputConnectionId(i)];
+                    ushort id = (ushort)((inputId - opId) - lastId);
                     AddToData(id);
+                    lastId = id;
                 }
             }
+        }
+        private static void AddOperatorPropertyAnimations()
+        {
+            List<KeyValuePair<Operator, Verkstan.CoreOperatorProperty>> animatedProperties = new List<KeyValuePair<Operator, Verkstan.CoreOperatorProperty>>();
+           
+            foreach (Operator op in operatorsSortedOnNewId)
+            {
+                foreach (Verkstan.CoreOperatorProperty property in op.BindedCoreOperator.Properties)
+                {
+                    if (op.GetPropertyChannel(property.Index, 0) > 0
+                        || op.GetPropertyChannel(property.Index, 1) > 0
+                        || op.GetPropertyChannel(property.Index, 2) > 0)
+                    {
+                        animatedProperties.Add(new KeyValuePair<Operator, Verkstan.CoreOperatorProperty>(op, property));
+                    }
+                }
+            }
+
+            AddToData((short)animatedProperties.Count);
+
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData((short)oldIdToNewId[pair.Key.BindedCoreOperator.Id]);
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData((byte)pair.Value.Index);
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData((byte)pair.Key.GetPropertyChannel(pair.Value.Index, 0));
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData((byte)pair.Key.GetPropertyChannel(pair.Value.Index, 1));
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData((byte)pair.Key.GetPropertyChannel(pair.Value.Index, 2));
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData(pair.Key.GetPropertyAmplify(pair.Value.Index, 0));
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData(pair.Key.GetPropertyAmplify(pair.Value.Index, 1));
+            }
+            foreach (KeyValuePair<Operator, Verkstan.CoreOperatorProperty> pair in animatedProperties)
+            {
+                AddToData(pair.Key.GetPropertyAmplify(pair.Value.Index, 2));
+            }
+        }
+        private static void AddTimelineOperators()
+        {
+            List<Operator> timelines = new List<Operator>();
+
+            foreach (Operator op in operatorsSortedOnNewId)
+            {
+                if (op.Timeline != null)
+                    timelines.Add(op);
+            }
+
+            AddToData((short)timelines.Count);
+
+            foreach (Operator op in timelines)
+            {
+                AddToData((short)oldIdToNewId[op.BindedCoreOperator.Id]);
+            }
+
+            foreach (Operator op in timelines)
+            {
+                AddToData((short)op.Timeline.GetBeats());
+            }
+            foreach (Operator op in timelines)
+            {
+                AddToData((byte)op.Timeline.GetGeneratorClips().Count);
+            }
+            foreach (Operator op in timelines)
+            {
+                AddToData((byte)op.Timeline.GetSplineClips().Count);
+            }
+            foreach (Operator op in timelines)
+            {
+                List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
+                foreach (GeneratorClip clip in generatorClips)
+                {
+                    AddToData((short)clip.GetStartBeat());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    AddToData((short)clip.GetStartBeat());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
+                foreach (GeneratorClip clip in generatorClips)
+                {
+                    AddToData((short)clip.GetEndBeat());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    AddToData((short)clip.GetEndBeat());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
+                foreach (GeneratorClip clip in generatorClips)
+                {
+                    AddToData((byte)clip.GetChannel());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<SplineClip> splineClips = op.Timeline.GetSplineClips();
+                foreach (SplineClip clip in splineClips)
+                {
+                    AddToData((short)clip.GetChannel());
+                }
+            }
+            foreach (Operator op in timelines)
+            {
+                List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
+                foreach (GeneratorClip clip in generatorClips)
+                {
+                    AddToData((byte)clip.GetGeneratorType());
+                }
+                foreach (GeneratorClip clip in generatorClips)
+                {
+                    System.Console.WriteLine("Perdiod = " + (short)clip.GetPeriodInTicks() + " and " + clip.GetPeriodInTicks());
+                    AddToData((short)clip.GetPeriodInTicks());
+                }
+            }
+
+            // TODO Splines!
+           
         }
         private static void AddToData(byte b)
         {
@@ -186,11 +329,10 @@ namespace VerkstanEditor.Logic
         }
         private static void AddToData(String str)
         {
-            AddToData((short)str.Length);
-
-            foreach (char c in str.ToCharArray())
-                foreach (byte b in BitConverter.GetBytes(c))
-                    bytes.Add(b);
+            byte[] byteArray = Encoding.GetEncoding("iso-8859-1").GetBytes(str);
+            AddToData((ushort)byteArray.Length);
+            foreach (byte b in byteArray)
+                bytes.Add(b);
         }
         private static void AddToData(Verkstan.Vector v)
         {

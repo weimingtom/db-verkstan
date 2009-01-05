@@ -24,7 +24,7 @@ namespace Verkstan
        delete coreGeneratorClip;
     }
 
-    int CoreGeneratorClip::Id::get()
+    unsigned short CoreGeneratorClip::Id::get()
     {
         return id;
     }

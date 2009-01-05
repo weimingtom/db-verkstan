@@ -50,9 +50,9 @@ public:
         char stringValue[DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH];
         D3DXCOLOR colorValue;
         D3DXVECTOR3 vectorValue;
-        int channel1;
-        int channel2;
-        int channel3;
+        unsigned char channel1;
+        unsigned char channel2;
+        unsigned char channel3;
         float amplify1;
         float amplify2;
         float amplify3;

@@ -1,5 +1,5 @@
 #include "core/loader.hpp"
-#include "64k/data.hpp"
+#include "64k/graphicsdata.hpp"
 #include "core/core.hpp"
 #define OPERATOR_HEADERS 1
 #include "core/operators.hpp"
@@ -46,8 +46,8 @@ unsigned char findLowestOperatorType(short type)
     for (int i = 0; i < instances; i++)
     {
         short index = i + 2;
-        if (data[index] < result && data[index] > type)
-            result = data[index];
+        if (graphicsData[index] < result && graphicsData[index] > type)
+            result = graphicsData[index];
     }
 
     return result;
@@ -57,7 +57,7 @@ short findNextIndexOfOperatorType(short type, short index)
 {    
     for (int i = 0; i < instances; i++)
     {
-        if (i > index && data[i + 2] == type)
+        if (i > index && graphicsData[i + 2] == type)
             return i;
     }
 
@@ -65,11 +65,11 @@ short findNextIndexOfOperatorType(short type, short index)
 }
 
 /**
- * Loads the demo by going through the data in the data.hpp header.
+ * Loads the graphics by going through the graphics data in the graphicsdata.hpp header.
  */
-void loadDemo()
+void loadGraphics()
 {
-    unsigned char* dataptr = data;
+    unsigned char* dataptr = graphicsData;
 
     // Loop through all operators and create them. Also retrieve information
     // about the operators.
@@ -163,7 +163,15 @@ void loadDemo()
                     break;
                     }
                 case 5: // String
+                    {
+                    unsigned short length = *(reinterpret_cast<unsigned short*>(dataptr));
+                    dataptr += 2;
+                    for (unsigned short charIndex = 0; charIndex < length; charIndex++)
+                        op->properties[propertyIndex].stringValue[charIndex] = *dataptr++;
+                    op->properties[propertyIndex].stringValue[length] = '\0';
                     break;
+                    }
+                   
                 }
             }
            
@@ -199,7 +207,7 @@ void loadDemo()
             numberOfInputs--;
         }
     }
-
+   
     // Load the operator's animations
     unsigned short numberOfAnimations = *(reinterpret_cast<unsigned short*>(dataptr));
     dataptr+=2;

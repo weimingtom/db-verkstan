@@ -1,1 +1,1 @@
-extern void loadDemo();
+extern void loadGraphics();

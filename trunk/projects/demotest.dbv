@@ -83,17 +83,10 @@
         </channel>
         <channel>
           <number>2</number>
-          <clip type="spline">
+          <clip type="generator">
             <dimension x="0" y="1" width="20" />
-            <splinetype>0</splinetype>
-            <controlpoints>
-              <controlpoint>
-                <dimension x="2" y="-0,9841269" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="5107" y="0,9761904" />
-              </controlpoint>
-            </controlpoints>
+            <generatortype>0</generatortype>
+            <period>2560</period>
           </clip>
         </channel>
         <channel>
@@ -257,6 +250,108 @@
           <animation channel="-1" amplify="1" />
           <animation channel="-1" amplify="1" />
         </vector>
+      </properties>
+    </operator>
+    <operator type="Timeline">
+      <name>
+      </name>
+      <dimension x="700" y="140" width="100" height="20" />
+      <properties>
+        <byte value="1">
+          <animation channel="-1" amplify="1" />
+        </byte>
+        <float value="0">
+          <animation channel="-1" amplify="1" />
+        </float>
+      </properties>
+      <timeline>
+        <channel>
+          <number>1</number>
+          <clip type="generator">
+            <dimension x="0" y="0" width="10" />
+            <generatortype>0</generatortype>
+            <period>256</period>
+          </clip>
+        </channel>
+      </timeline>
+    </operator>
+    <operator type="Camera">
+      <name>
+      </name>
+      <dimension x="700" y="120" width="100" height="20" />
+      <properties>
+        <float value="45">
+          <animation channel="-1" amplify="1" />
+        </float>
+        <int value="1024">
+          <animation channel="-1" amplify="1" />
+        </int>
+        <int value="768">
+          <animation channel="-1" amplify="1" />
+        </int>
+        <color r="255" g="0" b="255">
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+        </color>
+        <vector x="0" y="0" z="-2">
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+        </vector>
+        <vector x="0" y="0" z="0">
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+        </vector>
+        <float value="0">
+          <animation channel="-1" amplify="1" />
+        </float>
+      </properties>
+    </operator>
+    <operator type="Material">
+      <name>
+      </name>
+      <dimension x="700" y="100" width="200" height="20" />
+      <properties />
+    </operator>
+    <operator type="Text">
+      <name>
+      </name>
+      <dimension x="700" y="80" width="100" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+          <animation channel="-1" amplify="1" />
+        </color>
+        <byte value="108">
+          <animation channel="-1" amplify="1" />
+        </byte>
+        <byte value="10">
+          <animation channel="-1" amplify="1" />
+        </byte>
+        <byte value="5">
+          <animation channel="-1" amplify="1" />
+        </byte>
+        <string value="" />
+        <text>Text!</text>
+      </properties>
+    </operator>
+    <operator type="Box">
+      <name>
+      </name>
+      <dimension x="800" y="80" width="100" height="20" />
+      <properties>
+        <float value="1">
+          <animation channel="-1" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="-1" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="-1" amplify="1" />
+        </float>
       </properties>
     </operator>
   </page>

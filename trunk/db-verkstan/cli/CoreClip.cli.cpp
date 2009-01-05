@@ -42,12 +42,12 @@ namespace Verkstan
         coreClip->end = end;
     }
 
-    int CoreClip::GetChannel()
+    unsigned char CoreClip::GetChannel()
     {
         return coreClip->channel;
     }
 
-    void CoreClip::SetChannel(int channel)
+    void CoreClip::SetChannel(unsigned char channel)
     {
         coreClip->channel = channel;
     }

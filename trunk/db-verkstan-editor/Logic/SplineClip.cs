@@ -10,7 +10,7 @@ namespace VerkstanEditor.Logic
     public class SplineClip: Clip
     {
         #region Properties
-        public override int Id
+        public override ushort Id
         {
             get { return bindedSplineCoreClip.Id; }
         }
