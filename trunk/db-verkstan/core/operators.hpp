@@ -600,8 +600,8 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_DISPLACEMENTMAPOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(35, DisplacementMapOperator, -1);
-DEF_OP_FOR_EDITOR(35, "Displacement Map", DisplacementMapOperator, Mesh);
+DEF_OP_FOR_LOADER(36, DisplacementMapOperator, 2, 1, DB_FLOAT_PROP);
+DEF_OP_FOR_EDITOR(36, "Displacement Map", DisplacementMapOperator, Mesh);
 ADD_INPUT(Mesh);
 ADD_INPUT(Texture);
 ADD_FLOAT_PROP("Distance", 0.25f);
