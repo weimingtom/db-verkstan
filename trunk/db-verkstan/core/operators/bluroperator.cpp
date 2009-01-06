@@ -1,5 +1,22 @@
 #include "core/operators/bluroperator.hpp"
 
+DWORD pack(DWORD r, DWORD g, DWORD b, DWORD div, DWORD amp)
+{
+	div *= 16;
+	r = (r * amp) / div;
+	g = (g * amp) / div;
+	b = (b * amp) / div;
+
+	r = min(r, (DWORD)255);
+	g = min(g, (DWORD)255);
+	b = min(b, (DWORD)255);
+
+	return 0xff000000 |
+		(r & 0xff) |
+		(g & 0xff) << 8 |
+		(b & 0xff) << 16;
+}
+
 // Some thoughts and ideas about enhancing the code.
 // Different was of handling edges could be handled,
 // like CLAMP, WRAP and ZERO.
@@ -12,18 +29,117 @@ void BlurOperator::process()
     if (texture != 0)
         delete texture;
 
-    Texture* tmp;
-    Texture* out = getInput(0)->texture->clone();   
-    Texture* in = new Texture();
+    unsigned char type = getByteProperty(0) + 1;
+    unsigned char direction = getByteProperty(1) + 1;
+    unsigned char width = getByteProperty(2) + 1;
+    unsigned char amplify = getByteProperty(3);
+
+    Texture* in = getInput(0)->texture->clone();   
+/*
+	if (width <= 1)
+	{
+		texture = in;
+		return;
+	}
+*/
+    Texture* out = new Texture();
 
     in->lock();
     out->lock();
 
-    unsigned char type = getByteProperty(0);
-    unsigned char direction = getByteProperty(1);
-    unsigned char width = getByteProperty(2);
-    unsigned char amplify = getByteProperty(3);
 
+	if (direction & 1)
+	{
+		// Repeat box blur
+		for (int t = 0; t < type; t++)
+		{
+			// For each line
+			for (int y = 0; y < 256; y++)
+			{
+				DWORD r = 0, g = 0, b = 0;
+				for (int x = 0; x < width; x++)
+				{
+					DWORD c = in->getPixel(x, y);
+					r += c & 0xff;
+					g += (c >> 8) & 0xff;
+					b += (c >> 16) & 0xff;
+				}
+
+				for (int x = 0; x < 256; x++)
+				{
+					out->putPixel((x + width / 2) & 0xff, y, pack(r, g, b, width, amplify));
+
+					DWORD c1 = in->getPixel((x + width) & 0xff, y);
+					DWORD c2 = in->getPixel(x, y);
+					r += c1 & 0xff;
+					g += (c1 >> 8) & 0xff;
+					b += (c1 >> 16) & 0xff;
+					r -= c2 & 0xff;
+					g -= (c2 >> 8) & 0xff;
+					b -= (c2 >> 16) & 0xff;
+				}
+			}
+
+			{
+				Texture *tmp = out;
+				out = in;
+				in = tmp;
+			}
+		}
+	}
+
+
+	if (direction & 2)
+	{
+		// Repeat box blur
+		for (int t = 0; t < type; t++)
+		{
+			// For each column
+			for (int x = 0; x < 256; x++)
+			{
+				DWORD r = 0, g = 0, b = 0;
+				for (int y = 0; y < width; y++)
+				{
+					DWORD c = in->getPixel(x, y);
+					r += c & 0xff;
+					g += (c >> 8) & 0xff;
+					b += (c >> 16) & 0xff;
+				}
+
+				for (int y = 0; y < 256; y++)
+				{
+					out->putPixel(x, (y + width / 2) & 0xff, pack(r, g, b, width, amplify));
+
+					DWORD c1 = in->getPixel(x, (y + width) & 0xff);
+					DWORD c2 = in->getPixel(x, y);
+					r += c1 & 0xff;
+					g += (c1 >> 8) & 0xff;
+					b += (c1 >> 16) & 0xff;
+					r -= c2 & 0xff;
+					g -= (c2 >> 8) & 0xff;
+					b -= (c2 >> 16) & 0xff;
+				}
+			}
+
+			{
+				Texture *tmp = out;
+				out = in;
+				in = tmp;
+			}
+		}
+	}
+
+
+	
+    in->unlock();
+    out->unlock();
+
+    texture = in;
+
+    delete out;
+
+
+/*
     width = width % 2 == 0 ? width + 1 : width;
     width = width < 1 ? 1 : width;
     amplify = amplify > 32 ? 32 : amplify; 
@@ -162,5 +278,5 @@ void BlurOperator::process()
     texture = out->clone();
 
     delete in;
-    delete out;
+    delete out;*/
 }

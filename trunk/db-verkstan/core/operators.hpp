@@ -472,7 +472,7 @@ DEF_OP_FOR_EDITOR(23, "Blur", BlurOperator, Texture);
 ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
 ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
 ADD_BYTE_PROP("Width", 1);
-ADD_BYTE_PROP("Amplify", 5);
+ADD_BYTE_PROP("Amplify", 16);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
