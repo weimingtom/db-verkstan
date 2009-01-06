@@ -23,16 +23,6 @@ void GlowOperator::process()
     D3DXCOLOR blackColor = D3DCOLOR_ARGB(0, 0, 0, 0);
 
     texture->lock();
-
-    DWORD* pixels = (DWORD*)texture->d3d9LockedRect.pBits;
-    DWORD* inputPixels;
-    
-    if (input != 0)
-        inputPixels = (DWORD*)input->texture->d3d9LockedRect.pBits;
-    else
-        inputPixels = pixels;
-
-    int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
     
     for (int y = 0; y < 256; y++)
     {
@@ -55,12 +45,13 @@ void GlowOperator::process()
                 a = d - alpha;
             }
             
-            a = a < 0.0f ? 0.0f : a;
+            if (a < 0.0f)
+                continue;
 
             D3DXCOLOR resultColor;
-            D3DXCOLOR inputColor = inputPixels[pitch * y + x];
+            D3DXCOLOR inputColor = texture->getPixel(x, y);
             D3DXColorLerp(&resultColor, &inputColor, &color, a);
-            pixels[pitch * y + x] = resultColor;
+            texture->putPixel(x, y, resultColor);
         }
     }
 

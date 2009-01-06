@@ -161,13 +161,13 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(1, PixelsOperator, -1, 4, 
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP, 
-                  DB_INT_PROP, 
-                  DB_INT_PROP);
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(1, "Pixels", PixelsOperator, Texture);
 ADD_COLOR_PROP("Color 1", 255, 255, 255);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
-ADD_INT_PROP("Count", 255);
-ADD_INT_PROP("Seed",  0);
+ADD_BYTE_PROP("Count", 1);
+ADD_BYTE_PROP("Seed",  0);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

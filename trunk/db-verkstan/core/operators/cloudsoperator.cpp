@@ -38,7 +38,7 @@ void CloudsOperator::divideGrid(int x,
         //c = c * c * (3 - c * 2);
         D3DXCOLOR color;
         D3DXColorLerp(&color, &color1, &color2, c);
-        pixels[pitch * y + x] = color; 
+        texture->putPixel(x, y, color); 
     }
 }
 
@@ -51,9 +51,6 @@ void CloudsOperator::process()
     color2 = getColorProperty(1);
     srand(getByteProperty(3));
     texture->lock();
-
-    pixels = (DWORD*)texture->d3d9LockedRect.pBits;
-    pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
 
 	int scale = getByteProperty(2);
 	int size = 1 << scale;

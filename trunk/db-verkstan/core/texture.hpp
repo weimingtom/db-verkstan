@@ -15,9 +15,6 @@ public:
     ~Texture();
     void lock();
     void unlock();
-    DWORD getPixel(int x, int y);
-    DWORD getPixel(float x, float y);
-    void putPixel(int x, int y, DWORD c);
     void fillRectangle(int x, 
                        int y,
                        int width,
@@ -30,4 +27,18 @@ public:
     bool d3d9TextureDirty;
     D3DLOCKED_RECT d3d9LockedRect; 
     LPDIRECT3DTEXTURE9 d3d9Texture;
+
+    // Inline functions
+    DWORD getPixel(int x, int y)
+    {
+        return ((DWORD*)d3d9LockedRect.pBits)[256 * y + x];
+    }
+    DWORD getPixel(float x, float y)
+    {
+        return ((DWORD*)d3d9LockedRect.pBits)[256 * (int)y + (int)x];
+    }
+    void putPixel(int x, int y, DWORD c)
+    {
+        ((DWORD*)d3d9LockedRect.pBits)[256 * y + x] = c;
+    }
 };

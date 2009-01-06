@@ -60,24 +60,6 @@ void Texture::unlock()
     d3d9Surface->UnlockRect();
 }
 
-DWORD Texture::getPixel(int x, int y)
-{
-    DWORD* pixels = (DWORD*)d3d9LockedRect.pBits;
-    return pixels[d3d9LockedRect.Pitch / sizeof(DWORD) * y + x];
-}
-
-DWORD Texture::getPixel(float x, float y)
-{
-    // TODO Should use billinear interpolation or something.
-    return getPixel((int)x, (int)y);
-}
-
-void Texture::putPixel(int x, int y, DWORD c)
-{
-    DWORD* pixels = (DWORD*)d3d9LockedRect.pBits;
-    pixels[d3d9LockedRect.Pitch / sizeof(DWORD) * y + x] = c;
-}
-
 void Texture::fillRectangle(int x, 
                             int y,
                             int width,
@@ -87,8 +69,12 @@ void Texture::fillRectangle(int x,
     lock();
     DWORD* pixels = (DWORD*)d3d9LockedRect.pBits;
     int pitch = d3d9LockedRect.Pitch / sizeof(DWORD);
-    for (int j = y; j < y + height; j++)
-        for (int i = x; i < x + width; i++)
+    int h = y + height;
+    h = h > 255 ? 255 : h;
+    int w = x + width;
+    w = w > 255 ? 255 : w;
+    for (int j = y; j <= h; j++)
+        for (int i = x; i <= w; i++)
             pixels[pitch * j + i] =  c;
     unlock();
 }
