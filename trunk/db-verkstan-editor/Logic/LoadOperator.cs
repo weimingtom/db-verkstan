@@ -204,10 +204,9 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void OnOperatorAdded(Operator op)
         {
-            System.Console.WriteLine("OnOperatorAdded. op.Name="+op.Name+" targetName="+targetName);
             // Check if this load operator has the operator as target.
             // If so, update the target reference.
-            if (op.Name == targetName)
+            if (op.Name != null && op.Name == targetName)
                 SetStringProperty(0, targetName);
         }
         #endregion

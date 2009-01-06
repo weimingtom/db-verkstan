@@ -312,7 +312,13 @@ namespace VerkstanEditor.Gui
         private void page_Removed(Page.EventArgs e)
         {
             foreach (Operator op in e.Operators)
+            {
+                if (ViewedOperator == op)
+                    ViewedOperator = null;
+                if (ViewedOperatorProperties == op)
+                    ViewedOperatorProperties = null;
                 Invalidate(op.Dimension);
+            }
         }
         private void page_Moved(Page.EventArgs e)
         {
