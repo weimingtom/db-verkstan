@@ -108,6 +108,9 @@ namespace VerkstanEditor.Logic
         }
         public override void StackConnectChangedUpwards()
         {
+            foreach (Operator op in senders)
+                op.StackConnectChangedUpwards();
+
             OnStateChanged();
         }
         public override void CascadeStackConnectChangedDownwards()
@@ -207,7 +210,10 @@ namespace VerkstanEditor.Logic
             // Check if this load operator has the operator as target.
             // If so, update the target reference.
             if (op.Name != null && op.Name == targetName)
+            {
                 SetStringProperty(0, targetName);
+                CascadeStackConnectChangedDownwards();
+            }
         }
         #endregion
 

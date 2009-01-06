@@ -81,9 +81,9 @@ namespace VerkstanEditor.Logic
         {
             List<Operator> result = new List<Operator>();
 
-            foreach (Operator op in senders)
-                foreach (Operator opp in op.GetSenderOperators())
-                    result.Add(opp);
+            foreach (Operator sender in senders)
+                foreach (Operator senderSender in sender.GetSenderOperators())
+                    result.Add(senderSender);
            
             return result;
         }

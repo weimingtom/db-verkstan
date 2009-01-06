@@ -73,18 +73,18 @@ namespace VerkstanEditor.Logic
         public override List<Operator> GetReceiverOperators()
         {
             List<Operator> result = new List<Operator>();
-            foreach (Operator op in receivers)
-                foreach (Operator opp in op.GetReceiverOperators())
-                    result.Add(op);
+            foreach (Operator receiver in receivers)
+                foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
+                    result.Add(receiverReceiver);
 
             return result;
         }
         public override List<Operator> GetSenderOperators()
         {
             List<Operator> result = new List<Operator>();
-            foreach (Operator op in senders)
-                foreach (Operator opp in op.GetSenderOperators())
-                    result.Add(opp);
+            foreach (Operator sender in senders)
+                foreach (Operator senderSender in sender.GetSenderOperators())
+                    result.Add(senderSender);
 
             return result;
         }
@@ -92,9 +92,9 @@ namespace VerkstanEditor.Logic
         {
             List<Operator> result = new List<Operator>();
 
-            foreach (Operator op in senders)
-                foreach (Operator opp in op.GetSenderOperators())
-                    result.Add(opp);
+            foreach (Operator sender in senders)
+                foreach (Operator senderSender in sender.GetSenderOperators())
+                    result.Add(senderSender);
            
             return result;
         }
