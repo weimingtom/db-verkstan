@@ -224,12 +224,12 @@ DEF_OP_FOR_LOADER(5, RotozoomOperator, 1, 4,
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP, 
-                  DB_FLOAT_PROP);
+                  DB_BYTE_PROP);
 DEF_OP_FOR_EDITOR(5, "Rotozoom", RotozoomOperator, Texture);
 ADD_BYTE_PROP("Center X", 128);
 ADD_BYTE_PROP("Center Y", 128);
 ADD_BYTE_PROP("Rotation", 0);
-ADD_FLOAT_PROP("Zoom",    1.0f);
+ADD_BYTE_PROP("Zoom",    128);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

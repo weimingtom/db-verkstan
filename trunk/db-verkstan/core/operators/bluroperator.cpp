@@ -19,11 +19,6 @@ void BlurOperator::process()
     in->lock();
     out->lock();
 
-    DWORD* inPixels = (DWORD*)in->d3d9LockedRect.pBits;
-    DWORD* outPixels = (DWORD*)out->d3d9LockedRect.pBits;
-
-    int pitch = in->d3d9LockedRect.Pitch / sizeof(DWORD);
-
     unsigned char type = getByteProperty(0);
     unsigned char direction = getByteProperty(1);
     unsigned char width = getByteProperty(2);
@@ -46,8 +41,6 @@ void BlurOperator::process()
         tmp = in;
         in = out;
         out = tmp;
-        inPixels = (DWORD*)in->d3d9LockedRect.pBits;
-        outPixels = (DWORD*)out->d3d9LockedRect.pBits;
 
         // If we should blur along the x-axis.
         if (direction == 0 || direction == 2)
@@ -62,7 +55,7 @@ void BlurOperator::process()
                
                 for (int i = 0; i < width; ++i)
                 {
-                    D3DCOLOR c = inPixels[y * pitch + i];
+                    D3DCOLOR c = in->getPixel(i, y);
                     //suma += D3DCOLOR_A(c);
                     sumr += D3DCOLOR_R(c) / w;
                     sumg += D3DCOLOR_G(c) / w;
@@ -83,9 +76,9 @@ void BlurOperator::process()
                     g = g > 255 ? 255 : g;
                     b = b > 255 ? 255 : b;
 
-                    outPixels[y * pitch + ox] = D3DCOLOR_XRGB(r, g, b);
+                    out->putPixel(ox, y, D3DCOLOR_XRGB(r, g, b));
                     
-                    D3DCOLOR c1 = inPixels[y * pitch + x];
+                    D3DCOLOR c1 = in->getPixel(x, y);
                     //suma -= D3DCOLOR_A(c1);
                     sumr -= D3DCOLOR_R(c1) / w;
                     sumg -= D3DCOLOR_G(c1) / w;
@@ -93,7 +86,7 @@ void BlurOperator::process()
 
                     int ex = (x + width) % 256;
 
-                    D3DCOLOR c2 = inPixels[y * pitch + ex];
+                    D3DCOLOR c2 = in->getPixel(ex, y);
                     //suma += D3DCOLOR_A(c2);
                     sumr += D3DCOLOR_R(c2) / w;
                     sumg += D3DCOLOR_G(c2) / w;
@@ -110,8 +103,6 @@ void BlurOperator::process()
             tmp = in;
             in = out;
             out = tmp;
-            inPixels = (DWORD*)in->d3d9LockedRect.pBits;
-            outPixels = (DWORD*)out->d3d9LockedRect.pBits;
         }
 
         // If we should blur along the y-axis.
@@ -127,7 +118,7 @@ void BlurOperator::process()
                
                 for (int i = 0; i < width; ++i)
                 {
-                    D3DCOLOR c = inPixels[i * pitch + x];
+                    D3DCOLOR c = in->getPixel(x, i);
                     //suma += D3DCOLOR_A(c);
                     sumr += D3DCOLOR_R(c) / w;
                     sumg += D3DCOLOR_G(c) / w;
@@ -147,16 +138,16 @@ void BlurOperator::process()
                     g = g > 255 ? 255 : g;
                     b = b > 255 ? 255 : b;
 
-                    outPixels[oy * pitch + x] = D3DCOLOR_XRGB(r, g, b);
+                    out->putPixel(x, oy, D3DCOLOR_XRGB(r, g, b));
                     
-                    D3DCOLOR c1 = inPixels[y * pitch + x];
+                    D3DCOLOR c1 = in->getPixel(x, y);
                     sumr -= D3DCOLOR_R(c1) / w;
                     sumg -= D3DCOLOR_G(c1) / w;
                     sumb -= D3DCOLOR_B(c1) / w;
 
                     int ey = (y + width) % 256;
 
-                    D3DCOLOR c2 = inPixels[ey * pitch + x];
+                    D3DCOLOR c2 = in->getPixel(x, ey);
                     sumr += D3DCOLOR_R(c2) / w;
                     sumg += D3DCOLOR_G(c2) / w;
                     sumb += D3DCOLOR_B(c2) / w;
