@@ -36,14 +36,12 @@
 // We includes all operator defines to create the variables.
 #define OPERATOR_DEFINES 1
 #include "core/operators.hpp"
-#undef OPERATOR_DEFINES 
-
-short instances;
+#undef OPERATOR_DEFINES
 
 unsigned char findLowestOperatorType(short type)
 {
     unsigned char result = 255;
-    for (int i = 0; i < instances; i++)
+    for (int i = 0; i < numberOfOperators; i++)
     {
         short index = i + 2;
         if (graphicsData[index] < result && graphicsData[index] > type)
@@ -55,7 +53,7 @@ unsigned char findLowestOperatorType(short type)
 
 short findNextIndexOfOperatorType(short type, short index)
 {    
-    for (int i = 0; i < instances; i++)
+    for (int i = 0; i < numberOfOperators; i++)
     {
         if (i > index && graphicsData[i + 2] == type)
             return i;
@@ -73,15 +71,15 @@ void loadGraphics()
 
     // Loop through all operators and create them. Also retrieve information
     // about the operators.
-    instances = *dataptr;
+    numberOfOperators = *dataptr;
     dataptr += 2;
 
     // These variables contain information about the operators.
-    unsigned char* instanceNumberOfProperties = new unsigned char[instances];
-    int* instancePropertyTypes = new int[instances];
-    char* instanceNumberOfConstantInputs = new char[instances];
+    unsigned char* instanceNumberOfProperties = new unsigned char[numberOfOperators];
+    int* instancePropertyTypes = new int[numberOfOperators];
+    char* instanceNumberOfConstantInputs = new char[numberOfOperators];
 
-    for (short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+    for (short operatorIndex = 0; operatorIndex < numberOfOperators; operatorIndex++)
     {
         unsigned char id = *dataptr++;
         // We redefine the macros to instanciate operators and fill the instance variables with values.
@@ -178,8 +176,8 @@ void loadGraphics()
         }
     }
     // Load the operators inputs
-    unsigned char* instanceNumberOfInputs = new unsigned char[instances];
-    for (unsigned short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+    unsigned char* instanceNumberOfInputs = new unsigned char[numberOfOperators];
+    for (unsigned short operatorIndex = 0; operatorIndex < numberOfOperators; operatorIndex++)
     {
         if (instanceNumberOfConstantInputs[operatorIndex] == -1)
             instanceNumberOfInputs[operatorIndex] = *dataptr++;
@@ -187,7 +185,7 @@ void loadGraphics()
             instanceNumberOfInputs[operatorIndex] = instanceNumberOfConstantInputs[operatorIndex];
     }
    
-    for (unsigned short operatorIndex = 0; operatorIndex < instances; operatorIndex++)
+    for (unsigned short operatorIndex = 0; operatorIndex < numberOfOperators; operatorIndex++)
     {
         unsigned char numberOfInputs = instanceNumberOfInputs[operatorIndex];
         unsigned short inputIndex;

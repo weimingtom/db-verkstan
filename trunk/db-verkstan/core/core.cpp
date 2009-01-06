@@ -2,4 +2,4 @@
 
 Clip* clips[DB_MAX_CLIPS];
 Operator* operators[DB_MAX_OPERATORS];
-int beat = 0;
+short numberOfOperators;

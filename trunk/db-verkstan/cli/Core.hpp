@@ -11,7 +11,6 @@ namespace Verkstan
 {
     namespace Core
     {
-        using ::beat;
         using ::clips;
         using ::operators;
         using ::Operator;

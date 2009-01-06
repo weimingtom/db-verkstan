@@ -9,4 +9,4 @@
 
 extern Clip* clips[DB_MAX_CLIPS];
 extern Operator* operators[DB_MAX_OPERATORS];
-extern int beat;
+extern short numberOfOperators;

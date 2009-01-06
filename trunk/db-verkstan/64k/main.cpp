@@ -21,6 +21,18 @@ extern "C"
 #include "core/metronome.hpp"
 #include "synth.h"
 
+void drawProgressBar(float progress)
+{
+    HDC hdc = GetDC(globalWindow);
+    SelectObject(hdc, CreateSolidBrush(0x0045302c));
+    Rectangle(hdc, 0, 0, 640, 480);
+
+    SelectObject(hdc, CreateSolidBrush(0x00705030));
+    Rectangle(hdc, 20, 220, 600, 260);
+    SelectObject(hdc, CreateSolidBrush(0x00f0d0b0));
+    Rectangle(hdc, 20, 220, 20 + (int)(580 * progress), 260);
+}
+
 LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) 
 {
     if (msg == WM_KEYDOWN && VK_ESCAPE == wParam)
@@ -103,14 +115,16 @@ int WINAPI WinMain(HINSTANCE instance,
 
     D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
+    drawProgressBar(0.0f);
     Synth* synth = new Synth(globalWindow);
-
     loadGraphics();
 
     // Do a process before the demo starts.
-    for (unsigned short i = 0; i < DB_MAX_OPERATORS; i++)
-        if (operators[i] != 0)
-            operators[i]->cascadeProcess();
+    for (unsigned short i = 0; i < numberOfOperators; i++)
+    {
+        operators[i]->cascadeProcess();
+        drawProgressBar((i + 1) / (float)numberOfOperators);
+    }
 
     startMetronome();
 

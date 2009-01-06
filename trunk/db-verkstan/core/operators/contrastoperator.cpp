@@ -8,9 +8,6 @@ void ContrastOperator::process()
     Texture* srcTexture = getInput(0)->texture;
     texture->lock();
     srcTexture->lock();
-    DWORD* destPixels = (DWORD*)texture->d3d9LockedRect.pBits;
-    DWORD* srcPixels = (DWORD*)srcTexture->d3d9LockedRect.pBits;
-    int pitch = texture->d3d9LockedRect.Pitch / sizeof(DWORD);
 
     float contrast = powf((getByteProperty(0) / 128.0f), 3.0f);
 
@@ -18,7 +15,7 @@ void ContrastOperator::process()
     {
         for (int x = 0; x < 256; x++)
         {
-            D3DCOLOR srcColor = srcPixels[x + y * pitch];
+            D3DCOLOR srcColor = srcTexture->getPixel(x, y);
             int r = (int)((D3DCOLOR_R(srcColor) - 128.0f) * contrast + 128.0f);
             int g = (int)((D3DCOLOR_G(srcColor) - 128.0f) * contrast + 128.0f);
             int b = (int)((D3DCOLOR_B(srcColor) - 128.0f) * contrast + 128.0f);
@@ -35,7 +32,7 @@ void ContrastOperator::process()
                 b = 0;
             if (b > 255)
                 b = 255;
-            destPixels[x + y * pitch] = D3DCOLOR_XRGB(r, g, b);
+            texture->putPixel(x, y, D3DCOLOR_XRGB(r, g, b));
         }
     }
 
