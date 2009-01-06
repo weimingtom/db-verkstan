@@ -306,9 +306,13 @@ namespace VerkstanEditor.Logic
             bindedCoreOperator.ClearOutputConnections();
 
             List<Operator> receiversToConsiderAsOutput = new List<Operator>();
-            foreach (Operator op in receivers)
-                foreach (Operator opp in op.GetReceiverOperators())
-                    receiversToConsiderAsOutput.Add(opp);
+            foreach (Operator receiver in receivers)
+                foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
+                    receiversToConsiderAsOutput.Add(receiverReceiver);
+
+            foreach (Operator receiver in loads)
+                foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
+                    receiversToConsiderAsOutput.Add(receiverReceiver);
 
             int numberOfOutputs = 0;
             foreach (Operator op in receiversToConsiderAsOutput)

@@ -93,7 +93,12 @@ namespace VerkstanEditor.Logic
         }
         public override List<Operator> GetReceiverOperators()
         {
-            return new List<Operator>();
+            List<Operator> result = new List<Operator>();
+            foreach (Operator receiver in receivers)
+                foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
+                    result.Add(receiverReceiver);
+
+            return result;
         }
         public override List<Operator> GetSenderOperators()
         {
@@ -108,8 +113,8 @@ namespace VerkstanEditor.Logic
         }
         public override void StackConnectChangedUpwards()
         {
-            foreach (Operator op in senders)
-                op.StackConnectChangedUpwards();
+            if (target != null)
+                target.StackConnectChangedUpwards();
 
             OnStateChanged();
         }
