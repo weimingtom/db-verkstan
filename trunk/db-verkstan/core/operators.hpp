@@ -258,7 +258,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_CYLINDEROPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 5, 
+DEF_OP_FOR_LOADER(8, CylinderOperator, 0, 7, 
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP, 

@@ -71,7 +71,12 @@ namespace VerkstanEditor.Logic
         }
         public override List<Operator> GetReceiverOperators()
         {
-            return new List<Operator>();
+            List<Operator> result = new List<Operator>();
+            foreach (Operator receiver in loads)
+                foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
+                    result.Add(receiverReceiver);
+
+            return result;
         }
         public override List<Operator> GetSenderOperators()
         {
