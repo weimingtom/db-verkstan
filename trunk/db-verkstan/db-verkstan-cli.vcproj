@@ -807,6 +807,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\twodimensionalplaneoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\twodimensionalplaneoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\weldoperator.cpp"
 					>
 				</File>

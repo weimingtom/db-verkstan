@@ -387,7 +387,8 @@ void loadGraphics()
         for (unsigned short i = 0; i < numberOfSplines; i++)
         {
             unsigned short clipId = operators[timelineOperatorIndexes[timelineIndex]]->timelineClips[numberOfGenerators + i];
-            ((SplineClip*)clips[clipId])->numberOfControlPoints = *dataptr++;   
+            unsigned char numberOfControlPoints = *dataptr++;
+            ((SplineClip*)clips[clipId])->numberOfControlPoints = numberOfControlPoints;   
         }
     }
      // Spline ticks
@@ -422,8 +423,11 @@ void loadGraphics()
             short lastValue = 0;
             for (unsigned char controlPointIndex = 0; controlPointIndex < clip->numberOfControlPoints; controlPointIndex++)
             {
-                clip->controlPoints[controlPointIndex].value = *dataptr++ + lastValue; 
-                lastValue = clip->controlPoints[controlPointIndex].value;
+                unsigned char uvalue = *dataptr++;
+
+                char value = uvalue - 128; 
+                clip->controlPoints[controlPointIndex].value = value + lastValue; 
+                lastValue = uvalue;
             }
         }
     }

@@ -95,16 +95,32 @@ int WINAPI WinMain(HINSTANCE instance,
                                  D3DCREATE_HARDWARE_VERTEXPROCESSING,
                                  &d3dPresentParameters,
                                  &globalDirect3DDevice);
+    D3DVIEWPORT9 viewport;
+    viewport.X = 0;
+    viewport.Y = 0;
+    viewport.Width = WINDOW_WIDTH;
+    viewport.Height = WINDOW_HEIGHT;
+    viewport.MinZ   = 0.0f;
+    viewport.MaxZ   = 1.0f;
+    globalDirect3DDevice->SetViewport(&viewport);
+
     globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
     globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
     globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
     globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
     globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
+    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
+    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+    globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+    globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+    globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
 
-    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
-    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
-    globalDirect3DDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
+
     globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
     globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
     globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
@@ -112,6 +128,39 @@ int WINAPI WinMain(HINSTANCE instance,
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+
+    D3DLIGHT9 d3dLight;
+    ZeroMemory(&d3dLight, sizeof(d3dLight));
+    d3dLight.Type = D3DLIGHT_DIRECTIONAL;
+  
+    d3dLight.Diffuse.r = 1.0f;
+    d3dLight.Diffuse.g = 1.0f;
+    d3dLight.Diffuse.b = 1.0f;
+    d3dLight.Diffuse.a = 1.0f;
+
+    D3DVECTOR position;
+    position.x = -1.0f;
+    position.y = -1.0f;
+    position.z = -1.0f;
+    d3dLight.Position = position;
+
+    D3DVECTOR direction;
+    direction.x = 1.0f;
+    direction.y = 0.0f;
+    direction.z = 0.0f;
+    d3dLight.Direction = direction;
+
+    globalDirect3DDevice->SetLight(0, &d3dLight); 
+    globalDirect3DDevice->LightEnable(0, TRUE);
+
+    D3DMATERIAL9 d3d9Material;
+    ZeroMemory(&d3d9Material, sizeof(d3d9Material));
+    d3d9Material.Diffuse.r = d3d9Material.Ambient.r = 0.5f;
+    d3d9Material.Diffuse.g = d3d9Material.Ambient.g = 0.5f;
+    d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
+    d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
+    
+    globalDirect3DDevice->SetMaterial(&d3d9Material);
 
     D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
@@ -149,30 +198,6 @@ int WINAPI WinMain(HINSTANCE instance,
         else
         {  
             operators[0]->cascadeProcess();
-            D3DLIGHT9 d3dLight;
-            ZeroMemory(&d3dLight, sizeof(d3dLight));
-            d3dLight.Type = D3DLIGHT_DIRECTIONAL;
-          
-            d3dLight.Diffuse.r = 1.0f;
-            d3dLight.Diffuse.g = 1.0f;
-            d3dLight.Diffuse.b = 1.0f;
-            d3dLight.Diffuse.a = 1.0f;
-
-            D3DVECTOR position;
-            position.x = -1.0f;
-            position.y = -1.0f;
-            position.z = -1.0f;
-            d3dLight.Position = position;
-
-            D3DVECTOR direction;
-            direction.x = 1.0f;
-            direction.y = 0.0f;
-            direction.z = 0.0f;
-            d3dLight.Direction = direction;
-
-            globalDirect3DDevice->SetLight(0, &d3dLight); 
-            globalDirect3DDevice->LightEnable(0, TRUE);
-
             operators[0]->preRender(tick);
 
             globalWorldMatrixStack->LoadIdentity();

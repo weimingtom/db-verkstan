@@ -37,6 +37,7 @@
 #include "core/operators/weldoperator.hpp"
 #include "core/operators/displacementmapoperator.hpp"
 #include "core/operators/spherizeoperator.hpp"
+#include "core/operators/twodimensionalplaneoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -82,6 +83,7 @@ namespace Verkstan
 		using ::WeldOperator;
 		using ::DisplacementMapOperator;
 		using ::SpherizeOperator;
+        using ::TwoDimensionalPlaneOperator;
     }
 }
 #endif
@@ -126,6 +128,7 @@ ADD_OP_TO_CAT("Normals Shader",  "Model");
 ADD_OP_TO_CAT("Camera",          "Renderer");
 ADD_OP_TO_CAT("Timeline",        "Renderer");
 ADD_OP_TO_CAT("Transform",       "Renderer");
+ADD_OP_TO_CAT("2D Plane",        "Renderer");
 #endif
 
 #define DB_BYTE_PROP 0x00
@@ -567,7 +570,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MERGETEXTURESOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(32, MergeTexturesOperator, 1, 1, 
+DEF_OP_FOR_LOADER(32, MergeTexturesOperator, -1, 1, 
                   DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(32, "Merge Textures", MergeTexturesOperator, Texture);
 ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
@@ -620,6 +623,14 @@ DEF_OP_FOR_EDITOR(37, "Spherize", SpherizeOperator, Mesh);
 ADD_INPUT(Mesh);
 ADD_FLOAT_PROP("Radius", 1.0f);
 ADD_FLOAT_PROP("Amount", 1.0f);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_2DPLANEOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(38, TwoDimensionalPlaneOperator, -1);
+DEF_OP_FOR_EDITOR(38, "2D Plane", TwoDimensionalPlaneOperator, Renderer);
+ADD_INPUT(Texture);
+ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
 

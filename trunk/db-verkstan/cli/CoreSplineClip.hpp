@@ -20,7 +20,7 @@ namespace Verkstan
         int GetNumberOfControlPoints();
         void SetControlPoint(int index, int tick, char value);
         int GetControlPointTick(int index);
-        float GetControlPointValue(int index);
+        char GetControlPointValue(int index);
         void SetSplineType(int type);
         int GetSplineType();
 

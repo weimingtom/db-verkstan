@@ -50,7 +50,7 @@ namespace Verkstan
         return coreSplineClip->controlPoints[index].tick;
     }
 
-    float CoreSplineClip::GetControlPointValue(int index)
+    char CoreSplineClip::GetControlPointValue(int index)
     {
         return coreSplineClip->controlPoints[index].value;
     }

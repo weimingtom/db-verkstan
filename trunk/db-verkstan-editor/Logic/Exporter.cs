@@ -320,33 +320,38 @@ namespace VerkstanEditor.Logic
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
+                    int lastTick = 0; // Used for delta encoding.
                     for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
                     {
                         // Write only the control points that are actually needed.
-                        int lastTick = 0; // Used for delta encoding.
                         if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
                         {
                             int tick = clip.BindedSplineCoreClip.GetControlPointTick(i) - lastTick;
+                            System.Console.WriteLine("Spline tick="+tick+" orginal="+clip.BindedSplineCoreClip.GetControlPointTick(i));
                             AddToData(tick);
                             lastTick = clip.BindedSplineCoreClip.GetControlPointTick(i);
                         }
                     }  
                 }
             }
+            System.Console.WriteLine("Max=" + sbyte.MaxValue + " Min="+sbyte.MinValue);
             foreach (Operator op in timelines)
             {
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
+                    int lastValue = 0; // Used for delta encoding.
                     for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
                     {
                         // Write only the control points that are actually needed.
-                        sbyte lastValue = 0; // Used for delta encoding.
                         if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
                         {
-                            sbyte value = (sbyte)(clip.BindedSplineCoreClip.GetControlPointValue(i) * 128 - lastValue);
-                            AddToData(value);
-                            value = (sbyte)(clip.BindedSplineCoreClip.GetControlPointValue(i) * 128);
+                            int value = clip.BindedSplineCoreClip.GetControlPointValue(i) + 128;
+                            value -= lastValue;
+
+                            System.Console.WriteLine("Spline value=" + value + " orginal=" + clip.BindedSplineCoreClip.GetControlPointValue(i));
+                            AddToData((byte)value);
+                            lastValue = value;
                         }
                     }
                 }
