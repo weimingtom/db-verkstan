@@ -592,8 +592,9 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_DARKBITSLOGOOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(34, DarkbitsLogoOperator, -1);
+DEF_OP_FOR_LOADER(34, DarkbitsLogoOperator, -1, 1, DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(34, "Darkbits Logo", DarkbitsLogoOperator, Texture);
+ADD_ENUM_PROP("Outline", "No,Yes", "No");
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

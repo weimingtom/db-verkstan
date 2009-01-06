@@ -6637,7 +6637,13 @@ void DarkbitsLogoOperator::process()
         }
     }
 
-    for (int i = 0; i < 6; i++)
+    short iterations;
+    if (getByteProperty(0))
+        iterations = 6;
+    else
+        iterations = 4;
+
+    for (int i = 0; i < iterations; i++)
     {
         short width = 2;
         short offset = -2;
