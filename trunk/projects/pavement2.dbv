@@ -38,29 +38,6 @@
         </byte>
       </properties>
     </operator>
-    <operator type="Pixels">
-      <name>
-      </name>
-      <dimension x="500" y="60" width="100" height="20" />
-      <properties>
-        <color r="0" g="0" b="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <byte value="52">
-          <animation channel="0" amplify="1" />
-        </byte>
-        <byte value="0">
-          <animation channel="0" amplify="1" />
-        </byte>
-      </properties>
-    </operator>
     <operator type="Invert">
       <name>
       </name>
@@ -90,58 +67,6 @@
         <enum value="0">
           <animation channel="0" amplify="1" />
         </enum>
-      </properties>
-    </operator>
-    <operator type="Blur">
-      <name>
-      </name>
-      <dimension x="500" y="80" width="100" height="20" />
-      <properties>
-        <enum value="2">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <byte value="17">
-          <animation channel="0" amplify="1" />
-        </byte>
-        <byte value="13">
-          <animation channel="0" amplify="1" />
-        </byte>
-      </properties>
-    </operator>
-    <operator type="Merge Textures">
-      <name>
-      </name>
-      <dimension x="400" y="100" width="200" height="20" />
-      <properties>
-        <enum value="2">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Clouds">
-      <name>
-      </name>
-      <dimension x="400" y="80" width="100" height="20" />
-      <properties>
-        <color r="0" g="0" b="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="128" g="128" b="128">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <enum value="4">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <byte value="1">
-          <animation channel="0" amplify="1" />
-        </byte>
       </properties>
     </operator>
     <operator type="Blur">
@@ -209,16 +134,6 @@
       <name>
       </name>
       <dimension x="700" y="200" width="200" height="20" />
-      <properties>
-        <enum value="4">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Merge Textures">
-      <name>
-      </name>
-      <dimension x="600" y="80" width="200" height="20" />
       <properties>
         <enum value="4">
           <animation channel="0" amplify="1" />
@@ -371,6 +286,25 @@
         </byte>
       </properties>
     </operator>
+    <operator type="Blur">
+      <name>
+      </name>
+      <dimension x="800" y="60" width="100" height="20" />
+      <properties>
+        <enum value="2">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="2">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <byte value="3">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <byte value="16">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
     <operator type="Merge Textures">
       <name>
       </name>
@@ -391,23 +325,14 @@
         </byte>
       </properties>
     </operator>
-    <operator type="Blur">
+    <operator type="Merge Textures">
       <name>
       </name>
-      <dimension x="800" y="60" width="100" height="20" />
+      <dimension x="600" y="80" width="200" height="20" />
       <properties>
-        <enum value="2">
+        <enum value="4">
           <animation channel="0" amplify="1" />
         </enum>
-        <enum value="2">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <byte value="3">
-          <animation channel="0" amplify="1" />
-        </byte>
-        <byte value="16">
-          <animation channel="0" amplify="1" />
-        </byte>
       </properties>
     </operator>
     <operator type="Distortion">
@@ -419,6 +344,110 @@
           <animation channel="0" amplify="1" />
         </enum>
         <byte value="9">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Pixels">
+      <name>
+      </name>
+      <dimension x="500" y="40" width="100" height="20" />
+      <properties>
+        <color r="0" g="0" b="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <byte value="52">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <byte value="0">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Blur">
+      <name>
+      </name>
+      <dimension x="500" y="80" width="100" height="20" />
+      <properties>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="1">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <byte value="1">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <byte value="16">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Blur">
+      <name>
+      </name>
+      <dimension x="500" y="60" width="100" height="20" />
+      <properties>
+        <enum value="2">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <byte value="17">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <byte value="13">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Merge Textures">
+      <name>
+      </name>
+      <dimension x="400" y="100" width="200" height="20" />
+      <properties>
+        <enum value="2">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Clouds">
+      <name>
+      </name>
+      <dimension x="400" y="80" width="100" height="20" />
+      <properties>
+        <color r="32" g="32" b="32">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <enum value="4">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <byte value="1">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Contrast">
+      <name>
+      </name>
+      <dimension x="600" y="240" width="100" height="20" />
+      <properties>
+        <byte value="134">
           <animation channel="0" amplify="1" />
         </byte>
       </properties>

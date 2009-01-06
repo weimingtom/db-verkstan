@@ -86,15 +86,15 @@ void WeldOperator::process()
 	for(int i = 0; i < srcMesh->getNumVertices(); i++)
 	{
 		int v = welded[i];
-		mesh->pos(v) += srcMesh->pos(i);
-		mesh->normal(v) += srcMesh->normal(i);
+		mesh->pos(v) = srcMesh->pos(i);
+		mesh->normal(v) = srcMesh->normal(i);
 
 		for (int s = 0; s < mesh->getNumUVSets(); s++)
 		{
-			mesh->uv(v, s) += srcMesh->uv(i, s);
+			mesh->uv(v, s) = srcMesh->uv(i, s);
 		}
 	}
-
+/*
 	for(int i = 0; i < mesh->getNumVertices(); i++)
 	{
 		int n = numInputs[i];
@@ -112,7 +112,7 @@ void WeldOperator::process()
 			mesh->uv(i, s) *= k;
 		}
 	}
-
+*/
 	for (int i = 0; i < mesh->getNumFaces(); i++)
 	{
 		int sides;
