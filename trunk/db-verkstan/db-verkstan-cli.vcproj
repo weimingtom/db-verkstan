@@ -759,6 +759,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\spherizeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\spherizeoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\subdivideoperator.cpp"
 					>
 				</File>
