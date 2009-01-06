@@ -547,6 +547,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\displacementmapoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\displacementmapoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\distortionoperator.cpp"
 					>
 				</File>
@@ -736,6 +744,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\transformmodeloperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\weldoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\weldoperator.hpp"
 					>
 				</File>
 			</Filter>

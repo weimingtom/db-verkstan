@@ -40,9 +40,11 @@ namespace VerkstanEditor.Logic
         #region Private Static Methods
         private static ushort PopulateOldIdToNewIdAndOperatorsSortedOnNewId(Operator root, ushort id)
         {
-            System.Console.WriteLine(root.UniqueName + " id=" + root.BindedCoreOperator.Id + " newid=" + id);
-            oldIdToNewId.Add(root.BindedCoreOperator.Id, id);
-            operatorsSortedOnNewId.Add(root);
+            if (!oldIdToNewId.ContainsKey(root.BindedCoreOperator.Id))
+            {
+                oldIdToNewId.Add(root.BindedCoreOperator.Id, id);
+                operatorsSortedOnNewId.Add(root);
+            }
             foreach (Operator op in root.GetInputs())
                 id = PopulateOldIdToNewIdAndOperatorsSortedOnNewId(op, ++id);
 

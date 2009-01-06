@@ -47,10 +47,8 @@ namespace VerkstanEditor.Logic
                 Removed(new Page.EventArgs(operators));
         }
         public event EventHandler Moved;
-        protected void OnMoved(Operator op)
+        protected void OnMoved(ICollection<Operator> operators)
         {
-            ICollection<Operator> operators = new List<Operator>();
-            operators.Add(op);
             if (Moved != null)
                 Moved(new Page.EventArgs(operators));
         }
@@ -243,8 +241,23 @@ namespace VerkstanEditor.Logic
             }
 
             foreach (Operator op in selected)
-                if (Move(op, point))
-                    OnMoved(op);
+            {
+                operators.Remove(op);
+                Disconnect(op);
+            }
+
+            foreach (Operator op in selected)
+            {
+                Move(op, point);
+            }
+
+            foreach (Operator op in selected)
+            {
+                operators.Add(op);
+                Connect(op);
+            }
+
+            OnMoved(selected);
         }
         public void ResizeSelected(int width)
         {
@@ -335,8 +348,6 @@ namespace VerkstanEditor.Logic
                 return false;
 
             op.Dimension = new Rectangle(newLocation.X, newLocation.Y, op.Width, op.Height);
-            Disconnect(op);
-            Connect(op);
             return true;
         }
         private bool Resize(Operator op, int width)

@@ -106,6 +106,12 @@ int WINAPI WinMain(HINSTANCE instance,
     Synth* synth = new Synth(globalWindow);
 
     loadGraphics();
+
+    // Do a process before the demo starts.
+    for (unsigned short i = 0; i < DB_MAX_OPERATORS; i++)
+        if (operators[i] != 0)
+            operators[i]->cascadeProcess();
+
     startMetronome();
 
     while (true)

@@ -17,9 +17,9 @@ dirty(true)
 
     for (unsigned short i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
     {
-        properties[i].channel1 = -1;
-        properties[i].channel2 = -1;
-        properties[i].channel3 = -1;
+        properties[i].channel1 = 0;
+        properties[i].channel2 = 0;
+        properties[i].channel3 = 0;
         properties[i].channelValue1 = 0.0f;
         properties[i].channelValue2 = 0.0f;
         properties[i].channelValue3 = 0.0f;
@@ -28,6 +28,13 @@ dirty(true)
         properties[i].amplify3 = 1.0f;
     }
 }
+
+#ifdef DB_EDITOR
+Operator::~Operator()
+{
+    deviceLost();
+}
+#endif
 
 unsigned char Operator::getByteProperty(int index)
 {
@@ -52,9 +59,9 @@ const char* Operator::getStringProperty(int index)
 D3DXCOLOR Operator::getColorProperty(int index)
 {
     D3DXCOLOR color = properties[index].colorValue;
-    color.r += properties[index].channelValue1 / 256.0f;
-    color.g += properties[index].channelValue2 / 256.0f;
-    color.b += properties[index].channelValue3 / 256.0f;
+    color.r += properties[index].channelValue1 / 255.0f;
+    color.g += properties[index].channelValue2 / 255.0f;
+    color.b += properties[index].channelValue3 / 255.0f;
     color.a = 1.0f;
 
     return color;

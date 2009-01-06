@@ -14,6 +14,9 @@ class Operator
 {
 public:
     Operator();
+#ifdef DB_EDITOR
+    virtual ~Operator();
+#endif
 
     virtual void process() = 0;
 

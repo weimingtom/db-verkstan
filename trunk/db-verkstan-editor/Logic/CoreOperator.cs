@@ -201,8 +201,9 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreInputConnections()
         {
-            inputs.Clear();
             bindedCoreOperator.ClearInputConnections();
+            
+            List<Operator> unsortedInputs = new List<Operator>();
 
             List<Operator> sendersToConsiderAsInput = new List<Operator>();
             foreach (Operator op in senders)
@@ -240,7 +241,7 @@ namespace VerkstanEditor.Logic
                         numberOfInputs++;
                         if (!input.Optional)
                             numberOfRequiredInputs++;
-                        inputs.Add(op);
+                        unsortedInputs.Add(op);
                         break;
                     }
                 }
@@ -261,14 +262,17 @@ namespace VerkstanEditor.Logic
                             bindedCoreOperator.SetInputConnectionId(i, coreOp.Id);
                             accepted = true;
                             numberOfInputs++;
-                            inputs.Add(op);
+                            unsortedInputs.Add(op);
                             break;
                         }
                     }
                 }
 
                 if (!accepted)
+                {
+                    System.Console.WriteLine(op.TypeName + " was not accepted by " + TypeName);
                     IsWarningPresent = true;
+                }
             }
 
             bindedCoreOperator.SetNumberOfInputConnections(numberOfInputs);
@@ -280,6 +284,22 @@ namespace VerkstanEditor.Logic
 
             isProcessable = requiredInputs <= numberOfRequiredInputs;
             bindedCoreOperator.SetDirty(true);
+
+            // Populate the list of inputs.
+            inputs.Clear();
+            for (int i = 0; i < numberOfInputs; i++)
+            {
+                int inputId = bindedCoreOperator.GetInputConnectionId(i);
+
+                foreach (Operator op in unsortedInputs)
+                {
+                    if (op.BindedCoreOperator.Id == inputId)
+                    {
+                        inputs.Add(op);
+                        break;
+                    }
+                }
+            }
         }
         private void UpdateCoreOutputConnections()
         {
