@@ -77,22 +77,14 @@ namespace VerkstanEditor.Gui
             verkstanWindow.Render(Metronome.Tick);
             Metronome.OnBeatChangedFastUpdate(Metronome.Tick);
         }
-        private void PreviewPanel_SizeChanged(object sender, EventArgs e)
+        private void previewPanel_SizeChanged(object sender, EventArgs e)
         {
             if (verkstanWindow != null)
                 verkstanWindow.Resize();
         }
-        private void Operators_ViewedOperatorPropertiesChanged(Operator op)
+        private void previewPanel_DoubleClick(object sender, EventArgs e)
         {
-            operatorPropertyGrid.Operator = op;
-        }
-        private void Operators_ViewedOperatorChanged(Operator op)
-        {
-            /*
-            if (op == null)
-                verkstanWindow.ViewedOperator = null;
-            else
-                verkstanWindow.ViewedOperator = op.Binding;*/
+            previewBoardSplitContainer.Panel2Collapsed = !previewBoardSplitContainer.Panel2Collapsed;
         }
         private void previewPanel_MouseDown(object sender, MouseEventArgs e)
         {

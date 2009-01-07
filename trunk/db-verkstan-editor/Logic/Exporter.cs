@@ -13,7 +13,7 @@ namespace VerkstanEditor.Logic
         private static IDictionary<ushort, ushort> oldIdToNewId = new Dictionary<ushort, ushort>();
         private static IList<Operator> operatorsSortedOnNewId = new List<Operator>();
         private static IList<byte> bytes = new List<byte>();
-        private static IList<String> operatorDefines = new List<String>();
+        private static HashSet<String> operatorDefines = new HashSet<String>();
         #endregion
 
         #region Public Static Methods
