@@ -9,4 +9,8 @@ public:
     void render(int tick);
     void process();
     LPD3DXEFFECT d3d9Effect;
+
+#ifdef DB_EDITOR
+    void deviceLost();
+#endif
 };

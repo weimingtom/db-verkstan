@@ -144,21 +144,9 @@ const BYTE g_main[] =
 };
 
 NormalsShaderOperator::NormalsShaderOperator()
+:d3d9Effect(0)
 {
-    HRESULT result = D3DXCreateEffect(globalDirect3DDevice, 
-                     g_main, 
-                     sizeof(g_main), 
-                     NULL, 
-                     NULL, 
-                     NULL, 
-                     NULL,
-                     &d3d9Effect,
-                     NULL);
 
-    if (FAILED(result))
-    {
-        throw "Blä!";
-    }
 }
 
 void NormalsShaderOperator::render(int tick)
@@ -188,5 +176,27 @@ void NormalsShaderOperator::render(int tick)
 
 void NormalsShaderOperator::process()
 {
-    
+    if (d3d9Effect == 0)
+       D3DXCreateEffect(globalDirect3DDevice, 
+                        g_main, 
+                        sizeof(g_main), 
+                         NULL, 
+                         NULL, 
+                         NULL, 
+                         NULL,
+                         &d3d9Effect,
+                         NULL); 
 }
+
+#ifdef DB_EDITOR
+void NormalsShaderOperator::deviceLost()
+{
+	Operator::deviceLost();
+	
+    if (d3d9Effect != 0)
+    {
+        d3d9Effect->Release();
+        d3d9Effect = 0;
+    }
+}
+#endif

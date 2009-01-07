@@ -283,7 +283,7 @@
             this.timelinesTab.Controls.Add(this.timelinesView1);
             this.timelinesTab.Location = new System.Drawing.Point(4, 25);
             this.timelinesTab.Name = "timelinesTab";
-            this.timelinesTab.Size = new System.Drawing.Size(548, 105);
+            this.timelinesTab.Size = new System.Drawing.Size(548, 130);
             this.timelinesTab.TabIndex = 1;
             this.timelinesTab.Text = "Timelines";
             this.timelinesTab.UseVisualStyleBackColor = true;
@@ -294,7 +294,7 @@
             this.clipTab.Controls.Add(this.clipView1);
             this.clipTab.Location = new System.Drawing.Point(4, 25);
             this.clipTab.Name = "clipTab";
-            this.clipTab.Size = new System.Drawing.Size(548, 105);
+            this.clipTab.Size = new System.Drawing.Size(548, 130);
             this.clipTab.TabIndex = 3;
             this.clipTab.Text = "Clip";
             this.clipTab.UseVisualStyleBackColor = true;
@@ -349,7 +349,7 @@
             this.timelinesView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.timelinesView1.Location = new System.Drawing.Point(0, 0);
             this.timelinesView1.Name = "timelinesView1";
-            this.timelinesView1.Size = new System.Drawing.Size(548, 105);
+            this.timelinesView1.Size = new System.Drawing.Size(548, 130);
             this.timelinesView1.TabIndex = 0;
             this.timelinesView1.Timeline = null;
             this.timelinesView1.ViewedClip = null;
@@ -362,7 +362,7 @@
             this.clipView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.clipView1.Location = new System.Drawing.Point(0, 0);
             this.clipView1.Name = "clipView1";
-            this.clipView1.Size = new System.Drawing.Size(548, 105);
+            this.clipView1.Size = new System.Drawing.Size(548, 130);
             this.clipView1.TabIndex = 0;
             // 
             // operatorPropertyGrid

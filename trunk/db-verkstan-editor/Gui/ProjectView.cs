@@ -17,6 +17,7 @@ namespace VerkstanEditor.Gui
         private Verkstan.Window verkstanWindow;
         private Operator viewedOperator;
         private Project project;
+        private MouseButtons previewPanelLastMouseButtonDown;
         #endregion
 
         #region Constructor
@@ -85,9 +86,17 @@ namespace VerkstanEditor.Gui
         private void previewPanel_DoubleClick(object sender, EventArgs e)
         {
             previewBoardSplitContainer.Panel2Collapsed = !previewBoardSplitContainer.Panel2Collapsed;
+
+            if (previewPanelLastMouseButtonDown == MouseButtons.Right
+                && !mainLeftAndRightSplitContainer.Panel2Collapsed)
+                mainLeftAndRightSplitContainer.Panel2Collapsed = true;
+            else
+                mainLeftAndRightSplitContainer.Panel2Collapsed = false;
         }
         private void previewPanel_MouseDown(object sender, MouseEventArgs e)
         {
+            previewPanelLastMouseButtonDown = e.Button;
+
             int button = 0;
 
             if (e.Button == MouseButtons.Left)
@@ -190,7 +199,10 @@ namespace VerkstanEditor.Gui
             XmlElement rootElement = doc.DocumentElement;
 
             if (project != null)
+            {
+                verkstanWindow.ViewedOperator = null;
                 project.Dispose();
+            }
 
             project = new Project();
             project.Filename = filename;
