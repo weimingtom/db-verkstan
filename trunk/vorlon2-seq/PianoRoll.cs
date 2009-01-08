@@ -21,6 +21,9 @@ namespace VorlonSeq
         byte tryingKey = 128;
         private Clip.NoteEvent paintedNote = null;
         private bool moving = false;
+        private bool copying = false;
+        private bool shift = false;
+        private bool selecting = false;
         private List<Clip.NoteEvent> selected = new List<Clip.NoteEvent>();
         static Point mouseDownPos;
         static Point mousePos;
@@ -101,6 +104,11 @@ namespace VorlonSeq
             {
                 Rectangle r = NoteToRect(paintedNote);
                 g.DrawRectangle(Pens.Black, r);
+            }
+
+            if (selecting)
+            {
+                g.DrawRectangle(Pens.DarkGray, GetSelectRect());
             }
         }
 
@@ -184,6 +192,7 @@ namespace VorlonSeq
         private void PianoRoll_MouseDown(object sender, MouseEventArgs e)
         {
             mousePos = e.Location;
+            mouseDownPos = e.Location;
 
             if (e.Button == MouseButtons.Right)
             {
@@ -193,6 +202,11 @@ namespace VorlonSeq
             }
 
             if (e.Button == MouseButtons.Left)
+            {
+                selecting = shift;
+            }
+
+            if (e.Button == MouseButtons.Left && !selecting)
             {
                 Clip.NoteEvent clickedNote = GetNoteAt(e.Location);
                 if (clickedNote == null)
@@ -204,12 +218,20 @@ namespace VorlonSeq
                 }
                 else
                 {
-                    mouseDownPos = e.Location;
-                    selected.Clear();
-                    selected.Add(clickedNote);
+                    if (!selected.Contains(clickedNote))
+                    {
+                        selected.Clear();
+                        selected.Add(clickedNote);
+                    }
                     moving = true;
                     Refresh();
                 }
+            }
+
+            if (e.Button == MouseButtons.Left && selecting)
+            {
+                selected.Clear();
+                Refresh();
             }
         }
 
@@ -228,6 +250,8 @@ namespace VorlonSeq
             {
                 UpdatePaintedNote(e.X);
                 Clip.NoteEvents.Add(paintedNote);
+                selected.Clear();
+                selected.Add(paintedNote);
                 paintedNote = null;
                 Refresh();
             }
@@ -236,12 +260,36 @@ namespace VorlonSeq
             {
                 int timeDelta = GetTimeMovement();
                 int keyDelta = GetKeyMovement();
-                foreach (Clip.NoteEvent n in selected)
+                List<Clip.NoteEvent> moved = new List<Clip.NoteEvent>();
+                foreach (Clip.NoteEvent ne in selected)
                 {
+                    Clip.NoteEvent n = ne;
+                    if (copying)
+                    {
+                        n = n.Clone();
+                        Clip.NoteEvents.Add(n);
+                    }
                     n.StartTime += timeDelta;
                     n.Note = (byte)(n.Note + keyDelta);
+                    moved.Add(n);
                 }
+                selected.Clear();
+                selected.AddRange(moved);
                 moving = false;
+                Refresh();
+            }
+
+            if (e.Button == MouseButtons.Left && selecting)
+            {
+                Rectangle selectRect = GetSelectRect();
+                foreach (Clip.NoteEvent n in Clip.NoteEvents)
+                {
+                    if (NoteToRect(n).IntersectsWith(selectRect))
+                    {
+                        selected.Add(n);
+                    }
+                }
+                selecting = false;
                 Refresh();
             }
         }
@@ -260,10 +308,19 @@ namespace VorlonSeq
                 }
             }
 
-            if (e.Button == MouseButtons.Left && moving)
+            if (e.Button == MouseButtons.Left && (moving || selecting))
             {
                 Refresh();
             }
+        }
+
+        private Rectangle GetSelectRect()
+        {
+            int x1 = Math.Min(mousePos.X, mouseDownPos.X);
+            int y1 = Math.Min(mousePos.Y, mouseDownPos.Y);
+            int x2 = Math.Max(mousePos.X, mouseDownPos.X);
+            int y2 = Math.Max(mousePos.Y, mouseDownPos.Y);
+            return new Rectangle(x1, y1, x2 - x1, y2 - y1);
         }
 
         private void PianoRoll_KeyDown(object sender, KeyEventArgs e)
@@ -277,12 +334,35 @@ namespace VorlonSeq
                 selected.Clear();
                 Refresh();
             }
+
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                copying = true;
+            }
+
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                shift = true;
+            }
         }
 
         public void OnMidiInput(MidiMessage message)
         {
             message.Channel = (uint)Clip.Channel.Number;
             Sequencer.PlayMidiEvent(message, true);
+        }
+
+        private void PianoRoll_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                copying = false;
+            }
+
+            if (e.KeyCode == Keys.ShiftKey)
+            {
+                shift = false;
+            }
         }
     }
 }

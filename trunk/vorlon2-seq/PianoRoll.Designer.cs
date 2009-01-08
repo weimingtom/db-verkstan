@@ -40,6 +40,7 @@
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PianoRoll_Paint);
             this.Layout += new System.Windows.Forms.LayoutEventHandler(this.PianoRoll_Layout);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseMove);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PianoRoll_KeyUp);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseDown);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PianoRoll_MouseUp);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PianoRoll_KeyDown);

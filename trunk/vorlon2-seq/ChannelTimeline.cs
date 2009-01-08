@@ -24,6 +24,7 @@ namespace VorlonSeq
         bool moving = false;
         bool selecting = false;
         bool creating = false;
+        bool copying = false;
         Point mouseDownPos;
         Point mousePos;
         Channel selectedChannel = null;
@@ -301,7 +302,6 @@ namespace VorlonSeq
             if (moving || selecting)
             {
                 selectedChannel = GetChannelClosestTo(e.Y);
-                Refresh();
             }
 
             mousePos = e.Location;
@@ -309,14 +309,23 @@ namespace VorlonSeq
             if (moving)
             {
                 Point m = GetSelectedClipsMovement();
-                foreach(Clip c in selectedClips)
+                foreach(Clip clip in selectedClips)
                 {
+                    Clip c = clip;
+
+                    if (copying)
+                    {
+                        c = c.Clone();
+                        Sequencer.Song.Channels[c.Channel.Number].AddClip(c);
+                    }
+                    
                     c.StartTime += m.X;
 
                     if (m.Y != 0)
                     {
                         int oldChannel = c.Channel.Number;
                         int newChannel = oldChannel + m.Y;
+
                         Sequencer.Song.Channels[oldChannel].RemoveClip(c);
                         Sequencer.Song.Channels[newChannel].AddClip(c);
                     }
@@ -444,6 +453,11 @@ namespace VorlonSeq
                 selectedClips.Clear();
                 Refresh();
             }
+
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                copying = true;
+            }
         }
 
         private void savePatchToolStripMenuItem_Click(object sender, EventArgs e)
@@ -464,6 +478,14 @@ namespace VorlonSeq
         private void ChannelTimeline_Load(object sender, EventArgs e)
         {
             RefreshPatches();
+        }
+
+        private void ChannelTimeline_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.ControlKey)
+            {
+                copying = false;
+            }
         }
     }
 }
