@@ -93,7 +93,8 @@ void TextOperator::process()
     globalDirect3DDevice->GetRenderTargetData(renderTargetSurface,
                                               texture->d3d9Surface);
     renderTargetSurface->Release();
-    texture->d3d9TextureDirty = true;
+    
+    texture->setDirty();
 }
 
 #ifdef DB_EDITOR

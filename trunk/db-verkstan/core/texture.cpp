@@ -19,6 +19,15 @@ Texture::~Texture()
         d3d9Texture->Release();
 }
 
+void Texture::setDirty()
+{
+    if (d3d9Texture != 0)
+    {
+        d3d9Texture->Release();
+        d3d9Texture = 0;
+    }
+}
+
 LPDIRECT3DTEXTURE9 Texture::getD3D9Texture()
 {
     if (d3d9Texture == 0)
@@ -31,10 +40,7 @@ LPDIRECT3DTEXTURE9 Texture::getD3D9Texture()
                           D3DFMT_A8R8G8B8,
                           D3DPOOL_DEFAULT,
                           &d3d9Texture);
-    }
 
-    if (d3d9TextureDirty)
-    {
         LPDIRECT3DSURFACE9 d3d9TextureSurface;
         d3d9Texture->GetSurfaceLevel(0, &d3d9TextureSurface);
         globalDirect3DDevice->UpdateSurface(d3d9Surface, 
@@ -43,7 +49,6 @@ LPDIRECT3DTEXTURE9 Texture::getD3D9Texture()
                                             NULL);
         d3d9TextureSurface->Release();
         D3DXFilterTexture(d3d9Texture, NULL, 0, D3DX_DEFAULT);
-        d3d9TextureDirty = false;
     }
                                            
     return d3d9Texture;
@@ -52,7 +57,6 @@ LPDIRECT3DTEXTURE9 Texture::getD3D9Texture()
 void Texture::lock()
 {
     d3d9Surface->LockRect(&d3d9LockedRect, NULL, NULL);
-    d3d9TextureDirty = true;
 }
 
 void Texture::unlock()

@@ -197,6 +197,7 @@ void NormalsShaderOperator::deviceLost()
     {
         d3d9Effect->Release();
         d3d9Effect = 0;
+        setDirty(true);
     }
 }
 #endif

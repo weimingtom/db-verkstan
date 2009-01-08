@@ -23,9 +23,7 @@ void RenderToTextureOperator::process()
 void RenderToTextureOperator::preRender(int tick)
 {    
     if (texture == 0)
-    {
         texture = new Texture();
-    }
  
     if (d3d9RenderTargetTexture == 0)
     {
@@ -73,7 +71,6 @@ void RenderToTextureOperator::preRender(int tick)
     globalWorldMatrixStack->Pop();
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
     d3d9RenderToSurface->EndScene(0);
-    texture->d3d9TextureDirty = false;
 }
 
 #ifdef DB_EDITOR

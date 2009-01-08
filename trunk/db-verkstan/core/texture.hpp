@@ -23,8 +23,9 @@ public:
     Texture* clone();
     void copy(Texture* texture);
     LPDIRECT3DTEXTURE9 getD3D9Texture();
+    void setDirty();
+
     LPDIRECT3DSURFACE9 d3d9Surface;
-    bool d3d9TextureDirty;
     D3DLOCKED_RECT d3d9LockedRect; 
     LPDIRECT3DTEXTURE9 d3d9Texture;
 

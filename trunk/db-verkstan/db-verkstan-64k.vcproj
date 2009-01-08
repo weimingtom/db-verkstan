@@ -211,7 +211,8 @@
 				StructMemberAlignment="0"
 				BufferSecurityCheck="false"
 				EnableFunctionLevelLinking="true"
-				FloatingPointModel="2"
+				EnableEnhancedInstructionSet="1"
+				FloatingPointModel="0"
 				RuntimeTypeInfo="false"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
@@ -704,6 +705,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\sphereoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\spherizeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\spherizeoperator.hpp"
 					>
 				</File>
 				<File

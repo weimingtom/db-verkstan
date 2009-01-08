@@ -154,17 +154,9 @@ void Operator::render(int tick)
 void Operator::deviceLost()
 {
     if (texture != 0)
-    {
-        delete texture;
-        texture = 0;
-    }
+        texture->setDirty();
 
     if (mesh != 0)
-    {
-		delete mesh;
-        mesh = 0;
-    }
-
-    dirty = true;
+        mesh->setDirty();
 }
 #endif
