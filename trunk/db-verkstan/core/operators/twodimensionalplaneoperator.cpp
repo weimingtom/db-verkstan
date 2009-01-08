@@ -55,6 +55,12 @@ void TwoDimensionalPlaneOperator::render(int tick)
     DWORD oldFVF;
     globalDirect3DDevice->GetFVF(&oldFVF);
     globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1);
+    
+    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+    globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+    globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+    globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
+
     globalDirect3DDevice->SetTexture(0, getInput(0)->texture->getD3D9Texture());
     globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, &quad, sizeof(TwoDimensionalVertex));
     globalDirect3DDevice->SetTexture(0, 0);

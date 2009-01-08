@@ -32,15 +32,13 @@ namespace Verkstan
         D3DPRESENT_PARAMETERS d3dPresentParameters;
         ZeroMemory(&d3dPresentParameters, sizeof(d3dPresentParameters));
         d3dPresentParameters.Windowed = TRUE;
+        d3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
         d3dPresentParameters.hDeviceWindow = globalWindow;
-        d3dPresentParameters.BackBufferFormat = displayMode.Format;
         d3dPresentParameters.EnableAutoDepthStencil = TRUE;
+        d3dPresentParameters.BackBufferFormat = displayMode.Format;
         d3dPresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
         d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-        d3dPresentParameters.BackBufferWidth  = WINDOW_WIDTH;
-		d3dPresentParameters.BackBufferHeight = WINDOW_HEIGHT;
-        d3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
-        d3dPresentParameters.BackBufferCount= 1;
+        d3dPresentParameters.BackBufferCount = 1;
 
         globalDirect3D->CreateDevice(D3DADAPTER_DEFAULT,
                                      D3DDEVTYPE_HAL,

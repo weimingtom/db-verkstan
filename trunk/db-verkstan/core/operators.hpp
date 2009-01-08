@@ -415,8 +415,18 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MATERIALOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(19, MaterialOperator, -1);
+DEF_OP_FOR_LOADER(19, MaterialOperator, -1, 5, 
+                  DB_COLOR_PROP, 
+                  DB_COLOR_PROP,
+                  DB_COLOR_PROP,
+                  DB_ENUM_PROP,
+                  DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(19, "Material", MaterialOperator, Model);
+ADD_COLOR_PROP("Diffuse", 255, 255, 255);
+ADD_COLOR_PROP("Specular", 255, 255, 255);
+ADD_COLOR_PROP("Ambient", 128, 128, 128);
+ADD_ENUM_PROP("Lightning", "No,Yes", "No");
+ADD_ENUM_PROP("Cull mode", "CCW,None,CW,Force Dword", "CCW");
 ADD_INPUT(Mesh);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
