@@ -2,7 +2,6 @@
 
 void ContrastOperator::process()
 {
-    System::Console::WriteLine("Process contrast!!");
     if (texture == 0)
        texture = new Texture();
 
