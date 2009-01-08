@@ -107,17 +107,18 @@ void ExtrudeOperator::process()
 	{
 		int size;
 		int *vert = srcMesh->face(i, size);
+		int destVert[4];
 
 		if (srcMesh->faceSelected(i))
 		{
 			for (int v = 0; v < size; v++)
 			{
-				vert[v] = extrudedVertex[vert[v]];
+				destVert[v] = extrudedVertex[vert[v]];
 			}
 		}
 
 		// This works simply because both meshes contain the same number of triangles
-		mesh->setFace(i, vert);
+		mesh->setFace(i, destVert);
 	}
 	
 
