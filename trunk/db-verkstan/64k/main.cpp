@@ -44,45 +44,37 @@ LRESULT CALLBACK windowProcedure(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPar
     return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
+static D3DPRESENT_PARAMETERS d3dPresentParameters = 
+{
+    640, 480, D3DFMT_A8R8G8B8, 0, D3DMULTISAMPLE_NONE,
+    0, D3DSWAPEFFECT_DISCARD, 0, true, true,
+    D3DFMT_D24S8, 0, 0, D3DPRESENT_INTERVAL_IMMEDIATE 
+};
+
 int WINAPI WinMain(HINSTANCE instance, 
                    HINSTANCE previousInstance, 
                    LPSTR commandLne, 
                    int showCommand)
 {
-    WNDCLASSEX windowClass;
-    
-    ZeroMemory(&windowClass, sizeof(WNDCLASSEX));
+    globalDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
 
-    windowClass.cbSize = sizeof(WNDCLASSEX);
-    windowClass.style = CS_HREDRAW | CS_VREDRAW;
-    windowClass.lpfnWndProc = windowProcedure;
-    windowClass.hInstance = instance;
-    windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
-    windowClass.hbrBackground = (HBRUSH)(COLOR_WINDOW);
-    windowClass.lpszClassName = "db";
-    RegisterClassEx(&windowClass);
- 
-    globalWindow = CreateWindow("db",
-                                "db - alpha",
-                                WS_VISIBLE,
-                                20, 
-                                0, 
+    globalWindow = CreateWindow("static",
+                                0,
+                                WS_POPUP | WS_VISIBLE,
+                                0,
+                                0,
                                 640, 
                                 480,
-                                NULL, 
-                                NULL, 
-                                instance, 
-                                NULL);
+                                0, 
+                                0, 
+                                0, 
+                                0);
+    ShowCursor(0);  
 
-    RECT rect;
-    GetWindowRect(globalWindow, &rect);
-    WINDOW_WIDTH = rect.right - rect.left;
-    WINDOW_HEIGHT = rect.bottom - rect.top;
+    WINDOW_WIDTH = 640;
+    WINDOW_HEIGHT = 480;
 
-    globalDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
-    D3DDISPLAYMODE displayMode;
-    globalDirect3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &displayMode);
-
+    /*
     D3DPRESENT_PARAMETERS d3dPresentParameters;
     ZeroMemory(&d3dPresentParameters, sizeof(d3dPresentParameters));
     d3dPresentParameters.Windowed = TRUE;
@@ -91,9 +83,12 @@ int WINAPI WinMain(HINSTANCE instance,
     d3dPresentParameters.EnableAutoDepthStencil = TRUE;
     d3dPresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
     d3dPresentParameters.BackBufferCount = 1; 
-    d3dPresentParameters.BackBufferFormat = displayMode.Format;
+    d3dPresentParameters.BackBufferFormat = D3DFMT_A8B8G8R8;
+    d3dPresentParameters.BackBufferWidth = 640;
+    d3dPresentParameters.BackBufferWidth = 480;
     d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-
+    d3dPresentParameters.MultiSampleType = D3DMULTISAMPLE_NONE;
+*/
     globalDirect3D->CreateDevice(D3DADAPTER_DEFAULT,
                                  D3DDEVTYPE_HAL,
                                  globalWindow,
@@ -101,6 +96,16 @@ int WINAPI WinMain(HINSTANCE instance,
                                  &d3dPresentParameters,
                                  &globalDirect3DDevice);
 
+        /*
+    globalDirect3D->CreateDevice(D3DADAPTER_DEFAULT,
+                                 D3DDEVTYPE_HAL,
+                                 globalWindow,
+                                 D3DCREATE_HARDWARE_VERTEXPROCESSING,
+                                 &d3dPresentParameters,
+                                 &globalDirect3DDevice);
+                                */
+
+    /*
     globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
     globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
     globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -121,6 +126,7 @@ int WINAPI WinMain(HINSTANCE instance,
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
     globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+    */
 
     D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
@@ -142,39 +148,26 @@ int WINAPI WinMain(HINSTANCE instance,
     drawProgressBar(1.0f);
     startMetronome();
 
-    while (true)
+    int tick;
+    do
     {
-        int tick = getTick();
-
-        if (operators[0]->ticks < tick)
-            break;
-
+        tick = getTick();
         MSG msg;
-        if (PeekMessage(&msg, globalWindow, 0, 0, PM_REMOVE))
-        {
-            if (msg.message == WM_QUIT)
-            {
-                break;
-            }
+        PeekMessage(&msg, globalWindow, 0, 0, PM_REMOVE);
+        
+        operators[0]->cascadeProcess();
+        operators[0]->preRender(tick);
+
+        globalWorldMatrixStack->LoadIdentity();
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
+        
+        globalDirect3DDevice->BeginScene();
+        operators[0]->render(tick);
+        globalDirect3DDevice->EndScene();
+
+        globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
       
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
-        }
-        else
-        {  
-            operators[0]->cascadeProcess();
-            operators[0]->preRender(tick);
-
-            globalWorldMatrixStack->LoadIdentity();
-            globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
-            
-            globalDirect3DDevice->BeginScene();
-            operators[0]->render(tick);
-            globalDirect3DDevice->EndScene();
-
-            globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
-        }
-    }
+    } while (!GetAsyncKeyState(VK_ESCAPE) && operators[0]->ticks > tick);
 
     delete synth;
     globalDirect3DDevice->Release();
