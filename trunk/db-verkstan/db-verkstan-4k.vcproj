@@ -461,19 +461,19 @@
 					>
 				</File>
 				<File
-					RelativePath=".\core\operators\sceneoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\sceneoperator.hpp"
-					>
-				</File>
-				<File
 					RelativePath=".\core\operators\transformmodeloperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\transformmodeloperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\uvoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\uvoperator.hpp"
 					>
 				</File>
 			</Filter>

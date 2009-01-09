@@ -660,6 +660,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\planeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\planeoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\randomselectionoperator.cpp"
 					>
 				</File>
@@ -761,6 +769,14 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\twodimensionalplaneoperator.hpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\uvoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\uvoperator.hpp"
 					>
 				</File>
 				<File

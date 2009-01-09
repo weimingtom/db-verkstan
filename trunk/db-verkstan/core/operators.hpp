@@ -38,6 +38,7 @@
 #include "core/operators/displacementmapoperator.hpp"
 #include "core/operators/spherizeoperator.hpp"
 #include "core/operators/twodimensionalplaneoperator.hpp"
+#include "core/operators/planeoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -84,6 +85,7 @@ namespace Verkstan
 		using ::DisplacementMapOperator;
 		using ::SpherizeOperator;
         using ::TwoDimensionalPlaneOperator;
+        using ::PlaneOperator;
     }
 }
 #endif
@@ -118,6 +120,7 @@ ADD_OP_TO_CAT("Extrude",		 "Mesh");
 ADD_OP_TO_CAT("Weld",			 "Mesh");
 ADD_OP_TO_CAT("Displacement Map","Mesh");
 ADD_OP_TO_CAT("Spherize",        "Mesh");
+ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -642,6 +645,20 @@ DEF_OP_FOR_LOADER_WITH_NO_PROPS(38, TwoDimensionalPlaneOperator, -1);
 DEF_OP_FOR_EDITOR(38, "2D Plane", TwoDimensionalPlaneOperator, Renderer);
 ADD_INPUT(Texture);
 ADD_INFINITE_INPUT(Unspecified);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_PLANEOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(39, PlaneOperator, 0, 4, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR(39, "Plane", PlaneOperator, Mesh);
+ADD_FLOAT_PROP("Width",   1.0f);
+ADD_FLOAT_PROP("Height",  1.0f);
+ADD_BYTE_PROP("X Slices", 10);
+ADD_BYTE_PROP("Y Slices", 10);
 END_OP_FOR_EDITOR();
 #endif
 
