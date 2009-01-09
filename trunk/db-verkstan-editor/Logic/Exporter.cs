@@ -238,7 +238,7 @@ namespace VerkstanEditor.Logic
                 List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
                 foreach (GeneratorClip clip in generatorClips)
                 {
-                    AddToData((short)clip.GetStartBeat());
+                    AddToData((ushort)clip.GetStartBeat());
                 }
             }
             foreach (Operator op in timelines)
@@ -246,7 +246,8 @@ namespace VerkstanEditor.Logic
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
-                    AddToData((short)clip.GetStartBeat());
+                    System.Console.WriteLine("Spline start beat="+(ushort)clip.GetStartBeat());
+                    AddToData((ushort)clip.GetStartBeat());
                 }
             }
             foreach (Operator op in timelines)
@@ -254,7 +255,7 @@ namespace VerkstanEditor.Logic
                 List<GeneratorClip> generatorClips = op.Timeline.GetGeneratorClips();
                 foreach (GeneratorClip clip in generatorClips)
                 {
-                    AddToData((short)clip.GetEndBeat());
+                    AddToData((ushort)clip.GetEndBeat());
                 }
             }
             foreach (Operator op in timelines)
@@ -262,7 +263,7 @@ namespace VerkstanEditor.Logic
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
-                    AddToData((short)clip.GetEndBeat());
+                    AddToData((ushort)clip.GetEndBeat());
                 }
             }
             foreach (Operator op in timelines)
@@ -324,7 +325,7 @@ namespace VerkstanEditor.Logic
                     for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
                     {
                         // Write only the control points that are actually needed.
-                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
+                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) <= clip.BindedSplineCoreClip.GetEnd())
                         {
                             int tick = clip.BindedSplineCoreClip.GetControlPointTick(i) - lastTick;
                             System.Console.WriteLine("Spline tick="+tick+" orginal="+clip.BindedSplineCoreClip.GetControlPointTick(i));
@@ -340,17 +341,17 @@ namespace VerkstanEditor.Logic
                 List<SplineClip> splineClips = op.Timeline.GetSplineClips();
                 foreach (SplineClip clip in splineClips)
                 {
-                    int lastValue = 0; // Used for delta encoding.
+                    sbyte lastValue = 0; // Used for delta encoding.
                     for (int i = 0; i < clip.BindedSplineCoreClip.GetNumberOfControlPoints(); i++)
                     {
                         // Write only the control points that are actually needed.
-                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) < clip.BindedSplineCoreClip.GetEnd())
+                        if (clip.BindedSplineCoreClip.GetControlPointTick(i) <= clip.BindedSplineCoreClip.GetEnd())
                         {
-                            int value = clip.BindedSplineCoreClip.GetControlPointValue(i) + 128;
+                            sbyte value = clip.BindedSplineCoreClip.GetControlPointValue(i);
                             value -= lastValue;
 
                             System.Console.WriteLine("Spline value=" + value + " orginal=" + clip.BindedSplineCoreClip.GetControlPointValue(i));
-                            AddToData((byte)value);
+                            AddToData(value);
                             lastValue = value;
                         }
                     }
@@ -360,6 +361,10 @@ namespace VerkstanEditor.Logic
         private static void AddToData(byte b)
         {
             bytes.Add(b);
+        }
+        private static void AddToData(sbyte b)
+        {
+            bytes.Add(unchecked((byte)b));
         }
         private static void AddToData(Color color)
         {

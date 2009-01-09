@@ -423,11 +423,9 @@ void loadGraphics()
             short lastValue = 0;
             for (unsigned char controlPointIndex = 0; controlPointIndex < clip->numberOfControlPoints; controlPointIndex++)
             {
-                unsigned char uvalue = *dataptr++;
-
-                char value = uvalue - 128; 
+                char value = *dataptr++;
                 clip->controlPoints[controlPointIndex].value = value + lastValue; 
-                lastValue = uvalue;
+                lastValue = value;
             }
         }
     }

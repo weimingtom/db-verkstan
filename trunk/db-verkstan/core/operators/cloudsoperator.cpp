@@ -81,4 +81,5 @@ void CloudsOperator::process()
 	delete[] values;
 
     texture->unlock();
+    texture->setDirty();
 }

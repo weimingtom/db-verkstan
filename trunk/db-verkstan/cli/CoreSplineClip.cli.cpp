@@ -41,6 +41,8 @@ namespace Verkstan
 
     void CoreSplineClip::SetControlPoint(int index, int tick, char value)
     {
+        if (tick < 0)
+            tick = 0;
         coreSplineClip->controlPoints[index].tick = tick;
         coreSplineClip->controlPoints[index].value = value;
     }

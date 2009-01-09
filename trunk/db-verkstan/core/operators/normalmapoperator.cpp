@@ -30,6 +30,7 @@ void NormalMapOperator::process()
                                D3DX_FILTER_NONE,
                                0);
     normalMapTexture->getD3D9Texture()->Release();
+    texture->setDirty();
 }
 
 #ifdef DB_EDITOR
@@ -39,6 +40,7 @@ void NormalMapOperator::deviceLost()
     if (normalMapTexture != 0)
     {
         delete normalMapTexture;
+        normalMapTexture = 0;
     }
 }
 #endif

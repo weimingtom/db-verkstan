@@ -150,9 +150,17 @@ namespace VerkstanEditor.Logic
         }
         public int GetStartBeat()
         {
-            return bindedCoreClip.GetStart();
+            return Dimension.X;
         }
         public int GetEndBeat()
+        {
+            return Dimension.X + Dimension.Width;
+        }
+        public int GetStartTick()
+        {
+            return bindedCoreClip.GetStart();
+        }
+        public int GetEndTick()
         {
             return bindedCoreClip.GetEnd();
         }

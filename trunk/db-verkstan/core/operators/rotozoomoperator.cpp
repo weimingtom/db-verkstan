@@ -32,4 +32,5 @@ void RotozoomOperator::process()
 
     source->unlock();
     texture->unlock();
+    texture->setDirty();
 }

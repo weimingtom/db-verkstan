@@ -26,4 +26,5 @@ void PixelsOperator::process()
         texture->putPixel(rand() % 256, rand() % 256, color); 
     }
     texture->unlock();
+    texture->setDirty();
 }

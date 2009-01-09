@@ -19,4 +19,5 @@ void RectangleOperator::process()
     unsigned char height = getByteProperty(4);
 
     texture->fillRectangle(x, y, width, height, color);
+    texture->setDirty();
 }

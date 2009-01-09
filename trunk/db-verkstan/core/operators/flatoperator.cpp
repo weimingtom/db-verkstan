@@ -6,4 +6,5 @@ void FlatOperator::process()
         texture = new Texture();
 
     texture->fillRectangle(0, 0, 256, 256, getColorProperty(0));
+    texture->setDirty();
 }

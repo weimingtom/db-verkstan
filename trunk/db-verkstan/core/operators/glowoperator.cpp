@@ -56,4 +56,5 @@ void GlowOperator::process()
     }
 
     texture->unlock();
+    texture->setDirty();
 }

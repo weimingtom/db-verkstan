@@ -38,51 +38,5 @@ public:
     {
         ((DWORD*)d3d9LockedRect.pBits)[256 * y + x] = c;
     }
-    DWORD getPixelWrap(float x, float y)
-    {
-        // Fractions
-        float xFraction = x >= 0.0f ? (x - (int)x) : 1.0f + (x - (int)x);
-        float yFraction = y >= 0.0f ? (y - (int)y) : 1.0f + (y - (int)y);
-
-        int xPixel = x >= 0.0f ? (int)x : (int)x - 1;
-		int yPixel = y >= 0.0f ? (int)y : (int)y - 1;
-
-        int r = 0;
-        int g = 0;
-        int b = 0;
-
-        float weight = (1.0f - xFraction) * (1.0f - yFraction);
-        int xCurrent = (xPixel + 2560) % 256;
-        int yCurrent = (yPixel + 2560) % 256;
-        D3DCOLOR colorCurrent = getPixel(xCurrent, yCurrent);
-        r += (int)(D3DCOLOR_R(colorCurrent) * weight);
-        g += (int)(D3DCOLOR_G(colorCurrent) * weight);
-        b += (int)(D3DCOLOR_B(colorCurrent) * weight);
-
-        weight = xFraction * (1.0f - yFraction);
-        xCurrent = (xPixel + 2561) % 256;
-        yCurrent = (yPixel + 2560) % 256;
-        colorCurrent = getPixel(xCurrent, yCurrent);
-        r += (int)(D3DCOLOR_R(colorCurrent) * weight);
-        g += (int)(D3DCOLOR_G(colorCurrent) * weight);
-        b += (int)(D3DCOLOR_B(colorCurrent) * weight);
-
-        weight = (1.0f - xFraction) * yFraction;
-        xCurrent = (xPixel + 2560) % 256;
-        yCurrent = (yPixel + 2561) % 256;
-        colorCurrent = getPixel(xCurrent, yCurrent);
-        r += (int)(D3DCOLOR_R(colorCurrent) * weight);
-        g += (int)(D3DCOLOR_G(colorCurrent) * weight);
-        b += (int)(D3DCOLOR_B(colorCurrent) * weight);
-
-        weight = xFraction * yFraction;
-        xCurrent = (xPixel + 2561) % 256;
-        yCurrent = (yPixel + 2561) % 256;
-        colorCurrent = getPixel(xCurrent, yCurrent);
-        r += (int)(D3DCOLOR_R(colorCurrent) * weight);
-        g += (int)(D3DCOLOR_G(colorCurrent) * weight);
-        b += (int)(D3DCOLOR_B(colorCurrent) * weight);
-
-        return D3DCOLOR_XRGB(r, g, b);
-    }
+    DWORD getPixelWrap(float x, float y);
 };
