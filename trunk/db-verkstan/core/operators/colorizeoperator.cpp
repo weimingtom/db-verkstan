@@ -145,4 +145,5 @@ void ColorizeOperator::process()
 
     texture->unlock();
     srcTexture->unlock();
+    texture->setDirty();
 }

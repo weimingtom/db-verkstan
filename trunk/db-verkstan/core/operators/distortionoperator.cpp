@@ -39,4 +39,5 @@ void DistortionOperator::process()
     texture->unlock();
     srcTexture->unlock();
     mapTexture->unlock();
+    texture->setDirty();
 }

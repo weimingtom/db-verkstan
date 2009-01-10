@@ -114,48 +114,10 @@
         </byte>
       </properties>
     </operator>
-    <operator type="Material">
-      <name>
-      </name>
-      <dimension x="200" y="120" width="200" height="20" />
-      <properties>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="128" g="128" b="128">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="1">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Darkbits Logo">
-      <name>
-      </name>
-      <dimension x="200" y="100" width="100" height="20" />
-      <properties>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
     <operator type="Camera">
       <name>
       </name>
-      <dimension x="300" y="160" width="100" height="20" />
+      <dimension x="300" y="180" width="100" height="20" />
       <properties>
         <float value="45">
           <animation channel="0" amplify="1" />
@@ -186,36 +148,14 @@
         </float>
       </properties>
     </operator>
-    <operator type="Transform Model">
+    <operator type="Darkbits Logo">
       <name>
       </name>
-      <dimension x="300" y="140" width="100" height="20" />
+      <dimension x="200" y="120" width="100" height="20" />
       <properties>
-        <vector x="1" y="1" z="1">
+        <enum value="0">
           <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <vector x="0" y="0" z="-1">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <vector x="0" y="0" z="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-      </properties>
-    </operator>
-    <operator type="Displacement Map">
-      <name>
-      </name>
-      <dimension x="300" y="80" width="200" height="20" />
-      <properties>
-        <float value="-0,3">
-          <animation channel="0" amplify="1" />
-        </float>
+        </enum>
       </properties>
     </operator>
     <operator type="Plane">
@@ -237,10 +177,93 @@
         </byte>
       </properties>
     </operator>
+    <operator type="Displacement Map">
+      <name>
+      </name>
+      <dimension x="300" y="80" width="200" height="20" />
+      <properties>
+        <float value="-0,3">
+          <animation channel="0" amplify="1" />
+        </float>
+      </properties>
+    </operator>
+    <operator type="Spherize">
+      <name>
+      </name>
+      <dimension x="300" y="100" width="100" height="20" />
+      <properties>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="1" amplify="1" />
+        </float>
+      </properties>
+    </operator>
+    <operator type="Model">
+      <name>
+      </name>
+      <dimension x="300" y="120" width="100" height="20" />
+      <properties>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Material">
+      <name>
+      </name>
+      <dimension x="200" y="140" width="200" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Transform Model">
+      <name>
+      </name>
+      <dimension x="300" y="160" width="100" height="20" />
+      <properties>
+        <vector x="1" y="-1" z="1">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <vector x="0" y="0" z="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <vector x="0" y="0" z="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+      </properties>
+    </operator>
     <operator type="Timeline">
       <name>
       </name>
-      <dimension x="300" y="180" width="100" height="20" />
+      <dimension x="300" y="200" width="100" height="20" />
       <properties>
         <byte value="1">
           <animation channel="0" amplify="1" />
@@ -266,19 +289,6 @@
           </clip>
         </channel>
       </timeline>
-    </operator>
-    <operator type="Spherize">
-      <name>
-      </name>
-      <dimension x="300" y="100" width="100" height="20" />
-      <properties>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="0">
-          <animation channel="1" amplify="1" />
-        </float>
-      </properties>
     </operator>
   </page>
 </project>

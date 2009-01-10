@@ -360,7 +360,7 @@ DEF_OP_FOR_LOADER(15, ModelOperator, 1, 2,
                   DB_ENUM_PROP,
                   DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(15, "Model", ModelOperator, Model);
-ADD_ENUM_PROP("Cull mode", "None,CW,CCW", "None");
+ADD_ENUM_PROP("Cull mode", "CW,CCW,None", "CW");
 ADD_ENUM_PROP("Fill mode", "Solid,Wireframe,Point", "Solid");
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
