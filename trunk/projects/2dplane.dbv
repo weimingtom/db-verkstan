@@ -29,6 +29,9 @@
         <enum value="0">
           <animation channel="0" amplify="1" />
         </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
       </properties>
     </operator>
     <operator type="Camera">
@@ -187,53 +190,6 @@
         </enum>
       </properties>
     </operator>
-    <operator type="Material">
-      <name>
-      </name>
-      <dimension x="400" y="40" width="100" height="20" />
-      <properties>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="128" g="128" b="128">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <enum value="1">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Transform Model">
-      <name>
-      </name>
-      <dimension x="400" y="60" width="100" height="20" />
-      <properties>
-        <vector x="1" y="1" z="1">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <vector x="-1,56" y="0" z="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="1" amplify="5" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <vector x="0" y="0" z="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-      </properties>
-    </operator>
     <operator type="Merge Textures">
       <name>
       </name>
@@ -263,10 +219,57 @@
         </byte>
       </properties>
     </operator>
+    <operator type="Material">
+      <name>
+      </name>
+      <dimension x="400" y="60" width="100" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <enum value="1">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Transform Model">
+      <name>
+      </name>
+      <dimension x="400" y="80" width="100" height="20" />
+      <properties>
+        <vector x="1" y="1" z="1">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <vector x="-1,56" y="0" z="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="1" amplify="5" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <vector x="0" y="0" z="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+      </properties>
+    </operator>
     <operator type="2D Plane">
       <name>
       </name>
-      <dimension x="400" y="100" width="100" height="20" />
+      <dimension x="400" y="120" width="100" height="20" />
       <properties>
         <color r="255" g="0" b="0">
           <animation channel="0" amplify="1" />
@@ -311,7 +314,7 @@
     <operator type="2D Plane">
       <name>
       </name>
-      <dimension x="300" y="80" width="200" height="20" />
+      <dimension x="300" y="100" width="200" height="20" />
       <properties>
         <color r="255" g="255" b="255">
           <animation channel="0" amplify="1" />
@@ -356,7 +359,7 @@
     <operator type="Timeline">
       <name>
       </name>
-      <dimension x="400" y="160" width="100" height="20" />
+      <dimension x="400" y="180" width="100" height="20" />
       <properties>
         <byte value="1">
           <animation channel="0" amplify="1" />
@@ -394,7 +397,7 @@
     <operator type="Camera">
       <name>
       </name>
-      <dimension x="400" y="140" width="100" height="20" />
+      <dimension x="400" y="160" width="100" height="20" />
       <properties>
         <float value="45">
           <animation channel="0" amplify="1" />
@@ -428,7 +431,7 @@
     <operator type="2D Plane">
       <name>
       </name>
-      <dimension x="400" y="120" width="100" height="20" />
+      <dimension x="400" y="140" width="100" height="20" />
       <properties>
         <color r="255" g="255" b="0">
           <animation channel="0" amplify="1" />
@@ -465,6 +468,19 @@
         <float value="1">
           <animation channel="0" amplify="1" />
         </float>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Model">
+      <name>
+      </name>
+      <dimension x="400" y="40" width="100" height="20" />
+      <properties>
+        <enum value="1">
+          <animation channel="0" amplify="1" />
+        </enum>
         <enum value="0">
           <animation channel="0" amplify="1" />
         </enum>
