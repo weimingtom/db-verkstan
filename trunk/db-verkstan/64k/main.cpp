@@ -17,7 +17,8 @@ extern "C"
 
 #include "core/core.hpp"
 #include "core/globals.hpp"
-#include "core/loader.hpp"
+#include "core/graphicsloader.hpp"
+#include "core/musicloader.hpp"
 #include "core/metronome.hpp"
 #include "synth.h"
 
@@ -133,6 +134,7 @@ int WINAPI WinMain(HINSTANCE instance,
     drawProgressBar(0.0f);
     Synth* synth = new Synth(globalWindow);
     loadGraphics();
+    loadMusic();
 
     // Do a process before the demo starts. We do it backwards
     // so all operators will have their input ready as the root

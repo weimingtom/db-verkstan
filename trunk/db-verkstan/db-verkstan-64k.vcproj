@@ -397,11 +397,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\core\loader.cpp"
+				RelativePath=".\core\graphicsloader.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\core\loader.hpp"
+				RelativePath=".\core\graphicsloader.hpp"
 				>
 			</File>
 			<File
@@ -418,6 +418,14 @@
 			</File>
 			<File
 				RelativePath=".\core\metronome.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\musicloader.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\core\musicloader.hpp"
 				>
 			</File>
 			<File
@@ -883,6 +891,10 @@
 		</File>
 		<File
 			RelativePath=".\64k\main.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\64k\musicdata.hpp"
 			>
 		</File>
 	</Files>

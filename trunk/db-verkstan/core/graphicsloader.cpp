@@ -1,4 +1,4 @@
-#include "core/loader.hpp"
+#include "core/graphicsloader.hpp"
 #include "64k/graphicsdata.hpp"
 #include "core/core.hpp"
 #define OPERATOR_HEADERS 1

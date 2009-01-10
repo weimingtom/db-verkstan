@@ -269,7 +269,8 @@ namespace Verkstan
                                    ClearColor, 
                                    1.0f, 
                                    0);
-
+    
+        /*
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -323,6 +324,7 @@ namespace Verkstan
         d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
         
         globalDirect3DDevice->SetMaterial(&d3d9Material);
+        */
 
         camera->ApplyUserTransformations();
         
@@ -337,6 +339,9 @@ namespace Verkstan
     void Renderer::RenderDemoSceneRendererOperator(CoreOperator^ op, int tick)
     {
         Core::Operator* coreOp = op->getOperator();
+
+        for (int i = 0; i < numberOfLights; i++)
+            globalDirect3DDevice->LightEnable(i, FALSE);
 
         globalDirect3DDevice->Clear(0, 
                NULL, 
@@ -357,6 +362,7 @@ namespace Verkstan
         viewport.MaxZ   = 1.0f;
         globalDirect3DDevice->SetViewport(&viewport);
      
+
         globalDirect3DDevice->Clear(0, 
                                      NULL, 
                                      D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
@@ -364,6 +370,7 @@ namespace Verkstan
                                      1.0f, 
                                      0);
 
+        /*
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
@@ -417,6 +424,7 @@ namespace Verkstan
         d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
         
         globalDirect3DDevice->SetMaterial(&d3d9Material);
+        */
 
         coreOp->preRender(tick);
 
