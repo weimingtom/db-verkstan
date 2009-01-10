@@ -250,6 +250,18 @@ namespace VerkstanEditor.Gui
         {
             Exporter.Export(operatorPropertyGrid.Operator, exportAsHeaderSaveFileDialog.FileName);
         }
+        private void tileTextureMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            verkstanWindow.TextureTiling = tileTextureMenuItem.Checked;
+        }
+        private void filterTextureMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            verkstanWindow.TextureFiltering = filterTextureMenuItem.Checked;
+        }
+        private void solidMeshMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            verkstanWindow.MeshSolid = solidMeshMenuItem.Checked;
+        }
         #endregion
     }
 }

@@ -2,7 +2,7 @@
 
 #include <d3d9.h>
 
-struct VertexWithTexture
+struct TextureVertex
 {
     float x, y, z;
     DWORD color;
@@ -19,9 +19,15 @@ namespace Verkstan
     public:
         Renderer();
         ~Renderer();
+ 
+        bool TextureTiling;
+        bool TextureFiltering;
+        bool MeshSolid;
+
         int ClearColor;
         int WindowWidth;
         int WindowHeight;
+        
         void RenderOperator(CoreOperator^ op, int tick);
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);

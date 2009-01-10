@@ -12,5 +12,4 @@
 extern Clip* clips[DB_MAX_CLIPS];
 extern Operator* operators[DB_MAX_OPERATORS];
 extern short numberOfOperators;
-extern D3DLIGHT9* lights[DB_MAX_LIGHTS];
 extern short numberOfLights;

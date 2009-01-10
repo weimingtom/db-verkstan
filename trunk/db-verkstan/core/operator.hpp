@@ -22,6 +22,9 @@ public:
 
     virtual void preRender(int tick);
     virtual void render(int tick);
+#ifdef DB_EDITOR
+    virtual void renderInEditor(int tick);
+#endif
 
     Operator* getInput(int index);
     

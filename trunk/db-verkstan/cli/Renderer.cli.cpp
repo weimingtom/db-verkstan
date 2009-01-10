@@ -8,6 +8,9 @@ namespace Verkstan
     Renderer::Renderer()
     {
         camera = gcnew Camera();
+        TextureTiling = false;
+        TextureFiltering = false;
+        MeshSolid = false;
     }
 
     Renderer::~Renderer()
@@ -44,7 +47,6 @@ namespace Verkstan
         case Constants::OperatorTypes::Texture:
             RenderTextureOperator(op, tick);
             break;
-        case Constants::OperatorTypes::Scene:
         case Constants::OperatorTypes::Renderer:
             RenderDemoSceneRendererOperator(op, tick);
             break;
@@ -79,6 +81,7 @@ namespace Verkstan
             } 
         }
 
+        /*
         globalDirect3DDevice->Clear(0, 
                                     NULL, 
                                     D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
@@ -141,37 +144,155 @@ namespace Verkstan
         d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
         d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
         
-        globalDirect3DDevice->SetMaterial(&d3d9Material);
+        globalDirect3DDevice->SetMaterial(&d3d9Material);*/
      
-        coreOp->preRender(tick);
+        //coreOp->preRender(tick);
 
         if (coreOp->texture == 0)
             return;
 
+        int textureWidth = coreOp->texture->width;
+        int textureHeight = coreOp->texture->height;
+        float textureRatioWidthHeight = textureWidth / textureHeight;
+        float textureRatioHeightWidth = textureHeight / textureWidth;
+
+        if (textureWidth > WindowWidth && textureHeight > WindowHeight)
+        {
+            if (textureWidth > textureHeight)
+            {
+                textureWidth = WindowWidth;
+                textureHeight = (int)(textureWidth * textureRatioHeightWidth);
+            }
+            else
+            {
+                textureHeight = WindowHeight;
+                textureWidth = (int)(textureHeight * textureRatioWidthHeight);
+            }
+        }
+        else if (textureWidth > WindowWidth)
+        {
+            textureWidth = WindowWidth;
+            textureHeight = (int)(textureWidth * textureRatioHeightWidth);
+        }
+        else if (textureHeight > WindowHeight)
+        {
+            textureHeight = WindowHeight;
+            textureWidth = (int)(textureHeight * textureRatioWidthHeight);
+        }
+
+        float x, y, width, height, u1, u2, v1, v2;
+
+        if (TextureTiling)
+        {
+            x = 0.0f;
+            y = 0.0f;
+            width = 1.0f;
+            height = 1.0f;
+
+            float texturesOnX = WindowWidth / (float)textureWidth;
+            float texturesOnY = WindowHeight / (float)textureHeight;
+            
+            // We add 0.5f to center the texture. Why? Because if the
+            // the texture width is the same as the window width
+            // texturesOnX becomes 0.5f, and in that case we want
+            // u1 = 0.0f and u2 = 1.0f.
+            u1 = -texturesOnX / 2.0f + 0.5f;
+            u2 =  texturesOnX / 2.0f + 0.5f;
+            v1 = -texturesOnY / 2.0f + 0.5f;
+            v2 =  texturesOnY / 2.0f + 0.5f;
+
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
+        }
+        else
+        {
+            x = (WindowWidth / 2 - textureWidth / 2) / (float)WindowWidth;
+            y = (WindowHeight / 2 - textureHeight / 2) / (float)WindowHeight;
+            width = textureWidth / (float)WindowWidth;
+            height = textureHeight / (float)WindowHeight;
+            u1 = 0.0f;
+            u2 = 1.0f;
+            v1 = 0.0f;
+            v2 = 1.0f;
+
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_BORDER);
+        }
+
+        if (TextureFiltering)
+        {
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
+	        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
+	        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
+        }
+        else
+        {
+            globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_NONE);
+	        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_NONE);
+	        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_NONE);
+        }
+
+        TextureVertex quad[4];
+        quad[0].x = x; 
+        quad[0].y = y; 
+        quad[0].z = 0.0f;
+        quad[0].u = u1; 
+        quad[0].v = v1; 
+        quad[0].color = 0xffffffff;
+        
+        quad[1].x = x + width; 
+        quad[1].y = y; 
+        quad[1].z = 0.0f;
+        quad[1].u = u2; 
+        quad[1].v = v1; 
+        quad[1].color = 0xffffffff;
+
+        quad[2].x = x + width; 
+        quad[2].y = y + height; 
+        quad[2].z = 0.0f;
+        quad[2].u = u2;
+        quad[2].v = v2; 
+        quad[2].color = 0xffffffff;
+
+        quad[3].x = x; 
+        quad[3].y = y + height; 
+        quad[3].z = 0.0f;
+        quad[3].u = u1; 
+        quad[3].v = v2; 
+        quad[3].color = 0xffffffff;
+
+        D3DXMATRIX identityMatrix;
+        D3DXMATRIX projectionMatrix;
+        D3DXMatrixIdentity(&identityMatrix);
+        D3DXMatrixOrthoOffCenterLH(&projectionMatrix, 
+                                   0.0f, 
+                                   1.0f, 
+                                   1.0f, 
+                                   0.0f, 
+                                   -1.0f, 
+                                   1.0f);
+        globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projectionMatrix);
+        globalDirect3DDevice->SetTransform(D3DTS_VIEW, &identityMatrix);
+        globalDirect3DDevice->SetTransform(D3DTS_WORLD, &identityMatrix);
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
-        globalWorldMatrixStack->LoadIdentity();
-        globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
+        globalDirect3DDevice->Clear(0, 
+                                    NULL, 
+                                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
+                                    ClearColor, 
+                                    1.0f, 
+                                    0);
 
-        camera->ApplyUserTransformations();
 
         globalDirect3DDevice->BeginScene();
-        
-        VertexWithTexture vertices[]=
-        {
-           { -1.0f, -1.0f, 0.0f, 0xFFFFFFFF, 0.0f, 1.0f },
-           { -1.0f,  1.0f, 0.0f, 0xFFFFFFFF, 0.0f, 0.0f },
-           {  1.0f, -1.0f, 0.0f, 0xFFFFFFFF, 1.0f, 1.0f },
-           {  1.0f,  1.0f, 0.0f, 0xFFFFFFFF, 1.0f, 0.0f },
-        };
-
         globalDirect3DDevice->SetTexture(0, coreOp->texture->getD3D9Texture());		
         globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1);
-        globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP,
-                                              2,
-                                              &vertices, 
-                                              sizeof(VertexWithTexture));
-        globalDirect3DDevice->SetTexture(0, 0);	
+        globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, &quad, sizeof(TextureVertex));
+        globalDirect3DDevice->SetTexture(0, 0);		
         globalDirect3DDevice->EndScene();
     }
 
@@ -342,6 +463,8 @@ namespace Verkstan
 
         for (int i = 0; i < numberOfLights; i++)
             globalDirect3DDevice->LightEnable(i, FALSE);
+
+        numberOfLights = 0;
 
         globalDirect3DDevice->Clear(0, 
                NULL, 

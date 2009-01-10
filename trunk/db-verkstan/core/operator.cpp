@@ -151,6 +151,13 @@ void Operator::render(int tick)
 }
 
 #ifdef DB_EDITOR
+void Operator::renderInEditor(int tick)
+{
+    render(tick);
+}
+#endif
+
+#ifdef DB_EDITOR
 void Operator::deviceLost()
 {
     if (texture != 0)

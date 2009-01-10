@@ -1,9 +1,15 @@
 #include "core/operators/lightoperator.hpp"
 
+#include "core/core.hpp"
+
 void LightOperator::render(int tick)
 {
-    globalDirect3DDevice->SetLight(0, &d3dLight); 
-    globalDirect3DDevice->LightEnable(0, TRUE); 
+    globalDirect3DDevice->SetLight(numberOfLights, &d3dLight); 
+    globalDirect3DDevice->LightEnable(numberOfLights, TRUE); 
+    numberOfLights++;
+
+    for (int i = 0; i < numberOfInputs; i++)
+        getInput(i)->render(tick);
 }
 
 void LightOperator::process()

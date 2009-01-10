@@ -544,8 +544,6 @@ namespace VerkstanEditor.Gui
                     return Color.FromArgb(70, 90, 255);
                 case Verkstan.Constants.OperatorTypes.Renderer:
                     return Color.FromArgb(225, 71, 223);
-                case Verkstan.Constants.OperatorTypes.Scene:
-                    return Color.FromArgb(225, 210, 71);
                 default:
                     return Color.FromArgb(190, 190, 100);
             }

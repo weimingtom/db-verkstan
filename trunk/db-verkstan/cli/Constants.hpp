@@ -15,8 +15,7 @@ namespace Verkstan
             Renderer,
             Load,
             Store,
-            Unspecified,
-            Scene
+            Unspecified
         };
 
        enum class OperatorPropertyTypes

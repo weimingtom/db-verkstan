@@ -20,6 +20,21 @@ namespace Verkstan
             int get();
             void set(int clearColor);
         }
+        property bool TextureTiling
+        {
+            bool get();
+            void set(bool tiling);
+        }
+        property bool TextureFiltering
+        {
+            bool get();
+            void set(bool filtering);
+        }
+        property bool MeshSolid
+        {
+            bool get();
+            void set(bool filtering);
+        }
 
         void Boot(void* windowPtr);
         void Shutdown();

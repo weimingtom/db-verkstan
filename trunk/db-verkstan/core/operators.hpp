@@ -126,7 +126,6 @@ ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
-ADD_OP_TO_CAT("Light",           "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
@@ -135,6 +134,7 @@ ADD_OP_TO_CAT("Camera",          "Renderer");
 ADD_OP_TO_CAT("Timeline",        "Renderer");
 ADD_OP_TO_CAT("Transform",       "Renderer");
 ADD_OP_TO_CAT("2D Plane",        "Renderer");
+ADD_OP_TO_CAT("Light",           "Renderer");
 #endif
 
 #define DB_BYTE_PROP 0x00
@@ -381,7 +381,7 @@ DEF_OP_FOR_EDITOR(16, "Transform", TransformModelOperator, Renderer);
 ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
-ADD_INPUT(Scene);
+ADD_INPUT(Renderer);
 END_OP_FOR_EDITOR();
 #endif
 
@@ -393,7 +393,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_LIGHTOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(18, LightOperator, 0, 13, 
+DEF_OP_FOR_LOADER(18, LightOperator, -1, 13, 
                   DB_ENUM_PROP,
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP,
@@ -407,7 +407,7 @@ DEF_OP_FOR_LOADER(18, LightOperator, 0, 13,
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP, 
                   DB_FLOAT_PROP);
-DEF_OP_FOR_EDITOR(18, "Light", LightOperator, Model);
+DEF_OP_FOR_EDITOR(18, "Light", LightOperator, Renderer);
 ADD_ENUM_PROP("Type", "Point,Spot,Directional", "Point");
 ADD_COLOR_PROP("Diffuse", 255, 255, 0);
 ADD_COLOR_PROP("Specular", 255, 255, 255);
@@ -421,6 +421,7 @@ ADD_FLOAT_PROP("Attenuation1", 1.0f);
 ADD_FLOAT_PROP("Attenuation2", 1.0f);
 ADD_FLOAT_PROP("Theta", 1.0f);
 ADD_FLOAT_PROP("Phi", 1.0f);
+ADD_OPTIONAL_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
 

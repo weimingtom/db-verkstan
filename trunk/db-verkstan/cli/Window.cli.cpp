@@ -149,7 +149,37 @@ namespace Verkstan
 
     void Window::ClearColor::set(int color)
     {
-         renderer->ClearColor = color;
+        renderer->ClearColor = color;
+    }
+
+    void Window::TextureTiling::set(bool tiling)
+    {
+        renderer->TextureTiling = tiling;
+    }
+
+    bool Window::TextureTiling::get()
+    {
+        return renderer->TextureTiling;
+    }
+        
+    void Window::TextureFiltering::set(bool filtering)
+    {
+        renderer->TextureFiltering = filtering;
+    }
+
+    bool Window::TextureFiltering::get()
+    {
+        return renderer->TextureFiltering;
+    }
+
+    void Window::MeshSolid::set(bool solid)
+    {
+        renderer->MeshSolid = solid;
+    }
+
+    bool Window::MeshSolid::get()
+    {
+        return renderer->MeshSolid;
     }
 
     void Window::MouseDown(int button, int x, int y)
