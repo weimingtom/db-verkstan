@@ -711,6 +711,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\particlesystemoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\particlesystemoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\pixelsoperator.cpp"
 					>
 				</File>

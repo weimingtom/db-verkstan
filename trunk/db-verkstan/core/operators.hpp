@@ -40,6 +40,7 @@
 #include "core/operators/twodimensionalplaneoperator.hpp"
 #include "core/operators/planeoperator.hpp"
 #include "core/operators/megaextrudeoperator.hpp"
+#include "core/operators/particlesystemoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -88,6 +89,7 @@ namespace Verkstan
         using ::TwoDimensionalPlaneOperator;
         using ::PlaneOperator;
         using ::MegaExtrudeOperator;
+        using ::ParticleSystemOperator;
     }
 }
 #endif
@@ -125,6 +127,7 @@ ADD_OP_TO_CAT("Spherize",        "Mesh");
 ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
+ADD_OP_TO_CAT("Particle System", "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
 ADD_OP_TO_CAT("Material",        "Model");
@@ -707,5 +710,16 @@ ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
+
+#if defined(DB_PARTICLESYSTEMOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(41, ParticleSystemOperator, 1, 1,
+                  DB_FLOAT_PROP);
+DEF_OP_FOR_EDITOR(41, "Particle System", ParticleSystemOperator, Model);
+ADD_FLOAT_PROP("Particle Size", 0.2f);
+ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+
 
 #endif

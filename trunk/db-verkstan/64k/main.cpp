@@ -13,6 +13,13 @@ extern "C"
         __asm fistp result;
         return result;
     }
+/*
+	int __cdecl _ftol2_sse_excpt(float f)
+    {
+        volatile int result;
+        __asm fistp result;
+        return result;
+    }*/
 }
 
 #include "core/core.hpp"

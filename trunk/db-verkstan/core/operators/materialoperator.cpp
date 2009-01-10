@@ -9,7 +9,9 @@ void MaterialOperator::render(int tick)
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
     globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, getByteProperty(3));
-    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
+    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE); 
+	globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+	globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
     getInput(0)->render(tick);
     globalDirect3DDevice->SetTexture(0, 0);	
@@ -20,5 +22,5 @@ void MaterialOperator::process()
     ZeroMemory(&d3d9Material, sizeof(d3d9Material));
     d3d9Material.Diffuse = getColorProperty(0);
     d3d9Material.Specular = getColorProperty(1);
-    d3d9Material.Ambient = getColorProperty(2);   
+    d3d9Material.Ambient = getColorProperty(2);
 }

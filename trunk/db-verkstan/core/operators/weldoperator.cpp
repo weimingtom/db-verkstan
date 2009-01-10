@@ -1,22 +1,5 @@
 #include "weldoperator.hpp"
 
-static Vec3 projector;
-static Mesh *srcMesh;
-
-static int projectedComparator(const void *_i1, const void *_i2)
-{
-	int i1 = *(int *)_i1;
-	int i2 = *(int *)_i2;
-
-	Vec3 p1 = srcMesh->pos(i1);
-	Vec3 p2 = srcMesh->pos(i2);
-
-	float j1 = dot(p1, projector);
-	float j2 = dot(p2, projector);
-
-	return j1 < j2 ? -1 : 1;
-}
-
 void WeldOperator::process()
 {
 	// TODO: Weld away triangles and quads properly
@@ -24,7 +7,7 @@ void WeldOperator::process()
     if (mesh != 0)
         delete mesh;
 
-	srcMesh = getInput(0)->mesh;
+	Mesh *srcMesh = getInput(0)->mesh;
 
 	int *welded = new int[srcMesh->getNumVertices()];
 	int *numInputs = new int[srcMesh->getNumVertices()];
@@ -32,17 +15,10 @@ void WeldOperator::process()
 	memset(welded, -1, sizeof(int) * srcMesh->getNumVertices());
 	memset(numInputs, 0, sizeof(int) * srcMesh->getNumVertices());
 
-	projector = normalize(Vec3(0.2f, 0.3f, 0.5f));
+	Vec3 projector = normalize(Vec3(0.2f, 0.3f, 0.5f));
 	static const float epsilon = 0.0001f;
 
-	int *sortedVerts = new int[srcMesh->getNumVertices()];
-
-	for (int i = 0; i < srcMesh->getNumVertices(); i++)
-	{
-		sortedVerts[i] = i;
-	}
-
-	qsort(sortedVerts, srcMesh->getNumVertices(), sizeof(int), projectedComparator);
+	int *sortedVerts = mesh->constructSortedVertexIndices(projector);
 
 	int numVertices = 0;
 

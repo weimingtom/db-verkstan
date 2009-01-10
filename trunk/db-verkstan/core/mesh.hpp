@@ -69,6 +69,10 @@ public:
 	// Caller is responsible for deleting it
 	EdgeInfo *constructEdgeInfo();
 
+	// Constructs an array containing all vertex indicies sorted along an axis.
+	// Caller is responsible for deleting it
+	int *constructSortedVertexIndices(Vec3 sortAxis);
+
 	// Gets the normal of a triangle
 	// While the normal points in the right direction, it is not actually normalized
 	Vec3 getTriangleNormal(int triangleIndex);

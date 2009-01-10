@@ -277,6 +277,40 @@ Mesh::EdgeInfo *Mesh::constructEdgeInfo()
 }
 
 
+static Vec3 sortAxisProjector;
+static Mesh* sortAxisMesh;
+static int projectedComparator(const void *_i1, const void *_i2)
+{
+	int i1 = *(int *)_i1;
+	int i2 = *(int *)_i2;
+
+	Vec3 p1 = sortAxisMesh->pos(i1);
+	Vec3 p2 = sortAxisMesh->pos(i2);
+
+	float j1 = dot(p1, sortAxisProjector);
+	float j2 = dot(p2, sortAxisProjector);
+
+	return j1 < j2 ? -1 : 1;
+}
+
+int *Mesh::constructSortedVertexIndices(Vec3 sortAxis)
+{
+	sortAxisProjector = sortAxis;
+	sortAxisMesh = this;
+
+	int *result = new int[getNumVertices()];
+
+	for (int i = 0; i < getNumVertices(); i++)
+	{
+		result[i] = i;
+	}	
+
+	qsort(result, getNumVertices(), sizeof(int), projectedComparator);
+
+	return result;
+}
+
+
 Vec3 Mesh::getTriangleNormal(int triangleIndex)
 {
 	int *verts = triangle(triangleIndex);
