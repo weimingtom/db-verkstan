@@ -436,7 +436,7 @@ ADD_COLOR_PROP("Diffuse", 255, 255, 255);
 ADD_COLOR_PROP("Specular", 255, 255, 255);
 ADD_COLOR_PROP("Ambient", 128, 128, 128);
 ADD_ENUM_PROP("Lightning", "No,Yes", "No");
-ADD_INPUT(Mesh);
+ADD_INPUT(Model);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
@@ -470,7 +470,7 @@ ADD_FLOAT_PROP("Angle", 45.0f);
 ADD_INT_PROP("Aspect width", 1024);
 ADD_INT_PROP("Aspect height", 768);
 ADD_COLOR_PROP("Clear color", 255, 0, 255);
-ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -5.0f);
+ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -2.0f);
 ADD_VECTOR_PROP("Look at", 0.0f, 0.0f, 0.0f);
 ADD_FLOAT_PROP("Rotation", 0.0f);
 ADD_INFINITE_INPUT(Unspecified);

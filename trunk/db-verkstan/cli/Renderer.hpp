@@ -23,6 +23,7 @@ namespace Verkstan
         bool TextureTiling;
         bool TextureFiltering;
         bool MeshSolid;
+        bool ModelLightning;
 
         int ClearColor;
         int WindowWidth;

@@ -262,6 +262,14 @@ namespace VerkstanEditor.Gui
         {
             verkstanWindow.MeshSolid = solidMeshMenuItem.Checked;
         }
+        private void resetCameraMenuItem_Click(object sender, EventArgs e)
+        {
+            verkstanWindow.ResetCamera();
+        }
+        private void lightModelMenuItem_CheckedChanged(object sender, EventArgs e)
+        {
+            verkstanWindow.ModelLightning = lightModelMenuItem.Checked;
+        }
         #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace Verkstan
         TextureTiling = false;
         TextureFiltering = false;
         MeshSolid = false;
+        ModelLightning = true;
     }
 
     Renderer::~Renderer()
@@ -80,71 +81,6 @@ namespace Verkstan
                 coreOp->setDirty(true);
             } 
         }
-
-        /*
-        globalDirect3DDevice->Clear(0, 
-                                    NULL, 
-                                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
-                                    ClearColor, 
-                                    1.0f, 
-                                    0);
-
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(128, 128, 128));
-        globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
-	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
-	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
-        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
-        globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
-        globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
-        globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
-
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
-
-	    globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-        globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
-        globalDirect3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-
-        D3DLIGHT9 d3dLight;
-        ZeroMemory(&d3dLight, sizeof(d3dLight));
-        d3dLight.Type = D3DLIGHT_DIRECTIONAL;
-      
-        d3dLight.Diffuse.r = 1.0f;
-        d3dLight.Diffuse.g = 1.0f;
-        d3dLight.Diffuse.b = 1.0f;
-        d3dLight.Diffuse.a = 1.0f;
-
-        D3DVECTOR position;
-        position.x = -1.0f;
-        position.y = -1.0f;
-        position.z = -1.0f;
-        d3dLight.Position = position;
-
-        D3DVECTOR direction;
-        direction.x = 1.0f;
-        direction.y = 0.0f;
-        direction.z = 0.0f;
-        d3dLight.Direction = direction;
-
-        globalDirect3DDevice->SetLight(0, &d3dLight); 
-        globalDirect3DDevice->LightEnable(0, TRUE);
-
-        D3DMATERIAL9 d3d9Material;
-        ZeroMemory(&d3d9Material, sizeof(d3d9Material));
-        d3d9Material.Diffuse.r = d3d9Material.Ambient.r = 0.5f;
-        d3d9Material.Diffuse.g = d3d9Material.Ambient.g = 0.5f;
-        d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
-        d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
-        
-        globalDirect3DDevice->SetMaterial(&d3d9Material);*/
      
         //coreOp->preRender(tick);
 
@@ -341,9 +277,63 @@ namespace Verkstan
                            1.0f, 
                            0);
 
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+       
+
+        if (MeshSolid)
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+            globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+            D3DLIGHT9 d3dLight;
+            ZeroMemory(&d3dLight, sizeof(d3dLight));
+            d3dLight.Type = D3DLIGHT_DIRECTIONAL;
+          
+            d3dLight.Diffuse.r = 1.0f;
+            d3dLight.Diffuse.g = 1.0f;
+            d3dLight.Diffuse.b = 1.0f;
+            d3dLight.Diffuse.a = 1.0f;
+
+            D3DVECTOR position;
+            position.x = -1.0f;
+            position.y = -1.0f;
+            position.z = -1.0f;
+            d3dLight.Position = position;
+
+            D3DVECTOR direction;
+            direction.x = 1.0f;
+            direction.y = 0.0f;
+            direction.z = 0.0f;
+            d3dLight.Direction = direction;
+
+            globalDirect3DDevice->SetLight(0, &d3dLight); 
+            globalDirect3DDevice->LightEnable(0, TRUE);
+
+            D3DMATERIAL9 d3d9Material;
+            ZeroMemory(&d3d9Material, sizeof(d3d9Material));
+            d3d9Material.Diffuse.r = d3d9Material.Ambient.r = 0.5f;
+            d3d9Material.Diffuse.g = d3d9Material.Ambient.g = 0.5f;
+            d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
+            d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
+            d3d9Material.Specular.r = 1.0f;
+            d3d9Material.Specular.g = 1.0f;
+            d3d9Material.Specular.b = 1.0f;
+            d3d9Material.Specular.a = 1.0f;
+            d3d9Material.Power = 0.001f;
+            
+            globalDirect3DDevice->SetMaterial(&d3d9Material);
+
+            globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_PHONG); 
+	        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+	        globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
+            globalDirect3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
+        }
+        else
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+            globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);  
+        }
+
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
         globalWorldMatrixStack->LoadIdentity();
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
@@ -359,7 +349,13 @@ namespace Verkstan
 
     void Renderer::RenderModelOperator(CoreOperator^ op, int tick)
     {
+        System::Console::WriteLine(ModelLightning);
         Core::Operator* coreOp = op->getOperator();
+
+        for (int i = 0; i < numberOfLights; i++)
+            globalDirect3DDevice->LightEnable(i, FALSE);
+
+        numberOfLights = 0;
 
         // Reset all channel values as we don't want any animation
         // to pollute the view.
@@ -382,6 +378,60 @@ namespace Verkstan
             } 
         }
 
+        if (ModelLightning)
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+            D3DLIGHT9 d3dLight;
+            ZeroMemory(&d3dLight, sizeof(d3dLight));
+            d3dLight.Type = D3DLIGHT_DIRECTIONAL;
+          
+            d3dLight.Diffuse.r = 1.0f;
+            d3dLight.Diffuse.g = 1.0f;
+            d3dLight.Diffuse.b = 1.0f;
+            d3dLight.Diffuse.a = 1.0f;
+
+            D3DVECTOR position;
+            position.x = -1.0f;
+            position.y = -1.0f;
+            position.z = -1.0f;
+            d3dLight.Position = position;
+
+            D3DVECTOR direction;
+            direction.x = 1.0f;
+            direction.y = 0.0f;
+            direction.z = 0.0f;
+            d3dLight.Direction = direction;
+
+            globalDirect3DDevice->SetLight(0, &d3dLight); 
+            globalDirect3DDevice->LightEnable(0, TRUE);
+
+            D3DMATERIAL9 d3d9Material;
+            ZeroMemory(&d3d9Material, sizeof(d3d9Material));
+            d3d9Material.Diffuse.r = d3d9Material.Ambient.r = 0.5f;
+            d3d9Material.Diffuse.g = d3d9Material.Ambient.g = 0.5f;
+            d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
+            d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
+            d3d9Material.Specular.r = 1.0f;
+            d3d9Material.Specular.g = 1.0f;
+            d3d9Material.Specular.b = 1.0f;
+            d3d9Material.Specular.a = 1.0f;
+            d3d9Material.Power = 0.001f;
+            
+            globalDirect3DDevice->SetMaterial(&d3d9Material);
+
+            globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+            globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_PHONG); 
+	        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
+	        globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
+            globalDirect3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
+            numberOfLights++;
+        }
+        else
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+        }
+
         coreOp->preRender(tick);
 
         globalDirect3DDevice->Clear(0, 
@@ -390,62 +440,6 @@ namespace Verkstan
                                    ClearColor, 
                                    1.0f, 
                                    0);
-    
-        /*
-        globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-        globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-        globalDirect3DDevice->SetRenderState(D3DRS_ZENABLE, TRUE);
-        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENT, D3DCOLOR_XRGB(80, 80, 80));
-        globalDirect3DDevice->SetRenderState(D3DRS_SHADEMODE, D3DSHADE_GOURAUD); 
-	    globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
-	    globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
-
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MAGFILTER, D3DTEXF_ANISOTROPIC);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MINFILTER, D3DTEXF_ANISOTROPIC);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_ANISOTROPIC);
-
-		globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
-	    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
-
-	    globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLORARG1, D3DTA_TEXTURE );
-        globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLORARG2, D3DTA_DIFFUSE );
-        globalDirect3DDevice->SetTextureStageState( 0, D3DTSS_COLOROP, D3DTOP_MODULATE );
-
-        D3DLIGHT9 d3dLight;
-        ZeroMemory(&d3dLight, sizeof(d3dLight));
-        d3dLight.Type = D3DLIGHT_DIRECTIONAL;
-      
-        d3dLight.Diffuse.r = 1.0f;
-        d3dLight.Diffuse.g = 1.0f;
-        d3dLight.Diffuse.b = 1.0f;
-        d3dLight.Diffuse.a = 1.0f;
-
-        D3DVECTOR position;
-        position.x = -1.0f;
-        position.y = -1.0f;
-        position.z = -1.0f;
-        d3dLight.Position = position;
-
-        D3DVECTOR direction;
-        direction.x = 1.0f;
-        direction.y = 0.0f;
-        direction.z = 0.0f;
-        d3dLight.Direction = direction;
-
-        globalDirect3DDevice->SetLight(0, &d3dLight); 
-        globalDirect3DDevice->LightEnable(0, TRUE);
-
-        D3DMATERIAL9 d3d9Material;
-        ZeroMemory(&d3d9Material, sizeof(d3d9Material));
-        d3d9Material.Diffuse.r = d3d9Material.Ambient.r = 0.5f;
-        d3d9Material.Diffuse.g = d3d9Material.Ambient.g = 0.5f;
-        d3d9Material.Diffuse.b = d3d9Material.Ambient.b = 0.5f;
-        d3d9Material.Diffuse.a = d3d9Material.Ambient.a = 0.5f;
-        
-        globalDirect3DDevice->SetMaterial(&d3d9Material);
-        */
 
         camera->ApplyUserTransformations();
         

@@ -44,6 +44,7 @@
             this.tileTextureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterTextureMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.solidMeshMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lightModelMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripContainer1 = new System.Windows.Forms.ToolStripContainer();
@@ -160,7 +161,8 @@
             this.resetCameraMenuItem,
             this.tileTextureMenuItem,
             this.filterTextureMenuItem,
-            this.solidMeshMenuItem});
+            this.solidMeshMenuItem,
+            this.lightModelMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.viewToolStripMenuItem.Text = "View";
@@ -170,6 +172,7 @@
             this.resetCameraMenuItem.Name = "resetCameraMenuItem";
             this.resetCameraMenuItem.Size = new System.Drawing.Size(152, 22);
             this.resetCameraMenuItem.Text = "Reset Camera";
+            this.resetCameraMenuItem.Click += new System.EventHandler(this.resetCameraMenuItem_Click);
             // 
             // tileTextureMenuItem
             // 
@@ -194,6 +197,16 @@
             this.solidMeshMenuItem.Size = new System.Drawing.Size(152, 22);
             this.solidMeshMenuItem.Text = "Solid Mesh";
             this.solidMeshMenuItem.CheckedChanged += new System.EventHandler(this.solidMeshMenuItem_CheckedChanged);
+            // 
+            // lightModelMenuItem
+            // 
+            this.lightModelMenuItem.Checked = true;
+            this.lightModelMenuItem.CheckOnClick = true;
+            this.lightModelMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.lightModelMenuItem.Name = "lightModelMenuItem";
+            this.lightModelMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lightModelMenuItem.Text = "Light Model";
+            this.lightModelMenuItem.CheckedChanged += new System.EventHandler(this.lightModelMenuItem_CheckedChanged);
             // 
             // mainMenuHelp
             // 
@@ -512,6 +525,7 @@
         private System.Windows.Forms.ToolStripMenuItem tileTextureMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filterTextureMenuItem;
         private System.Windows.Forms.ToolStripMenuItem solidMeshMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lightModelMenuItem;
     }
 }
 

@@ -9,10 +9,9 @@ void MaterialOperator::render(int tick)
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
     globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, getByteProperty(3));
-
     globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
 
-    getInput(0)->mesh->render();
+    getInput(0)->render(tick);
     globalDirect3DDevice->SetTexture(0, 0);	
 }
 

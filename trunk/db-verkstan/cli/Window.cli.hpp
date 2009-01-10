@@ -35,6 +35,11 @@ namespace Verkstan
             bool get();
             void set(bool filtering);
         }
+        property bool ModelLightning
+        {
+            bool get();
+            void set(bool lightning);
+        }
 
         void Boot(void* windowPtr);
         void Shutdown();

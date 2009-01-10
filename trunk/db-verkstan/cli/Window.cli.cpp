@@ -182,6 +182,16 @@ namespace Verkstan
         return renderer->MeshSolid;
     }
 
+    void Window::ModelLightning::set(bool lightning)
+    {
+        renderer->ModelLightning = lightning;
+    }
+
+    bool Window::ModelLightning::get()
+    {
+        return renderer->ModelLightning;
+    }
+
     void Window::MouseDown(int button, int x, int y)
     {
         renderer->MouseDown(button, x, y);
