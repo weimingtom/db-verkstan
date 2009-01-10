@@ -15,6 +15,8 @@ void MaterialOperator::render(int tick)
 
     getInput(0)->render(tick);
     globalDirect3DDevice->SetTexture(0, 0);	
+
+	globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
 }
 
 void MaterialOperator::process()

@@ -54,10 +54,10 @@ void ParticleSystemOperator::render(int tick)
 		tmpMesh->normal(i * 4 + 2) = srcMesh->normal(j);
 		tmpMesh->normal(i * 4 + 3) = srcMesh->normal(j);
 
-		tmpMesh->uv(i * 4 + 0) = Vec2(0.0f, 0.0f);
-		tmpMesh->uv(i * 4 + 1) = Vec2(0.0f, 1.0f);
-		tmpMesh->uv(i * 4 + 2) = Vec2(1.0f, 1.0f);
-		tmpMesh->uv(i * 4 + 3) = Vec2(1.0f, 0.0f);
+		tmpMesh->uv(i * 4 + 0) = Vec2(1.0f, 0.0f);
+		tmpMesh->uv(i * 4 + 1) = Vec2(0.0f, 0.0f);
+		tmpMesh->uv(i * 4 + 2) = Vec2(0.0f, 1.0f);
+		tmpMesh->uv(i * 4 + 3) = Vec2(1.0f, 1.0f);
 
 		tmpMesh->setQuad(i, i * 4 + 0, i * 4 + 3, i * 4 + 2, i * 4 + 1);
 	}						
