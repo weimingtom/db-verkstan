@@ -14,6 +14,8 @@ namespace Verkstan
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);
         void MouseUp(int button, int x, int y);
+        int WindowWidth;
+        int WindowHeight;
     private:
         float zoom;
         float xRotation;

@@ -671,6 +671,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\megaextrudeoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\megaextrudeoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\mergetexturesopeartor.cpp"
 					>
 				</File>

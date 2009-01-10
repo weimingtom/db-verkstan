@@ -39,6 +39,7 @@
 #include "core/operators/spherizeoperator.hpp"
 #include "core/operators/twodimensionalplaneoperator.hpp"
 #include "core/operators/planeoperator.hpp"
+#include "core/operators/megaextrudeoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -86,6 +87,7 @@ namespace Verkstan
 		using ::SpherizeOperator;
         using ::TwoDimensionalPlaneOperator;
         using ::PlaneOperator;
+        using ::MegaExtrudeOperator;
     }
 }
 #endif
@@ -121,6 +123,7 @@ ADD_OP_TO_CAT("Weld",			 "Mesh");
 ADD_OP_TO_CAT("Displacement Map","Mesh");
 ADD_OP_TO_CAT("Spherize",        "Mesh");
 ADD_OP_TO_CAT("Plane",           "Mesh");
+ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Light",           "Model");
@@ -353,8 +356,10 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MODELOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(15, ModelOperator, 1);
+DEF_OP_FOR_LOADER(15, ModelOperator, 1, 1,
+                  DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(15, "Model", ModelOperator, Model);
+ADD_ENUM_PROP("Cull mode", "None,CW,CCW,Force Dword", "None");
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
@@ -418,18 +423,16 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MATERIALOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(19, MaterialOperator, -1, 5, 
+DEF_OP_FOR_LOADER(19, MaterialOperator, -1, 4, 
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP,
                   DB_COLOR_PROP,
-                  DB_ENUM_PROP,
                   DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(19, "Material", MaterialOperator, Model);
 ADD_COLOR_PROP("Diffuse", 255, 255, 255);
 ADD_COLOR_PROP("Specular", 255, 255, 255);
 ADD_COLOR_PROP("Ambient", 128, 128, 128);
 ADD_ENUM_PROP("Lightning", "No,Yes", "No");
-ADD_ENUM_PROP("Cull mode", "CCW,None,CW,Force Dword", "CCW");
 ADD_INPUT(Mesh);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
@@ -641,9 +644,32 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_2DPLANEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(38, TwoDimensionalPlaneOperator, -1);
+DEF_OP_FOR_LOADER(38, TwoDimensionalPlaneOperator, -1, 12,
+                  DB_COLOR_PROP,
+                  DB_BYTE_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_FLOAT_PROP,
+                  DB_ENUM_PROP);
 DEF_OP_FOR_EDITOR(38, "2D Plane", TwoDimensionalPlaneOperator, Renderer);
-ADD_INPUT(Texture);
+ADD_COLOR_PROP("Color", 255, 255, 255);
+ADD_BYTE_PROP("Alpha", 255);
+ADD_FLOAT_PROP("X", 0.0f);
+ADD_FLOAT_PROP("Width", 1.0f);
+ADD_FLOAT_PROP("Y", 0.0f);
+ADD_FLOAT_PROP("Height", 1.0f);
+ADD_FLOAT_PROP("Z", 0.0f);
+ADD_FLOAT_PROP("U Offset", 0.0f);
+ADD_FLOAT_PROP("V Offset", 0.0f);
+ADD_FLOAT_PROP("U Scale", 1.0f);
+ADD_FLOAT_PROP("V Scale", 1.0f);
+ADD_ENUM_PROP("Stretch texture", "No,Yes", "No");
 ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
@@ -659,6 +685,23 @@ ADD_FLOAT_PROP("Width",   1.0f);
 ADD_FLOAT_PROP("Height",  1.0f);
 ADD_BYTE_PROP("X Slices", 10);
 ADD_BYTE_PROP("Y Slices", 10);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_MEGAEXTRUDE) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(40, MegaExtrudeOperator, 1, 5, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP);
+DEF_OP_FOR_EDITOR(40, "Mega Extrude", MegaExtrudeOperator, Mesh);
+ADD_FLOAT_PROP("Distance",   0.2f);
+ADD_BYTE_PROP("Count", 3);
+ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotation", 1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
 

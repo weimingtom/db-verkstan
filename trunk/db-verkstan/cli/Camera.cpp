@@ -25,7 +25,7 @@ namespace Verkstan
         D3DXMATRIX projection;
         D3DXMatrixPerspectiveFovLH(&projection, 
                                    D3DXToRadian(45.0f), 
-                                   WINDOW_WIDTH / (float)WINDOW_HEIGHT, 
+                                   WindowWidth / (float)WindowHeight, 
                                    0.1f, 
                                    100.0f);
         globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &projection);

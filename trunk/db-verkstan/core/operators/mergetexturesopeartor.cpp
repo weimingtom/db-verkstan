@@ -89,4 +89,6 @@ void MergeTexturesOperator::process()
     texture->unlock();
     for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->texture->unlock();
+
+    texture->setDirty();
 }

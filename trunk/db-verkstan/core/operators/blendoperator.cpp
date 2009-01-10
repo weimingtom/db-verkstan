@@ -35,4 +35,6 @@ void BlendOperator::process()
     inputToBlend1->texture->unlock();
     inputToBlend2->texture->unlock();
     inputAlpha->texture->unlock();
+
+    texture->setDirty();
 }

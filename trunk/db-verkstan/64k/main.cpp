@@ -71,8 +71,8 @@ int WINAPI WinMain(HINSTANCE instance,
                                 0);
     ShowCursor(0);  
 
-    WINDOW_WIDTH = 640;
-    WINDOW_HEIGHT = 480;
+    globalWindowWidth = 640;
+    globalWindowHeight = 480;
 
     /*
     D3DPRESENT_PARAMETERS d3dPresentParameters;

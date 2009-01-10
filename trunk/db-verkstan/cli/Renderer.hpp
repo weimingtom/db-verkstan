@@ -20,7 +20,8 @@ namespace Verkstan
         Renderer();
         ~Renderer();
         int ClearColor;
-            
+        int WindowWidth;
+        int WindowHeight;
         void RenderOperator(CoreOperator^ op, int tick);
         void MouseDown(int button, int x, int y);
         void MouseMove(int x, int y);

@@ -23,8 +23,8 @@ namespace Verkstan
         globalWindow = (HWND)windowPtr;
         RECT rect;
         GetWindowRect(globalWindow, &rect);
-        WINDOW_WIDTH = rect.right - rect.left;
-        WINDOW_HEIGHT = rect.bottom - rect.top;
+        renderer->WindowWidth = rect.right - rect.left;
+        renderer->WindowHeight = rect.bottom - rect.top;
 
         globalDirect3D = Direct3DCreate9(D3D_SDK_VERSION);
         D3DDISPLAYMODE displayMode;
@@ -65,8 +65,8 @@ namespace Verkstan
     {
         RECT rect;
         GetWindowRect(globalWindow, &rect);
-        WINDOW_WIDTH = rect.right - rect.left;
-        WINDOW_HEIGHT = rect.bottom - rect.top;
+        renderer->WindowWidth = rect.right - rect.left;
+        renderer->WindowHeight = rect.bottom - rect.top;
         D3DDISPLAYMODE displayMode;
         globalDirect3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &displayMode);
 
@@ -78,8 +78,8 @@ namespace Verkstan
         d3dPresentParameters.EnableAutoDepthStencil = TRUE;
         d3dPresentParameters.AutoDepthStencilFormat = D3DFMT_D16;
         d3dPresentParameters.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
-        d3dPresentParameters.BackBufferWidth  = WINDOW_WIDTH;
-	    d3dPresentParameters.BackBufferHeight = WINDOW_HEIGHT;
+        d3dPresentParameters.BackBufferWidth  = renderer->WindowWidth;
+        d3dPresentParameters.BackBufferHeight = renderer->WindowHeight;
         d3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
         d3dPresentParameters.BackBufferCount= 1;
         

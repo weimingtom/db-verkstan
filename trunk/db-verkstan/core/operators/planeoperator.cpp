@@ -26,7 +26,7 @@ void PlaneOperator::process()
 			Vec3 pos = Vec3(uv.x * 2.0f - 1.0f, uv.y * 2.0f - 1.0f, 0.0f);
 			mesh->pos(vert) = Vec3(pos.x * width, pos.y * height, 0.0f);
 			mesh->normal(vert) = Vec3(0.0f, 0.0f, 1.0f);
-			mesh->uv(vert) = Vec2(uv.y, uv.x);
+			mesh->uv(vert) = Vec2(uv.x, uv.y);
 
 			if (y != ySlices && x != xSlices)
 			{

@@ -9,8 +9,10 @@ struct TwoDimensionalVertex
 
 void TwoDimensionalPlaneOperator::render(int tick)
 {    
-    for (int i = 1; i < numberOfInputs; i++)
+    for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->render(tick);
+
+    Texture* inputTexture = getInput(0)->texture;
 
     D3DXMATRIX lastViewMatrix;
     D3DXMATRIX lastProjectionMatrix;
@@ -23,34 +25,66 @@ void TwoDimensionalPlaneOperator::render(int tick)
     globalDirect3DDevice->GetRenderState(D3DRS_LIGHTING, &lastLightning); 
     globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
+    D3DXCOLOR color = getColorProperty(0);
+    color.a = getByteProperty(1) / 255.0f;
+
+    float x = getFloatProperty(2);
+    float width = getFloatProperty(3);
+    float y = getFloatProperty(4);
+    float height = getFloatProperty(5);
+    float z = getFloatProperty(6);
+    float uOffset = getFloatProperty(7);
+    float vOffset = getFloatProperty(8);
+    float uScale = getFloatProperty(9);
+    float vScale = getFloatProperty(10);
+
+    float ratio = (globalWindowHeight / (float)globalWindowWidth) / 4.0f;
+    float u1 = -ratio + uOffset;
+    float u2 = 1.0f + ratio + uOffset;
+    float v1 = vOffset;
+    float v2 = 1.0f + vOffset;
+
+    if (getByteProperty(11) == 1)
+    {
+        u1 = -0.002f;
+        u2 = 1.000f;
+        v1 = 0.000f;
+        v2 = 1.000f;
+    }
+
+    u1 *= uScale;
+    u2 *= uScale;
+    v1 *= vScale;
+    v2 *= vScale;
+
     TwoDimensionalVertex quad[4];
-    quad[0].x = 0.0f; 
-    quad[0].y = 0.0f; 
-    quad[0].z = 0.0f;
-    quad[0].u = 0.0f; 
-    quad[0].v = 0.0f; 
-    quad[0].color = 0xffffffff;
+    quad[0].x = x; 
+    quad[0].y = y; 
+    quad[0].z = z;
+    quad[0].u = u1; 
+    quad[0].v = v1; 
+    quad[0].color = color;
     
-    quad[1].x = (float)WINDOW_WIDTH; 
-    quad[1].y = 0.0f; 
-    quad[1].z = 0.0f;
-    quad[1].u = 1.0f; 
-    quad[1].v = 0.0f; 
-    quad[1].color = 0xffffffff;
+    quad[1].x = x + width; 
+    quad[1].y = y; 
+    quad[1].z = z;
+    quad[1].u = u2; 
+    quad[1].v = v1; 
+    quad[1].color = color;
 
-    quad[2].x = (float)WINDOW_WIDTH; 
-    quad[2].y = (float)WINDOW_HEIGHT; 
-    quad[2].z = 0.0f;
-    quad[2].u = 1.0f;
-    quad[2].v = 1.0f; 
-    quad[2].color = 0xffffffff;
+    quad[2].x = x + width; 
+    quad[2].y = y + height; 
+    quad[2].z = z;
+    quad[2].u = u2;
+    quad[2].v = v2; 
+    quad[2].color = color;
 
-    quad[3].x = 0.0f; 
-    quad[3].y = (float)WINDOW_HEIGHT; 
-    quad[3].z = 0.0f;
-    quad[3].u = 0.0f; 
-    quad[3].v = 1.0f; 
-    quad[3].color = 0xffffffff;
+    quad[3].x = x; 
+    quad[3].y = y + height; 
+    quad[3].z = z;
+    quad[3].u = u1; 
+    quad[3].v = v2; 
+    quad[3].color = color;
 
     DWORD oldFVF;
     globalDirect3DDevice->GetFVF(&oldFVF);
@@ -60,8 +94,13 @@ void TwoDimensionalPlaneOperator::render(int tick)
     globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
     globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
     globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
+    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_BORDER);
 
-    globalDirect3DDevice->SetTexture(0, getInput(0)->texture->getD3D9Texture());
+    if (inputTexture != 0)
+        globalDirect3DDevice->SetTexture(0, inputTexture->getD3D9Texture());
+
     globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, &quad, sizeof(TwoDimensionalVertex));
     globalDirect3DDevice->SetTexture(0, 0);
     globalDirect3DDevice->SetFVF(oldFVF);
@@ -76,9 +115,17 @@ void TwoDimensionalPlaneOperator::process()
     D3DXMatrixIdentity(&identityMatrix);
     D3DXMatrixOrthoOffCenterLH(&projectionMatrix, 
                                0.0f, 
-                               (float)WINDOW_WIDTH, 
-                               (float)WINDOW_HEIGHT, 
+                               1.0f, 
+                               1.0f, 
                                0.0f, 
                                -1.0f, 
                                1.0f);
 }
+
+#ifdef DB_EDITOR
+void TwoDimensionalPlaneOperator::deviceLost()
+{
+    Operator::deviceLost();
+    setDirty(true);
+}
+#endif

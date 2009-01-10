@@ -28,6 +28,9 @@ namespace Verkstan
             return;
         }
 
+        camera->WindowWidth = WindowWidth;
+        camera->WindowHeight = WindowHeight;
+
         op->getOperator()->cascadeProcess();
 
         switch (op->Type)
@@ -342,13 +345,14 @@ namespace Verkstan
                1.0f, 
                0);
 
-        int height = WINDOW_HEIGHT;
-        int width = (int)(height / 3.0f * 4.0f);
+       
+        globalWindowHeight = WindowHeight;
+        globalWindowWidth = (int)(WindowHeight / 3.0f * 4.0f);
         D3DVIEWPORT9 viewport;
-        viewport.X = WINDOW_WIDTH / 2 - width / 2;
+        viewport.X = WindowWidth / 2 - globalWindowWidth / 2;
         viewport.Y = 0;
-        viewport.Width = width;
-        viewport.Height = height;
+        viewport.Width = globalWindowWidth;
+        viewport.Height = globalWindowHeight;
         viewport.MinZ   = 0.0f;
         viewport.MaxZ   = 1.0f;
         globalDirect3DDevice->SetViewport(&viewport);
@@ -428,8 +432,8 @@ namespace Verkstan
         viewport;
         viewport.X = 0;
         viewport.Y = 0;
-        viewport.Width = WINDOW_WIDTH;
-        viewport.Height = WINDOW_HEIGHT;
+        viewport.Width = WindowWidth;
+        viewport.Height = WindowHeight;
         viewport.MinZ   = 0.0f;
         viewport.MaxZ   = 1.0f;
         globalDirect3DDevice->SetViewport(&viewport);
