@@ -519,6 +519,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\basicmaterialoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\basicmaterialoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\blendoperator.cpp"
 					>
 				</File>
@@ -660,14 +668,6 @@
 				</File>
 				<File
 					RelativePath=".\core\operators\lightoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\materialoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\materialoperator.hpp"
 					>
 				</File>
 				<File

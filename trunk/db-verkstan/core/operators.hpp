@@ -9,7 +9,7 @@
 #include "core/operators/cylinderoperator.hpp"
 #include "core/operators/boxoperator.hpp"
 #include "core/operators/transformmodeloperator.hpp"
-#include "core/operators/materialoperator.hpp"
+#include "core/operators/basicmaterialoperator.hpp"
 #include "core/operators/modeloperator.hpp"
 #include "core/operators/addmodelsoperator.hpp"
 #include "core/operators/lightoperator.hpp"
@@ -58,7 +58,7 @@ namespace Verkstan
         using ::CylinderOperator;
         using ::BoxOperator;
         using ::TransformModelOperator;
-        using ::MaterialOperator;
+        using ::BasicMaterialOperator;
         using ::ModelOperator;
         using ::AddModelsOperator;
         using ::LightOperator;
@@ -130,8 +130,8 @@ ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Particle System", "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
 ADD_OP_TO_CAT("Add Models",      "Model");
-ADD_OP_TO_CAT("Material",        "Model");
 ADD_OP_TO_CAT("Clone Model",     "Model");
+ADD_OP_TO_CAT("Basic Material",  "Model");
 ADD_OP_TO_CAT("Normals Shader",  "Model");
 ADD_OP_TO_CAT("Camera",          "Renderer");
 ADD_OP_TO_CAT("Timeline",        "Renderer");
@@ -428,17 +428,23 @@ ADD_OPTIONAL_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
 
-#if defined(DB_MATERIALOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(19, MaterialOperator, -1, 4, 
+#if defined(DB_BASICMATERIALOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(19, BasicMaterialOperator, -1, 7, 
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP,
                   DB_COLOR_PROP,
+                  DB_ENUM_PROP,
+                  DB_ENUM_PROP,
+                  DB_ENUM_PROP,
                   DB_ENUM_PROP);
-DEF_OP_FOR_EDITOR(19, "Material", MaterialOperator, Model);
+DEF_OP_FOR_EDITOR(19, "Basic Material", BasicMaterialOperator, Model);
 ADD_COLOR_PROP("Diffuse", 255, 255, 255);
 ADD_COLOR_PROP("Specular", 255, 255, 255);
 ADD_COLOR_PROP("Ambient", 128, 128, 128);
 ADD_ENUM_PROP("Lightning", "No,Yes", "No");
+ADD_ENUM_PROP("Texture Address", "Wrap,Mirror,Border,Clamp", "Wrap");
+ADD_ENUM_PROP("Texture Filtiring", "Anisotropic,Convolution Mono,Gaussion Quad,Linear,None", "Anisotropic");
+ADD_ENUM_PROP("Alpha blend", "Yes, No", "Yes");
 ADD_INPUT(Model);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();

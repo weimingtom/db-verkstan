@@ -2,7 +2,7 @@
 
 #include "core/operator.hpp"
 
-class MaterialOperator: public Operator
+class BasicMaterialOperator: public Operator
 {
 public:
     void process();
