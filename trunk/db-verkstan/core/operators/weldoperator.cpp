@@ -18,7 +18,7 @@ void WeldOperator::process()
 	Vec3 projector = normalize(Vec3(0.2f, 0.3f, 0.5f));
 	static const float epsilon = 0.0001f;
 
-	int *sortedVerts = mesh->constructSortedVertexIndices(projector);
+	int *sortedVerts = srcMesh->constructSortedVertexIndices(projector);
 
 	int numVertices = 0;
 

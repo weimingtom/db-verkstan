@@ -1,7 +1,7 @@
 #include "core/globals.hpp"
 #include "core/mesh.hpp"
 
-Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets) :
+Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets, bool _vertexColors) :
 	triangleData(0),
 	quadData(0),
 	selectedUVSet(0),
@@ -11,9 +11,10 @@ Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets) :
 	numUVSets(_numUVSets),
 	fvf(0),
 	vertexBuffer(0),
-	indexBuffer(0)
+	indexBuffer(0),
+	vertexColors(_vertexColors ? 1 : 0)
 {
-	vertexStride = 6 + 2 * numUVSets;
+	vertexStride = 6 + 2 * numUVSets + vertexColors;
 	vertexData = new float[numVertices * vertexStride];
 	ZeroMemory(vertexData, sizeof(float) * numVertices * vertexStride);
 
@@ -47,9 +48,10 @@ Mesh::Mesh(const Mesh& mesh) :
 	numUVSets(mesh.numUVSets),
 	fvf(0),
 	vertexBuffer(0),
-	indexBuffer(0)
+	indexBuffer(0),
+	vertexColors(mesh.vertexColors)
 {
-	vertexStride = 6 + 2 * numUVSets;
+	vertexStride = 6 + 2 * numUVSets + vertexColors;
 	vertexData = new float[numVertices * vertexStride];
 	memcpy(vertexData, mesh.vertexData, sizeof(float) * vertexStride * numVertices);
 
@@ -111,6 +113,12 @@ Vec3 &Mesh::pos(int vertexIndex)
 }
 
 
+unsigned int &Mesh::color(int vertexIndex)
+{
+	return *((unsigned int*)(vertexData + vertexIndex * vertexStride + 6));
+}
+
+
 Vec3 &Mesh::normal(int vertexIndex)
 {
 	return *((Vec3*)(vertexData + vertexIndex * vertexStride + 3));
@@ -125,7 +133,7 @@ Vec2 &Mesh::uv(int vertexIndex)
 
 Vec2 &Mesh::uv(int vertexIndex, int uvSet)
 {
-	return *((Vec2*)(vertexData + vertexIndex * vertexStride + 6 + 2 * uvSet));
+	return *((Vec2*)(vertexData + vertexIndex * vertexStride + 6 + 2 * uvSet + vertexColors));
 }
 
 
@@ -385,7 +393,7 @@ void Mesh::createD3DBuffers()
 	{
 		int vertexBytes = numVertices * vertexStride * sizeof(float);
 
-		fvf = D3DFVF_XYZ | D3DFVF_NORMAL | (numUVSets << D3DFVF_TEXCOUNT_SHIFT);
+		fvf = D3DFVF_XYZ | D3DFVF_NORMAL | (numUVSets << D3DFVF_TEXCOUNT_SHIFT) | (vertexColors * D3DFVF_DIFFUSE);
 
 		globalDirect3DDevice->CreateVertexBuffer
 		( 

@@ -7,7 +7,7 @@ void ParticleSystemOperator::process()
 
 void ParticleSystemOperator::render(int tick)
 {	
-	Mesh *srcMesh = getInput(0)->mesh;
+	Mesh *srcMesh = getInput(0)->mesh->clone();
 
 	if (!srcMesh)
 	{
@@ -15,6 +15,7 @@ void ParticleSystemOperator::render(int tick)
 	}
 
 	float particleSize = getFloatProperty(0);
+	float lightingRange = 0.2f; //getFloatProperty(1);
 	
 	globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
@@ -36,9 +37,68 @@ void ParticleSystemOperator::render(int tick)
 		forward = Vec3(worldViewMatrix.m[2]);
 	}
 
-	Mesh *tmpMesh = new Mesh(srcMesh->getNumVertices() * 4, 0, srcMesh->getNumVertices());
+	Mesh *tmpMesh = new Mesh(srcMesh->getNumVertices() * 4, 0, srcMesh->getNumVertices(), 1, true);
 
 	int *sortedVerts = srcMesh->constructSortedVertexIndices(-forward);
+
+	unsigned int *colors = new unsigned int[srcMesh->getNumVertices()];
+
+	for (int i = 0; i < srcMesh->getNumVertices(); i++)
+	{
+		float wsum = 0.0f;
+		Vec3 n(0.0f, 0.0f, 0.0f);
+
+		for (int j = 0; j < srcMesh->getNumVertices(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+
+			Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
+			float l = length(diff);
+			float w = pow(2.0f, -l / lightingRange);
+
+			n += w * (diff / l);
+
+			wsum += w;
+		}
+
+		srcMesh->normal(i) = normalize(-n);
+	}
+
+	for (int i = 0; i < srcMesh->getNumVertices(); i++)
+	{
+		float ao = 1.0f;
+
+		for (int j = 0; j < srcMesh->getNumVertices(); j++)
+		{
+			if (i == j)
+			{
+				continue;
+			}
+
+			Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
+			float l = length(diff);
+			float w = pow(2.0f, -l / lightingRange);
+			float aw = saturate(dot((diff / l), srcMesh->normal(i)));
+			ao *= saturate(1.0f - w * aw);
+		}
+
+		Vec3 lightDir = normalize(Vec3(1.0f, 1.0f, 1.0f));
+		Vec3 lightColor(1.0f, 0.9f, 0.7f);
+		Vec3 ambientColor(0.2f, 0.2f, 0.3f);
+
+		Vec3 diffuse = saturate(0.2f + dot(lightDir, srcMesh->normal(i))) * lightColor;
+
+		Vec3 color = diffuse + ambientColor * ao;
+		
+		int r = (int)(color.x * 255.0f);
+		int g = (int)(color.y * 255.0f);
+		int b = (int)(color.z * 255.0f);
+		colors[i] = D3DCOLOR_ARGB(255, min(r, 255), min(g, 255), min(b, 255));
+	}
+
 
 	for (int i = 0; i < srcMesh->getNumVertices(); i++)
 	{
@@ -59,15 +119,23 @@ void ParticleSystemOperator::render(int tick)
 		tmpMesh->uv(i * 4 + 2) = Vec2(0.0f, 1.0f);
 		tmpMesh->uv(i * 4 + 3) = Vec2(1.0f, 1.0f);
 
+		tmpMesh->color(i * 4 + 0) = colors[j];
+		tmpMesh->color(i * 4 + 1) = colors[j];
+		tmpMesh->color(i * 4 + 2) = colors[j];
+		tmpMesh->color(i * 4 + 3) = colors[j];
+
 		tmpMesh->setQuad(i, i * 4 + 0, i * 4 + 3, i * 4 + 2, i * 4 + 1);
 	}						
 							
 	globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	tmpMesh->render();		
+
 	delete tmpMesh;
+	delete srcMesh;
 
 	delete[] sortedVerts;
+	delete[] colors;
 }
 
 #ifdef DB_EDITOR

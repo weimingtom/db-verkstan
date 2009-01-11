@@ -25,7 +25,7 @@ public:
 	};
 
 	// Creates a new mesh and allocates buffers of desired size
-	Mesh(int numVertices, int numTriangles, int numQuads, int numUVSets = 1);
+	Mesh(int numVertices, int numTriangles, int numQuads, int numUVSets = 1, bool vertexColors = false);
     
 	// Creates a copy of a mesh
 	Mesh(const Mesh& mesh);	
@@ -36,6 +36,9 @@ public:
 
 	// Position of a vertex
 	Vec3 &pos(int vertexIndex);
+
+	// Diffuse color of a vertex
+	unsigned int &color(int vertexIndex);
 
 	// Normal of a vertex
 	Vec3 &normal(int vertexIndex);
@@ -114,6 +117,8 @@ public:
 
 	inline void setDirty() { destroyD3DBuffers(); }
 
+	inline bool isVertexColorsEnabled() { return vertexColors != 0; }
+
 	void debugPrint();
 
 private:
@@ -131,6 +136,7 @@ private:
 	int numQuads;
 	int numUVSets;
 	int vertexStride;
+	int vertexColors;
 
 	DWORD fvf;
 	IDirect3DVertexBuffer9 *vertexBuffer;

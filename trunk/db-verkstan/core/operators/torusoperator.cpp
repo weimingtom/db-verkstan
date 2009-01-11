@@ -30,6 +30,7 @@ void TorusOperator::process()
 			Vec3 toInner = -cosf(v * 2 * M_PI) * toOuter + sinf(v * 2 * M_PI) * Vec3(0.0f, 1.0f, 0.0f);
 
 			mesh->pos(vert) = toOuter * outerRadius + toInner * innerRadius;
+			mesh->color(vert) = 0xff00ff00;//rand() + (rand() << 16);
 			mesh->normal(vert) = toInner;
 			mesh->uv(vert) = Vec2(u, v);
 
