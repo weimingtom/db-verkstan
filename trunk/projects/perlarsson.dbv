@@ -491,6 +491,80 @@ Den sista mannen</text>
         </enum>
       </properties>
     </operator>
+    <operator type="Add Models">
+      <name>
+      </name>
+      <dimension x="500" y="140" width="300" height="20" />
+      <properties />
+    </operator>
+    <operator type="Camera">
+      <name>
+      </name>
+      <dimension x="500" y="160" width="100" height="20" />
+      <properties>
+        <float value="45">
+          <animation channel="0" amplify="1" />
+        </float>
+        <int value="1024">
+          <animation channel="0" amplify="1" />
+        </int>
+        <int value="768">
+          <animation channel="0" amplify="1" />
+        </int>
+        <color r="255" g="0" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <vector x="-0,21" y="0,03" z="-2,47">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <vector x="0,57" y="0" z="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </vector>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+      </properties>
+    </operator>
+    <operator type="Basic Material">
+      <name>
+      </name>
+      <dimension x="500" y="80" width="200" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="3">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
     <operator type="Timeline">
       <name>
       </name>
@@ -540,6 +614,42 @@ Den sista mannen</text>
                 <dimension x="501" y="-0,005882382" />
               </controlpoint>
               <controlpoint>
+                <dimension x="765" y="0,005882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="770" y="0,9647059" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="838" y="-0,005882382" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1021" y="0" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1024" y="0,9882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1085" y="0,005882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1277" y="0,005882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1280" y="0,9764706" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1333" y="0,005882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1533" y="0,005882353" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1536" y="0,9823529" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="1593" y="0" />
+              </controlpoint>
+              <controlpoint>
                 <dimension x="7680" y="-0,005882382" />
               </controlpoint>
               <controlpoint>
@@ -549,80 +659,6 @@ Den sista mannen</text>
           </clip>
         </channel>
       </timeline>
-    </operator>
-    <operator type="Basic Material">
-      <name>
-      </name>
-      <dimension x="500" y="80" width="200" height="20" />
-      <properties>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <color r="128" g="128" b="128">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="3">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="4">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Add Models">
-      <name>
-      </name>
-      <dimension x="500" y="140" width="300" height="20" />
-      <properties />
-    </operator>
-    <operator type="Camera">
-      <name>
-      </name>
-      <dimension x="500" y="160" width="100" height="20" />
-      <properties>
-        <float value="45">
-          <animation channel="0" amplify="1" />
-        </float>
-        <int value="1024">
-          <animation channel="0" amplify="1" />
-        </int>
-        <int value="768">
-          <animation channel="0" amplify="1" />
-        </int>
-        <color r="255" g="0" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <vector x="-0,21" y="0,03" z="-2,47">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <vector x="0,57" y="0" z="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
-        <float value="0">
-          <animation channel="0" amplify="1" />
-        </float>
-      </properties>
     </operator>
   </page>
 </project>

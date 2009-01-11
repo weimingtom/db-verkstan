@@ -4,11 +4,11 @@ void ModelOperator::render(int tick)
 {
     unsigned char cullMode = getByteProperty(0);
     if (cullMode == 0)
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
     else if (cullMode == 1)
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
     else if (cullMode == 2)
-        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+        globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
     unsigned char fillMode = getByteProperty(1);
     if (fillMode == 0)
