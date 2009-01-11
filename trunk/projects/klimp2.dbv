@@ -2,22 +2,6 @@
   <version>1</version>
   <bpm>120</bpm>
   <page>
-    <operator type="Sphere">
-      <name>
-      </name>
-      <dimension x="700" y="100" width="100" height="20" />
-      <properties>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <byte value="255">
-          <animation channel="0" amplify="1" />
-        </byte>
-        <byte value="255">
-          <animation channel="0" amplify="1" />
-        </byte>
-      </properties>
-    </operator>
     <operator type="Clouds">
       <name>
       </name>
@@ -39,16 +23,6 @@
         <byte value="1">
           <animation channel="0" amplify="1" />
         </byte>
-      </properties>
-    </operator>
-    <operator type="Displacement Map">
-      <name>
-      </name>
-      <dimension x="600" y="120" width="200" height="20" />
-      <properties>
-        <float value="0,1">
-          <animation channel="0" amplify="1" />
-        </float>
       </properties>
     </operator>
     <operator type="Glow">
@@ -81,21 +55,6 @@
         </byte>
       </properties>
     </operator>
-    <operator type="Darkbits Logo">
-      <name>
-      </name>
-      <dimension x="500" y="100" width="200" height="20" />
-      <properties>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="Propagate">
-      <name>
-      </name>
-      <dimension x="500" y="120" width="100" height="20" />
-    </operator>
     <operator type="Material">
       <name>
       </name>
@@ -116,9 +75,6 @@
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
         </color>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
         <enum value="0">
           <animation channel="0" amplify="1" />
         </enum>
@@ -213,58 +169,46 @@
       <name>
       </name>
       <dimension x="400" y="180" width="200" height="20" />
-      <properties />
-    </operator>
-    <operator type="Flat">
-      <name>
-      </name>
-      <dimension x="400" y="140" width="100" height="20" />
       <properties>
-        <color r="128" g="128" b="128">
+        <color r="255" g="255" b="255">
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
         </color>
-      </properties>
-    </operator>
-    <operator type="Timeline">
-      <name>
-      </name>
-      <dimension x="500" y="220" width="100" height="20" />
-      <properties>
-        <byte value="1">
+        <byte value="255">
           <animation channel="0" amplify="1" />
         </byte>
         <float value="0">
           <animation channel="0" amplify="1" />
         </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
       </properties>
-      <timeline>
-        <channel>
-          <number>1</number>
-          <clip type="generator">
-            <dimension x="0" y="0" width="40" />
-            <generatortype>0</generatortype>
-            <period>20480</period>
-          </clip>
-        </channel>
-        <channel>
-          <number>2</number>
-          <clip type="generator">
-            <dimension x="0" y="1" width="40" />
-            <generatortype>0</generatortype>
-            <period>1024</period>
-          </clip>
-        </channel>
-        <channel>
-          <number>3</number>
-          <clip type="generator">
-            <dimension x="0" y="2" width="40" />
-            <generatortype>0</generatortype>
-            <period>512</period>
-          </clip>
-        </channel>
-      </timeline>
     </operator>
     <operator type="Camera">
       <name>
@@ -320,6 +264,116 @@
           <animation channel="2" amplify="0,2" />
           <animation channel="0" amplify="1" />
         </vector>
+      </properties>
+    </operator>
+    <operator type="Sphere">
+      <name>
+      </name>
+      <dimension x="700" y="80" width="100" height="20" />
+      <properties>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <byte value="255">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <byte value="255">
+          <animation channel="0" amplify="1" />
+        </byte>
+      </properties>
+    </operator>
+    <operator type="Displacement Map">
+      <name>
+      </name>
+      <dimension x="600" y="100" width="200" height="20" />
+      <properties>
+        <float value="0,1">
+          <animation channel="0" amplify="1" />
+        </float>
+      </properties>
+    </operator>
+    <operator type="Darkbits Logo">
+      <name>
+      </name>
+      <dimension x="500" y="80" width="200" height="20" />
+      <properties>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Propagate">
+      <name>
+      </name>
+      <dimension x="500" y="100" width="100" height="20" />
+    </operator>
+    <operator type="Propagate">
+      <name>
+      </name>
+      <dimension x="500" y="120" width="100" height="20" />
+    </operator>
+    <operator type="Model">
+      <name>
+      </name>
+      <dimension x="600" y="120" width="100" height="20" />
+      <properties>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Timeline">
+      <name>
+      </name>
+      <dimension x="500" y="220" width="100" height="20" />
+      <properties>
+        <byte value="1">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+      </properties>
+      <timeline>
+        <channel>
+          <number>1</number>
+          <clip type="generator">
+            <dimension x="0" y="0" width="40" />
+            <generatortype>0</generatortype>
+            <period>20480</period>
+          </clip>
+        </channel>
+        <channel>
+          <number>2</number>
+          <clip type="generator">
+            <dimension x="0" y="1" width="40" />
+            <generatortype>0</generatortype>
+            <period>1024</period>
+          </clip>
+        </channel>
+        <channel>
+          <number>3</number>
+          <clip type="generator">
+            <dimension x="0" y="2" width="40" />
+            <generatortype>0</generatortype>
+            <period>512</period>
+          </clip>
+        </channel>
+      </timeline>
+    </operator>
+    <operator type="Flat">
+      <name>
+      </name>
+      <dimension x="400" y="140" width="100" height="20" />
+      <properties>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
       </properties>
     </operator>
   </page>

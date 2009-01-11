@@ -215,6 +215,10 @@ namespace Verkstan
         globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         globalDirect3DDevice->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+        globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+        globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+        globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+        globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
 
         globalDirect3DDevice->Clear(0, 
                                     NULL, 
