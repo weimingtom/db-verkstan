@@ -7,9 +7,9 @@ namespace Verkstan
         coreSplineClip = new Core::SplineClip();
         for (int i = 0; i < DB_MAX_CLIPS; i++)
         {   
-            if (Core::clips[i] == 0)
+            if (Core::coreClips[i] == 0)
             {
-                Core::clips[i] = coreSplineClip;
+                Core::coreClips[i] = coreSplineClip;
                 id = i;
                 break;
             }
@@ -20,7 +20,7 @@ namespace Verkstan
 
     CoreSplineClip::~CoreSplineClip()
     {
-       Core::clips[id] = 0;
+       Core::coreClips[id] = 0;
        delete coreSplineClip;
     }
 

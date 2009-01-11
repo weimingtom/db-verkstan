@@ -85,9 +85,9 @@ namespace Verkstan
         
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {
-            if (Core::operators[i] != 0)
+            if (Core::coreOperators[i] != 0)
             {
-                Core::operators[i]->deviceLost();
+                Core::coreOperators[i]->deviceLost();
             }
         }
 

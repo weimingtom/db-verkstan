@@ -89,8 +89,8 @@ namespace Verkstan
 
         int textureWidth = coreOp->texture->width;
         int textureHeight = coreOp->texture->height;
-        float textureRatioWidthHeight = textureWidth / textureHeight;
-        float textureRatioHeightWidth = textureHeight / textureWidth;
+        float textureRatioWidthHeight = textureWidth / (float)textureHeight;
+        float textureRatioHeightWidth = textureHeight / (float)textureWidth;
 
         if (textureWidth > WindowWidth && textureHeight > WindowHeight)
         {
@@ -227,7 +227,6 @@ namespace Verkstan
                                     1.0f, 
                                     0);
 
-
         globalDirect3DDevice->BeginScene();
         globalDirect3DDevice->SetTexture(0, coreOp->texture->getD3D9Texture());		
         globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE|D3DFVF_TEX1);
@@ -356,10 +355,10 @@ namespace Verkstan
         System::Console::WriteLine(ModelLightning);
         Core::Operator* coreOp = op->getOperator();
 
-        for (int i = 0; i < numberOfLights; i++)
+        for (int i = 0; i < coreNumberOfLights; i++)
             globalDirect3DDevice->LightEnable(i, FALSE);
 
-        numberOfLights = 0;
+        coreNumberOfLights = 0;
 
         // Reset all channel values as we don't want any animation
         // to pollute the view.
@@ -429,7 +428,7 @@ namespace Verkstan
 	        globalDirect3DDevice->SetRenderState(D3DRS_AMBIENTMATERIALSOURCE, D3DMCS_MATERIAL);
 	        globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
             globalDirect3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
-            numberOfLights++;
+            coreNumberOfLights++;
         }
         else
         {
@@ -459,10 +458,10 @@ namespace Verkstan
     {
         Core::Operator* coreOp = op->getOperator();
 
-        for (int i = 0; i < numberOfLights; i++)
+        for (int i = 0; i < coreNumberOfLights; i++)
             globalDirect3DDevice->LightEnable(i, FALSE);
 
-        numberOfLights = 0;
+        coreNumberOfLights = 0;
 
         globalDirect3DDevice->Clear(0, 
                NULL, 

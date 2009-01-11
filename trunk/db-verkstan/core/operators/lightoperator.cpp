@@ -4,9 +4,10 @@
 
 void LightOperator::render(int tick)
 {
-    globalDirect3DDevice->SetLight(numberOfLights, &d3dLight); 
-    globalDirect3DDevice->LightEnable(numberOfLights, TRUE); 
-    numberOfLights++;
+    globalDirect3DDevice->SetLight(coreNumberOfLights, &d3dLight); 
+    globalDirect3DDevice->LightEnable(coreNumberOfLights, TRUE); 
+    coreLights[coreNumberOfLights] = &d3dLight;
+    coreNumberOfLights++;
 
     for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->render(tick);

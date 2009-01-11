@@ -25,8 +25,8 @@ namespace Verkstan
 
     CoreOperator::~CoreOperator()
     {
-        delete Core::operators[id];
-        Core::operators[id] = 0;
+        delete Core::coreOperators[id];
+        Core::coreOperators[id] = 0;
     }
 
     unsigned char CoreOperator::Number::get()
@@ -245,7 +245,7 @@ namespace Verkstan
 
     Core::Operator* CoreOperator::getOperator()
     {
-        return Core::operators[id];
+        return Core::coreOperators[id];
     }
 
     void CoreOperator::ClearInputConnections()

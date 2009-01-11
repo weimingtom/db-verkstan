@@ -9,7 +9,8 @@
 #define DB_TICKS_PER_BEAT 256
 #define DB_MAX_LIGHTS 9
 
-extern Clip* clips[DB_MAX_CLIPS];
-extern Operator* operators[DB_MAX_OPERATORS];
-extern short numberOfOperators;
-extern short numberOfLights;
+extern Clip* coreClips[DB_MAX_CLIPS];
+extern Operator* coreOperators[DB_MAX_OPERATORS];
+extern short coreNumberOfOperators;
+extern D3DLIGHT9* coreLights[DB_MAX_LIGHTS];
+extern short coreNumberOfLights;

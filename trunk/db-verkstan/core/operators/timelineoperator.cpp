@@ -23,7 +23,7 @@ void TimelineOperator::render(int tick)
 
     for (int i = 0; i < numberOfClips; i++)
     {
-        Clip* clip = clips[timelineClips[i]];
+        Clip* clip = coreClips[timelineClips[i]];
 
         if (clip->start <= relativeTick && clip->end > relativeTick)
             Operator::broadcastChannelValue(clip->channel, clip->getValue(relativeTick - clip->start));
@@ -41,7 +41,7 @@ void TimelineOperator::process()
 void TimelineOperator::broadcastChannelValue(int channel, float value)
 {
     for (int i = 0; i < numberOfClips; i++)
-        if (clips[timelineClips[i]]->channel == channel)
+        if (coreClips[timelineClips[i]]->channel == channel)
             return;
 
     Operator::broadcastChannelValue(channel, value);

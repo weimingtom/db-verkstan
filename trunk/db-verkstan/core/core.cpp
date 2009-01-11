@@ -1,6 +1,7 @@
 #include "core/core.hpp"
 
-Clip* clips[DB_MAX_CLIPS];
-Operator* operators[DB_MAX_OPERATORS];
-short numberOfOperators;
-short numberOfLights = 0;
+Clip* coreClips[DB_MAX_CLIPS];
+Operator* coreOperators[DB_MAX_OPERATORS];
+short coreNumberOfOperators;
+D3DLIGHT9* coreLights[DB_MAX_LIGHTS];
+short coreNumberOfLights = 0;

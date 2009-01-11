@@ -65,9 +65,9 @@ categories[category]->Add(name);
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
-        if (Core::operators[i] == 0)                \
+        if (Core::coreOperators[i] == 0)            \
             {                                       \
-            Core::operators[i] = o;                 \
+            Core::coreOperators[i] = o;             \
                 id = i;                             \
                 break;                              \
             }                                       \

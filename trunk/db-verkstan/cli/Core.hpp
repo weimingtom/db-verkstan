@@ -11,8 +11,8 @@ namespace Verkstan
 {
     namespace Core
     {
-        using ::clips;
-        using ::operators;
+        using ::coreClips;
+        using ::coreOperators;
         using ::Operator;
         using ::Texture;
         using ::Mesh;

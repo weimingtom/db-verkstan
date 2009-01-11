@@ -87,7 +87,7 @@ void Operator::cascadeProcess()
         return;
 
     for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->cascadeProcess();
+        coreOperators[inputs[i]]->cascadeProcess();
 
     process();
     dirty = false;
@@ -96,7 +96,7 @@ void Operator::cascadeProcess()
 void Operator::broadcastChannelValue(int channel, float value)
 {
     for (int i = 0; i < numberOfInputs; i++)
-        operators[inputs[i]]->broadcastChannelValue(channel, value);
+        coreOperators[inputs[i]]->broadcastChannelValue(channel, value);
 
     for (int i = 0; i < DB_MAX_OPERATOR_PROPERTIES; i++)
     {
@@ -127,7 +127,7 @@ void Operator::broadcastChannelValue(int channel, float value)
 void Operator::setDirty(bool dirty)
 {
     for (int i = 0; i < numberOfOutputs; i++)
-        operators[outputs[i]]->setDirty(dirty);
+        coreOperators[outputs[i]]->setDirty(dirty);
 
     this->dirty = dirty;
 }
@@ -136,7 +136,7 @@ Operator* Operator::getInput(int index)
 {
     if (inputs[index] == -1)
         return 0;
-    return operators[inputs[index]];
+    return coreOperators[inputs[index]];
 }
 
 void Operator::preRender(int tick)

@@ -7,9 +7,9 @@ namespace Verkstan
         coreGeneratorClip = new Core::GeneratorClip();
         for (int i = 0; i < DB_MAX_CLIPS; i++)
         {   
-            if (Core::clips[i] == 0)
+            if (Core::coreClips[i] == 0)
             {
-                Core::clips[i] = coreGeneratorClip;
+                Core::coreClips[i] = coreGeneratorClip;
                 id = i;
                 break;
             }
@@ -20,7 +20,7 @@ namespace Verkstan
 
     CoreGeneratorClip::~CoreGeneratorClip()
     {
-       Core::clips[id] = 0;
+       Core::coreClips[id] = 0;
        delete coreGeneratorClip;
     }
 

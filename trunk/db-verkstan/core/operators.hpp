@@ -389,7 +389,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_ADDMODELSOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER_WITH_NO_PROPS(17, AddModelsOperator, 1);
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(17, AddModelsOperator, -1);
 DEF_OP_FOR_EDITOR(17, "Add Models", AddModelsOperator, Model);
 ADD_INFINITE_INPUT(Model);
 END_OP_FOR_EDITOR();

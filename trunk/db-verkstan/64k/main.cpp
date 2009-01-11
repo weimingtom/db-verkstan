@@ -147,13 +147,13 @@ int WINAPI WinMain(HINSTANCE instance,
     // so all operators will have their input ready as the root
     // operator has the lowest index and the top rightmost operator
     // has the highest index.
-    for (unsigned short i = 0; i < numberOfOperators; i++)
+    for (unsigned short i = 0; i < coreNumberOfOperators; i++)
     {
-        operators[numberOfOperators - i - 1]->process();
-        drawProgressBar(i / (float)numberOfOperators);
+        coreOperators[coreNumberOfOperators - i - 1]->process();
+        drawProgressBar(i / (float)coreNumberOfOperators);
     }
 
-    operators[0]->cascadeProcess();
+    coreOperators[0]->cascadeProcess();
     drawProgressBar(1.0f);
     startMetronome();
 
@@ -164,19 +164,24 @@ int WINAPI WinMain(HINSTANCE instance,
         MSG msg;
         PeekMessage(&msg, globalWindow, 0, 0, PM_REMOVE);
         
-        operators[0]->cascadeProcess();
-        operators[0]->preRender(tick);
+        for (int i = 0; i < coreNumberOfLights; i++)
+            globalDirect3DDevice->LightEnable(i, FALSE);
+
+        coreNumberOfLights = 0;
+
+        coreOperators[0]->cascadeProcess();
+        coreOperators[0]->preRender(tick);
 
         globalWorldMatrixStack->LoadIdentity();
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
         
         globalDirect3DDevice->BeginScene();
-        operators[0]->render(tick);
+        coreOperators[0]->render(tick);
         globalDirect3DDevice->EndScene();
 
         globalDirect3DDevice->Present(NULL, NULL, NULL, NULL);
       
-    } while (!GetAsyncKeyState(VK_ESCAPE) && operators[0]->ticks > tick);
+    } while (!GetAsyncKeyState(VK_ESCAPE) && coreOperators[0]->ticks > tick);
 
     delete synth;
     globalDirect3DDevice->Release();
