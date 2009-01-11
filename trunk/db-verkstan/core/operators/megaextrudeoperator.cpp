@@ -13,10 +13,12 @@ void MegaExtrudeOperator::process()
 
 	Mesh *srcMesh = getInput(0)->mesh;
 
+    System::Console::WriteLine(srcMesh->getNumFaces() + " " + srcMesh->getNumQuads() + " " + srcMesh->getNumTriangles());
     int numberOfVertices = srcMesh->getNumVertices();
     int numberOfQuads = srcMesh->getNumQuads();
 	
-    // Calculate the new number of quads.
+    // Calculate the new number of quads and vertices.
+    // The number of triangles will be unchanged.
     for (int i = 0; i < srcMesh->getNumFaces(); i++)
     {
         int n;
@@ -24,7 +26,7 @@ void MegaExtrudeOperator::process()
 
         if (srcMesh->faceSelected(i))
         {
-            numberOfQuads += 3 * count;
+            numberOfQuads += n * count;
             numberOfVertices += n * count;
         }
     }
@@ -45,15 +47,11 @@ void MegaExtrudeOperator::process()
     for (int i = 0; i < srcMesh->getNumFaces(); i++)
     {
         int n;
-        int *face = srcMesh->face(i, n);
-
-        int v0 = face[0];
-        int v1 = face[1];
-        int v2 = face[2];
-        int v3 = face[3]; // Might segfault...
+        int *face = srcMesh->face(i, n);   
 
         if (srcMesh->faceSelected(i))
         {
+            int* lastIndices = face;
             Vec3* lastPositions = new Vec3[n];
             for (int f = 0; f < n; f++)
                 lastPositions[f] = srcMesh->pos(face[f]);
@@ -65,55 +63,49 @@ void MegaExtrudeOperator::process()
 
             for (int c = 0; c < count; c++)
             {
+                int* currentIndices = new int[n];
                 for (int f = 0; f < n; f++)
                 {
                     Vec3 pos = lastPositions[f] + incrementVector;
                     mesh->pos(vertexIndex) = pos;
+                    currentIndices[f] = vertexIndex;
                     lastPositions[f] = pos;
                     vertexIndex++;
-
-                    mesh->setQuad(quadIndex, 
-                                  vertexIndex - n, 
-                                  vertexIndex - n + 1, 
-                                  vertexIndex,
-                                  vertexIndex + 1);
-                    quadIndex++;
                 }
 
-                if (n == 3)
+                for (int f = 0; f < n; f++)
                 {
-                     mesh->setTriangle(triangleIndex, 
-                                       vertexIndex - 3, 
-                                       vertexIndex - 2, 
-                                       vertexIndex - 1);
-                     triangleIndex++;
+                     mesh->setQuad(quadIndex, 
+                                   lastIndices[f], 
+                                   lastIndices[(f + 1) % n], 
+                                   currentIndices[(f + 1) % n],
+                                   currentIndices[f]);
+                     quadIndex++;
                 }
-                if (n == 4)
+
+                for (int f = 0; f < n; f++)
                 {
-                    mesh->setQuad(quadIndex, 
-                                  vertexIndex - 4, 
-                                  vertexIndex - 3, 
-                                  vertexIndex - 2,
-                                  vertexIndex - 1);
-                    quadIndex++;
+                    lastIndices[f] = currentIndices[f];
+                    face[f] = currentIndices[f];
                 }
+
+                delete[] currentIndices;
             }
 
             delete[] lastPositions;
         }
 
-        /*
         if (n == 3)
         {
-            mesh->setTriangle(triangleIndex, v0, v1, v2);
+            mesh->setTriangle(triangleIndex, face[0], face[1], face[2]);
             triangleIndex++;
         }
         else
         {
-            mesh->setQuad(quadIndex, v0, v1, v2, v3);
+            mesh->setQuad(quadIndex, face[0], face[1], face[2],  face[3]);
             quadIndex++;
-        }*/
-
-        mesh->recalculateNormals();
+        }
     }
+
+    mesh->recalculateNormals();
 }
