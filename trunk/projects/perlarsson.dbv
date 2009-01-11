@@ -253,64 +253,6 @@
 Den sista mannen</text>
       </properties>
     </operator>
-    <operator type="Model">
-      <name>
-      </name>
-      <dimension x="500" y="60" width="100" height="20" />
-      <properties>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
-    <operator type="2D Plane">
-      <name>
-      </name>
-      <dimension x="500" y="220" width="200" height="20" />
-      <properties>
-        <color r="255" g="255" b="255">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </color>
-        <byte value="0">
-          <animation channel="3" amplify="255" />
-        </byte>
-        <float value="0">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="0">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="-1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="0">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="0">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <float value="1">
-          <animation channel="0" amplify="1" />
-        </float>
-        <enum value="0">
-          <animation channel="0" amplify="1" />
-        </enum>
-      </properties>
-    </operator>
     <operator type="2D Plane">
       <name>
       </name>
@@ -531,6 +473,51 @@ Den sista mannen</text>
         </float>
       </properties>
     </operator>
+    <operator type="2D Plane">
+      <name>
+      </name>
+      <dimension x="500" y="220" width="100" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <byte value="0">
+          <animation channel="3" amplify="255" />
+        </byte>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="-1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
     <operator type="Basic Material">
       <name>
       </name>
@@ -565,10 +552,97 @@ Den sista mannen</text>
         </enum>
       </properties>
     </operator>
-    <operator type="Timeline">
+    <operator type="Model">
+      <name>
+      </name>
+      <dimension x="500" y="60" width="100" height="20" />
+      <properties>
+        <enum value="1">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="2D Plane">
       <name>
       </name>
       <dimension x="500" y="240" width="100" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <byte value="0">
+          <animation channel="4" amplify="255" />
+        </byte>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="-1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
+    <operator type="Timeline">
+      <name>BlinkTimline</name>
+      <dimension x="500" y="260" width="100" height="20" />
+      <properties>
+        <byte value="1">
+          <animation channel="0" amplify="1" />
+        </byte>
+        <float value="0">
+          <animation channel="0" amplify="1" />
+        </float>
+      </properties>
+      <timeline>
+        <channel>
+          <number>4</number>
+          <clip type="spline">
+            <dimension x="0" y="0" width="2" />
+            <splinetype>1</splinetype>
+            <controlpoints>
+              <controlpoint>
+                <dimension x="2" y="0,9764706" />
+              </controlpoint>
+              <controlpoint>
+                <dimension x="130" y="0" />
+              </controlpoint>
+            </controlpoints>
+          </clip>
+        </channel>
+      </timeline>
+    </operator>
+    <operator type="Timeline">
+      <name>
+      </name>
+      <dimension x="500" y="280" width="100" height="20" />
       <properties>
         <byte value="1">
           <animation channel="0" amplify="1" />
@@ -614,48 +688,20 @@ Den sista mannen</text>
                 <dimension x="501" y="-0,005882382" />
               </controlpoint>
               <controlpoint>
-                <dimension x="765" y="0,005882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="770" y="0,9647059" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="838" y="-0,005882382" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1021" y="0" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1024" y="0,9882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1085" y="0,005882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1277" y="0,005882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1280" y="0,9764706" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1333" y="0,005882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1533" y="0,005882353" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1536" y="0,9823529" />
-              </controlpoint>
-              <controlpoint>
-                <dimension x="1593" y="0" />
-              </controlpoint>
-              <controlpoint>
                 <dimension x="7680" y="-0,005882382" />
               </controlpoint>
               <controlpoint>
                 <dimension x="8179" y="0,9764706" />
               </controlpoint>
             </controlpoints>
+          </clip>
+        </channel>
+        <channel>
+          <number>4</number>
+          <clip type="generator">
+            <dimension x="0" y="3" width="12" />
+            <generatortype>0</generatortype>
+            <period>256</period>
           </clip>
         </channel>
       </timeline>
