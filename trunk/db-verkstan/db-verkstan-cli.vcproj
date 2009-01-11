@@ -591,6 +591,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\crackleoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\crackleoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\cylinderoperator.cpp"
 					>
 				</File>

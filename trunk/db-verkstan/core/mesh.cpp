@@ -319,6 +319,12 @@ int *Mesh::constructSortedVertexIndices(Vec3 sortAxis)
 }
 
 
+Mesh::BoxedMesh *Mesh::constructBoxedMesh(float boxSize)
+{
+	return new BoxedMesh(this, boxSize);
+}
+
+
 Vec3 Mesh::getTriangleNormal(int triangleIndex)
 {
 	int *verts = triangle(triangleIndex);
@@ -566,3 +572,87 @@ int Mesh::EdgeInfo::getIndexOf(int v1, int v2)
 	}
 }
 
+
+
+///////////////////////
+// BoxedMesh
+///////////////////////
+
+Mesh::BoxedMesh::BoxedMesh(Mesh *mesh_, float boxSize_) : 
+	boxSize(boxSize_),
+	mesh(mesh_)
+{
+	minPos = maxPos = mesh->pos(0);
+	for (int i = 1; i < mesh->getNumVertices(); i++)
+	{
+		Vec3 p = mesh->pos(i);
+		minPos = Vec3(min(minPos.x, p.x), min(minPos.y, p.y), min(minPos.z, p.z));
+		maxPos = Vec3(max(maxPos.x, p.x), max(maxPos.y, p.y), max(maxPos.z, p.z));
+	}
+
+	size = maxPos - minPos;
+	numBoxesX = (int)ceil((double)size.x / boxSize);
+	numBoxesY = (int)ceil((double)size.y / boxSize);
+	numBoxesZ = (int)ceil((double)size.z / boxSize);
+	numBoxesTotal = numBoxesX * numBoxesY * numBoxesZ;
+
+	boxes = new Box[numBoxesTotal];
+
+	int guessedVertsPerBox = max((mesh->getNumVertices() * 2) / numBoxesTotal, 1);
+
+	for (int i = 1; i < mesh->getNumVertices(); i++)
+	{
+		int x, y, z;
+		getBoxFor(x, y, z, i);
+		Box &box = get(x, y, z);
+
+		if (box.allocated == 0)
+		{
+			box.allocated = guessedVertsPerBox;
+			box.vertices = new int[guessedVertsPerBox];
+		}
+		else if (box.allocated == box.size)
+		{
+			int newAllocation = box.allocated * 2;
+			int *newVertices = new int[newAllocation];
+			memcpy(newVertices, box.vertices, box.allocated * sizeof(int));
+			delete[] box.vertices;
+			box.vertices = newVertices;
+			box.allocated = newAllocation;
+		}
+
+		box.vertices[box.size] = i;
+		box.size++;
+	}
+}
+
+Mesh::BoxedMesh::~BoxedMesh()
+{
+	for (int i = 0; i < numBoxesTotal; i++)
+	{
+		delete[] boxes[i].vertices;
+	}
+	delete[] boxes;
+}
+
+Mesh::BoxedMesh::Box &Mesh::BoxedMesh::get(int x, int y, int z)
+{
+	static Box emptyBox;
+
+	if (x < 0 || x >= numBoxesX ||
+		y < 0 || y >= numBoxesY ||
+		z < 0 || z >= numBoxesZ)
+	{
+		return emptyBox;
+	}
+
+	return boxes[x + y * numBoxesX + z * numBoxesX * numBoxesY];
+}
+
+void Mesh::BoxedMesh::getBoxFor(int &outX, int &outY, int &outZ, int vertex)
+{
+	Vec3 p = mesh->pos(vertex) - minPos;
+	outX = (int)floor((double)p.x / boxSize);
+	outY = (int)floor((double)p.y / boxSize);
+	outZ = (int)floor((double)p.z / boxSize);
+}

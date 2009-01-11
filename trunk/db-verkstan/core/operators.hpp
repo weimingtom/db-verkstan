@@ -41,6 +41,7 @@
 #include "core/operators/planeoperator.hpp"
 #include "core/operators/megaextrudeoperator.hpp"
 #include "core/operators/particlesystemoperator.hpp"
+#include "core/operators/crackleoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -90,6 +91,7 @@ namespace Verkstan
         using ::PlaneOperator;
         using ::MegaExtrudeOperator;
         using ::ParticleSystemOperator;
+		using ::CrackleOperator;
     }
 }
 #endif
@@ -112,6 +114,7 @@ ADD_OP_TO_CAT("Contrast",        "Texture");
 ADD_OP_TO_CAT("Merge Textures",  "Texture");
 ADD_OP_TO_CAT("Distortion",      "Texture");
 ADD_OP_TO_CAT("Darkbits Logo",   "Texture");
+ADD_OP_TO_CAT("Crackle",         "Texture");
 ADD_OP_TO_CAT("Torus",           "Mesh");
 ADD_OP_TO_CAT("Sphere",          "Mesh");
 ADD_OP_TO_CAT("Cylinder",        "Mesh");
@@ -722,10 +725,27 @@ DEF_OP_FOR_LOADER(41, ParticleSystemOperator, 1, 1,
                   DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(41, "Particle System", ParticleSystemOperator, Model);
 ADD_FLOAT_PROP("Particle Size", 0.2f);
+ADD_FLOAT_PROP("Lighting Range", 0.2f);
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
 
+
+#if defined(DB_CRACKLEOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(42, CrackleOperator, 0, 5,
+                  DB_COLOR_PROP,
+				  DB_COLOR_PROP,
+				  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
+				  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR(42, "Crackle", CrackleOperator, Texture);
+ADD_COLOR_PROP("Color 1", 0, 0, 0);
+ADD_COLOR_PROP("Color 2", 255, 255, 255);
+ADD_BYTE_PROP("Count", 8);
+ADD_BYTE_PROP("Randomness", 128);
+ADD_BYTE_PROP("Seed", 1);
+END_OP_FOR_EDITOR();
+#endif
 
 
 #endif

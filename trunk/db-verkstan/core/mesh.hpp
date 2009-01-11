@@ -24,6 +24,46 @@ public:
 		int *edges;
 	};
 
+
+	// Class used to sort vertices of a mesh into spatial buckets
+	class BoxedMesh
+	{
+	public:
+		class Box
+		{
+		public:
+			Box() :
+				size(0),
+				allocated(0),
+				vertices(0)
+			{}
+
+			int size;
+			int allocated;
+			int *vertices;
+		};
+
+		BoxedMesh(Mesh *mesh, float boxSize);
+
+		~BoxedMesh();
+
+		Box &get(int x, int y, int z);
+
+		void getBoxFor(int &outX, int &outY, int &outZ, int vertex);
+
+		inline int getNumBoxesX() { return numBoxesX; }
+		inline int getNumBoxesY() { return numBoxesY; }
+		inline int getNumBoxesZ() { return numBoxesZ; }
+
+	private:
+		Mesh *mesh;
+		Vec3 minPos, maxPos, size;
+		int numBoxesX, numBoxesY, numBoxesZ, numBoxesTotal;
+		float boxSize;
+		Box *boxes;
+	};
+
+	
 	// Creates a new mesh and allocates buffers of desired size
 	Mesh(int numVertices, int numTriangles, int numQuads, int numUVSets = 1, bool vertexColors = false);
     
@@ -75,6 +115,10 @@ public:
 	// Constructs an array containing all vertex indicies sorted along an axis.
 	// Caller is responsible for deleting it
 	int *constructSortedVertexIndices(Vec3 sortAxis);
+
+	// Constructs a boxed mesh with a certain box size
+	// Caller is responsible for deleting it
+	BoxedMesh *constructBoxedMesh(float boxSize);
 
 	// Gets the normal of a triangle
 	// While the normal points in the right direction, it is not actually normalized
@@ -142,3 +186,4 @@ private:
 	IDirect3DVertexBuffer9 *vertexBuffer;
 	IDirect3DIndexBuffer9 *indexBuffer;
 };
+

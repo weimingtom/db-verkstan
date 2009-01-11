@@ -15,7 +15,7 @@ void ParticleSystemOperator::render(int tick)
 	}
 
 	float particleSize = getFloatProperty(0);
-	float lightingRange = 0.2f; //getFloatProperty(1);
+	float lightingRange = getFloatProperty(1);
 	
 	globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
@@ -43,25 +43,42 @@ void ParticleSystemOperator::render(int tick)
 
 	unsigned int *colors = new unsigned int[srcMesh->getNumVertices()];
 
+	Mesh::BoxedMesh *boxedMesh = srcMesh->constructBoxedMesh(lightingRange * 2);
+
 	for (int i = 0; i < srcMesh->getNumVertices(); i++)
 	{
 		float wsum = 0.0f;
 		Vec3 n(0.0f, 0.0f, 0.0f);
 
-		for (int j = 0; j < srcMesh->getNumVertices(); j++)
+		int bx, by, bz;
+		boxedMesh->getBoxFor(bx, by, bz, i);
+
+		for (int z = -1; z <= 1; z++)
 		{
-			if (i == j)
+			for (int y = -1; y <= 1; y++)
 			{
-				continue;
+				for (int x = -1; x <= 1; x++)
+				{
+					Mesh::BoxedMesh::Box &box = boxedMesh->get(bx + x, by + y, bz + z);
+					for (int v = 0; v < box.size; v++)
+					{
+						int j = box.vertices[v];
+
+						if (i == j)
+						{
+							continue;
+						}
+
+						Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
+						float l = length(diff);
+						float w = pow(2.0f, -l / lightingRange);
+
+						n += w * (diff / l);
+
+						wsum += w;
+					}
+				}
 			}
-
-			Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
-			float l = length(diff);
-			float w = pow(2.0f, -l / lightingRange);
-
-			n += w * (diff / l);
-
-			wsum += w;
 		}
 
 		srcMesh->normal(i) = normalize(-n);
@@ -71,18 +88,33 @@ void ParticleSystemOperator::render(int tick)
 	{
 		float ao = 1.0f;
 
-		for (int j = 0; j < srcMesh->getNumVertices(); j++)
-		{
-			if (i == j)
-			{
-				continue;
-			}
+		int bx, by, bz;
+		boxedMesh->getBoxFor(bx, by, bz, i);
 
-			Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
-			float l = length(diff);
-			float w = pow(2.0f, -l / lightingRange);
-			float aw = saturate(dot((diff / l), srcMesh->normal(i)));
-			ao *= saturate(1.0f - w * aw);
+		for (int z = -1; z <= 1; z++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				for (int x = -1; x <= 1; x++)
+				{
+					Mesh::BoxedMesh::Box &box = boxedMesh->get(bx + x, by + y, bz + z);
+					for (int v = 0; v < box.size; v++)
+					{
+						int j = box.vertices[v];
+
+						if (i == j)
+						{
+							continue;
+						}
+
+						Vec3 diff = srcMesh->pos(j) - srcMesh->pos(i);
+						float l = length(diff);
+						float w = pow(2.0f, -l / lightingRange);
+						float aw = saturate(dot((diff / l), srcMesh->normal(i)));
+						ao *= saturate(1.0f - w * aw);
+					}
+				}
+			}
 		}
 
 		Vec3 lightDir = normalize(Vec3(1.0f, 1.0f, 1.0f));
@@ -136,6 +168,7 @@ void ParticleSystemOperator::render(int tick)
 
 	delete[] sortedVerts;
 	delete[] colors;
+	delete boxedMesh;
 }
 
 #ifdef DB_EDITOR
