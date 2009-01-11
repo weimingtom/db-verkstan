@@ -42,6 +42,7 @@
 #include "core/operators/megaextrudeoperator.hpp"
 #include "core/operators/particlesystemoperator.hpp"
 #include "core/operators/crackleoperator.hpp"
+#include "core/operators/uvoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -92,6 +93,7 @@ namespace Verkstan
         using ::MegaExtrudeOperator;
         using ::ParticleSystemOperator;
 		using ::CrackleOperator;
+        using ::UVOperator;
     }
 }
 #endif
@@ -129,6 +131,7 @@ ADD_OP_TO_CAT("Displacement Map","Mesh");
 ADD_OP_TO_CAT("Spherize",        "Mesh");
 ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
+ADD_OP_TO_CAT("UV",              "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Particle System", "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
@@ -447,7 +450,7 @@ ADD_COLOR_PROP("Ambient", 128, 128, 128);
 ADD_ENUM_PROP("Lightning", "No,Yes", "No");
 ADD_ENUM_PROP("Texture Address", "Wrap,Mirror,Border,Clamp", "Wrap");
 ADD_ENUM_PROP("Texture Filtiring", "Anisotropic,Convolution Mono,Gaussion Quad,Linear,None", "Anisotropic");
-ADD_ENUM_PROP("Alpha blend", "Yes, No", "Yes");
+ADD_ENUM_PROP("Alpha blend", "Yes,No", "Yes");
 ADD_INPUT(Model);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
@@ -747,5 +750,19 @@ ADD_BYTE_PROP("Seed", 1);
 END_OP_FOR_EDITOR();
 #endif
 
+#if defined(DB_UVOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(43, UVOperator, 1, 4,
+                  DB_BYTE_PROP,
+				  DB_VECTOR_PROP,
+				  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP);
+DEF_OP_FOR_EDITOR(42, "UV", UVOperator, Mesh);
+ADD_BYTE_PROP("Set", 0);
+ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
 
 #endif

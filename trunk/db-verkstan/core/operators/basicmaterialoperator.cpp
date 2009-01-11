@@ -64,7 +64,7 @@ void BasicMaterialOperator::render(int tick)
         globalDirect3DDevice->SetSamplerState(0,D3DSAMP_MIPFILTER, D3DTEXF_NONE);
     }
 
-    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, getByteProperty(6)); 
+    globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, !getByteProperty(6)); 
 
 	globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
 	globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
