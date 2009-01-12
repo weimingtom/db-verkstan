@@ -29,9 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1 = new VorlonSeq.ProperScrollPanel();
             this.pianoRoll1 = new VorlonSeq.PianoRoll();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -44,21 +46,32 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.AutoScroll = true;
-            this.splitContainer1.Panel1.Controls.Add(this.pianoRoll1);
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
             this.splitContainer1.Size = new System.Drawing.Size(864, 500);
             this.splitContainer1.SplitterDistance = 304;
             this.splitContainer1.TabIndex = 0;
             // 
+            // panel1
+            // 
+            this.panel1.AutoScroll = true;
+            this.panel1.AutoSize = true;
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.Controls.Add(this.pianoRoll1);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(860, 300);
+            this.panel1.TabIndex = 4;
+            // 
             // pianoRoll1
             // 
-            this.pianoRoll1.AutoScroll = true;
             this.pianoRoll1.BackColor = System.Drawing.Color.White;
+            this.pianoRoll1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pianoRoll1.Dock = System.Windows.Forms.DockStyle.Top;
             this.pianoRoll1.Location = new System.Drawing.Point(0, 0);
             this.pianoRoll1.Name = "pianoRoll1";
-            this.pianoRoll1.Size = new System.Drawing.Size(860, 300);
-            this.pianoRoll1.TabIndex = 0;
+            this.pianoRoll1.Size = new System.Drawing.Size(844, 889);
+            this.pianoRoll1.TabIndex = 2;
             // 
             // ClipEditor
             // 
@@ -69,7 +82,9 @@
             this.Name = "ClipEditor";
             this.Size = new System.Drawing.Size(864, 500);
             this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -78,5 +93,6 @@
 
         private System.Windows.Forms.SplitContainer splitContainer1;
         private PianoRoll pianoRoll1;
+        private ProperScrollPanel panel1;
     }
 }

@@ -35,6 +35,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
+            this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.Name = "PianoRoll";
             this.Size = new System.Drawing.Size(911, 612);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.PianoRoll_Paint);

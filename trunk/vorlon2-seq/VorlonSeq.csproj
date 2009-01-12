@@ -102,6 +102,12 @@
       <DependentUpon>PianoRoll.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProperScrollPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProperScrollPanel.Designer.cs">
+      <DependentUpon>ProperScrollPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="ChannelEditor.resx">
       <DependentUpon>ChannelEditor.cs</DependentUpon>
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="PianoRoll.resx">
       <DependentUpon>PianoRoll.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProperScrollPanel.resx">
+      <DependentUpon>ProperScrollPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
