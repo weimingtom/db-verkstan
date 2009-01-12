@@ -12,7 +12,10 @@ void TwoDimensionalPlaneOperator::render(int tick)
     for (int i = 0; i < numberOfInputs; i++)
         getInput(i)->render(tick);
 
-    Texture* inputTexture = getInput(0)->texture;
+    Texture* inputTexture = 0;
+    
+    if (getInput(0) != 0)
+        inputTexture = getInput(0)->texture;
 
     D3DXMATRIX lastViewMatrix;
     D3DXMATRIX lastProjectionMatrix;
@@ -46,10 +49,19 @@ void TwoDimensionalPlaneOperator::render(int tick)
 
     if (getByteProperty(11) == 1)
     {
-        u1 = -0.002f;
-        u2 = 1.000f;
-        v1 = 0.000f;
-        v2 = 1.000f;
+        u1 = 0.0f;
+        u2 = 1.0f;
+        v1 = 0.0f;
+        v2 = 1.0f;
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_WRAP);
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_WRAP);
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_WRAP);
+    }
+    else
+    {
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
+        globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_BORDER);
     }
 
     u1 *= uScale;
@@ -94,9 +106,6 @@ void TwoDimensionalPlaneOperator::render(int tick)
     globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
     globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
     globalDirect3DDevice->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
-    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSU, D3DTADDRESS_BORDER);
-    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSV, D3DTADDRESS_BORDER);
-    globalDirect3DDevice->SetSamplerState(0,D3DSAMP_ADDRESSW, D3DTADDRESS_BORDER);
 
     if (inputTexture != 0)
         globalDirect3DDevice->SetTexture(0, inputTexture->getD3D9Texture());

@@ -183,6 +183,7 @@ DEF_OP_FOR_LOADER(0, TimelineOperator, -1, 2, DB_BYTE_PROP, DB_FLOAT_PROP);
 DEF_OP_FOR_EDITOR(0, "Timeline", TimelineOperator, Renderer);
 ADD_BYTE_PROP("Render", 1);
 ADD_FLOAT_PROP("Time offset", 0);
+ADD_INPUT(Unspecified);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
@@ -406,6 +407,8 @@ END_OP_FOR_EDITOR();
 #if defined(DB_ADDMODELSOPERATOR) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(17, AddModelsOperator, -1);
 DEF_OP_FOR_EDITOR(17, "Add Models", AddModelsOperator, Model);
+ADD_INPUT(Model);
+ADD_INPUT(Model);
 ADD_INFINITE_INPUT(Model);
 END_OP_FOR_EDITOR();
 #endif
@@ -499,6 +502,7 @@ ADD_COLOR_PROP("Clear color", 255, 0, 255);
 ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, -2.0f);
 ADD_VECTOR_PROP("Look at", 0.0f, 0.0f, 0.0f);
 ADD_FLOAT_PROP("Rotation", 0.0f);
+ADD_INPUT(Unspecified);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
@@ -506,6 +510,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_RENDERTOTEXTUREOPERATOR) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(22, RenderToTextureOperator, -1);
 DEF_OP_FOR_EDITOR(22, "Render To", RenderToTextureOperator, Texture);
+ADD_INPUT(Unspecified);
 ADD_INFINITE_INPUT(Unspecified);
 END_OP_FOR_EDITOR();
 #endif
@@ -620,6 +625,7 @@ DEF_OP_FOR_LOADER(32, MergeTexturesOperator, -1, 1,
 DEF_OP_FOR_EDITOR(32, "Merge Textures", MergeTexturesOperator, Texture);
 ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
 ADD_INPUT(Texture);
+ADD_INPUT(Texture);
 ADD_INFINITE_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
@@ -728,8 +734,7 @@ DEF_OP_FOR_EDITOR(40, "Mega Extrude", MegaExtrudeOperator, Mesh);
 ADD_FLOAT_PROP("Distance",   0.2f);
 ADD_BYTE_PROP("Count", 3);
 ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
-ADD_VECTOR_PROP("Rotation", 1.0f, 1.0f, 1.0f);
-ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
@@ -743,7 +748,6 @@ ADD_FLOAT_PROP("Lighting Range", 0.2f);
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
-
 
 #if defined(DB_CRACKLEOPERATOR) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(42, CrackleOperator, 0, 5,
@@ -793,6 +797,8 @@ END_OP_FOR_EDITOR();
 #if defined(DB_MERGEMESHESOPERATOR) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(45, MergeMeshesOperator, -1);
 DEF_OP_FOR_EDITOR(45, "Merge Meshes", MergeMeshesOperator, Mesh);
+ADD_INPUT(Mesh);
+ADD_INPUT(Mesh);
 ADD_INFINITE_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif

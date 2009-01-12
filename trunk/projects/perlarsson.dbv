@@ -419,6 +419,9 @@ Den sista mannen</text>
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
         </color>
+        <float value="1">
+          <animation channel="0" amplify="1" />
+        </float >
         <enum value="1">
           <animation channel="0" amplify="1" />
         </enum>

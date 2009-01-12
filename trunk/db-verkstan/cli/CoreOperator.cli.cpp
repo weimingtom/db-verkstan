@@ -328,7 +328,7 @@ namespace Verkstan
 
         for (int i = 0; i < inputs->Count; i++)
         {
-            if (!inputs[i]->Optional)
+            if (!inputs[i]->Optional && !inputs[i]->Infinite)
                 result++;
         }
 

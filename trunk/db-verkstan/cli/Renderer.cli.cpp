@@ -383,6 +383,7 @@ namespace Verkstan
 
         if (ModelLightning)
         {
+            globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
             globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
             D3DLIGHT9 d3dLight;
