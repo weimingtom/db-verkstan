@@ -420,7 +420,7 @@
         </enum>
       </properties>
     </operator>
-    <operator type="UV">
+    <operator type="Transform UV">
       <name>
       </name>
       <dimension x="300" y="220" width="100" height="20" />

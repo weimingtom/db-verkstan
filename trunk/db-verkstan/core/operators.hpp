@@ -44,6 +44,7 @@
 #include "core/operators/crackleoperator.hpp"
 #include "core/operators/transformuvoperator.hpp"
 #include "core/operators/transformmeshoperator.hpp"
+#include "core/operators/mergemeshesoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -96,6 +97,7 @@ namespace Verkstan
 		using ::CrackleOperator;
         using ::TransformUVOperator;
         using ::TransformMeshOperator;
+        using ::MergeMeshesOperator;
     }
 }
 #endif
@@ -134,6 +136,7 @@ ADD_OP_TO_CAT("Spherize",        "Mesh");
 ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
 ADD_OP_TO_CAT("Transform UV",    "Mesh");
+ADD_OP_TO_CAT("Merge Meshes",    "Mesh");
 ADD_OP_TO_CAT("Transform Mesh",  "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Particle System", "Model");
@@ -438,10 +441,11 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_BASICMATERIALOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(19, BasicMaterialOperator, -1, 7, 
+DEF_OP_FOR_LOADER(19, BasicMaterialOperator, -1, 8, 
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP,
                   DB_COLOR_PROP,
+                  DB_FLOAT_PROP,
                   DB_ENUM_PROP,
                   DB_ENUM_PROP,
                   DB_ENUM_PROP,
@@ -450,6 +454,7 @@ DEF_OP_FOR_EDITOR(19, "Basic Material", BasicMaterialOperator, Model);
 ADD_COLOR_PROP("Diffuse", 255, 255, 255);
 ADD_COLOR_PROP("Specular", 255, 255, 255);
 ADD_COLOR_PROP("Ambient", 128, 128, 128);
+ADD_FLOAT_PROP("Power", 100.0f);
 ADD_ENUM_PROP("Lightning", "No,Yes", "No");
 ADD_ENUM_PROP("Texture Address", "Wrap,Mirror,Border,Clamp", "Wrap");
 ADD_ENUM_PROP("Texture Filtiring", "Anisotropic,Convolution Mono,Gaussion Quad,Linear,None", "Anisotropic");
@@ -778,6 +783,14 @@ ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotate", 0.0f, 0.0f, 0.0f);
 ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+
+#if defined(DB_MERGEMESHESOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(45, MergeMeshesOperator, -1);
+DEF_OP_FOR_EDITOR(45, "Merge Meshes", MergeMeshesOperator, Mesh);
+ADD_INFINITE_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
 

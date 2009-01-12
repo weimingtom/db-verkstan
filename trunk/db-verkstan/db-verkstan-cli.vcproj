@@ -687,6 +687,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\mergemeshesoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\mergemeshesoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\mergetexturesopeartor.cpp"
 					>
 				</File>
