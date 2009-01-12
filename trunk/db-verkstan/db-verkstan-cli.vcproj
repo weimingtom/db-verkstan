@@ -831,6 +831,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\transformmeshoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\transformmeshoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\transformmodeloperator.cpp"
 					>
 				</File>
@@ -839,19 +847,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\transformuvoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\transformuvoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\twodimensionalplaneoperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\core\operators\twodimensionalplaneoperator.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\uvoperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\core\operators\uvoperator.hpp"
 					>
 				</File>
 				<File

@@ -1,6 +1,6 @@
-#include "uvoperator.hpp"
+#include "transformuvoperator.hpp"
 
-void UVOperator::process()
+void TransformUVOperator::process()
 {
     if (mesh != 0)
         delete mesh;

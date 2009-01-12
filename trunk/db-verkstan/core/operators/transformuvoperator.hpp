@@ -2,7 +2,7 @@
 
 #include "core/operator.hpp"
 
-class UVOperator: public Operator
+class TransformUVOperator: public Operator
 {
 public:
     void process();

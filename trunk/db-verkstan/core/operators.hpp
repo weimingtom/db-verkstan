@@ -42,7 +42,8 @@
 #include "core/operators/megaextrudeoperator.hpp"
 #include "core/operators/particlesystemoperator.hpp"
 #include "core/operators/crackleoperator.hpp"
-#include "core/operators/uvoperator.hpp"
+#include "core/operators/transformuvoperator.hpp"
+#include "core/operators/transformmeshoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -93,7 +94,8 @@ namespace Verkstan
         using ::MegaExtrudeOperator;
         using ::ParticleSystemOperator;
 		using ::CrackleOperator;
-        using ::UVOperator;
+        using ::TransformUVOperator;
+        using ::TransformMeshOperator;
     }
 }
 #endif
@@ -131,7 +133,8 @@ ADD_OP_TO_CAT("Displacement Map","Mesh");
 ADD_OP_TO_CAT("Spherize",        "Mesh");
 ADD_OP_TO_CAT("Plane",           "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
-ADD_OP_TO_CAT("UV",              "Mesh");
+ADD_OP_TO_CAT("Transform UV",    "Mesh");
+ADD_OP_TO_CAT("Transform Mesh",  "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Particle System", "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
@@ -750,17 +753,30 @@ ADD_BYTE_PROP("Seed", 1);
 END_OP_FOR_EDITOR();
 #endif
 
-#if defined(DB_UVOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(43, UVOperator, 1, 4,
+#if defined(DB_TRANSFORMUVOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(43, TransformUVOperator, 1, 4,
                   DB_BYTE_PROP,
 				  DB_VECTOR_PROP,
 				  DB_VECTOR_PROP,
                   DB_VECTOR_PROP);
-DEF_OP_FOR_EDITOR(42, "UV", UVOperator, Mesh);
+DEF_OP_FOR_EDITOR(43, "Transform UV", TransformUVOperator, Mesh);
 ADD_BYTE_PROP("Set", 0);
 ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
-ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
-ADD_VECTOR_PROP("Translation", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Rotate", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_TRANSFORMMESHOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(44, TransformMeshOperator, 1, 3,
+				  DB_VECTOR_PROP,
+				  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP);
+DEF_OP_FOR_EDITOR(44, "Transform Mesh", TransformMeshOperator, Mesh);
+ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate", 0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
