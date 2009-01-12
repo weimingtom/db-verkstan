@@ -395,9 +395,9 @@ namespace Verkstan
             d3dLight.Diffuse.a = 1.0f;
 
             D3DVECTOR position;
-            position.x = -1.0f;
-            position.y = -1.0f;
-            position.z = -1.0f;
+            position.x = 100.0f;
+            position.y = 100.0f;
+            position.z = -100.0f;
             d3dLight.Position = position;
 
             D3DVECTOR direction;

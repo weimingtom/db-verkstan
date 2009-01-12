@@ -45,6 +45,7 @@
 #include "core/operators/transformuvoperator.hpp"
 #include "core/operators/transformmeshoperator.hpp"
 #include "core/operators/mergemeshesoperator.hpp"
+#include "core/operators/clonemeshoperator.hpp"
 #endif
 
 #ifdef OPERATORS_IN_NAMESPACE_CORE
@@ -98,6 +99,7 @@ namespace Verkstan
         using ::TransformUVOperator;
         using ::TransformMeshOperator;
         using ::MergeMeshesOperator;
+        using ::CloneMeshOperator;
     }
 }
 #endif
@@ -138,6 +140,7 @@ ADD_OP_TO_CAT("Mega Extrude",    "Mesh");
 ADD_OP_TO_CAT("Transform UV",    "Mesh");
 ADD_OP_TO_CAT("Merge Meshes",    "Mesh");
 ADD_OP_TO_CAT("Transform Mesh",  "Mesh");
+ADD_OP_TO_CAT("Clone Mesh",      "Mesh");
 ADD_OP_TO_CAT("Model",           "Model");
 ADD_OP_TO_CAT("Particle System", "Model");
 ADD_OP_TO_CAT("Transform Model", "Model");
@@ -791,6 +794,21 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(45, MergeMeshesOperator, -1);
 DEF_OP_FOR_EDITOR(45, "Merge Meshes", MergeMeshesOperator, Mesh);
 ADD_INFINITE_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_CLONEMESHOPERATOR) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(46, CloneMeshOperator, 1, 4, 
+                  DB_BYTE_PROP,
+                  DB_VECTOR_PROP, 
+                  DB_VECTOR_PROP,
+                  DB_VECTOR_PROP);
+DEF_OP_FOR_EDITOR(46, "Clone Mesh", CloneMeshOperator, Mesh);
+ADD_BYTE_PROP("Clones",      2);
+ADD_VECTOR_PROP("Scale",     1.0f, 1.0f, 1.0f);
+ADD_VECTOR_PROP("Rotate",    0.0f, 0.0f, 0.0f);
+ADD_VECTOR_PROP("Translate", 0.0f, 0.0f, 0.0f);
+ADD_INPUT(Mesh);
 END_OP_FOR_EDITOR();
 #endif
 

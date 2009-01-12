@@ -559,6 +559,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\core\operators\clonemeshoperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\core\operators\clonemeshoperator.hpp"
+					>
+				</File>
+				<File
 					RelativePath=".\core\operators\clonemodeloperator.cpp"
 					>
 				</File>
