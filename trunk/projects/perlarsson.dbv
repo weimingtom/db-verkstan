@@ -1,6 +1,6 @@
 <project>
   <version>1</version>
-  <bpm>120</bpm>
+  <bpm>62</bpm>
   <page>
     <operator type="Pixels">
       <name>
@@ -348,11 +348,6 @@ Den sista mannen</text>
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
         </vector>
-        <vector x="0" y="0" z="0">
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-          <animation channel="0" amplify="1" />
-        </vector>
       </properties>
     </operator>
     <operator type="Transform Model">
@@ -484,7 +479,7 @@ Den sista mannen</text>
         </enum>
       </properties>
     </operator>
-       <operator type="Model">
+    <operator type="Model">
       <name>
       </name>
       <dimension x="500" y="60" width="100" height="20" />
@@ -571,6 +566,43 @@ Den sista mannen</text>
         </channel>
       </timeline>
     </operator>
+    <operator type="Basic Material">
+      <name>
+      </name>
+      <dimension x="500" y="80" width="200" height="20" />
+      <properties>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <float value="100">
+          <animation channel="0" amplify="1" />
+        </float>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
+    </operator>
     <operator type="Timeline">
       <name>
       </name>
@@ -628,15 +660,44 @@ Den sista mannen</text>
             </controlpoints>
           </clip>
         </channel>
-        <channel>
-          <number>4</number>
-          <clip type="generator">
-            <dimension x="0" y="3" width="12" />
-            <generatortype>0</generatortype>
-            <period>256</period>
-          </clip>
-        </channel>
       </timeline>
+    </operator>
+    <operator type="Basic Material">
+      <name>
+      </name>
+      <dimension x="700" y="100" width="100" height="20" />
+      <properties>
+        <color r="255" g="0" b="0">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="255" g="255" b="255">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <color r="128" g="128" b="128">
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+          <animation channel="0" amplify="1" />
+        </color>
+        <float value="100">
+          <animation channel="0" amplify="1" />
+        </float>
+        <enum value="1">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+        <enum value="0">
+          <animation channel="0" amplify="1" />
+        </enum>
+      </properties>
     </operator>
   </page>
 </project>
