@@ -247,7 +247,6 @@ namespace VerkstanEditor.Logic
             if (!moveNecessary)
                 return;
 
-            System.Console.WriteLine("Performing move!");
             foreach (Operator op in selected)
             {
                 operators.Remove(op);
