@@ -201,7 +201,6 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreInputConnections()
         {
-            System.Console.WriteLine("Update core inputs connectsion!");
             bindedCoreOperator.ClearInputConnections();
             
             List<Operator> unsortedInputs = new List<Operator>();
@@ -271,7 +270,6 @@ namespace VerkstanEditor.Logic
 
                 if (!accepted)
                 {
-                    System.Console.WriteLine(op.TypeName + " was not accepted by " + TypeName);
                     IsWarningPresent = true;
                 }
             }
@@ -283,7 +281,6 @@ namespace VerkstanEditor.Logic
                 if (!bindedCoreOperator.Inputs[i].Optional && !bindedCoreOperator.Inputs[i].Infinite)
                     requiredInputs++;
 
-            System.Console.WriteLine("required inputs = " + requiredInputs);
             isProcessable = requiredInputs <= numberOfRequiredInputs;
             bindedCoreOperator.SetDirty(true);
 

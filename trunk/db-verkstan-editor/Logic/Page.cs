@@ -221,6 +221,7 @@ namespace VerkstanEditor.Logic
             ICollection<Operator> selected = GetSelected();
             ICollection<Operator> notSelected = GetNotSelected();
 
+            bool moveNecessary = false;
             foreach (Operator selectedOp in selected)
             {
                 Point p = Operator.QuantizeLocation(new Point(selectedOp.Left + point.X,
@@ -230,6 +231,9 @@ namespace VerkstanEditor.Logic
                                                         selectedOp.Width,
                                                         selectedOp.Height);
 
+                if (!selectedOpDim.Equals(selectedOp.Dimension))
+                    moveNecessary = true;
+                    
                 foreach (Operator nonSelectedOp in notSelected)
                 {
                     if (nonSelectedOp.Dimension.IntersectsWith(selectedOpDim))
@@ -240,6 +244,10 @@ namespace VerkstanEditor.Logic
                 }
             }
 
+            if (!moveNecessary)
+                return;
+
+            System.Console.WriteLine("Performing move!");
             foreach (Operator op in selected)
             {
                 operators.Remove(op);
