@@ -3,12 +3,30 @@
 #include "core/core.hpp"
 
 TimelineOperator::TimelineOperator()
-:startTick(-1)
+:startTick(-1),
+shouldRender(false)
 {
 
 }
 
-void TimelineOperator::render(int tick)
+void TimelineOperator::render()
+{
+    if (startTick < 0)
+        return;
+
+    for (int i = 0; i < numberOfInputs; i++)
+        getInput(i)->render();
+}
+
+void TimelineOperator::cascadeProcess(int tick)
+{
+    for (int i = 0; i < numberOfInputs; i++)
+        coreOperators[inputs[i]]->cascadeProcess(tick);
+
+    process(tick);
+}
+
+void TimelineOperator::process(int tick)
 {
     if (getByteProperty(0) <= 0)
     {
@@ -28,18 +46,13 @@ void TimelineOperator::render(int tick)
         if (clip->start <= relativeTick && clip->end > relativeTick)
             Operator::broadcastChannelValue(clip->channel, clip->getValue(relativeTick - clip->start));
     }
-
-    for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(tick);
-}
-
-void TimelineOperator::process()
-{
-
 }
 
 void TimelineOperator::broadcastChannelValue(int channel, float value)
 {
+   if (startTick < 0)
+        return;
+
     for (int i = 0; i < numberOfClips; i++)
         if (coreClips[timelineClips[i]]->channel == channel)
             return;

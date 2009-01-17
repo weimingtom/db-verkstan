@@ -1,6 +1,6 @@
 #include "core/operators/pixelsoperator.hpp"
 
-void PixelsOperator::process()
+void PixelsOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

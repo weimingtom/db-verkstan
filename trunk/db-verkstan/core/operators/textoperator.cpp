@@ -12,7 +12,7 @@ TextOperator::~TextOperator()
 		d3d9RenderTargetTexture->Release();
 }
 
-void TextOperator::process()
+void TextOperator::process(int tick)
 {   
     if (d3d9RenderTargetTexture == 0)
         D3DXCreateTexture(globalDirect3DDevice, 

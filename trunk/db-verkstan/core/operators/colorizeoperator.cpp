@@ -112,7 +112,7 @@ inline void HSL2RGB(float h, float s, float l, int& r_, int& g_, int& b_)
     b_ = (int)(b * 255.0f);
 }
 
-void ColorizeOperator::process()
+void ColorizeOperator::process(int tick)
 {
     if (texture == 0)
        texture = new Texture();

@@ -1,7 +1,6 @@
 #include "displacementmapoperator.hpp"
 
-
-void DisplacementMapOperator::process()
+void DisplacementMapOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

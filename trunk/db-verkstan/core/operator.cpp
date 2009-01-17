@@ -81,16 +81,21 @@ bool Operator::isDirty()
     return dirty;
 }
 
-void Operator::cascadeProcess()
+void Operator::cascadeProcess(int tick)
 {
     if (!isDirty())
         return;
 
     for (int i = 0; i < numberOfInputs; i++)
-        coreOperators[inputs[i]]->cascadeProcess();
+        coreOperators[inputs[i]]->cascadeProcess(tick);
 
-    process();
+    process(tick);
     dirty = false;
+}
+
+void Operator::render()
+{
+
 }
 
 void Operator::broadcastChannelValue(int channel, float value)
@@ -139,21 +144,10 @@ Operator* Operator::getInput(int index)
     return coreOperators[inputs[index]];
 }
 
-void Operator::preRender(int tick)
-{
-    for (int i = 0; i < numberOfInputs; i++)
-       getInput(i)->preRender(tick);
-}
-
-void Operator::render(int tick)
-{
-
-}
-
 #ifdef DB_EDITOR
-void Operator::renderInEditor(int tick)
+void Operator::renderInEditor()
 {
-    render(tick);
+    render();
 }
 #endif
 

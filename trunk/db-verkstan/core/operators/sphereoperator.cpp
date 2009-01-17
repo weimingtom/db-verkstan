@@ -1,7 +1,7 @@
 #include "core/operators/sphereoperator.hpp"
 #include "../util.hpp"
 
-void SphereOperator::process()
+void SphereOperator::process(int tick)
 {
 	if (mesh != 0)
         delete mesh;

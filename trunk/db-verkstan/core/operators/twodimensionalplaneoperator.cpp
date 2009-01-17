@@ -7,10 +7,10 @@ struct TwoDimensionalVertex
     float u, v;
 };
 
-void TwoDimensionalPlaneOperator::render(int tick)
+void TwoDimensionalPlaneOperator::render()
 {    
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(tick);
+        getInput(i)->render();
 
     Texture* inputTexture = 0;
     
@@ -119,7 +119,7 @@ void TwoDimensionalPlaneOperator::render(int tick)
     globalDirect3DDevice->GetRenderState(D3DRS_LIGHTING, &lastLightning); 
 }
 
-void TwoDimensionalPlaneOperator::process()
+void TwoDimensionalPlaneOperator::process(int tick)
 {
     D3DXMatrixIdentity(&identityMatrix);
     D3DXMatrixOrthoOffCenterLH(&projectionMatrix, 

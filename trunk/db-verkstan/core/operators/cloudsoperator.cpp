@@ -42,7 +42,7 @@ void CloudsOperator::divideGrid(int x,
     }
 }
 
-void CloudsOperator::process()
+void CloudsOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

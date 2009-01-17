@@ -2,7 +2,7 @@
 
 #include "core/core.hpp"
 
-void LightOperator::render(int tick)
+void LightOperator::render()
 {
     globalDirect3DDevice->SetLight(coreNumberOfLights, &d3dLight); 
     globalDirect3DDevice->LightEnable(coreNumberOfLights, TRUE); 
@@ -10,10 +10,10 @@ void LightOperator::render(int tick)
     coreNumberOfLights++;
 
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(tick);
+        getInput(i)->render();
 }
 
-void LightOperator::process()
+void LightOperator::process(int tick)
 {
     ZeroMemory(&d3dLight, sizeof(d3dLight));
     unsigned char type = getByteProperty(0);

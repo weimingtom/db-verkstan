@@ -1,6 +1,6 @@
 #include "core/operators/icosahedronoperator.hpp"
 
-void IcosahedronOperator::process()
+void IcosahedronOperator::process(int tick)
 {
 	if (mesh != 0)
         delete mesh;

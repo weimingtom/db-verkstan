@@ -15,13 +15,14 @@ RenderToTextureOperator::~RenderToTextureOperator()
         d3d9RenderToSurface->Release();
 }
 
-void RenderToTextureOperator::process()
+void RenderToTextureOperator::process(int tick)
 {  
    
 }
 
 void RenderToTextureOperator::preRender(int tick)
 {    
+    /*
     if (texture == 0)
         texture = new Texture();
  
@@ -71,6 +72,7 @@ void RenderToTextureOperator::preRender(int tick)
     globalWorldMatrixStack->Pop();
     globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
     d3d9RenderToSurface->EndScene(0);
+    */
 }
 
 #ifdef DB_EDITOR

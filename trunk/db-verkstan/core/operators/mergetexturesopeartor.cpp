@@ -1,6 +1,6 @@
 #include "core/operators/mergetexturesoperator.hpp"
 
-void MergeTexturesOperator::process()
+void MergeTexturesOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

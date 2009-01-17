@@ -7,7 +7,7 @@ class TextOperator: public Operator
 public:
     TextOperator();
     ~TextOperator();
-    void process();
+    void process(int tick);
     LPDIRECT3DTEXTURE9 d3d9RenderTargetTexture;
 
 #ifdef DB_EDITOR

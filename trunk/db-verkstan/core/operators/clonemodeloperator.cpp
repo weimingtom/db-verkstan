@@ -1,21 +1,21 @@
 #include "core/operators/clonemodeloperator.hpp"
 
-void CloneModelOperator::render(int tick)
+void CloneModelOperator::render()
 {
     globalWorldMatrixStack->Push();
 
-    getInput(0)->render(tick);
+    getInput(0)->render();
 
     for (int i = 1; i < clones; i++)
     {
         globalWorldMatrixStack->MultMatrixLocal(&matrix);
-        getInput(0)->render(tick);
+        getInput(0)->render();
     }
 
     globalWorldMatrixStack->Pop();
 }
 
-void CloneModelOperator::process()
+void CloneModelOperator::process(int tick)
 {
     clones = getByteProperty(0);
     D3DXVECTOR3 scaleVector = getVectorProperty(1);

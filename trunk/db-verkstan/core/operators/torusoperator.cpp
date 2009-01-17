@@ -1,6 +1,6 @@
 #include "core/operators/torusoperator.hpp"
 
-void TorusOperator::process()
+void TorusOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

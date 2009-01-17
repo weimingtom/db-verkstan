@@ -1,14 +1,14 @@
 #include "core/operators/transformmodeloperator.hpp"
 
-void TransformModelOperator::render(int tick)
+void TransformModelOperator::render()
 {
     globalWorldMatrixStack->Push();
     globalWorldMatrixStack->MultMatrixLocal(&matrix);
-    getInput(0)->render(tick);
+    getInput(0)->render();
     globalWorldMatrixStack->Pop();
 }
 
-void TransformModelOperator::process()
+void TransformModelOperator::process(int tick)
 {
     D3DXVECTOR4 scaleVector = getVectorProperty(0);
     D3DXVECTOR4 rotationVector = getVectorProperty(1);

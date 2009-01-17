@@ -6,7 +6,7 @@ class NormalMapOperator: public Operator
 {
 public:
     NormalMapOperator();
-    void process();
+    void process(int tick);
     Texture* normalMapTexture;
 #ifdef DB_EDITOR
     void deviceLost();

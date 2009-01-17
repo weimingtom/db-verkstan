@@ -1,6 +1,6 @@
 #include "core/operators/planeoperator.hpp"
 
-void PlaneOperator::process()
+void PlaneOperator::process(int tick)
 {
    	if (mesh != 0)
         delete mesh;

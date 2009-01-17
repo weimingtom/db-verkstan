@@ -1,6 +1,6 @@
 #include "core/operators/subdivideoperator.hpp"
 
-void SubdivideOperator::process()
+void SubdivideOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

@@ -1,6 +1,6 @@
 #include "core/operators/relaxoperator.hpp"
 
-void RelaxOperator::process()
+void RelaxOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

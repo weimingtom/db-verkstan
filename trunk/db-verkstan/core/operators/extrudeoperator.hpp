@@ -5,5 +5,5 @@
 class ExtrudeOperator: public Operator
 {
 public:
-    void process();
+    void process(int tick);
 };

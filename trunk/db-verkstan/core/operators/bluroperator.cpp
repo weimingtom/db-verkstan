@@ -24,7 +24,7 @@ DWORD pack(DWORD r, DWORD g, DWORD b, DWORD div, DWORD amp)
 // identicall it could be done with a single loop
 // if the loop transposes each pixel so it's ready
 // for the next blur.
-void BlurOperator::process()
+void BlurOperator::process(int tick)
 {
     if (texture != 0)
         delete texture;

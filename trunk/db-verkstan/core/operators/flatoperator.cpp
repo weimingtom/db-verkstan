@@ -1,6 +1,6 @@
 #include "core/operators/flatoperator.hpp"
 
-void FlatOperator::process()
+void FlatOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

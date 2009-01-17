@@ -1,6 +1,6 @@
 #include "core/operators/contrastoperator.hpp"
 
-void ContrastOperator::process()
+void ContrastOperator::process(int tick)
 {
     if (texture == 0)
        texture = new Texture();

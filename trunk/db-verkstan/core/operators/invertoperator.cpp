@@ -1,8 +1,7 @@
 #include "core/operators/invertoperator.hpp"
 
-void InvertOperator::process()
+void InvertOperator::process(int tick)
 {
-    System::Console::WriteLine("Process invert");
     if (texture == 0)
         texture = new Texture();
 

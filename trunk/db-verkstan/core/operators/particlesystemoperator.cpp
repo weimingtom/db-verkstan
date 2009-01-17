@@ -1,11 +1,11 @@
 #include "core/operators/particlesystemoperator.hpp"
 
-void ParticleSystemOperator::process()
+void ParticleSystemOperator::process(int tick)
 {
 
 }
 
-void ParticleSystemOperator::render(int tick)
+void ParticleSystemOperator::render()
 {	
 	Mesh *srcMesh = getInput(0)->mesh->clone();
 

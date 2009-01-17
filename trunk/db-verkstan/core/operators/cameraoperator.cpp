@@ -1,6 +1,6 @@
 #include "core/operators/cameraoperator.hpp"
 
-void CameraOperator::render(int tick)
+void CameraOperator::render()
 {
     D3DXCOLOR color = getColorProperty(3);
     globalDirect3DDevice->Clear(0, 
@@ -18,13 +18,13 @@ void CameraOperator::render(int tick)
     globalDirect3DDevice->SetTransform(D3DTS_VIEW, &viewMatrix);
 
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(tick);
+        getInput(i)->render();
 
     globalDirect3DDevice->SetTransform(D3DTS_PROJECTION, &lastProjectionMatrix);
     globalDirect3DDevice->SetTransform(D3DTS_VIEW, &lastViewMatrix);
 }
 
-void CameraOperator::process()
+void CameraOperator::process(int tick)
 {
     float angle = getFloatProperty(0);
     int ratioWidth = getIntProperty(1);

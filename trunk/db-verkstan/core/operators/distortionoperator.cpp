@@ -1,6 +1,6 @@
 #include "core/operators/distortionoperator.hpp"
 
-void DistortionOperator::process()
+void DistortionOperator::process(int tick)
 {
     if (texture == 0)
        texture = new Texture();

@@ -1,7 +1,6 @@
 #include "spherizeoperator.hpp"
 
-
-void SpherizeOperator::process()
+void SpherizeOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

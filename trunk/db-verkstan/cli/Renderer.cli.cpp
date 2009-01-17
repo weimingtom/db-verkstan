@@ -35,7 +35,7 @@ namespace Verkstan
         camera->WindowWidth = WindowWidth;
         camera->WindowHeight = WindowHeight;
 
-        op->getOperator()->cascadeProcess();
+        op->getOperator()->cascadeProcess(tick);
 
         switch (op->Type)
         {
@@ -81,8 +81,6 @@ namespace Verkstan
                 coreOp->setDirty(true);
             } 
         }
-     
-        //coreOp->preRender(tick);
 
         if (coreOp->texture == 0)
             return;
@@ -352,7 +350,6 @@ namespace Verkstan
 
     void Renderer::RenderModelOperator(CoreOperator^ op, int tick)
     {
-        System::Console::WriteLine(ModelLightning);
         Core::Operator* coreOp = op->getOperator();
 
         for (int i = 0; i < coreNumberOfLights; i++)
@@ -436,8 +433,6 @@ namespace Verkstan
             globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
         }
 
-        coreOp->preRender(tick);
-
         globalDirect3DDevice->Clear(0, 
                                    NULL, 
                                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
@@ -451,7 +446,7 @@ namespace Verkstan
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
         globalDirect3DDevice->BeginScene();
-        coreOp->render(tick);
+        coreOp->render();
         globalDirect3DDevice->EndScene();
     }
 
@@ -547,7 +542,7 @@ namespace Verkstan
         globalDirect3DDevice->SetMaterial(&d3d9Material);
         */
 
-        coreOp->preRender(tick);
+        //coreOp->preRender(tick);
 
         camera->ApplyFixedTransformations();
         
@@ -555,7 +550,7 @@ namespace Verkstan
         globalDirect3DDevice->SetTransform(D3DTS_WORLD, globalWorldMatrixStack->GetTop());
 
         globalDirect3DDevice->BeginScene();
-        coreOp->render(tick);
+        coreOp->render();
         globalDirect3DDevice->EndScene();
 
         viewport;

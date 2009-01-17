@@ -5,7 +5,7 @@ NormalMapOperator::NormalMapOperator()
 {
 }
 
-void NormalMapOperator::process()
+void NormalMapOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

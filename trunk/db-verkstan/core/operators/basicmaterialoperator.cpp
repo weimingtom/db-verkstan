@@ -1,6 +1,6 @@
 #include "core/operators/basicmaterialoperator.hpp"
 
-void BasicMaterialOperator::render(int tick)
+void BasicMaterialOperator::render()
 {
     Operator* textureOperator = getInput(1);
 
@@ -80,13 +80,13 @@ void BasicMaterialOperator::render(int tick)
     globalDirect3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	globalDirect3DDevice->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
 
-    getInput(0)->render(tick);
+    getInput(0)->render();
     globalDirect3DDevice->SetTexture(0, 0);	
 
 	globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
 }
 
-void BasicMaterialOperator::process()
+void BasicMaterialOperator::process(int tick)
 {
     ZeroMemory(&d3d9Material, sizeof(d3d9Material));
     d3d9Material.Diffuse = getColorProperty(0);

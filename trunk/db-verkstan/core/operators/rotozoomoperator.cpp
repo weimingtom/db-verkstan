@@ -1,6 +1,6 @@
 #include "core/operators/rotozoomoperator.hpp"
 
-void RotozoomOperator::process()
+void RotozoomOperator::process(int tick)
 {    
     if (texture == 0)
         texture = new Texture();

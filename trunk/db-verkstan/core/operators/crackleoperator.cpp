@@ -1,6 +1,6 @@
 #include "core/operators/crackleoperator.hpp"
 
-void CrackleOperator::process()
+void CrackleOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

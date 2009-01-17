@@ -1,6 +1,6 @@
 #include "core/operators/blendoperator.hpp"
 
-void BlendOperator::process()
+void BlendOperator::process(int tick)
 {
     if (texture == 0)
        texture = new Texture();

@@ -5,7 +5,7 @@
 class RelaxOperator: public Operator
 {
 public:
-    void process();
+    void process(int tick);
 
 private:
 	void relax(Mesh::EdgeInfo *edgeInfo, float strength);

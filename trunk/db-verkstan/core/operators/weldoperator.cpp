@@ -1,6 +1,6 @@
 #include "weldoperator.hpp"
 
-void WeldOperator::process()
+void WeldOperator::process(int tick)
 {
 	// TODO: Weld away triangles and quads properly
 

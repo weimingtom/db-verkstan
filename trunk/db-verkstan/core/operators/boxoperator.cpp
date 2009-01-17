@@ -1,6 +1,6 @@
 #include "core/operators/boxoperator.hpp"
 
-void BoxOperator::process()
+void BoxOperator::process(int tick)
 {
 	if (mesh != 0)
         delete mesh;

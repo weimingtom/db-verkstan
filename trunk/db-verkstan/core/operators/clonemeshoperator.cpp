@@ -1,6 +1,6 @@
 #include "core/operators/clonemeshoperator.hpp"
 
-void CloneMeshOperator::process()
+void CloneMeshOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

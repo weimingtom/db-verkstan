@@ -1,6 +1,6 @@
 #include "core/operators/extrudeoperator.hpp"
 
-void ExtrudeOperator::process()
+void ExtrudeOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

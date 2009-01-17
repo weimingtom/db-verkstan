@@ -5,7 +5,7 @@
 class LightOperator: public Operator
 {
 public:
-    void process();
-    void render(int tick);
+    void process(int tick);
+    void render();
     D3DLIGHT9 d3dLight;
 };

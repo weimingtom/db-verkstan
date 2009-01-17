@@ -1,6 +1,6 @@
 #include "core/operators/transformmeshoperator.hpp"
 
-void TransformMeshOperator::process()
+void TransformMeshOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

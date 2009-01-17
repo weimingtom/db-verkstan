@@ -1,6 +1,6 @@
 #include "core/operators/rectangleoperator.hpp"
 
-void RectangleOperator::process()
+void RectangleOperator::process(int tick)
 {    
     if (texture == 0)
         texture = new Texture();

@@ -5,8 +5,8 @@
 class ParticleSystemOperator: public Operator
 {
 public:
-	void render(int tick);
-    void process();
+	void render();
+    void process(int tick);
 
 #ifdef DB_EDITOR
     void deviceLost();

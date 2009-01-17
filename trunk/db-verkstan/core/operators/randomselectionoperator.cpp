@@ -1,6 +1,6 @@
 #include "core/operators/randomselectionoperator.hpp"
 
-void RandomSelectionOperator::process()
+void RandomSelectionOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

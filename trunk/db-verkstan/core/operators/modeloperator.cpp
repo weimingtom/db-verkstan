@@ -1,6 +1,6 @@
 #include "core/operators/modeloperator.hpp"
 
-void ModelOperator::render(int tick)
+void ModelOperator::render()
 {
     unsigned char cullMode = getByteProperty(0);
     if (cullMode == 0)
@@ -22,7 +22,7 @@ void ModelOperator::render(int tick)
     getInput(0)->mesh->render();
 }
 
-void ModelOperator::process()
+void ModelOperator::process(int tick)
 {
     
 }

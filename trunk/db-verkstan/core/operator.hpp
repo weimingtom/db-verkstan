@@ -18,17 +18,15 @@ public:
     virtual ~Operator();
 #endif
 
-    virtual void process() = 0;
-
-    virtual void preRender(int tick);
-    virtual void render(int tick);
 #ifdef DB_EDITOR
-    virtual void renderInEditor(int tick);
+    virtual void renderInEditor();
 #endif
 
     Operator* getInput(int index);
     
-    void cascadeProcess();
+    virtual void cascadeProcess(int tick);
+    virtual void process(int tick) = 0;
+    virtual void render();
 
     unsigned char getByteProperty(int index);
     int getIntProperty(int index);

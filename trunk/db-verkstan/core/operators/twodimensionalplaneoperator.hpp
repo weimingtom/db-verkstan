@@ -5,8 +5,8 @@
 class TwoDimensionalPlaneOperator: public Operator
 {
 public:
-    void render(int tick);
-    void process();
+    void render();
+    void process(int tick);
    
     D3DXMATRIX identityMatrix;
     D3DXMATRIX projectionMatrix;

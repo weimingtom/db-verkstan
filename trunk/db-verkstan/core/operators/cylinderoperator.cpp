@@ -1,6 +1,6 @@
 #include "core/operators/cylinderoperator.hpp"
 
-void CylinderOperator::process()
+void CylinderOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

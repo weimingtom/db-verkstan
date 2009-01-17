@@ -1,6 +1,6 @@
 #include "core/operators/mergemeshesoperator.hpp"
 
-void MergeMeshesOperator::process()
+void MergeMeshesOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;

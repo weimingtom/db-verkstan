@@ -1,6 +1,6 @@
 #include "core/operators/glowoperator.hpp"
 
-void GlowOperator::process()
+void GlowOperator::process(int tick)
 {
     if (texture == 0)
         texture = new Texture();

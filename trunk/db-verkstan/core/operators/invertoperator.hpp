@@ -5,5 +5,5 @@
 class InvertOperator: public Operator
 {
 public:
-    void process();
+    void process(int tick);
 };

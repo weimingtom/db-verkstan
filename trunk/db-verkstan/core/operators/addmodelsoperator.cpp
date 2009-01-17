@@ -1,12 +1,12 @@
 #include "core/operators/addmodelsoperator.hpp"
 
-void AddModelsOperator::render(int tick)
+void AddModelsOperator::render()
 {
     for (int i = 0; i < numberOfInputs; i++)
-        getInput(i)->render(tick);
+        getInput(i)->render();
 }
 
-void AddModelsOperator::process()
+void AddModelsOperator::process(int tick)
 {
    
 }

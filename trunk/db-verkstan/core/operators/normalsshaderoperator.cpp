@@ -149,7 +149,7 @@ NormalsShaderOperator::NormalsShaderOperator()
 
 }
 
-void NormalsShaderOperator::render(int tick)
+void NormalsShaderOperator::render()
 {
     D3DXMATRIX projMatrix;
     D3DXMATRIX viewMatrix;
@@ -167,14 +167,14 @@ void NormalsShaderOperator::render(int tick)
     {
        d3d9Effect->BeginPass(i);
        for (int i = 0; i < numberOfInputs; i++)
-            getInput(i)->render(tick);
+            getInput(i)->render();
         d3d9Effect->EndPass();
     }
     
     d3d9Effect->End();
 }
 
-void NormalsShaderOperator::process()
+void NormalsShaderOperator::process(int tick)
 {
     if (d3d9Effect == 0)
        D3DXCreateEffect(globalDirect3DDevice, 

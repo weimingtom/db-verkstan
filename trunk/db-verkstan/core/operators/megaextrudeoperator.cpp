@@ -1,6 +1,6 @@
 #include "core/operators/megaextrudeoperator.hpp"
 
-void MegaExtrudeOperator::process()
+void MegaExtrudeOperator::process(int tick)
 {
     if (mesh != 0)
         delete mesh;
