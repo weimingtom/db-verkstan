@@ -138,6 +138,8 @@ void BlurOperator::process()
 
     delete out;
 
+    texture->setDirty();
+
 
 /*
     width = width % 2 == 0 ? width + 1 : width;
