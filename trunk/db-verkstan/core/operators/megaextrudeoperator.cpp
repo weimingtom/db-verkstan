@@ -79,36 +79,56 @@ void MegaExtrudeOperator::process(int tick)
 
         if (srcMesh->faceSelected(i))
         {
+            Vec3 translationVector(0.0f, 0.0f, 0.0f);
+
+            for (int f = 0; f < n; f++)
+                translationVector += srcMesh->pos(face[f]);
+
+            translationVector /= (float)n;
+
+        
+            D3DXMATRIX toOrigoMatrix;
+            D3DXMatrixIdentity(&toOrigoMatrix);
+            D3DXMatrixTranslation(&toOrigoMatrix,
+                                  -translationVector.x,
+                                  -translationVector.y,
+                                  -translationVector.z);
+            D3DXMATRIX toFaceMatrix;
+            D3DXMatrixIdentity(&toFaceMatrix);
+            D3DXMatrixTranslation(&toFaceMatrix,
+                                  translationVector.x,
+                                  translationVector.y,
+                                  translationVector.z);
+
             // Get our base vectors.
-            Vec3 faceBase1 = normalize(srcMesh->pos(face[0]));
+            Vec3 faceBase1 = normalize(srcMesh->pos(face[1]) - srcMesh->pos(face[0]));
             Vec3 faceBase2 = normalize(srcMesh->getFaceNormal(i));
             Vec3 faceBase3 = normalize(cross(faceBase2, faceBase1));
 
-            D3DXMATRIX toFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase2.x, faceBase3.x, 0.0f,
-                                                     faceBase1.y, faceBase2.y, faceBase3.y, 0.0f,
-                                                     faceBase1.z, faceBase2.z, faceBase3.z, 0.0f,
+            D3DXMATRIX toFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase1.y, faceBase1.z, 0.0f,
+                                                     faceBase2.x, faceBase2.y, faceBase2.z, 0.0f,
+                                                     faceBase3.x, faceBase3.y, faceBase3.z, 0.0f,
                                                      0.0f,               0.0f,        0.0f, 1.0f);
-            D3DXMATRIX fromFaceBaseMatrix;
-            D3DXMatrixInverse(&fromFaceBaseMatrix, NULL, &toFaceBaseMatrix);
-                                
+            D3DXMATRIX fromFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase2.x, faceBase3.x, 0.0f,
+                                                       faceBase1.y, faceBase2.y, faceBase3.y, 0.0f,
+                                                       faceBase1.z, faceBase2.z, faceBase3.z, 0.0f,
+                                                       0.0f,               0.0f,        0.0f, 1.0f);
+                    
+            D3DXMATRIX toFaceBaseAndOrigoMatrix = toFaceBaseMatrix * toOrigoMatrix;
+            D3DXMATRIX fromFaceBaseAndToFaceMatrix = toFaceMatrix * fromFaceBaseMatrix;
+
             for (int c = 0; c < count; c++)
             {
                 for (int f = 0; f < n; f++)
                 {
                     Vec3 pos = lastPositions[f];
-                    Vec4 posInFaceBase;
-                    D3DXVec3Transform(&posInFaceBase, &pos, &toFaceBaseMatrix);
-                    Vec4 posTransformedInFaceBase;
-                    D3DXVec4Transform(&posTransformedInFaceBase, &posInFaceBase, &extrudeMatrix);
-                    Vec4 posTransformed;
-                    D3DXVec4Transform(&posTransformed, &posTransformedInFaceBase, &fromFaceBaseMatrix);
-                    mesh->pos(vertexIndex) = Vec3(posTransformed.x,
-                                                  posTransformed.y,
-                                                  posTransformed.z);
+                    Vec3 posTransformedInFaceBase;
+                    D3DXVec3TransformCoord(&posTransformedInFaceBase, &pos, &toFaceBaseAndOrigoMatrix);
+                    Vec3 posTransformed;
+                    D3DXVec3TransformCoord(&posTransformed, &posTransformedInFaceBase, &fromFaceBaseAndToFaceMatrix);
+                    mesh->pos(vertexIndex) = posTransformedInFaceBase;
                     currentIndices[f] = vertexIndex;
-                    lastPositions[f] = Vec3(posTransformed.x,
-                                            posTransformed.y,
-                                            posTransformed.z);
+                    lastPositions[f] = posTransformedInFaceBase;
                     vertexIndex++;
                 }
 

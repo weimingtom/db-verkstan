@@ -46,9 +46,9 @@ void CloneMeshOperator::process(int tick)
         for (int v = 0; v < srcMesh->getNumVertices(); v++)
         {
             Vec3 pos = srcMesh->pos(v);
-            Vec4 result;
-            D3DXVec3Transform(&result, &pos, &matrix);
-            mesh->pos(verticeOffset + v) = Vec3(result.x, result.y, result.z);
+            Vec3 transformedPos;
+            D3DXVec3TransformCoord(&transformedPos, &pos, &matrix);
+            mesh->pos(verticeOffset + v) = transformedPos;
             mesh->uv(verticeOffset + v) = srcMesh->uv(v);
         }
 
