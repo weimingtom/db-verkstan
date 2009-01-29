@@ -6,6 +6,7 @@ float GeneratorClip::getValue(int tick)
     switch (type)
     {
     case 0:
+		//System::Console::WriteLine(sinf((tick / (float)period) * D3DX_PI * 2.0f));
         return sinf((tick / (float)period) * D3DX_PI * 2.0f);
     case 1:
         return cosf((tick / (float)period) * D3DX_PI * 2.0f);

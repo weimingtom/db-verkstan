@@ -26,8 +26,6 @@ void MegaExtrudeOperator::process(int tick)
                           distance,
                           0.0f);
     D3DXMATRIX extrudeMatrix = scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix * translationMatrix;
-    D3DXMATRIX matrix;
-    D3DXMatrixIdentity(&matrix);
 
 	Mesh *srcMesh = getInput(0)->mesh;
 
@@ -79,6 +77,9 @@ void MegaExtrudeOperator::process(int tick)
 
         if (srcMesh->faceSelected(i))
         {
+			D3DXMATRIX matrix;
+            D3DXMatrixIdentity(&matrix);
+
             Vec3 translationVector(0.0f, 0.0f, 0.0f);
 
             for (int f = 0; f < n; f++)
@@ -101,34 +102,39 @@ void MegaExtrudeOperator::process(int tick)
                                   translationVector.z);
 
             // Get our base vectors.
-            Vec3 faceBase1 = normalize(srcMesh->pos(face[1]) - srcMesh->pos(face[0]));
+			Vec3 pos1 = srcMesh->pos(face[1]);
+			Vec3 pos0 = srcMesh->pos(face[0]); 
+            Vec3 faceBase1 = normalize(pos1 - pos0);
             Vec3 faceBase2 = normalize(srcMesh->getFaceNormal(i));
             Vec3 faceBase3 = normalize(cross(faceBase2, faceBase1));
 
-            D3DXMATRIX toFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase1.y, faceBase1.z, 0.0f,
+            D3DXMATRIX fromFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase1.y, faceBase1.z, 0.0f,
                                                      faceBase2.x, faceBase2.y, faceBase2.z, 0.0f,
                                                      faceBase3.x, faceBase3.y, faceBase3.z, 0.0f,
                                                      0.0f,               0.0f,        0.0f, 1.0f);
-            D3DXMATRIX fromFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase2.x, faceBase3.x, 0.0f,
+            D3DXMATRIX toFaceBaseMatrix = D3DXMATRIX(faceBase1.x, faceBase2.x, faceBase3.x, 0.0f,
                                                        faceBase1.y, faceBase2.y, faceBase3.y, 0.0f,
                                                        faceBase1.z, faceBase2.z, faceBase3.z, 0.0f,
                                                        0.0f,               0.0f,        0.0f, 1.0f);
                     
-            D3DXMATRIX toFaceBaseAndOrigoMatrix = toFaceBaseMatrix * toOrigoMatrix;
-            D3DXMATRIX fromFaceBaseAndToFaceMatrix = toFaceMatrix * fromFaceBaseMatrix;
+            D3DXMATRIX toFaceBaseAndOrigoMatrix = toFaceBaseMatrix;// * toOrigoMatrix;
+			//D3DXMATRIX fromFaceBaseAndToFaceMatrix;
+			//D3DXMatrixInverse(&fromFaceBaseAndToFaceMatrix, NULL, &toFaceBaseMatrix);
+			D3DXMATRIX fromFaceBaseAndToFaceMatrix = fromFaceBaseMatrix;//toFaceMatrix * fromFaceBaseMatrix;
 
             for (int c = 0; c < count; c++)
             {
+				D3DXMATRIX fromFaceBaseAndToFaceTransformedMatrix = matrix * fromFaceBaseAndToFaceMatrix;
                 for (int f = 0; f < n; f++)
                 {
                     Vec3 pos = lastPositions[f];
-                    Vec3 posTransformedInFaceBase;
-                    D3DXVec3TransformCoord(&posTransformedInFaceBase, &pos, &toFaceBaseAndOrigoMatrix);
-                    Vec3 posTransformed;
-                    D3DXVec3TransformCoord(&posTransformed, &posTransformedInFaceBase, &fromFaceBaseAndToFaceMatrix);
-                    mesh->pos(vertexIndex) = posTransformedInFaceBase;
+                    Vec3 posInFaceBase;
+                    D3DXVec3TransformCoord(&posInFaceBase, &pos, &toFaceBaseAndOrigoMatrix);
+					Vec3 posTransformed;
+                    D3DXVec3TransformCoord(&posTransformed, &posInFaceBase, &fromFaceBaseAndToFaceTransformedMatrix);
+                    mesh->pos(vertexIndex) = posTransformed;
                     currentIndices[f] = vertexIndex;
-                    lastPositions[f] = posTransformedInFaceBase;
+                    lastPositions[f] = posTransformed;
                     vertexIndex++;
                 }
 
@@ -147,7 +153,7 @@ void MegaExtrudeOperator::process(int tick)
                     lastIndices[f] = currentIndices[f];
                 }  
 
-                matrix *= extrudeMatrix;
+                matrix = extrudeMatrix * matrix;
             }
         }
         
