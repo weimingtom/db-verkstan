@@ -1,6 +1,6 @@
 <project>
   <version>1</version>
-  <bpm>124</bpm>
+  <bpm>95</bpm>
   <page>
     <operator type="Sphere">
       <name>
@@ -39,7 +39,7 @@
         <float value="0,29">
           <animation channel="0" amplify="1" />
         </float>
-        <byte value="9">
+        <byte value="33">
           <animation channel="0" amplify="1" />
         </byte>
         <vector x="0,88" y="1" z="0,91">
@@ -47,10 +47,10 @@
           <animation channel="0" amplify="1" />
           <animation channel="0" amplify="1" />
         </vector>
-        <vector x="0,03" y="0" z="-0,03">
-          <animation channel="1" amplify="0,05" />
+        <vector x="-0,06" y="0,3" z="0">
+          <animation channel="1" amplify="0,2" />
           <animation channel="2" amplify="0,1" />
-          <animation channel="1" amplify="0,05" />
+          <animation channel="1" amplify="0,2" />
         </vector>
       </properties>
     </operator>
