@@ -8,7 +8,7 @@ void RandomSelectionOperator::process(int tick)
 	mesh = getInput(0)->mesh->clone();
 
 	int probability = getByteProperty(0);
-	int seed = getByteProperty(0);
+	int seed = getByteProperty(1);
 
     srand(seed);
 
