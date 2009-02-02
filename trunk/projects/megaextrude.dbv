@@ -183,10 +183,10 @@
                 <dimension x="2795" y="0,01970443" />
               </controlpoint>
               <controlpoint>
-                <dimension x="2865" y="0,4729064" />
+                <dimension x="2865" y="0,1231527" />
               </controlpoint>
               <controlpoint>
-                <dimension x="2865" y="0,1231527" />
+                <dimension x="2865" y="0,4729064" />
               </controlpoint>
               <controlpoint>
                 <dimension x="2925" y="0,01970443" />
@@ -455,7 +455,7 @@
       </name>
       <dimension x="300" y="80" width="100" height="20" />
       <properties>
-        <float value="0,29">
+        <float value="10">
           <animation channel="0" amplify="1" />
         </float>
         <byte value="33">

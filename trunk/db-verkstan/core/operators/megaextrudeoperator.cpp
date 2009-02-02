@@ -23,7 +23,7 @@ void MegaExtrudeOperator::process(int tick)
     D3DXMATRIX translationMatrix;
     D3DXMatrixTranslation(&translationMatrix,
                           0.0f,
-                          distance,
+                          distance / (float)count,
                           0.0f);
 	D3DXMATRIX extrudeMatrix = scaleMatrix * rotationXMatrix * rotationYMatrix * rotationZMatrix * translationMatrix;
 
