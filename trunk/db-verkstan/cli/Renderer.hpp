@@ -1,12 +1,19 @@
 #pragma once
 
 #include <d3d9.h>
+#include "core/mesh.hpp"
 
 struct TextureVertex
 {
     float x, y, z;
     DWORD color;
     float u, v;
+};
+
+struct MeshVertex
+{
+    float x, y, z;
+    DWORD color;
 };
 
 namespace Verkstan
@@ -41,6 +48,7 @@ namespace Verkstan
         void RenderModelOperator(CoreOperator^ op, int tick);
         void RenderDemoSceneRendererOperator(CoreOperator^ op, int tick);
         void RenderUnknownOperator(CoreOperator^ op, int tick);
+        void RenderMesh(Mesh* mesh);
 
         Camera^ camera;
     };

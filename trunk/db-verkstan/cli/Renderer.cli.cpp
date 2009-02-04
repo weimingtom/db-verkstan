@@ -282,7 +282,6 @@ namespace Verkstan
 
         if (MeshSolid)
         {
-            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
             globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
             D3DLIGHT9 d3dLight;
@@ -330,7 +329,6 @@ namespace Verkstan
         }
         else
         {
-            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
             globalDirect3DDevice->SetRenderState(D3DRS_LIGHTING, FALSE);  
         }
 
@@ -343,7 +341,83 @@ namespace Verkstan
         
         globalDirect3DDevice->BeginScene();
 
-		coreOp->mesh->render();
+        Mesh* mesh = coreOp->mesh;
+
+        if (!MeshSolid)
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+            mesh->render();
+
+            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+            globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+            globalDirect3DDevice->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
+            globalDirect3DDevice->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
+            
+            for (int f = 0; f < mesh->getNumFaces(); f++)
+            {
+                if (mesh->faceSelected(f))
+                {
+                    MeshVertex selectedFaceToDraw[4];
+                    int n;
+                    int *face = mesh->face(f, n);
+                    
+                    if (n == 3)
+                    {
+                        Vec3 pos1 = mesh->pos(face[0]);
+                        Vec3 pos2 = mesh->pos(face[1]);
+                        Vec3 pos3 = mesh->pos(face[2]);
+                        selectedFaceToDraw[0].x = pos1.x;
+                        selectedFaceToDraw[0].y = pos1.y;
+                        selectedFaceToDraw[0].z = pos1.z;
+                        selectedFaceToDraw[0].color = D3DCOLOR_ARGB(128, 255, 0, 0);    
+                        selectedFaceToDraw[1].x = pos2.x;
+                        selectedFaceToDraw[1].y = pos2.y;
+                        selectedFaceToDraw[1].z = pos2.z;
+                        selectedFaceToDraw[1].color = D3DCOLOR_ARGB(128, 255, 0, 0);   
+                        selectedFaceToDraw[2].x = pos3.x;
+                        selectedFaceToDraw[2].y = pos3.y;
+                        selectedFaceToDraw[2].z = pos3.z;
+                        selectedFaceToDraw[2].color = D3DCOLOR_ARGB(128, 255, 0, 0);
+                        globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE);
+                        globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 1, &selectedFaceToDraw, sizeof(MeshVertex));
+                    }
+                    else
+                    {
+                        Vec3 pos1 = mesh->pos(face[0]);
+                        Vec3 pos2 = mesh->pos(face[1]);
+                        Vec3 pos3 = mesh->pos(face[2]);
+                        Vec3 pos4 = mesh->pos(face[3]);
+                        selectedFaceToDraw[0].x = pos1.x;
+                        selectedFaceToDraw[0].y = pos1.y;
+                        selectedFaceToDraw[0].z = pos1.z;
+                        selectedFaceToDraw[0].color = D3DCOLOR_ARGB(128, 255, 0, 0);    
+                        selectedFaceToDraw[1].x = pos2.x;
+                        selectedFaceToDraw[1].y = pos2.y;
+                        selectedFaceToDraw[1].z = pos2.z;
+                        selectedFaceToDraw[1].color = D3DCOLOR_ARGB(128, 255, 0, 0);   
+                        selectedFaceToDraw[2].x = pos4.x;
+                        selectedFaceToDraw[2].y = pos4.y;
+                        selectedFaceToDraw[2].z = pos4.z;
+                        selectedFaceToDraw[2].color = D3DCOLOR_ARGB(128, 255, 0, 0);
+                        selectedFaceToDraw[3].x = pos3.x;
+                        selectedFaceToDraw[3].y = pos3.y;
+                        selectedFaceToDraw[3].z = pos3.z;
+                        selectedFaceToDraw[3].color = D3DCOLOR_ARGB(128, 255, 0, 0);
+                        globalDirect3DDevice->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE);
+                        globalDirect3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, &selectedFaceToDraw, sizeof(MeshVertex));
+                    }
+
+                     
+                }
+            }
+        }
+        else
+        {
+            globalDirect3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
+            globalDirect3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+            mesh->render();
+        }
+        
 	
         globalDirect3DDevice->EndScene();
     }
@@ -581,5 +655,10 @@ namespace Verkstan
     void Renderer::ResetCamera()
     {
         camera->Reset();
+    }
+
+    void Renderer::RenderMesh(Mesh* mesh)
+    {      
+       
     }
 }

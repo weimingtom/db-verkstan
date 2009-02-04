@@ -1,5 +1,7 @@
 #pragma once
 
+#include "core/util.hpp"
+
 /**
  * Helper class that wraps vertex & index buffers.
  */
