@@ -2,48 +2,34 @@
 
 Vec3 normalize(const Vec3 &v)
 {
-	return v / length(v);
+	float l = length(v);
+	if (l == 0.0f)
+	{
+		return v / l;
+	}
+	else
+	{
+		return Vec3(1, 0, 0);
+	}
 }
 
 Vec2 normalize(const Vec2 &v)
 {
-	return v / length(v);
-}
-
-float dot(const Vec3 &v1, const Vec3 &v2)
-{
-	return D3DXVec3Dot(&v1, &v2);
-}
-
-float dot(const Vec2 &v1, const Vec2 &v2)
-{
-	return D3DXVec2Dot(&v1, &v2);
+	float l = length(v);
+	if (l == 0.0f)
+	{
+		return v / l;
+	}
+	else
+	{
+		return Vec2(1, 0);
+	}
 }
 
 Vec3 cross(const Vec3 &v1, const Vec3 &v2)
 {
 	Vec3 res;
 	return *D3DXVec3Cross(&res, &v1, &v2);
-}
-
-float length(const Vec3 &v)
-{
-	return D3DXVec3Length(&v);
-}
-
-float length(const Vec2 &v)
-{
-	return D3DXVec2Length(&v);
-}
-
-float lengthSq(const Vec3 &v)
-{
-	return D3DXVec3LengthSq(&v);
-}
-
-float lengthSq(const Vec2 &v)
-{
-	return D3DXVec2LengthSq(&v);
 }
 
 float frand()
