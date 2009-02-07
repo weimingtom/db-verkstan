@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual C++ Express 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db-builder-cli", "db-builder-cli.vcproj", "{D1F6A13A-2B5A-4DBE-BCC5-3EF03F10CB6A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db-builder-cli", "projects\db-builder-cli.vcproj", "{D1F6A13A-2B5A-4DBE-BCC5-3EF03F10CB6A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
