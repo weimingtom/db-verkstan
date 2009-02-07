@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\lib"
-			IntermediateDirectory="..\intermediate\db-builder-lib-$(ConfigurationName)"
+			OutputDirectory="..\..\lib"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>
@@ -81,8 +81,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\lib"
-			IntermediateDirectory="..\intermediate\db-builder-lib-$(ConfigurationName)"
+			OutputDirectory="..\..\lib"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -148,11 +148,11 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\db-builder\lib\src\builder.cpp"
+			RelativePath=".\src\builder.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\db-builder\lib\include\builder.hpp"
+			RelativePath=".\include\builder.hpp"
 			>
 		</File>
 	</Files>

@@ -18,8 +18,8 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			OutputDirectory="..\bin"
-			IntermediateDirectory="..\intermediate\db-builder-cli-$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -90,8 +90,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="..\bin"
-			IntermediateDirectory="..\intermediate\db-builder-cli-$(ConfigurationName)"
+			OutputDirectory="..\..\bin"
+			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
 			ManagedExtensions="1"
@@ -179,7 +179,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\db-builder\cli\AssemblyInfo.cpp"
+			RelativePath=".\AssemblyInfo.cpp"
 			>
 		</File>
 	</Files>
