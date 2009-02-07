@@ -85,7 +85,7 @@ Mesh::~Mesh()
 }
 
 
-void Mesh::render()
+void Mesh::render(float time)
 {
 	if (!(indexBuffer && vertexBuffer))
 	{

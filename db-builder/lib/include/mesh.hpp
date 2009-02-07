@@ -1,9 +1,11 @@
 #pragma once
 
+#include "renderable.hpp"
+
 /**
  * Helper class that wraps vertex & index buffers.
  */
-class Mesh
+class Mesh : public Renderable
 {
 public:
 	class EdgeInfo
@@ -72,7 +74,7 @@ public:
     
 	~Mesh();	
     
-	void render();
+	virtual void render(float time = 0.0f);
 
 	// Position of a vertex
 	Vec3 &pos(int vertexIndex);

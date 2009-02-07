@@ -1,5 +1,6 @@
 #include "db-util.hpp"
 #include "filters.hpp"
+#include "texture.hpp"
 
 Texture* TextureFilters::pixels(Texture* texture, 
                                 D3DXCOLOR color1, 
