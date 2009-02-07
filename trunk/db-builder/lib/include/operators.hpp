@@ -26,23 +26,14 @@ ADD_OP_TO_CAT("Blur",            "Texture");
 // Number of constant inputs, e.i -1 for no constant inputs or 2 for two constant inputs
 
 #ifdef OPERATOR_DEFINES
-#if defined(DB_TIMELINEOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(0, TimelineOperator, -1, 2, DB_BYTE_PROP, DB_FLOAT_PROP);
-DEF_OP_FOR_EDITOR(0, "Timeline", TimelineOperator, Renderer);
-ADD_BYTE_PROP("Render", 1);
-ADD_FLOAT_PROP("Time offset", 0);
-ADD_INPUT(Unspecified);
-ADD_INFINITE_INPUT(Unspecified);
-END_OP_FOR_EDITOR();
-#endif
 
-#if defined(DB_PIXELSOPERATOR) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(1, PixelsOperator, -1, 4, 
+#if defined(DB_PIXELSTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(1, PixelsTextureFilter, -1, 4, 
                   DB_COLOR_PROP, 
                   DB_COLOR_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR(1, "Pixels", PixelsOperator, Texture);
+DEF_OP_FOR_EDITOR(1, "Pixels", PixelsTextureFilter, Texture);
 ADD_COLOR_PROP("Color 1", 255, 255, 255);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_BYTE_PROP("Count", 1);
