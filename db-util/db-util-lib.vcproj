@@ -151,7 +151,7 @@
 			Name="internal"
 			>
 			<File
-				RelativePath="..\db-util\include\externals.hpp"
+				RelativePath=".\include\internal\externals.hpp"
 				>
 			</File>
 			<File
@@ -159,7 +159,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\db-util\include\helpers.hpp"
+				RelativePath=".\include\internal\helpers.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\simplexnoise.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\internal\simplexnoise.hpp"
 				>
 			</File>
 		</Filter>

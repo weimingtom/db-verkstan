@@ -1,5 +1,4 @@
-#include "internal/externals.hpp"
-#include "internal/helpers.hpp"
+#include "db-util.hpp"
 
 Vec3 normalize(const Vec3 &v)
 {
@@ -60,4 +59,49 @@ float frand(float min, float max)
 float expFalloff(float current, float target, float rate, float dt)
 {
 	return target + (current - target) * powf(2.0f, -dt * rate);
+}
+
+
+
+////////////////////////////////////////////////////////////////////
+// Oscillator style functions
+////////////////////////////////////////////////////////////////////
+
+float periodicSin(float time, float period, float min, float max)
+{
+	float t = sinf((time / (2.0f * M_PI)) / period);
+	return (t + 1.0f) / 2.0f * (max - min) + min;
+}
+
+float periodicCos(float time, float period, float min, float max)
+{
+	float t = cosf((time / (2.0f * M_PI)) / period);
+	return (t + 1.0f) / 2.0f * (max - min) + min;
+}
+
+float periodicTriangle(float time, float period, float min, float max)
+{
+	float t = time / period + 0.5f;
+	t = abs((t - floorf(t)) -0.5f) * 2.0f;
+	return t * (max - min) + min;
+}
+
+float periodicRamp(float time, float period, float min, float max)
+{
+	float t = time / period;
+	t = t - floorf(t);
+	return t * (max - min) + min;
+}
+
+float step(float time, float startTime, float endTime, float startValue, float endValue)
+{
+	float t = saturate((time - startTime) / (endTime - startTime));
+	return t * (endValue - startValue) + startValue;
+}
+
+float smoothStep(float time, float startTime, float endTime, float startValue, float endValue)
+{
+	float t = saturate((time - startTime) / (endTime - startTime));
+	t = t * t * (3 - t * t);
+	return t * (endValue - startValue) + startValue;
 }

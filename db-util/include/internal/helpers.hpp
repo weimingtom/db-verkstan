@@ -63,3 +63,14 @@ inline float saturate(float a) { return clamp(a, 0.0f, 1.0f); }
 
 const float M_PI = 3.141592653589793238f;
 
+
+////////////////////////////////////////////////////////////////////
+// Oscillator style functions
+////////////////////////////////////////////////////////////////////
+
+float periodicSin(float time, float period, float min = 0.0f, float max = 1.0f);
+float periodicCos(float time, float period, float min = 0.0f, float max = 1.0f);
+float periodicTriangle(float time, float period, float min = 0.0f, float max = 1.0f);
+float periodicRamp(float time, float period, float min = 0.0f, float max = 1.0f);
+float step(float time, float startTime, float endTime, float startValue = 0.0f, float endValue = 1.0f);
+float smoothStep(float time, float startTime, float endTime, float startValue = 0.0f, float endValue = 1.0f);
