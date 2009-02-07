@@ -9,23 +9,24 @@ typedef D3DXVECTOR3 Vec3;
 typedef D3DXVECTOR2 Vec2;
 
 // Returns normalized vector
+// If vector is of length zero, returns vector with x = 1.0f
 Vec3 normalize(const Vec3 &v);
 Vec2 normalize(const Vec2 &v);
 
 // Computes dot product
-float dot(const Vec3 &v1, const Vec3 &v2);
-float dot(const Vec2 &v1, const Vec2 &v2);
+inline float dot(const Vec3 &v1, const Vec3 &v2) { return D3DXVec3Dot(&v1, &v2); }
+inline float dot(const Vec2 &v1, const Vec2 &v2) { return D3DXVec2Dot(&v1, &v2); }
 
 // Computes cross product
 Vec3 cross(const Vec3 &v1, const Vec3 &v2);
 
 // Computes length
-float length(const Vec3 &v);
-float length(const Vec2 &v);
+inline float length(const Vec3 &v) { return D3DXVec3Length(&v); }
+inline float length(const Vec2 &v) { return D3DXVec2Length(&v); }
 
 // Computes squared length
-float lengthSq(const Vec3 &v);
-float lengthSq(const Vec2 &v);
+inline float lengthSq(const Vec3 &v) { return D3DXVec3LengthSq(&v); }
+inline float lengthSq(const Vec2 &v) { return D3DXVec2LengthSq(&v); }
 
 
 ////////////////////////////////////////////////////////////////////
