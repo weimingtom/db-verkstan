@@ -14,7 +14,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute("")];
 [assembly:AssemblyCompanyAttribute("")];
 [assembly:AssemblyProductAttribute("dbbuildercli")];
-[assembly:AssemblyCopyrightAttribute("Copyright (c)  2009")];
+[assembly:AssemblyCopyrightAttribute("Copyright (c) Darkbits 2009")];
 [assembly:AssemblyTrademarkAttribute("")];
 [assembly:AssemblyCultureAttribute("")];
 
