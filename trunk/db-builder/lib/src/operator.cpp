@@ -3,13 +3,13 @@
 #include "filters.hpp"
 #include <string.h>
 
-Operator::Operator(unsigned int filterType_)
-:mesh(0),
-texture(0),
-numberOfInputs(0),
-numberOfOutputs(0),
-dirty(true),
-filterType(filterType_)
+Operator::Operator(unsigned int filterType_) :
+	mesh(0),
+	texture(0),
+	numberOfInputs(0),
+	numberOfOutputs(0),
+	dirty(true),
+	filterType(filterType_)
 {
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
         inputs[i] = -1;
@@ -49,7 +49,7 @@ void Operator::process()
                                        getByteProperty(0), 
                                        getByteProperty(2),
                                        getByteProperty(3),
-                                       getByteProperty(1));
+                                       getByteProperty(1) + 1);
         break;
     case PixelsTextureFilter:
         {
