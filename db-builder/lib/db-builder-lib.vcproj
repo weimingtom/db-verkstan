@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\db-builder\lib"
+				AdditionalIncludeDirectories="..\db-builder\lib\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -106,7 +106,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="..\db-builder\lib"
+				AdditionalIncludeDirectories="..\..\db-builder\lib\include;..\..\db-util\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -147,12 +147,64 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="meshfilters"
+			>
+		</Filter>
+		<Filter
+			Name="texturefilters"
+			>
+			<File
+				RelativePath=".\src\texturefilters\blurtexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\texturefilters\pixelstexturefilter.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="renderablefilters"
+			>
+		</Filter>
 		<File
 			RelativePath=".\src\builder.cpp"
 			>
 		</File>
 		<File
 			RelativePath=".\include\builder.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\filters.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\mesh.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\mesh.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\operator.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\operator.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\renderable.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\src\texture.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\texture.hpp"
 			>
 		</File>
 	</Files>
