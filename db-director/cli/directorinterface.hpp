@@ -9,8 +9,8 @@ using namespace System;
 #endif
 
 #if DB_USE_DIRECTOR
-#define getTweakFloat(name)  (director.getTweakableByName(#name, Tweakable::TypeInt).getFloat())
-#define getTweakInt(name)    (director.getTweakableByName(#name, Tweakable::TypeFloat).getInt())
+#define getTweakFloat(name)  (director.getTweakableByName(#name, Tweakable::TypeFloat).getFloat())
+#define getTweakInt(name)    (director.getTweakableByName(#name, Tweakable::TypeInt).getInt())
 #define getTweakVector(name) (director.getTweakableByName(#name, Tweakable::TypeVector).getVector())
 #define getTweakSpline(name) (director.getTweakableByName(#name, Tweakable::TypeSpline).getSpline())
 #else
@@ -52,8 +52,8 @@ namespace Verkstan
 		Vec3 getVector();
 		void setVector(Vec3 v);
 
-		Spline getSpine();
-		void setSpine(Spline v);
+		Spline getSpline();
+		void setSpline(Spline v);
 
 		string getName();
 		

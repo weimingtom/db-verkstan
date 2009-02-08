@@ -30,7 +30,6 @@
         {
             this.mainSplit = new System.Windows.Forms.SplitContainer();
             this.demoSplit = new System.Windows.Forms.SplitContainer();
-            this.transport1 = new VerkstanEditor.Gui.Transport();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDemoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +41,8 @@
             this.exportTweakablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.transport1 = new VerkstanEditor.Gui.Transport();
+            this.openDemoDialog = new System.Windows.Forms.OpenFileDialog();
             this.mainSplit.Panel1.SuspendLayout();
             this.mainSplit.Panel2.SuspendLayout();
             this.mainSplit.SuspendLayout();
@@ -79,15 +80,6 @@
             this.demoSplit.SplitterDistance = 526;
             this.demoSplit.TabIndex = 0;
             // 
-            // transport1
-            // 
-            this.transport1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.transport1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transport1.Location = new System.Drawing.Point(0, 0);
-            this.transport1.Name = "transport1";
-            this.transport1.Size = new System.Drawing.Size(703, 62);
-            this.transport1.TabIndex = 0;
-            // 
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -120,6 +112,7 @@
             this.openDemoToolStripMenuItem.Name = "openDemoToolStripMenuItem";
             this.openDemoToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.openDemoToolStripMenuItem.Text = "Open demo...";
+            this.openDemoToolStripMenuItem.Click += new System.EventHandler(this.openDemoToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -167,6 +160,19 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // transport1
+            // 
+            this.transport1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.transport1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.transport1.Location = new System.Drawing.Point(0, 0);
+            this.transport1.Name = "transport1";
+            this.transport1.Size = new System.Drawing.Size(703, 62);
+            this.transport1.TabIndex = 0;
+            // 
+            // openDemoDialog
+            // 
+            this.openDemoDialog.FileName = "openDemoDialog";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -177,7 +183,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "Form1";
             this.Text = "Darkbits® Verkstan™ Enterprise Graphical Demonstration Solutions Productivity Sui" +
-                "te™ Director";
+                "te™ - Director";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainSplit.Panel1.ResumeLayout(false);
             this.mainSplit.Panel2.ResumeLayout(false);
@@ -206,6 +212,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.SplitContainer demoSplit;
+        private System.Windows.Forms.OpenFileDialog openDemoDialog;
     }
 }
 
