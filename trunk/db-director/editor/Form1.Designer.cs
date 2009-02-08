@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.mainSplit = new System.Windows.Forms.SplitContainer();
+            this.demoSplit = new System.Windows.Forms.SplitContainer();
+            this.transport1 = new VerkstanEditor.Gui.Transport();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDemoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,13 +42,11 @@
             this.exportTweakablesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.transport1 = new VerkstanEditor.Gui.Transport();
-            this.demoSplit = new System.Windows.Forms.SplitContainer();
             this.mainSplit.Panel1.SuspendLayout();
             this.mainSplit.Panel2.SuspendLayout();
             this.mainSplit.SuspendLayout();
-            this.menuStrip.SuspendLayout();
             this.demoSplit.SuspendLayout();
+            this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // mainSplit
@@ -69,6 +69,24 @@
             this.mainSplit.Size = new System.Drawing.Size(703, 395);
             this.mainSplit.SplitterDistance = 329;
             this.mainSplit.TabIndex = 0;
+            // 
+            // demoSplit
+            // 
+            this.demoSplit.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.demoSplit.Location = new System.Drawing.Point(0, 0);
+            this.demoSplit.Name = "demoSplit";
+            this.demoSplit.Size = new System.Drawing.Size(703, 329);
+            this.demoSplit.SplitterDistance = 526;
+            this.demoSplit.TabIndex = 0;
+            // 
+            // transport1
+            // 
+            this.transport1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.transport1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.transport1.Location = new System.Drawing.Point(0, 0);
+            this.transport1.Name = "transport1";
+            this.transport1.Size = new System.Drawing.Size(703, 62);
+            this.transport1.TabIndex = 0;
             // 
             // menuStrip
             // 
@@ -149,24 +167,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(204, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // transport1
-            // 
-            this.transport1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.transport1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.transport1.Location = new System.Drawing.Point(0, 0);
-            this.transport1.Name = "transport1";
-            this.transport1.Size = new System.Drawing.Size(703, 62);
-            this.transport1.TabIndex = 0;
-            // 
-            // demoSplit
-            // 
-            this.demoSplit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.demoSplit.Location = new System.Drawing.Point(0, 0);
-            this.demoSplit.Name = "demoSplit";
-            this.demoSplit.Size = new System.Drawing.Size(703, 329);
-            this.demoSplit.SplitterDistance = 526;
-            this.demoSplit.TabIndex = 0;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -176,15 +176,15 @@
             this.Controls.Add(this.menuStrip);
             this.MainMenuStrip = this.menuStrip;
             this.Name = "Form1";
-            this.Text = "Darkbits® Verkstan™ Enhanced Graphical Demonstration Solutions Productivity Suite" +
-                "™ Director";
+            this.Text = "Darkbits® Verkstan™ Enterprise Graphical Demonstration Solutions Productivity Sui" +
+                "te™ Director";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.mainSplit.Panel1.ResumeLayout(false);
             this.mainSplit.Panel2.ResumeLayout(false);
             this.mainSplit.ResumeLayout(false);
+            this.demoSplit.ResumeLayout(false);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
-            this.demoSplit.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

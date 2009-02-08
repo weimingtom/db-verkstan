@@ -4,6 +4,7 @@
 
 Texture::Texture()
 :d3d9Texture(0),
+d3d9Surface(0),
 width(256),
 height(256)
 {

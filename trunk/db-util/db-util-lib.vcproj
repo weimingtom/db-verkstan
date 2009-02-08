@@ -163,6 +163,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\oshelpers.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\include\internal\oshelpers.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\simplexnoise.cpp"
 				>
 			</File>
