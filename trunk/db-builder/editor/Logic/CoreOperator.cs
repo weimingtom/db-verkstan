@@ -184,110 +184,110 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreInputConnections()
         {
-        
-            bindedOperator.ClearInputConnections();
+            /*
+             bindedOperator.ClearInputConnections();
          
-            List<Operator> unsortedInputs = new List<Operator>();
+             List<Operator> unsortedInputs = new List<Operator>();
 
-            List<Operator> sendersToConsiderAsInput = new List<Operator>();
-            foreach (Operator op in senders)
-            {
-                foreach (Operator opp in op.GetSenderOperators())
-                    sendersToConsiderAsInput.Add(opp);
-            }
-            int numberOfInputs = 0;
-            int numberOfRequiredInputs = 0;
+             List<Operator> sendersToConsiderAsInput = new List<Operator>();
+             foreach (Operator op in senders)
+             {
+                 foreach (Operator opp in op.GetSenderOperators())
+                     sendersToConsiderAsInput.Add(opp);
+             }
+             int numberOfInputs = 0;
+             int numberOfRequiredInputs = 0;
 
-            List<Boolean> inputAccepted = new List<bool>();
-            foreach (Verkstan.OperatorBindingInput input in bindedOperator.Inputs)
-                inputAccepted.Add(false);
+             List<Boolean> inputAccepted = new List<bool>();
+             foreach (Verkstan.OperatorBindingInput input in bindedOperator.Inputs)
+                 inputAccepted.Add(false);
             
         
-            foreach (Operator op in sendersToConsiderAsInput)
-            {
-               Verkstan.OperatorBinding bOp = op.BindedOperator;
+             foreach (Operator op in sendersToConsiderAsInput)
+             {
+                Verkstan.OperatorBinding bOp = op.BindedOperator;
 
-               if (bOp.Id == bindedOperator.Id)
-                   continue;
+                if (bOp.Id == bindedOperator.Id)
+                    continue;
 
-               bool accepted = false;
-               for (int i = 0; i < bindedOperator.Inputs.Count; i++)
-               {
-                   if (inputAccepted[i])
-                       continue;
+                bool accepted = false;
+                for (int i = 0; i < bindedOperator.Inputs.Count; i++)
+                {
+                    if (inputAccepted[i])
+                        continue;
 
-                   Verkstan.OperatorBindingInput input = bindedOperator.Inputs[i];
-                   if ((input.Type == bOp.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
-                       && bindedOperator.GetInputConnectionId(i) == -1)
-                   {
-                       bindedOperator.SetInputConnectionId(i, bOp.Id);
-                       accepted = true;
-                       inputAccepted[i] = true;
-                       numberOfInputs++;
-                       if (!input.Optional)
-                           numberOfRequiredInputs++;
-                       unsortedInputs.Add(op);
-                       break;
-                   }
-               }
+                    Verkstan.OperatorBindingInput input = bindedOperator.Inputs[i];
+                    if ((input.Type == bOp.Type || input.Type == Verkstan.Constants.OperatorTypes.Unspecified)
+                        && bindedOperator.GetInputConnectionId(i) == -1)
+                    {
+                        bindedOperator.SetInputConnectionId(i, bOp.Id);
+                        accepted = true;
+                        inputAccepted[i] = true;
+                        numberOfInputs++;
+                        if (!input.Optional)
+                            numberOfRequiredInputs++;
+                        unsortedInputs.Add(op);
+                        break;
+                    }
+                }
 
-               Verkstan.OperatorBindingInput lastInput = null;
-               if (bindedOperator.Inputs.Count > 0)
-                   lastInput = bindedOperator.Inputs[bindedOperator.Inputs.Count - 1];
+                Verkstan.OperatorBindingInput lastInput = null;
+                if (bindedOperator.Inputs.Count > 0)
+                    lastInput = bindedOperator.Inputs[bindedOperator.Inputs.Count - 1];
 
-               if (!accepted
-                   && lastInput != null
-                   && lastInput.Infinite
-                   && (lastInput.Type == bOp.Type || lastInput.Type == Verkstan.Constants.OperatorTypes.Unspecified))
-               {
-                   for (int i = 0; i < bindedOperator.GetMaxInputConnections(); i++)
-                   {
-                       if (bindedOperator.GetInputConnectionId(i) == -1)
-                       {
-                           bindedOperator.SetInputConnectionId(i, bOp.Id);
-                           accepted = true;
-                           numberOfInputs++;
-                           unsortedInputs.Add(op);
-                           break;
-                       }
-                   }
-               }
+                if (!accepted
+                    && lastInput != null
+                    && lastInput.Infinite
+                    && (lastInput.Type == bOp.Type || lastInput.Type == Verkstan.Constants.OperatorTypes.Unspecified))
+                {
+                    for (int i = 0; i < bindedOperator.GetMaxInputConnections(); i++)
+                    {
+                        if (bindedOperator.GetInputConnectionId(i) == -1)
+                        {
+                            bindedOperator.SetInputConnectionId(i, bOp.Id);
+                            accepted = true;
+                            numberOfInputs++;
+                            unsortedInputs.Add(op);
+                            break;
+                        }
+                    }
+                }
 
-               if (!accepted)
-               {
-                   IsWarningPresent = true;
-               }
-            }
+                if (!accepted)
+                {
+                    IsWarningPresent = true;
+                }
+             }
 
-            System.Console.WriteLine("SetNumberOfInputConnections = " + numberOfInputs);
-            bindedOperator.SetNumberOfInputConnections(numberOfInputs);
+             System.Console.WriteLine("SetNumberOfInputConnections = " + numberOfInputs);
+             bindedOperator.SetNumberOfInputConnections(numberOfInputs);
 
-            /*
-            int requiredInputs = 0;
-            for (int i = 0; i < bindedOperator.Inputs.Count; i++)
-               if (!bindedOperator.Inputs[i].Optional && !bindedOperator.Inputs[i].Infinite)
-                   requiredInputs++;
+         
+             int requiredInputs = 0;
+             for (int i = 0; i < bindedOperator.Inputs.Count; i++)
+                if (!bindedOperator.Inputs[i].Optional && !bindedOperator.Inputs[i].Infinite)
+                    requiredInputs++;
 
-            isProcessable = requiredInputs <= numberOfRequiredInputs;
+             isProcessable = requiredInputs <= numberOfRequiredInputs;
                
-            bindedOperator.SetDirty(true);
+             bindedOperator.SetDirty(true);
 
-            // Populate the list of inputs.
-            inputs.Clear();
-            for (int i = 0; i < numberOfInputs; i++)
-            {
-               int inputId = bindedOperator.GetInputConnectionId(i);
+             // Populate the list of inputs.
+             inputs.Clear();
+             for (int i = 0; i < numberOfInputs; i++)
+             {
+                int inputId = bindedOperator.GetInputConnectionId(i);
 
-               foreach (Operator op in unsortedInputs)
-               {
-                   if (op.BindedOperator.Id == inputId)
-                   {
-                       inputs.Add(op);
-                       break;
-                   }
-               }
-            }
-             */
+                foreach (Operator op in unsortedInputs)
+                {
+                    if (op.BindedOperator.Id == inputId)
+                    {
+                        inputs.Add(op);
+                        break;
+                    }
+                }
+             }
+              */
         }
         private void UpdateCoreOutputConnections()
         {

@@ -43,8 +43,8 @@ namespace VerkstanEditor
         }
         private void previewPanel_SizeChanged(object sender, EventArgs e)
         {
-            if (builderWindow != null)
-                builderWindow.Resize();
+           // if (builderWindow != null)
+           //     builderWindow.Resize();
         }
         private void operatorPageView1_ViewedOperatorChanged(object sender, EventArgs e)
         {

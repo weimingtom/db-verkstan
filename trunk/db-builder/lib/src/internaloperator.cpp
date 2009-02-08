@@ -1,16 +1,17 @@
 #include "db-util.hpp"
-#include "operator.hpp"
+#include "internaloperator.hpp"
 #include "texture.hpp"
 #include "mesh.hpp"
 #include "filters.hpp"
 #include <string.h>
 
-Operator* operators[DB_MAX_OPERATORS];
-short numberOfOperators;
+InternalOperator* InternalOperator::operators[DB_MAX_OPERATORS];
+short InternalOperator::numberOfOperators;
 
-Operator::Operator(unsigned int filterType_) :
+InternalOperator::InternalOperator(unsigned int filterType_) :
 	mesh(0),
 	texture(0),
+    renderable(0),
 	numberOfInputs(0),
 	numberOfOutputs(0),
 	dirty(true),
@@ -18,31 +19,30 @@ Operator::Operator(unsigned int filterType_) :
 {
     for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
         inputs[i] = -1;
+    for (int i = 0; i < DB_MAX_OPERATOR_CONNECTIONS; i++)
+        outputs[i] = -1;
 }
 
 #ifdef DB_EDITOR
-Operator::~Operator()
+InternalOperator::~InternalOperator()
 {
     deviceLost();
 }
 #endif
 
-void Operator::cascadeProcess()
-{
-  
+void InternalOperator::cascadeProcess()
+{  
     if (!isDirty())
         return;
 
-      /*
     for (int i = 0; i < numberOfInputs; i++)
         operators[inputs[i]]->cascadeProcess();
-    */
+   
     process();
     dirty = false;
-    
 }
 
-void Operator::process()
+void InternalOperator::process()
 {
 	if (texture != 0)
 	{
@@ -67,6 +67,7 @@ void Operator::process()
 
     switch (filterType)
     {
+        /*
     case BlurTextureFilter:
         texture = TextureFilters::blur(getInput(0)->texture, 
                                        getByteProperty(0), 
@@ -74,7 +75,10 @@ void Operator::process()
                                        getByteProperty(3),
                                        getByteProperty(1) + 1);
         break;
-    case PixelsTextureFilter:
+        */
+    case 0:
+        break;
+    case 1:
         {
         Texture* inputTexture = 0;
 
@@ -88,7 +92,10 @@ void Operator::process()
                                          getByteProperty(3));
         break;
         }
+    default:
+        break;
     }
+    
 
 	if (mesh != 0 && renderable == 0)
 	{
@@ -97,42 +104,42 @@ void Operator::process()
 	}
 }
 
-unsigned char Operator::getByteProperty(int index)
+unsigned char InternalOperator::getByteProperty(int index)
 {
     return properties[index].byteValue;
 }
 
-int Operator::getIntProperty(int index)
+int InternalOperator::getIntProperty(int index)
 {
     return properties[index].intValue;
 }
 
-float Operator::getFloatProperty(int index)
+float InternalOperator::getFloatProperty(int index)
 {
     return properties[index].floatValue;
 }
 
-const char* Operator::getStringProperty(int index)
+const char* InternalOperator::getStringProperty(int index)
 {
     return properties[index].stringValue;
 }
 
-D3DXCOLOR Operator::getColorProperty(int index)
+D3DXCOLOR InternalOperator::getColorProperty(int index)
 {
     return properties[index].colorValue;
 }
 
-D3DXVECTOR3 Operator::getVectorProperty(int index)
+D3DXVECTOR3 InternalOperator::getVectorProperty(int index)
 {
     return properties[index].vectorValue;
 }
 
-bool Operator::isDirty()
+bool InternalOperator::isDirty()
 {
     return dirty;
 }
 
-void Operator::setDirty(bool dirty)
+void InternalOperator::setDirty(bool dirty)
 {
     for (int i = 0; i < numberOfOutputs; i++)
         operators[outputs[i]]->setDirty(dirty);
@@ -140,7 +147,7 @@ void Operator::setDirty(bool dirty)
     this->dirty = dirty;
 }
 
-Operator* Operator::getInput(int index)
+InternalOperator* InternalOperator::getInput(int index)
 {
     if (inputs[index] == -1)
         return 0;
@@ -148,7 +155,7 @@ Operator* Operator::getInput(int index)
 }
 
 #ifdef DB_EDITOR
-void Operator::deviceLost()
+void InternalOperator::deviceLost()
 {
     if (texture != 0)
         texture->setDirty();

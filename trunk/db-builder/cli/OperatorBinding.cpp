@@ -1,4 +1,3 @@
-#include "operator.hpp"
 #include <vcclr.h>
 #include "OperatorBinding.hpp"
 #include "Color.hpp"
@@ -23,8 +22,8 @@ namespace Verkstan
 
     OperatorBinding::~OperatorBinding()
     {
-        delete operators[id];
-        operators[id] = 0;
+        delete InternalOperator::operators[id];
+        InternalOperator::operators[id] = 0;
     }
 
     unsigned char OperatorBinding::Number::get()
@@ -190,10 +189,10 @@ namespace Verkstan
         getOperator()->setDirty(true);
     }
 
-    Operator* OperatorBinding::getOperator()
+    InternalOperator* OperatorBinding::getOperator()
     {
-        Operator* op = operators[id];
-        return operators[id];
+        InternalOperator* op = InternalOperator::operators[id];
+        return InternalOperator::operators[id];
     }
 
     void OperatorBinding::ClearInputConnections()
@@ -252,7 +251,7 @@ namespace Verkstan
 
     void OperatorBinding::SetNumberOfInputConnections(int number)
     {
-        Operator* op = getOperator();
+        InternalOperator* op = getOperator();
         getOperator()->numberOfInputs = number;
     }
 
@@ -263,7 +262,7 @@ namespace Verkstan
 
     void OperatorBinding::SetDirty(bool dirty)
     {
-        Operator* op = getOperator();
+        InternalOperator* op = getOperator();
         int opi = (int)op;
         System::Console::WriteLine("setDirty = " + opi);
         op->setDirty(dirty);

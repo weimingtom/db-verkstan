@@ -1,5 +1,5 @@
-#include "operator.hpp"
 #include "db-util.hpp"
+#include "BuilderLib.hpp"
 #include "Window.cli.hpp"
 #include "Builder.hpp"
 #include "Constants.hpp"
@@ -10,6 +10,8 @@ namespace Verkstan
 {
     Window::Window()
     {
+        window = 0;
+        direct3d = 0;
         resetDevice = false;
         renderer = gcnew Renderer();
     }
@@ -52,7 +54,7 @@ namespace Verkstan
         //D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
-            operators[i] = 0;
+            InternalOperator::operators[i] = 0;
     }
 
     void Window::Resize()
@@ -82,13 +84,14 @@ namespace Verkstan
         d3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
         d3dPresentParameters.BackBufferCount= 1;
         
+        /*
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {
-            if (operators[i] != 0)
+            if (InternalOperator::operators[i] != 0)
             {
-                operators[i]->deviceLost();
+                InternalOperator::operators[i]->deviceLost();
             }
-        }
+        }*/
 
         HRESULT result = Builder::device->Reset(&d3dPresentParameters);
         
