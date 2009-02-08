@@ -3,7 +3,7 @@
 Vec3 normalize(const Vec3 &v)
 {
 	float l = length(v);
-	if (l == 0.0f)
+	if (l != 0.0f)
 	{
 		return v / l;
 	}
@@ -16,7 +16,7 @@ Vec3 normalize(const Vec3 &v)
 Vec2 normalize(const Vec2 &v)
 {
 	float l = length(v);
-	if (l == 0.0f)
+	if (l != 0.0f)
 	{
 		return v / l;
 	}

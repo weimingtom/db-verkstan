@@ -84,15 +84,14 @@ namespace Verkstan
         d3dPresentParameters.BackBufferHeight = renderer->WindowHeight;
         d3dPresentParameters.SwapEffect = D3DSWAPEFFECT_DISCARD;
         d3dPresentParameters.BackBufferCount= 1;
-        
-        /*
+
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {
             if (InternalOperator::operators[i] != 0)
             {
                 InternalOperator::operators[i]->deviceLost();
             }
-        }*/
+        }
 
         HRESULT result = Builder::device->Reset(&d3dPresentParameters);
         

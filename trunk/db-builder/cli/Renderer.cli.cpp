@@ -8,7 +8,7 @@ namespace Verkstan
 {
     Renderer::Renderer()
     {
-        //camera = gcnew Camera();
+        camera = gcnew Camera();
         TextureTiling = false;
         TextureFiltering = false;
         MeshSolid = false;
@@ -33,13 +33,11 @@ namespace Verkstan
             return;
         }
 
-       // camera->WindowWidth = WindowWidth;
-       // camera->WindowHeight = WindowHeight;
+        camera->WindowWidth = WindowWidth;
+        camera->WindowHeight = WindowHeight;
 
       
         InternalOperator* coreOp = op->getOperator();
-        //coreOp->getByteProperty(0);
-        //coreOp->process();
         coreOp->cascadeProcess();
  
         switch (op->Type)
@@ -194,7 +192,7 @@ namespace Verkstan
         Builder::device->SetRenderState(D3DRS_LIGHTING, FALSE);
         Builder::device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         Builder::device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-        Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
+        Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);     
         Builder::device->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
         Builder::device->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
         Builder::device->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
@@ -228,7 +226,6 @@ namespace Verkstan
 
     void Renderer::RenderMeshOperator(OperatorBinding^ op)
     {
-        /*
         InternalOperator* coreOp = op->getOperator();
 
         if (coreOp->mesh == 0)
@@ -381,11 +378,9 @@ namespace Verkstan
             Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE); 
             Builder::device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
             mesh->render();
-        }
-        
+        }   
 	
         Builder::device->EndScene();
-        */
     }
 
     void Renderer::RenderModelOperator(OperatorBinding^ op)
@@ -627,6 +622,6 @@ namespace Verkstan
 
     void Renderer::ResetCamera()
     {
-        //camera->Reset();
+        camera->Reset();
     }
 }

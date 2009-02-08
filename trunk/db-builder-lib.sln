@@ -4,9 +4,6 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db-builder-lib", "db-builder\lib\db-builder-lib.vcproj", "{1E3ACF27-56D7-44A3-9636-EE3424E75C60}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "db-builder-cli", "db-builder\cli\db-builder-cli.vcproj", "{D1F6A13A-2B5A-4DBE-BCC5-3EF03F10CB6A}"
-	ProjectSection(ProjectDependencies) = postProject
-		{1E3ACF27-56D7-44A3-9636-EE3424E75C60} = {1E3ACF27-56D7-44A3-9636-EE3424E75C60}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

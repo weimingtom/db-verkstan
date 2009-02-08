@@ -28,6 +28,7 @@ public:
     LPDIRECT3DSURFACE9 d3d9Surface;
     D3DLOCKED_RECT d3d9LockedRect; 
     LPDIRECT3DTEXTURE9 d3d9Texture;
+
     int width;
     int height;
 

@@ -150,6 +150,18 @@
 		<Filter
 			Name="meshfilters"
 			>
+			<File
+				RelativePath=".\src\meshfilters\megaextrudemeshfilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\meshfilters\randomselectionmeshfilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\meshfilters\torusmeshfilter.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="texturefilters"
@@ -159,7 +171,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\texturefilters\cloudstexturefilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\texturefilters\pixelstexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\texturefilters\texttexturefilter.cpp"
 				>
 			</File>
 		</Filter>
