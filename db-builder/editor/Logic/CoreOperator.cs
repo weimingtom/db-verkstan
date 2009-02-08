@@ -184,7 +184,6 @@ namespace VerkstanEditor.Logic
         #region Private Methods
         private void UpdateCoreInputConnections()
         {
-            /*
              bindedOperator.ClearInputConnections();
          
              List<Operator> unsortedInputs = new List<Operator>();
@@ -259,7 +258,6 @@ namespace VerkstanEditor.Logic
                 }
              }
 
-             System.Console.WriteLine("SetNumberOfInputConnections = " + numberOfInputs);
              bindedOperator.SetNumberOfInputConnections(numberOfInputs);
 
          
@@ -287,11 +285,9 @@ namespace VerkstanEditor.Logic
                     }
                 }
              }
-              */
         }
         private void UpdateCoreOutputConnections()
         {
-            /*
             bindedOperator.ClearOutputConnections();
 
             List<Operator> receiversToConsiderAsOutput = new List<Operator>();
@@ -323,7 +319,6 @@ namespace VerkstanEditor.Logic
             }
 
             bindedOperator.SetNumberOfOutputConnections(numberOfOutputs);
-             */
         }
         private XmlElement FromBytePropertyToXmlElement(XmlDocument doc, int index)
         {

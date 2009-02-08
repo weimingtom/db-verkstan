@@ -53,23 +53,21 @@ categories[category]->Add(name);
 
 #define DEF_OP_FOR_LOADER(opNumber, opClass, numberOfConstantInputs, numberOfProps, ...) 
 #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, numberOfConstantInputs) 
-#define DEF_OP_FOR_EDITOR(opNumber, opNameChars, opFilterType, opType)\
+#define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \
     {                                               \
-        Operator* o = new Operator(opFilterType);  \
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
-        if (operators[i] == 0)            \
+        if (InternalOperator::operators[i] == 0)            \
             {  \
-    System::Console::WriteLine("Operator name found! id=" + i);\
-            operators[i] = o;             \
+            InternalOperator::operators[i] = new InternalOperator(opFilterType);             \
                 id = i;                             \
                 break;                              \
             }                                       \
         }                                           \
-        op = gcnew OperatorBinding(opNumber,           \
+        op = gcnew OperatorBinding(opFilterType,    \
                                    opName,             \
                                    id,                 \
                                    Constants::OperatorTypes::##opType);
@@ -127,25 +125,10 @@ categories[category]->Add(name);
         String^ opName;
         OperatorBinding^ op;
 
-        int id;                                    
-        for (int i = 0; i < DB_MAX_OPERATORS; i++)
-        {                                          
-            if (InternalOperator::operators[i] == 0)           
-            {  
-                InternalOperator::operators[i] = new InternalOperator(PixelsTextureFilter);
-                id = i;
-                break;
-            }                                     
-        }          
-        op = gcnew OperatorBinding(1, 
-                                   "Pixels", 
-                                   id,           
-                                   Constants::OperatorTypes::Texture);
-        /*
 #define OPERATOR_DEFINES 1
 #include "operators.hpp"
 #undef OPERATOR_DEFINES
-*/
+
         return op;
      }
 }

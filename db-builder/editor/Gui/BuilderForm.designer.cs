@@ -37,9 +37,9 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.previewPanel = new System.Windows.Forms.Panel();
+            this.builderRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.operatorPropertyGrid1 = new VerkstanEditor.Gui.OperatorPropertyGrid();
-            this.builderRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -127,12 +127,22 @@
             // 
             // previewPanel
             // 
+            this.previewPanel.BackColor = System.Drawing.Color.DarkCyan;
             this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.previewPanel.Location = new System.Drawing.Point(0, 0);
             this.previewPanel.Name = "previewPanel";
             this.previewPanel.Size = new System.Drawing.Size(511, 80);
             this.previewPanel.TabIndex = 0;
+            this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
+            this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
+            this.previewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseUp);
             this.previewPanel.SizeChanged += new System.EventHandler(this.previewPanel_SizeChanged);
+            // 
+            // builderRenderTimer
+            // 
+            this.builderRenderTimer.Enabled = true;
+            this.builderRenderTimer.Interval = 10;
+            this.builderRenderTimer.Tick += new System.EventHandler(this.builderRenderTimer_Tick);
             // 
             // operatorPageView1
             // 
@@ -145,6 +155,7 @@
             this.operatorPageView1.TabIndex = 0;
             this.operatorPageView1.ViewedOperator = null;
             this.operatorPageView1.ViewedOperatorProperties = null;
+            this.operatorPageView1.ViewedOperatorPropertiesChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorPropertiesChanged);
             this.operatorPageView1.ViewedOperatorChanged += new System.EventHandler(this.operatorPageView1_ViewedOperatorChanged);
             // 
             // operatorPropertyGrid1
@@ -158,12 +169,6 @@
             this.operatorPropertyGrid1.Size = new System.Drawing.Size(161, 225);
             this.operatorPropertyGrid1.TabIndex = 0;
             // 
-            // builderRenderTimer
-            // 
-            this.builderRenderTimer.Enabled = true;
-            this.builderRenderTimer.Interval = 10;
-            this.builderRenderTimer.Tick += new System.EventHandler(this.builderRenderTimer_Tick);
-            // 
             // BuilderForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,8 +179,8 @@
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "BuilderForm";
-            this.Text = " Darkbits® Verkstan™ Enhanced Graphical Demonstration Solutions Productivity Suit" +
-                "e™  - Builder";
+            this.Text = " Darkbits® Verkstan™ Enterprise Graphical Demonstration Solutions Productivity Su" +
+                "ite™  - Builder";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

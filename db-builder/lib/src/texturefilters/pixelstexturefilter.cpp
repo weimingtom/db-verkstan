@@ -30,6 +30,7 @@ Texture* TextureFilters::pixels(Texture* texture,
 
     newTexture->lock();
     srand(seed);
+    count = count * count;
     D3DXCOLOR color;
     
     for (int i = 0; i < count; i++)

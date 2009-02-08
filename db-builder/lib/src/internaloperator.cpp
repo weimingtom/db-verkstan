@@ -65,9 +65,17 @@ void InternalOperator::process()
 		renderable = 0;
 	}
 
+    Texture* inputTexture = 0;
+    Mesh* inputMesh = 0;
+
+    if (getInput(0) != 0)
+    {
+        inputTexture = getInput(0)->texture;
+        inputMesh = getInput(0)->mesh;
+    }
+
     switch (filterType)
     {
-        /*
     case BlurTextureFilter:
         texture = TextureFilters::blur(getInput(0)->texture, 
                                        getByteProperty(0), 
@@ -75,16 +83,8 @@ void InternalOperator::process()
                                        getByteProperty(3),
                                        getByteProperty(1) + 1);
         break;
-        */
-    case 0:
-        break;
-    case 1:
+    case PixelsTextureFilter:
         {
-        Texture* inputTexture = 0;
-
-        if (getInput(0) != 0)
-            inputTexture = getInput(0)->texture;
-
         texture = TextureFilters::pixels(inputTexture, 
                                          getColorProperty(0), 
                                          getColorProperty(1),
@@ -92,6 +92,49 @@ void InternalOperator::process()
                                          getByteProperty(3));
         break;
         }
+    case CloudsTextureFilter:
+        {
+            texture = TextureFilters::clouds(getColorProperty(0), 
+                                             getColorProperty(1),
+                                             getByteProperty(2),
+                                             getByteProperty(3));
+            break;
+        }
+    case TextTextureFilter:
+    {
+        texture = TextureFilters::text(inputTexture,
+                                       getColorProperty(0), 
+                                       getByteProperty(1),
+                                       getByteProperty(2),
+                                       getByteProperty(3),
+                                       getStringProperty(4),
+                                       getStringProperty(5));
+        break;
+    }
+    case TorusMeshFilter:
+    {
+        mesh = MeshFilters::torus(getFloatProperty(0), 
+                                  getFloatProperty(1),
+                                  getByteProperty(2),
+                                  getByteProperty(3));
+        break;
+    }
+    case RandomSelectionMeshFilter:
+    {
+        mesh = MeshFilters::randomSelection(inputMesh,
+                                            getByteProperty(0), 
+                                            getByteProperty(1));
+        break;
+    }
+    case MegaExtrudeMeshFilter:
+    {
+        mesh = MeshFilters::megaExtrude(inputMesh,
+                                        getFloatProperty(0),
+                                        getByteProperty(1),
+                                        getVectorProperty(2), 
+                                        getVectorProperty(3));
+        break;
+    }
     default:
         break;
     }

@@ -48,9 +48,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="db-builder-cli, Version=1.0.3326.26947, Culture=neutral, processorArchitecture=x86">
+    <Reference Include="db-builder-clid, Version=1.0.3326.38968, Culture=neutral, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\db-builder-cli.dll</HintPath>
+      <HintPath>..\..\bin\db-builder-clid.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
