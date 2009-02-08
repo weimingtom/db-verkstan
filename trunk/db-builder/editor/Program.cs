@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace db_builder_editor
+namespace VerkstanEditor
 {
     static class Program
     {
@@ -15,7 +15,7 @@ namespace db_builder_editor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new BuilderForm());
         }
     }
 }

@@ -8,7 +8,7 @@
     <ProjectGuid>{BC30DEE6-5A64-4BA7-BCF5-AD8A81DCE424}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>dbbuilder</RootNamespace>
+    <RootNamespace>VerkstanEditor</RootNamespace>
     <AssemblyName>db-builder-editor</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -36,6 +36,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -44,8 +45,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="db-builder-cli, Version=1.0.3326.26947, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\bin\db-builder-cli.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -63,18 +69,76 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Gui\ColorProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\ColorProperty.designer.cs">
+      <DependentUpon>ColorProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\ExceptionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Gui\ExceptionForm.designer.cs">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Gui\BuilderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\BuilderForm.designer.cs">
+      <DependentUpon>BuilderForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPageView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPageView.designer.cs">
+      <DependentUpon>OperatorPageView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPageViewPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPageViewPanel.designer.cs">
+      <DependentUpon>OperatorPageViewPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\OperatorPropertyGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\OperatorPropertyGrid.designer.cs">
+      <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\ProjectViewOld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\ProjectViewOld.designer.cs">
+      <DependentUpon>ProjectViewOld.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\VectorProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Gui\VectorProperty.designer.cs">
+      <DependentUpon>VectorProperty.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Logic\CoreOperator.cs" />
+    <Compile Include="Logic\Exporter.cs" />
+    <Compile Include="Logic\LoadOperator.cs" />
+    <Compile Include="Logic\Operator.cs" />
+    <Compile Include="Logic\OperatorFactory.cs" />
+    <Compile Include="Logic\Page.cs" />
+    <Compile Include="Logic\Project.cs" />
+    <Compile Include="Logic\PropagateOperator.cs" />
+    <Compile Include="Logic\StoreOperator.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="Util\RGBHSL.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
@@ -109,10 +173,47 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Gui\ColorProperty.resx">
+      <DependentUpon>ColorProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ExceptionForm.resx">
+      <DependentUpon>ExceptionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\BuilderForm.resx">
+      <DependentUpon>BuilderForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPageView.resx">
+      <DependentUpon>OperatorPageView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPageViewPanel.resx">
+      <DependentUpon>OperatorPageViewPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\OperatorPropertyGrid.resx">
+      <DependentUpon>OperatorPropertyGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\ProjectViewOld.resx">
+      <DependentUpon>ProjectViewOld.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Gui\VectorProperty.resx">
+      <DependentUpon>VectorProperty.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="warning_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="eye_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

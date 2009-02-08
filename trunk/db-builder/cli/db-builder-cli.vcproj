@@ -60,6 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="d3d9.lib d3dx9.lib ../../lib/db-utild.lib"
 				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr.lib user32.lib  ../../lib/db-util.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -183,6 +184,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\Camera.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Camera.hpp"
+			>
+		</File>
+		<File
 			RelativePath=".\Color.cli.cpp"
 			>
 		</File>
@@ -227,11 +236,27 @@
 			>
 		</File>
 		<File
+			RelativePath=".\Renderer.cli.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Renderer.hpp"
+			>
+		</File>
+		<File
 			RelativePath=".\Vector.cli.cpp"
 			>
 		</File>
 		<File
 			RelativePath=".\Vector.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Window.cli.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Window.cli.hpp"
 			>
 		</File>
 	</Files>
