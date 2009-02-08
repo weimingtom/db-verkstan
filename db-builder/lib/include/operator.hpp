@@ -1,12 +1,14 @@
 #pragma once
 
-#include "texture.hpp"
-#include "mesh.hpp"
+#include "db-util.hpp"
 
 #define DB_MAX_OPERATORS 4096
 #define DB_MAX_OPERATOR_CONNECTIONS 32
 #define DB_MAX_OPERATOR_PROPERTIES 32
 #define DB_MAX_OPERATOR_STRING_PROPERTY_LENGTH 1024
+
+class Texture;
+class Mesh;
 
 class Operator
 {

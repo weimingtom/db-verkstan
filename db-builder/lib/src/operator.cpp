@@ -1,7 +1,12 @@
 #include "db-util.hpp"
 #include "operator.hpp"
+#include "texture.hpp"
+#include "mesh.hpp"
 #include "filters.hpp"
 #include <string.h>
+
+Operator* Operator::operators[DB_MAX_OPERATORS];
+short Operator::numberOfOperators;
 
 Operator::Operator(unsigned int filterType_) :
 	mesh(0),
