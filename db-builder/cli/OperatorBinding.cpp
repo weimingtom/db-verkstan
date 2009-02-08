@@ -23,8 +23,8 @@ namespace Verkstan
 
     OperatorBinding::~OperatorBinding()
     {
-        delete Operator::operators[id];
-        Operator::operators[id] = 0;
+        delete operators[id];
+        operators[id] = 0;
     }
 
     unsigned char OperatorBinding::Number::get()
@@ -192,7 +192,8 @@ namespace Verkstan
 
     Operator* OperatorBinding::getOperator()
     {
-        return Operator::operators[id];
+        Operator* op = operators[id];
+        return operators[id];
     }
 
     void OperatorBinding::ClearInputConnections()
@@ -251,6 +252,7 @@ namespace Verkstan
 
     void OperatorBinding::SetNumberOfInputConnections(int number)
     {
+        Operator* op = getOperator();
         getOperator()->numberOfInputs = number;
     }
 
@@ -261,7 +263,10 @@ namespace Verkstan
 
     void OperatorBinding::SetDirty(bool dirty)
     {
-        getOperator()->setDirty(dirty);
+        Operator* op = getOperator();
+        int opi = (int)op;
+        System::Console::WriteLine("setDirty = " + opi);
+        op->setDirty(dirty);
     }
 
     bool OperatorBinding::IsDirty()

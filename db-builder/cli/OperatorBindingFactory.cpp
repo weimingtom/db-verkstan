@@ -62,9 +62,10 @@ categories[category]->Add(name);
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
-        if (Operator::operators[i] == 0)            \
-            {                                       \
-            Operator::operators[i] = o;             \
+        if (operators[i] == 0)            \
+            {  \
+    System::Console::WriteLine("Operator name found! id=" + i);\
+            operators[i] = o;             \
                 id = i;                             \
                 break;                              \
             }                                       \
@@ -126,10 +127,27 @@ categories[category]->Add(name);
     {
         String^ opName;
         OperatorBinding^ op;
+
+        Operator* o = new Operator(1);
+        int id;                                    
+        for (int i = 0; i < DB_MAX_OPERATORS; i++)
+        {                                          
+            if (operators[i] == 0)           
+            {  
+                operators[i] = o;
+                id = i;
+                break;
+            }                                     
+        }          
+        op = gcnew OperatorBinding(1, 
+                                   "Pixels", 
+                                   id,           
+                                   Constants::OperatorTypes::Texture);
+        /*
 #define OPERATOR_DEFINES 1
 #include "operators.hpp"
 #undef OPERATOR_DEFINES
-
+*/
         return op;
      }
 }

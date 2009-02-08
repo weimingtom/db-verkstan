@@ -5,8 +5,8 @@
 #include "filters.hpp"
 #include <string.h>
 
-Operator* Operator::operators[DB_MAX_OPERATORS];
-short Operator::numberOfOperators;
+Operator* operators[DB_MAX_OPERATORS];
+short numberOfOperators;
 
 Operator::Operator(unsigned int filterType_) :
 	mesh(0),
@@ -29,14 +29,17 @@ Operator::~Operator()
 
 void Operator::cascadeProcess()
 {
+  
     if (!isDirty())
         return;
 
+      /*
     for (int i = 0; i < numberOfInputs; i++)
         operators[inputs[i]]->cascadeProcess();
-
+    */
     process();
     dirty = false;
+    
 }
 
 void Operator::process()

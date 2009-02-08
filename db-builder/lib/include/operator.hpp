@@ -14,9 +14,6 @@ class Renderable;
 class Operator
 {
 public:
-    static Operator* operators[DB_MAX_OPERATORS];
-    static short numberOfOperators;
-
     Operator(unsigned int filterType);
 
 #ifdef DB_EDITOR
@@ -64,3 +61,6 @@ public:
     virtual void deviceLost();
 #endif
 };
+
+extern Operator* operators[DB_MAX_OPERATORS];
+extern short numberOfOperators;
