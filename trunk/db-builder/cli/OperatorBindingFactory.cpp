@@ -1,3 +1,6 @@
+#include "db-util.hpp"
+#include "filters.hpp"
+#include "operator.hpp"
 #include "OperatorBinding.hpp"
 #include "OperatorBindingFactory.hpp"
 #include "Color.hpp"
@@ -51,17 +54,17 @@ categories[category]->Add(name);
 
 #define DEF_OP_FOR_LOADER(opNumber, opClass, numberOfConstantInputs, numberOfProps, ...) 
 #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, numberOfConstantInputs) 
-#define DEF_OP_FOR_EDITOR(opNumber, opNameChars, opClass, opType)\
+#define DEF_OP_FOR_EDITOR(opNumber, opNameChars, opFilterType, opType)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \
     {                                               \
-        Core::Operator* o = new Core::opClass##();  \
+        Operator* o = new Operator(opFilterType);  \
         int id;                                     \
         for (int i = 0; i < DB_MAX_OPERATORS; i++)  \
         {                                           \
-        if (operators[i] == 0)            \
+        if (Operator::operators[i] == 0)            \
             {                                       \
-            operators[i] = o;             \
+            Operator::operators[i] = o;             \
                 id = i;                             \
                 break;                              \
             }                                       \
