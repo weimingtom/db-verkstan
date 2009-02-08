@@ -60,7 +60,6 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib ../../lib/db-utild.lib"
 				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr.lib user32.lib  ../../lib/db-util.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
