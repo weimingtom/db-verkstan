@@ -9,6 +9,7 @@
 
 class Texture;
 class Mesh;
+class Renderable;
 
 class Operator
 {
@@ -39,6 +40,7 @@ public:
 
     Mesh* mesh;
     Texture* texture;
+	Renderable *renderable;
 
     struct Property
     {

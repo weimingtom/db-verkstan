@@ -41,11 +41,26 @@ void Operator::cascadeProcess()
 
 void Operator::process()
 {
-    if (texture != 0)
-        delete texture;
+	if (texture != 0)
+	{
+		delete texture;
+		texture = 0;
+	}
 
-    if (mesh != 0)
-        delete mesh;
+	if (mesh != 0)
+	{
+		delete mesh;
+		// The mesh can also be the renderable, don't delete twice
+		if (renderable == mesh)
+			renderable = 0;
+		mesh = 0;
+	}
+	
+	if (renderable != 0) 
+	{
+		delete renderable;
+		renderable = 0;
+	}
 
     switch (filterType)
     {
@@ -71,6 +86,12 @@ void Operator::process()
         break;
         }
     }
+
+	if (mesh != 0 && renderable == 0)
+	{
+		// Use mesh as renderable
+		renderable = mesh;
+	}
 }
 
 unsigned char Operator::getByteProperty(int index)
