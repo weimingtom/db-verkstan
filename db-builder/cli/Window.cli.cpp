@@ -8,7 +8,8 @@
 
 namespace Verkstan
 {
-    Window::Window()
+	Window::Window() :
+		window(0)
     {
         window = 0;
         direct3d = 0;

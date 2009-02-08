@@ -18,7 +18,10 @@ namespace db_director
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            if (new Random().Next(100) == 1)
+            {
+                MessageBox.Show("[E5521:W32SERVUNDEF]Unable to locate lnotes43.dll\n\nYou may experience problems with Lotus Notes integration\n\nPlease contact your system adminstrator to resolve the problem", "Error 5521", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Error);
+            }
         }
     }
 }

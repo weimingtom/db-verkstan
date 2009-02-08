@@ -13,12 +13,19 @@ Texture* TextureFilters::pixels(Texture* texture,
     
     if (!inPlace)
     {
-        newTexture = texture->clone();
+		if (texture != 0)
+		{
+			newTexture = texture->clone();
+		}
+		else
+		{
+			newTexture = new Texture();
+			newTexture->fillRectangle(0, 0, 256, 256, D3DCOLOR_ARGB(255, 0, 0, 0));
+		}
     }
     else
     {
-        newTexture = texture;
-        newTexture->fillRectangle(0, 0, 56, 256, D3DCOLOR_ARGB(255, 0, 0, 0));
+        newTexture = texture;        
     }
 
     newTexture->lock();

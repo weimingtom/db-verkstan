@@ -71,7 +71,7 @@ namespace Verkstan
         unsigned char number;
         String^ name;
         unsigned short id;
-        short numberOfConstantInputs;
+        //short numberOfConstantInputs;
         Constants::OperatorTypes type;
         List<OperatorBindingProperty^>^ properties;
         List<OperatorBindingInput^>^ inputs;
