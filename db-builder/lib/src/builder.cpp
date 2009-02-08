@@ -1,7 +1,7 @@
 #include "db-util.hpp"
 #include "builder.hpp"
 
-LPDIRECT3DDEVICE9 Builder::device;
+LPDIRECT3DDEVICE9 Builder::device = 0;
 
 void Builder::load(const unsigned char* data)
 {

@@ -1,13 +1,12 @@
 #pragma once
 
+#include "BuilderLib.hpp"
 #include "Constants.hpp"
 
 #using <mscorlib.dll>
 
 using namespace System;
 using namespace System::Collections::Generic;
-
-class Operator;
 
 namespace Verkstan
 {
@@ -46,7 +45,7 @@ namespace Verkstan
         Color^ GetColorProperty(int index);
         void SetColorProperty(int index, Color^ color);
         
-        Operator* getOperator();
+        InternalOperator* getOperator();
 
         void AddProperty(String^ name, Constants::OperatorPropertyTypes type);
         void AddEnumProperty(String^ name, List<String^>^ values);

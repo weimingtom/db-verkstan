@@ -11,16 +11,20 @@ class Texture;
 class Mesh;
 class Renderable;
 
-class Operator
+class InternalOperator
 {
 public:
-    Operator(unsigned int filterType);
+    
+    static InternalOperator* operators[DB_MAX_OPERATORS];
+    static short numberOfOperators;
+
+    InternalOperator(unsigned int filterType);
 
 #ifdef DB_EDITOR
-    virtual ~Operator();
+    ~InternalOperator();
 #endif
 
-    Operator* getInput(int index);
+    InternalOperator* getInput(int index);
     
     void cascadeProcess();
     void process();
@@ -58,9 +62,6 @@ public:
     unsigned int filterType;
 
 #ifdef DB_EDITOR
-    virtual void deviceLost();
+    void deviceLost();
 #endif
 };
-
-extern Operator* operators[DB_MAX_OPERATORS];
-extern short numberOfOperators;

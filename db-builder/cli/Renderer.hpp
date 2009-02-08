@@ -1,7 +1,5 @@
 #pragma once
 
-#include "mesh.hpp"
-
 struct TextureVertex
 {
     float x, y, z;
@@ -46,7 +44,6 @@ namespace Verkstan
         void RenderMeshOperator(OperatorBinding^ op);
         void RenderModelOperator(OperatorBinding^ op);
         void RenderUnknownOperator(OperatorBinding^ op);
-        void RenderMesh(Mesh* mesh);
 
         Camera^ camera;
     };

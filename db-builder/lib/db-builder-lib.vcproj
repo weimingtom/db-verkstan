@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\db-builder\lib\include;..\..\db-util\include"
-				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
+				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;DB_EDITOR"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -180,19 +180,19 @@
 			>
 		</File>
 		<File
+			RelativePath=".\src\internaloperator.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\include\internaloperator.hpp"
+			>
+		</File>
+		<File
 			RelativePath=".\src\mesh.cpp"
 			>
 		</File>
 		<File
 			RelativePath=".\include\mesh.hpp"
-			>
-		</File>
-		<File
-			RelativePath=".\src\operator.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\include\operator.hpp"
 			>
 		</File>
 		<File

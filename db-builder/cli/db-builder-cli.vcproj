@@ -183,6 +183,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\BuilderLib.hpp"
+			>
+		</File>
+		<File
 			RelativePath=".\Camera.cpp"
 			>
 		</File>

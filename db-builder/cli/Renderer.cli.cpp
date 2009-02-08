@@ -1,4 +1,4 @@
-#include "operator.hpp"
+#include "BuilderLib.hpp"
 #include "Renderer.hpp"
 #include "Builder.hpp"
 #include "Camera.hpp"
@@ -8,7 +8,7 @@ namespace Verkstan
 {
     Renderer::Renderer()
     {
-        camera = gcnew Camera();
+        //camera = gcnew Camera();
         TextureTiling = false;
         TextureFiltering = false;
         MeshSolid = false;
@@ -33,12 +33,15 @@ namespace Verkstan
             return;
         }
 
-        camera->WindowWidth = WindowWidth;
-        camera->WindowHeight = WindowHeight;
+       // camera->WindowWidth = WindowWidth;
+       // camera->WindowHeight = WindowHeight;
 
-        Operator* coreOp = op->getOperator();
+      
+        InternalOperator* coreOp = op->getOperator();
+        //coreOp->getByteProperty(0);
+        //coreOp->process();
         coreOp->cascadeProcess();
-
+ 
         switch (op->Type)
         {
         case Constants::OperatorTypes::Mesh:
@@ -58,7 +61,7 @@ namespace Verkstan
 
     void Renderer::RenderTextureOperator(OperatorBinding^ op)
     {
-        Operator* coreOp = op->getOperator();
+        InternalOperator* coreOp = op->getOperator();
 
         if (coreOp->texture == 0)
             return;
@@ -213,17 +216,20 @@ namespace Verkstan
 
     void Renderer::RenderUnknownOperator(OperatorBinding^ op)
     {
+        /*
         Builder::device->Clear(0, 
                    NULL, 
                    D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 
                    ClearColor, 
                    1.0f, 
                    0);
+                   */
     }
 
     void Renderer::RenderMeshOperator(OperatorBinding^ op)
     {
-        Operator* coreOp = op->getOperator();
+        /*
+        InternalOperator* coreOp = op->getOperator();
 
         if (coreOp->mesh == 0)
             return;
@@ -379,6 +385,7 @@ namespace Verkstan
         
 	
         Builder::device->EndScene();
+        */
     }
 
     void Renderer::RenderModelOperator(OperatorBinding^ op)
@@ -620,11 +627,6 @@ namespace Verkstan
 
     void Renderer::ResetCamera()
     {
-        camera->Reset();
-    }
-
-    void Renderer::RenderMesh(Mesh* mesh)
-    {      
-       
+        //camera->Reset();
     }
 }

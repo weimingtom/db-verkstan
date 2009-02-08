@@ -1,6 +1,5 @@
 #include "db-util.hpp"
-#include "filters.hpp"
-#include "operator.hpp"
+#include "BuilderLib.hpp"
 #include "OperatorBinding.hpp"
 #include "OperatorBindingFactory.hpp"
 #include "Color.hpp"
@@ -128,13 +127,12 @@ categories[category]->Add(name);
         String^ opName;
         OperatorBinding^ op;
 
-        Operator* o = new Operator(1);
         int id;                                    
         for (int i = 0; i < DB_MAX_OPERATORS; i++)
         {                                          
-            if (operators[i] == 0)           
+            if (InternalOperator::operators[i] == 0)           
             {  
-                operators[i] = o;
+                InternalOperator::operators[i] = new InternalOperator(PixelsTextureFilter);
                 id = i;
                 break;
             }                                     
