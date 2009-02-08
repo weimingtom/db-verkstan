@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\db-builder\lib"
+				AdditionalIncludeDirectories="..\..\db-builder\lib\include"
 				PreprocessorDefinitions="WIN32;_DEBUG"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr.lib user32.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -114,7 +114,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\db-builder\lib"
+				AdditionalIncludeDirectories="..\..\db-builder\lib\include;..\..\db-util\include"
 				PreprocessorDefinitions="WIN32;NDEBUG"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -132,7 +132,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="d3d9.lib d3dx9.lib ../../lib/db-util.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
@@ -180,6 +180,58 @@
 	<Files>
 		<File
 			RelativePath=".\AssemblyInfo.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Color.cli.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Color.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Constants.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBinding.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBinding.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingFactory.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingFactory.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingInput.cli.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingInput.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingProperty.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\OperatorBindingProperty.hpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Vector.cli.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\Vector.hpp"
 			>
 		</File>
 	</Files>

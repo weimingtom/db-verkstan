@@ -1,5 +1,5 @@
-#include "OperatorBindingFactory.hpp"
 #include "OperatorBinding.hpp"
+#include "OperatorBindingFactory.hpp"
 #include "Color.hpp"
 #include "Vector.hpp"
 
@@ -14,7 +14,7 @@ categories[category]->Add(name);
     {
         categories = gcnew Dictionary<String^, List<String^>^>();
 #define OPERATOR_CATEGORY_DEFINES 1
-#include "core/operators.hpp"
+#include "operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
 
         if (!categories->ContainsKey("Misc"))
@@ -124,7 +124,7 @@ categories[category]->Add(name);
         String^ opName;
         OperatorBinding^ op;
 #define OPERATOR_DEFINES 1
-#include "core/operators.hpp"
+#include "operators.hpp"
 #undef OPERATOR_DEFINES
 
         return op;

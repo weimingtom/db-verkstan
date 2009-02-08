@@ -196,6 +196,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\include\operators.hpp"
+			>
+		</File>
+		<File
 			RelativePath=".\include\renderable.hpp"
 			>
 		</File>

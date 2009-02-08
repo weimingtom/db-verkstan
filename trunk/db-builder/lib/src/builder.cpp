@@ -1,6 +1,8 @@
 #include "db-util.hpp"
 #include "builder.hpp"
 
+LPDIRECT3DDEVICE9 Builder::device;
+
 void Builder::load(const unsigned char* data)
 {
 

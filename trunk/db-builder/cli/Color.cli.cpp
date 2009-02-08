@@ -1,4 +1,4 @@
-#include "cli/Color.hpp"
+#include "Color.hpp"
 
 namespace Verkstan
 {
