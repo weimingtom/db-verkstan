@@ -75,7 +75,10 @@ namespace VerkstanEditor.Logic
         #region Public Methods
         public override List<Operator> GetInputs()
         {
-            throw new NotImplementedException();
+            if (target == null)
+                return new List<Operator>();
+            else
+                return target.GetInputs();
         }
         public override void Dispose()
         {

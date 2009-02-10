@@ -21,6 +21,18 @@ namespace VerkstanEditor.Logic
                 filename = value;
             }
         }
+        private String name;
+        public String Name
+        {
+            get
+            {
+                return name;
+            }
+            set
+            {
+                name = value;
+            }
+        }
         private int version = 1;
         public int Version
         {
@@ -34,7 +46,7 @@ namespace VerkstanEditor.Logic
             }
         }
         private List<Page> pages;
-        public ICollection<Page> OperatorPages
+        public ICollection<Page> Pages
         {
             get
             {
@@ -62,8 +74,11 @@ namespace VerkstanEditor.Logic
             XmlElement version = doc.CreateElement("version");
             version.InnerText = Version.ToString();
             root.AppendChild(version);
+            XmlElement name = doc.CreateElement("name");
+            name.InnerText = Name;
+            root.AppendChild(name);
 
-            foreach (Page page in OperatorPages)
+            foreach (Page page in Pages)
             {
                 root.AppendChild(page.ToXmlElement(doc));
             }
@@ -76,11 +91,13 @@ namespace VerkstanEditor.Logic
             {
                 if (node.Name == "version")
                     Version = int.Parse(node.InnerText);
+                if (node.Name == "name")
+                    Name = node.InnerText;
                 else if (node.Name == "page")
                 {
                     Page page = new Page();
                     page.FromXmlElement((XmlElement)node);
-                    OperatorPages.Add(page);
+                    Pages.Add(page);
                 }
             }
         }

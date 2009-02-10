@@ -38,8 +38,22 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.previewPanel = new System.Windows.Forms.Panel();
             this.builderRenderTimer = new System.Windows.Forms.Timer(this.components);
+            this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.exportAsHeaderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveExportAsHeaderFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveProjectFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.operatorPropertyGrid1 = new VerkstanEditor.Gui.OperatorPropertyGrid();
+            this.openProjectFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -71,6 +85,18 @@
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newProjectToolStripMenuItem,
+            this.openProjectToolStripMenuItem,
+            this.openFileToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.saveToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.exportAsHeaderToolStripMenuItem,
+            this.exportAsFileToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -144,6 +170,83 @@
             this.builderRenderTimer.Interval = 10;
             this.builderRenderTimer.Tick += new System.EventHandler(this.builderRenderTimer_Tick);
             // 
+            // newProjectToolStripMenuItem
+            // 
+            this.newProjectToolStripMenuItem.Name = "newProjectToolStripMenuItem";
+            this.newProjectToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.newProjectToolStripMenuItem.Text = "New Project...";
+            // 
+            // openProjectToolStripMenuItem
+            // 
+            this.openProjectToolStripMenuItem.Name = "openProjectToolStripMenuItem";
+            this.openProjectToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.openProjectToolStripMenuItem.Text = "Open Project...";
+            this.openProjectToolStripMenuItem.Click += new System.EventHandler(this.openProjectToolStripMenuItem_Click);
+            // 
+            // openFileToolStripMenuItem
+            // 
+            this.openFileToolStripMenuItem.Name = "openFileToolStripMenuItem";
+            this.openFileToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.openFileToolStripMenuItem.Text = "Open File...";
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.saveToolStripMenuItem.Text = "Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.saveToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(168, 6);
+            // 
+            // exportAsHeaderToolStripMenuItem
+            // 
+            this.exportAsHeaderToolStripMenuItem.Name = "exportAsHeaderToolStripMenuItem";
+            this.exportAsHeaderToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.exportAsHeaderToolStripMenuItem.Text = "Export As Header...";
+            this.exportAsHeaderToolStripMenuItem.Click += new System.EventHandler(this.exportAsHeaderToolStripMenuItem_Click);
+            // 
+            // exportAsFileToolStripMenuItem
+            // 
+            this.exportAsFileToolStripMenuItem.Name = "exportAsFileToolStripMenuItem";
+            this.exportAsFileToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.exportAsFileToolStripMenuItem.Text = "Export As File...";
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(168, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            // 
+            // saveExportAsHeaderFileDialog1
+            // 
+            this.saveExportAsHeaderFileDialog1.Filter = "C++ header files|*.hpp|All files|*.*";
+            this.saveExportAsHeaderFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExportAsHeaderFileDialog1_FileOk);
+            // 
+            // saveProjectFileDialog1
+            // 
+            this.saveProjectFileDialog1.Filter = "db Builder files |*.dbb|All files|*.*";
+            this.saveProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveProjectFileDialog1_FileOk);
+            // 
             // operatorPageView1
             // 
             this.operatorPageView1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
@@ -168,6 +271,11 @@
             this.operatorPropertyGrid1.Operator = null;
             this.operatorPropertyGrid1.Size = new System.Drawing.Size(161, 225);
             this.operatorPropertyGrid1.TabIndex = 0;
+            // 
+            // openProjectFileDialog1
+            // 
+            this.openProjectFileDialog1.FileName = "openFileDialog1";
+            this.openProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openProjectFileDialog1_FileOk);
             // 
             // BuilderForm
             // 
@@ -208,6 +316,20 @@
         private VerkstanEditor.Gui.OperatorPropertyGrid operatorPropertyGrid1;
         private System.Windows.Forms.Timer builderRenderTimer;
         private System.Windows.Forms.Panel previewPanel;
+        private System.Windows.Forms.ToolStripMenuItem newProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem exportAsHeaderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportAsFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveExportAsHeaderFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveProjectFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openProjectFileDialog1;
     }
 }
 

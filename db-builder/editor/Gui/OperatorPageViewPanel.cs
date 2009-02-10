@@ -392,7 +392,8 @@ namespace VerkstanEditor.Gui
             Brush b = new SolidBrush(color);
             Pen lightPen = new Pen(lightColor);
             Pen darkPen = new Pen(darkColor);
-            if (op.GetType() == typeof(CoreOperator) || op.GetType() == typeof(PropagateOperator))
+            if (op.GetType() == typeof(CoreOperator) 
+                || op.GetType() == typeof(PropagateOperator))
             {
                 e.Graphics.FillRectangle(b, op.Dimension);
                 e.Graphics.Clip = new Region(new Rectangle(op.Left + 10, op.Top, op.Width - 20, op.Height));
@@ -404,7 +405,8 @@ namespace VerkstanEditor.Gui
                 e.Graphics.DrawLine(darkPen, op.Left + 1, op.Top + op.Height - 1, op.Left + op.Width, op.Top + op.Height - 1);
                 e.Graphics.DrawLine(darkPen, op.Left + op.Width - 1, op.Top + 1, op.Left + op.Width - 1, op.Top + op.Height - 2);
             }
-            else if (op.GetType() == typeof(StoreOperator))
+            else if (op.GetType() == typeof(StoreOperator)
+                 || op.GetType() == typeof(ExportOperator))
             {
                 Point[] points1 = new Point[3];
                 points1[0] = new Point(op.Left, op.Top);

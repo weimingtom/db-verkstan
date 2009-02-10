@@ -10,33 +10,73 @@ namespace VerkstanEditor.Logic
     class Exporter
     {
         #region Private Static Variables
-        private static IDictionary<ushort, ushort> oldIdToNewId = new Dictionary<ushort, ushort>();
-        private static IList<Operator> operatorsSortedOnNewId = new List<Operator>();
-        private static IList<byte> bytes = new List<byte>();
-        private static HashSet<String> operatorDefines = new HashSet<String>();
+        private IList<ExportOperator> exportOperators = new List<ExportOperator>();
+        private IDictionary<ushort, ushort> oldIdToNewId = new Dictionary<ushort, ushort>();
+        private IList<Operator> operatorsSortedOnNewId = new List<Operator>();
+        private IList<byte> bytes = new List<byte>();
+        private HashSet<String> operatorDefines = new HashSet<String>();
+        #endregion
+
+        #region Constructor
+        public Exporter()
+        {
+        }
         #endregion
 
         #region Public Static Methods
-        public static void Export(Operator root, String filename)
+        public void ExportToHeader(Project project, String filename)
         {
-            oldIdToNewId.Clear();
-            operatorsSortedOnNewId.Clear();
-            bytes.Clear();
-            operatorDefines.Clear();
-
-            PopulateOldIdToNewIdAndOperatorsSortedOnNewId(root, 0);
-            PopulateOperatorDefines(root);
-            
-            AddOperatorInstances();
-            AddOperatorProperties();
-            AddOperatorConnections();
-
+            Export(project);
+            WriteToHeader(filename);
+        }
+        public void ExportToFile(Project project, String filename)
+        {
+            Export(project);
             WriteToFile(filename);
         }
         #endregion
 
-        #region Private Static Methods
-        private static ushort PopulateOldIdToNewIdAndOperatorsSortedOnNewId(Operator root, ushort id)
+        #region Private Methods
+        private void Export(Project project)
+        {
+            LocateAllExportOperators(project);
+            System.Console.WriteLine("Number of exports == " + exportOperators.Count);
+            PopulateOldIdToNewIdAndOperatorsSortedOnNewId();
+
+            foreach (ushort oldId in oldIdToNewId.Keys)
+            {
+                System.Console.WriteLine("oldId == " + oldId + " is now == " + oldIdToNewId[oldId]);
+            }
+            //PopulateOperatorDefines(root);
+
+            //AddOperatorInstances();
+            //AddOperatorProperties();
+            //AddOperatorConnections();
+
+           
+        }
+        private void LocateAllExportOperators(Project project)
+        {
+            foreach (Page page in project.Pages)
+            {
+                foreach (Operator op in page.Operators)
+                {
+                    if (op.GetType() == typeof(ExportOperator) && op.IsProcessable)
+                    {
+                        exportOperators.Add((ExportOperator)op);
+                    }
+                }
+            }
+        }
+        private void PopulateOldIdToNewIdAndOperatorsSortedOnNewId()
+        {
+            ushort id = 0;
+            foreach (Operator op in exportOperators)
+            {
+                id = PopulateOldIdToNewIdAndOperatorsSortedOnNewId(op, id);
+            }
+        }
+        private ushort PopulateOldIdToNewIdAndOperatorsSortedOnNewId(Operator root, ushort id)
         {
             if (!oldIdToNewId.ContainsKey(root.BindedOperator.Id))
             {
@@ -44,18 +84,19 @@ namespace VerkstanEditor.Logic
                 operatorsSortedOnNewId.Add(root);
             }
             foreach (Operator op in root.GetInputs())
+            {
                 id = PopulateOldIdToNewIdAndOperatorsSortedOnNewId(op, ++id);
-
+            }
             return id;
         }
-        private static void PopulateOperatorDefines(Operator root)
+        private void PopulateOperatorDefines(Operator root)
         {
             operatorDefines.Add(root.BindedOperator.Name);
 
             foreach (Operator op in root.GetInputs())
                 PopulateOperatorDefines(op);
         }
-        private static void AddOperatorInstances()
+        private void AddOperatorInstances()
         {
             AddToData((short)oldIdToNewId.Count);
 
@@ -63,7 +104,7 @@ namespace VerkstanEditor.Logic
                 AddToData((byte)op.BindedOperator.Number);
 
         }
-        private static void AddOperatorProperties()
+        private void AddOperatorProperties()
         {
             IDictionary<byte, List<Operator>> number2Operators = new SortedDictionary<byte, List<Operator>>();
 
@@ -90,7 +131,7 @@ namespace VerkstanEditor.Logic
                 AddOperatorProperties(pair.Value);
             }
         }
-        private static void AddOperatorProperties(List<Operator> operators)
+        private void AddOperatorProperties(List<Operator> operators)
         {
             Operator first = operators.First();
 
@@ -128,7 +169,7 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
-        private static void AddOperatorConnections()
+        private void AddOperatorConnections()
         {
             foreach (Operator op in operatorsSortedOnNewId)
                 if (op.BindedOperator.NumberOfConstantInputs == -1)
@@ -150,62 +191,62 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
-        private static void AddToData(byte b)
+        private void AddToData(byte b)
         {
             bytes.Add(b);
         }
-        private static void AddToData(sbyte b)
+        private void AddToData(sbyte b)
         {
             bytes.Add(unchecked((byte)b));
         }
-        private static void AddToData(Color color)
+        private void AddToData(Color color)
         {
             AddToData((byte)color.R);
             AddToData((byte)color.G);
             AddToData((byte)color.B);
         }
-        private static void AddToData(short s)
+        private void AddToData(short s)
         {
             byte[] array = BitConverter.GetBytes(s);
 
             foreach (byte arrayByte in array)
                 bytes.Add(arrayByte);
         }
-        private static void AddToData(ushort s)
+        private void AddToData(ushort s)
         {
             byte[] array = BitConverter.GetBytes(s);
 
             foreach (byte arrayByte in array)
                 bytes.Add(arrayByte);
         }
-        private static void AddToData(int i)
+        private void AddToData(int i)
         {
             byte[] array = BitConverter.GetBytes(i);
 
             foreach (byte arrayByte in array)
                 bytes.Add(arrayByte);
         }
-        private static void AddToData(float f)
+        private void AddToData(float f)
         {
             byte[] array = BitConverter.GetBytes(f);
 
             foreach (byte arrayByte in array)
                 bytes.Add(arrayByte);
         }
-        private static void AddToData(String str)
+        private void AddToData(String str)
         {
             byte[] byteArray = Encoding.GetEncoding("iso-8859-1").GetBytes(str);
             AddToData((ushort)byteArray.Length);
             foreach (byte b in byteArray)
                 bytes.Add(b);
         }
-        private static void AddToData(Verkstan.Vector v)
+        private void AddToData(Verkstan.Vector v)
         {
             AddToData(v.X);
             AddToData(v.Y);
             AddToData(v.Z);
         }
-        private static void WriteToFile(String filename)
+        private void WriteToHeader(String filename)
         {
             TextWriter textWriter = new StreamWriter(filename);
 
@@ -231,6 +272,10 @@ namespace VerkstanEditor.Logic
 
             textWriter.WriteLine(" };");
             textWriter.Close();
+        }
+        private void WriteToFile(String filename)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
