@@ -384,10 +384,7 @@ namespace VerkstanEditor.Gui
             Color lightColor = RGBHSL.ModifyBrightness(color, 1.3);
             Color darkColor = RGBHSL.ModifyBrightness(color, 0.7);
 
-            String displayName = op.Name;
-
-            if (displayName == null || displayName == "")
-                displayName = op.TypeName;
+            String displayName = op.DisplayName;
 
             Brush b = new SolidBrush(color);
             Pen lightPen = new Pen(lightColor);
@@ -545,7 +542,10 @@ namespace VerkstanEditor.Gui
                 case Verkstan.Constants.OperatorTypes.Renderable:
                     return Color.FromArgb(70, 90, 255);
                 default:
-                    return Color.FromArgb(190, 190, 100);
+                    if (op.GetType() == typeof(ExportOperator))
+                        return Color.FromArgb(220, 50, 220);
+                    else
+                        return Color.FromArgb(190, 190, 100);
             }
         }
         private Point CalculateMovePoint()

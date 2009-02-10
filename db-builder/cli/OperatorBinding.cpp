@@ -7,12 +7,12 @@
 
 namespace Verkstan
 {
-    OperatorBinding::OperatorBinding(unsigned char number,
-                               String^ name,
-                               unsigned short operatorId,
-                               Constants::OperatorTypes type)
+    OperatorBinding::OperatorBinding(unsigned char filterType,
+                                   String^ name,
+                                   unsigned short operatorId,
+                                   Constants::OperatorTypes type)
     {
-        this->number = number;
+        this->filterType = filterType;
         this->name = name;
         this->id = operatorId;
         this->type = type;
@@ -26,9 +26,9 @@ namespace Verkstan
         InternalOperator::operators[id] = 0;
     }
 
-    unsigned char OperatorBinding::Number::get()
+    unsigned char OperatorBinding::FilterType::get()
     {
-        return number;
+        return filterType;
     }
 
     unsigned short OperatorBinding::Id::get()

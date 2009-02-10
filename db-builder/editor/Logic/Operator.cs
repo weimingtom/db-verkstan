@@ -164,6 +164,16 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
+        public virtual String DisplayName
+        {
+            get
+            {
+                if (Name == null || Name == "")
+                    return TypeName;
+                else
+                    return Name;
+            }
+        }
         private Boolean isSelected = false;
         public Boolean IsSelected
         {
@@ -253,7 +263,7 @@ namespace VerkstanEditor.Logic
         }
         public static Point QuantizeLocation(Point location)
         {
-            return new Point(location.X - location.X % 100,
+            return new Point(location.X - location.X % 50,
                              location.Y - location.Y % 20);
         }
         public static Size QuantizeSize(Size size)

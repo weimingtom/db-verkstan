@@ -178,6 +178,20 @@ namespace VerkstanEditor
         {
             openProjectFileDialog1.ShowDialog();
         }
+        private void exportAsFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Name == null)
+                saveExportAsFileDialog1.FileName = "project.dat";
+            else
+                saveExportAsFileDialog1.FileName = project.Name + ".dat";
+
+            saveExportAsFileDialog1.ShowDialog();
+        }
+        private void saveExportAsFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            Exporter exporter = new Exporter();
+            exporter.ExportToFile(project, saveExportAsFileDialog1.FileName);
+        }
         #endregion
     }
 }

@@ -21,12 +21,12 @@ namespace Verkstan
         property Constants::OperatorTypes Type { Constants::OperatorTypes get(); }
         property String^ Name { String^ get(); }
         property unsigned short Id { unsigned short get(); }
-        property unsigned char Number { unsigned char get(); }
+        property unsigned char FilterType { unsigned char get(); }
         property short NumberOfConstantInputs { short get(); }
         property List<OperatorBindingProperty^>^ Properties { List<OperatorBindingProperty^>^ get(); }
         property List<OperatorBindingInput^>^ Inputs { List<OperatorBindingInput^>^ get(); }
 
-        OperatorBinding(unsigned char number, 
+        OperatorBinding(unsigned char filterType, 
                         String^ name,
                         unsigned short operatorId,
                         Constants::OperatorTypes type);
@@ -68,7 +68,7 @@ namespace Verkstan
         bool IsDirty();
 
     private:
-        unsigned char number;
+        unsigned char filterType;
         String^ name;
         unsigned short id;
         //short numberOfConstantInputs;
