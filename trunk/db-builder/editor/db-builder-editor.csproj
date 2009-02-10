@@ -119,6 +119,7 @@
     </Compile>
     <Compile Include="Logic\CoreOperator.cs" />
     <Compile Include="Logic\Exporter.cs" />
+    <Compile Include="Logic\ExportOperator.cs" />
     <Compile Include="Logic\LoadOperator.cs" />
     <Compile Include="Logic\Operator.cs" />
     <Compile Include="Logic\OperatorFactory.cs" />

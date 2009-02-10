@@ -26,6 +26,10 @@ namespace VerkstanEditor.Logic
             {
                 op = new PropagateOperator();
             }
+            else if (typeName == "export")
+            {
+                op = new ExportOperator();
+            }
             else
             {
                 Verkstan.OperatorBinding opBinding = Verkstan.OperatorBindingFactory.Create(typeName);
@@ -36,10 +40,24 @@ namespace VerkstanEditor.Logic
         }
         public static ICollection<String> GetCategories()
         {
-            return Verkstan.OperatorBindingFactory.GetCategories().ToList<String>();
+            List<String> categories = Verkstan.OperatorBindingFactory.GetCategories().ToList<String>();
+
+            if (!categories.Contains("Misc"))
+                categories.Add("Misc");
+            return categories;
         }
         public static ICollection<String> GetNamesInCategory(String category)
         {
+            if (category == "Misc")
+            {
+                List<String> names = new List<string>();
+                names.Add("Store");
+                names.Add("Load");
+                names.Add("Propagate");
+                names.Add("Export");
+                return names;
+            }
+
             return Verkstan.OperatorBindingFactory.GetNamesInCategory(category).ToList<String>();
         }
         #endregion

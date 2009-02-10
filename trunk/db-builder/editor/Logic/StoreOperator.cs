@@ -63,7 +63,10 @@ namespace VerkstanEditor.Logic
         #region Public Methods
         public override List<Operator> GetInputs()
         {
-            throw new NotImplementedException();
+            if (senders.Count == 0)
+                return new List<Operator>();
+            else
+                return senders.First().GetInputs();
         }
         public override void OnDisposed(Operator op)
         {

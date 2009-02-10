@@ -6,14 +6,13 @@ using System.Xml;
 
 namespace VerkstanEditor.Logic
 {
-    class PropagateOperator: Operator
+    class ExportOperator: Operator
     {
         #region Properties
         public override Verkstan.OperatorBinding BindedOperator
         {
-            get 
+            get
             {
-                List<Operator> senders = GetSenderOperators();
                 if (senders.Count == 0)
                     return null;
                 else
@@ -31,7 +30,7 @@ namespace VerkstanEditor.Logic
         {
             get
             {
-                if (senders.Count == 0)
+                if (senders.Count != 1)
                     return false;
                 else
                     return senders.First().IsProcessable;
@@ -48,14 +47,14 @@ namespace VerkstanEditor.Logic
         {
             get
             {
-                return "Propagate";
+                return "Export";
             }
         }
         #endregion
 
         #region Constructors
-        public PropagateOperator()
-            :base()
+        public ExportOperator()
+            : base()
         {
             UniqueName = AllocateUniqueName(TypeName);
         }
@@ -64,7 +63,6 @@ namespace VerkstanEditor.Logic
         #region Public Methods
         public override List<Operator> GetInputs()
         {
-            List<Operator> senders = GetSenderOperators();
             if (senders.Count == 0)
                 return new List<Operator>();
             else
@@ -77,7 +75,7 @@ namespace VerkstanEditor.Logic
         public override List<Operator> GetReceiverOperators()
         {
             List<Operator> result = new List<Operator>();
-            foreach (Operator receiver in receivers)
+            foreach (Operator receiver in loads)
                 foreach (Operator receiverReceiver in receiver.GetReceiverOperators())
                     result.Add(receiverReceiver);
 
@@ -85,12 +83,7 @@ namespace VerkstanEditor.Logic
         }
         public override List<Operator> GetSenderOperators()
         {
-            List<Operator> result = new List<Operator>();
-            foreach (Operator sender in senders)
-                foreach (Operator senderSender in sender.GetSenderOperators())
-                    result.Add(senderSender);
-
-            return result;
+            return new List<Operator>();
         }
         public override List<Operator> GetSenderOperatorsForLoad()
         {
@@ -104,26 +97,19 @@ namespace VerkstanEditor.Logic
         }
         public override void StackConnectChangedUpwards()
         {
-            foreach (Operator op in senders)
-                op.StackConnectChangedUpwards();
-
             OnStateChanged();
         }
         public override void CascadeStackConnectChangedDownwards()
         {
-            foreach (Operator op in receivers)
-                op.CascadeStackConnectChangedDownwards();
-
             foreach (Operator op in loads)
                 op.CascadeStackConnectChangedDownwards();
 
-            IsWarningPresent = senders.Count != 1;
             OnStateChanged();
         }
         public override XmlElement ToXmlElement(XmlDocument doc)
         {
             XmlElement root = doc.CreateElement("operator");
-            root.SetAttribute("type", "Propagate");
+            root.SetAttribute("type", "Export");
 
             PopulateXmlElementWithBasicOperatorInformation(root, doc);
 

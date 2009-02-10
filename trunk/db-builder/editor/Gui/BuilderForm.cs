@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using VerkstanEditor.Logic;
 
 namespace VerkstanEditor
@@ -33,7 +34,7 @@ namespace VerkstanEditor
 
             project = new Project();
             page = new Page();
-            project.OperatorPages.Add(page);
+            project.Pages.Add(page);
             operatorPageView1.Page = page;
         }
         #endregion
@@ -90,6 +91,92 @@ namespace VerkstanEditor
         private void previewPanel_MouseMove(object sender, MouseEventArgs e)
         {
             builderWindow.MouseMove(e.X, e.Y);
+        }
+        private void exportAsHeaderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Name == null)
+                saveExportAsHeaderFileDialog1.FileName = "project.hpp";
+            else
+                saveExportAsHeaderFileDialog1.FileName = project.Name + ".hpp";
+   
+            saveExportAsHeaderFileDialog1.ShowDialog();
+        }
+        private void saveExportAsHeaderFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            Exporter exporter = new Exporter();
+            exporter.ExportToHeader(project, saveExportAsHeaderFileDialog1.FileName);
+        }
+        private void saveProjectFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            project.Filename = saveProjectFileDialog1.FileName;
+
+            char[] firstSplitter = { '\\' };
+            char[] secondSplitter = { '.' };
+
+            string[] splittedOnSlash = project.Filename.Split(firstSplitter);
+            string nameWithFileEnding = splittedOnSlash.Last();
+            string[] splittedOnDot = nameWithFileEnding.Split(secondSplitter);
+
+            String name;
+
+            if (splittedOnDot.Count() == 0)
+                name = nameWithFileEnding;
+            else
+                name = splittedOnDot.First();
+
+            project.Name = name;
+
+            XmlDocument doc = new XmlDocument();
+            doc.AppendChild(project.ToXmlElement(doc));
+            doc.Save(project.Filename);
+        }
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Filename == null)
+            {
+                saveProjectFileDialog1.FileName = "project.dbb";
+                saveProjectFileDialog1.ShowDialog();
+                return;
+            }
+
+            XmlDocument doc = new XmlDocument();
+            doc.AppendChild(project.ToXmlElement(doc));
+            doc.Save(project.Filename);
+        }
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (project.Filename != null)
+            {
+                saveProjectFileDialog1.FileName = project.Name + ".dbb";
+            }
+            else
+            {
+                saveProjectFileDialog1.FileName = "project.dbb";
+            }
+
+            saveProjectFileDialog1.ShowDialog();
+        }
+        private void openProjectFileDialog1_FileOk(object sender, CancelEventArgs e)
+        {
+            String filename = openProjectFileDialog1.FileName;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(filename);
+            XmlElement rootElement = doc.DocumentElement;
+
+            if (project != null)
+            {
+                builderWindow.ViewedOperator = null;
+                project.Dispose();
+            }
+
+            project = new Project();
+            project.Filename = filename;
+            project.FromXmlElement(rootElement);
+            operatorPageView1.Page = project.Pages.First();
+        }
+        private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openProjectFileDialog1.ShowDialog();
         }
         #endregion
     }

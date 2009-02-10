@@ -18,18 +18,6 @@ categories[category]->Add(name);
 #define OPERATOR_CATEGORY_DEFINES 1
 #include "operators.hpp"
 #undef OPERATOR_CATEGORY_DEFINES
-
-        if (!categories->ContainsKey("Misc"))
-            categories->Add("Misc", gcnew List<String^>());
-        
-        if (!categories["Misc"]->Contains("Store"))
-            categories["Misc"]->Add("Store");
-
-        if (!categories["Misc"]->Contains("Load"))
-            categories["Misc"]->Add("Load");
-        
-        if (!categories["Misc"]->Contains("Propagate"))
-            categories["Misc"]->Add("Propagate");
     }
 
     ICollection<String^>^ OperatorBindingFactory::GetCategories()
