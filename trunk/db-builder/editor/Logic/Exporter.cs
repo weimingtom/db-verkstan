@@ -15,6 +15,7 @@ namespace VerkstanEditor.Logic
         private IList<Operator> operatorsSortedOnNewId = new List<Operator>();
         private IList<byte> bytes = new List<byte>();
         private HashSet<String> operatorDefines = new HashSet<String>();
+        private List<String> exportDefines = new List<String>();
         #endregion
 
         #region Constructor
@@ -27,7 +28,7 @@ namespace VerkstanEditor.Logic
         public void ExportToHeader(Project project, String filename)
         {
             Export(project);
-            WriteToHeader(filename);
+            WriteToHeader(filename, project.Name);
         }
         public void ExportToFile(Project project, String filename)
         {
@@ -41,19 +42,19 @@ namespace VerkstanEditor.Logic
         {
             LocateAllExportOperators(project);
             System.Console.WriteLine("Number of exports == " + exportOperators.Count);
-            PopulateOldIdToNewIdAndOperatorsSortedOnNewId();
+            PopulateIdNormalizerHash();
 
             foreach (ushort oldId in oldIdToNewId.Keys)
             {
                 System.Console.WriteLine("oldId == " + oldId + " is now == " + oldIdToNewId[oldId]);
             }
-            //PopulateOperatorDefines(root);
+            
+            PopulateFilterDefines();
+            PopulateExportDefines();
 
-            //AddOperatorInstances();
-            //AddOperatorProperties();
-            //AddOperatorConnections();
-
-           
+            AddOperatorFilterType();
+            AddOperatorProperties();
+            AddOperatorConnections();
         }
         private void LocateAllExportOperators(Project project)
         {
@@ -68,15 +69,16 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
-        private void PopulateOldIdToNewIdAndOperatorsSortedOnNewId()
+        private void PopulateIdNormalizerHash()
         {
             ushort id = 0;
             foreach (Operator op in exportOperators)
             {
-                id = PopulateOldIdToNewIdAndOperatorsSortedOnNewId(op, id);
+                id = PopulateIdNormalizerHash(op, id);
+                id++;
             }
         }
-        private ushort PopulateOldIdToNewIdAndOperatorsSortedOnNewId(Operator root, ushort id)
+        private ushort PopulateIdNormalizerHash(Operator root, ushort id)
         {
             if (!oldIdToNewId.ContainsKey(root.BindedOperator.Id))
             {
@@ -85,35 +87,55 @@ namespace VerkstanEditor.Logic
             }
             foreach (Operator op in root.GetInputs())
             {
-                id = PopulateOldIdToNewIdAndOperatorsSortedOnNewId(op, ++id);
+                id = PopulateIdNormalizerHash(op, ++id);
             }
+
             return id;
+        }
+        private void PopulateFilterDefines()
+        {
+            foreach (Operator op in exportOperators)
+            {
+                PopulateOperatorDefines(op);
+            }
         }
         private void PopulateOperatorDefines(Operator root)
         {
-            operatorDefines.Add(root.BindedOperator.Name);
+            String name = root.BindedOperator.Name + root.BindedOperator.Type.ToString();
+            name = name.ToUpper().Replace(" ", "");
+            operatorDefines.Add("#define DB_" + name + "FILTER 1");
 
             foreach (Operator op in root.GetInputs())
                 PopulateOperatorDefines(op);
         }
-        private void AddOperatorInstances()
+        private void PopulateExportDefines()
+        {
+            int number = 0;
+            foreach (ExportOperator exportOp in exportOperators)
+            {
+                String name = exportOp.UniqueName;
+                name = name.ToUpper().Replace(" ", "");
+                exportDefines.Add("#define " + name + " " + number);
+                number++;
+            }
+        }
+        private void AddOperatorFilterType()
         {
             AddToData((short)oldIdToNewId.Count);
-
             foreach (Operator op in operatorsSortedOnNewId)
-                AddToData((byte)op.BindedOperator.Number);
+                AddToData((byte)op.BindedOperator.FilterType);
 
         }
         private void AddOperatorProperties()
         {
-            IDictionary<byte, List<Operator>> number2Operators = new SortedDictionary<byte, List<Operator>>();
+            IDictionary<byte, List<Operator>> filterType2Operators = new SortedDictionary<byte, List<Operator>>();
 
             foreach (Operator op in operatorsSortedOnNewId)
             {
-                if (!number2Operators.ContainsKey(op.BindedOperator.Number))
-                    number2Operators.Add(op.BindedOperator.Number, new List<Operator>());
+                if (!filterType2Operators.ContainsKey(op.BindedOperator.FilterType))
+                    filterType2Operators.Add(op.BindedOperator.FilterType, new List<Operator>());
 
-                List<Operator> operators = number2Operators[op.BindedOperator.Number];
+                List<Operator> operators = filterType2Operators[op.BindedOperator.FilterType];
                 operators.Add(op);
                 operators.Sort(delegate(Operator op1, Operator op2)
                 {
@@ -121,9 +143,9 @@ namespace VerkstanEditor.Logic
                 });
             }
 
-            foreach (KeyValuePair<byte, List<Operator>> pair in number2Operators)
+            foreach (KeyValuePair<byte, List<Operator>> pair in filterType2Operators)
             {
-                System.Console.Write("Number="+pair.Key + " [");
+                System.Console.Write("FilterType="+pair.Key + " [");
                 foreach (Operator op in pair.Value)
                     System.Console.Write("newid=" + oldIdToNewId[op.BindedOperator.Id] + " oldid=" + op.BindedOperator.Id);
                 System.Console.WriteLine("]");
@@ -191,6 +213,14 @@ namespace VerkstanEditor.Logic
                 }
             }
         }
+        private void AddExports()
+        {
+            AddToData((ushort)exportOperators.Count);
+            foreach (ExportOperator exportOp in exportOperators)
+            {
+                AddToData((ushort)oldIdToNewId[exportOp.BindedOperator.Id]);
+            }
+        }
         private void AddToData(byte b)
         {
             bytes.Add(b);
@@ -246,18 +276,25 @@ namespace VerkstanEditor.Logic
             AddToData(v.Y);
             AddToData(v.Z);
         }
-        private void WriteToHeader(String filename)
+        private void WriteToHeader(String filename, String arrayName)
         {
             TextWriter textWriter = new StreamWriter(filename);
 
-            textWriter.WriteLine("// Generated by db-builder " + DateTime.Now);
+            textWriter.WriteLine("// Generated by Darkbits(r) Verkstan(tm) Enterprise Graphical");
+            textWriter.WriteLine("// Demonstration Solutions Productivity Suite(tm) - Builder");
+            textWriter.WriteLine("// Time of generation:" + DateTime.Now);
             textWriter.WriteLine();
 
-            foreach (String str in operatorDefines)
-                textWriter.WriteLine("#define DB_" + str.ToUpper().Replace(" ", "") + "OPERATOR 1");
+            foreach (String define in operatorDefines)
+                textWriter.WriteLine(define);
 
             textWriter.WriteLine();
-            textWriter.WriteLine("unsigned char graphicsData[] = {");
+
+            foreach (String define in exportDefines)
+                textWriter.WriteLine(define);
+
+            textWriter.WriteLine();
+            textWriter.WriteLine("unsigned char " + arrayName.ToLowerInvariant() + "BuilderData[] = {");
 
             for (int i = 0; i < bytes.Count; i++)
             {
@@ -266,7 +303,7 @@ namespace VerkstanEditor.Logic
                 if (i != bytes.Count - 1)
                     textWriter.Write(",");
 
-                if ((i + 1) % 10 == 0)
+                if ((i + 1) % 15 == 0)
                     textWriter.WriteLine();
             }
 
@@ -275,7 +312,13 @@ namespace VerkstanEditor.Logic
         }
         private void WriteToFile(String filename)
         {
-            throw new NotImplementedException();
+            FileStream stream = File.Open(filename, FileMode.Create);
+            BinaryWriter binaryWriter = new BinaryWriter(stream);
+
+            for (int i = 0; i < bytes.Count; i++)
+                binaryWriter.Write(bytes[i]);
+
+            stream.Close();
         }
         #endregion
     }

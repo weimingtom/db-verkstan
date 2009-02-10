@@ -50,6 +50,13 @@ namespace VerkstanEditor.Logic
                 return "Export";
             }
         }
+        public override String DisplayName
+        {
+            get
+            {
+                return UniqueName;
+            }
+        }
         #endregion
 
         #region Constructors

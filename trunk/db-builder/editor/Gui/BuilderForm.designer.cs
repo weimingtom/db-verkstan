@@ -51,9 +51,10 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveExportAsHeaderFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.saveProjectFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.openProjectFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.operatorPropertyGrid1 = new VerkstanEditor.Gui.OperatorPropertyGrid();
-            this.openProjectFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveExportAsFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -225,6 +226,7 @@
             this.exportAsFileToolStripMenuItem.Name = "exportAsFileToolStripMenuItem";
             this.exportAsFileToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.exportAsFileToolStripMenuItem.Text = "Export As File...";
+            this.exportAsFileToolStripMenuItem.Click += new System.EventHandler(this.exportAsFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
@@ -246,6 +248,11 @@
             // 
             this.saveProjectFileDialog1.Filter = "db Builder files |*.dbb|All files|*.*";
             this.saveProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveProjectFileDialog1_FileOk);
+            // 
+            // openProjectFileDialog1
+            // 
+            this.openProjectFileDialog1.FileName = "openFileDialog1";
+            this.openProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openProjectFileDialog1_FileOk);
             // 
             // operatorPageView1
             // 
@@ -272,10 +279,10 @@
             this.operatorPropertyGrid1.Size = new System.Drawing.Size(161, 225);
             this.operatorPropertyGrid1.TabIndex = 0;
             // 
-            // openProjectFileDialog1
+            // saveExportAsFileDialog1
             // 
-            this.openProjectFileDialog1.FileName = "openFileDialog1";
-            this.openProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openProjectFileDialog1_FileOk);
+            this.saveExportAsFileDialog1.Filter = "Data files|*.dat|All files|*.*";
+            this.saveExportAsFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExportAsFileDialog1_FileOk);
             // 
             // BuilderForm
             // 
@@ -330,6 +337,7 @@
         private System.Windows.Forms.SaveFileDialog saveExportAsHeaderFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveProjectFileDialog1;
         private System.Windows.Forms.OpenFileDialog openProjectFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveExportAsFileDialog1;
     }
 }
 
