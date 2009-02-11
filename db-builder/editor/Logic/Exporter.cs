@@ -52,7 +52,7 @@ namespace VerkstanEditor.Logic
             PopulateFilterDefines();
             PopulateExportDefines();
 
-            AddOperatorFilterType();
+            AddOperatorFilterTypes();
             AddOperatorProperties();
             AddOperatorConnections();
             AddExports();
@@ -111,20 +111,55 @@ namespace VerkstanEditor.Logic
         }
         private void PopulateExportDefines()
         {
-            int number = 0;
+            List<ExportOperator> textureExports = new List<ExportOperator>();
+            List<ExportOperator> meshExports = new List<ExportOperator>();
+            List<ExportOperator> renderableExports = new List<ExportOperator>();
+
             foreach (ExportOperator exportOp in exportOperators)
+            {
+                if (exportOp.BindedOperator.Type == Verkstan.Constants.OperatorTypes.Texture)
+                    textureExports.Add(exportOp);
+                else if (exportOp.BindedOperator.Type == Verkstan.Constants.OperatorTypes.Mesh)
+                    meshExports.Add(exportOp);
+                else
+                    renderableExports.Add(exportOp);
+            }
+
+            int number = 0;
+            foreach (ExportOperator exportOp in textureExports)
             {
                 String name = exportOp.UniqueName;
                 name = name.ToUpper().Replace(" ", "");
-                exportDefines.Add("#define " + name + " " + number);
+                exportDefines.Add("#define DB_BUILDER_EXPORT_" + name + " " + number);
+                number++;
+            }
+
+            number = 0;
+            foreach (ExportOperator exportOp in meshExports)
+            {
+                String name = exportOp.UniqueName;
+                name = name.ToUpper().Replace(" ", "");
+                exportDefines.Add("#define DB_BUILDER_EXPORT_" + name + " " + number);
+                number++;
+            }
+
+            number = 0;
+            foreach (ExportOperator exportOp in renderableExports)
+            {
+                String name = exportOp.UniqueName;
+                name = name.ToUpper().Replace(" ", "");
+                exportDefines.Add("#define DB_BUILDER_EXPORT_" + name + " " + number);
                 number++;
             }
         }
-        private void AddOperatorFilterType()
+        private void AddOperatorFilterTypes()
         {
-            AddToData((short)oldIdToNewId.Count);
+            AddToData((ushort)oldIdToNewId.Count);
             foreach (Operator op in operatorsSortedOnNewId)
+            {
+                System.Console.WriteLine("FilterType = " + (byte)op.BindedOperator.FilterType);
                 AddToData((byte)op.BindedOperator.FilterType);
+            }
 
         }
         private void AddOperatorProperties()
@@ -146,10 +181,11 @@ namespace VerkstanEditor.Logic
 
             foreach (KeyValuePair<byte, List<Operator>> pair in filterType2Operators)
             {
+                /*
                 System.Console.Write("FilterType="+pair.Key + " [");
                 foreach (Operator op in pair.Value)
                     System.Console.Write("newid=" + oldIdToNewId[op.BindedOperator.Id] + " oldid=" + op.BindedOperator.Id);
-                System.Console.WriteLine("]");
+                System.Console.WriteLine("]");*/
 
                 AddOperatorProperties(pair.Value);
             }

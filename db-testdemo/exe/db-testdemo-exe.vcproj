@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../lib;../../db-util/include"
+				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="db-util.lib db-builder.lib"
+				AdditionalDependencies="db-utild.lib db-builderd.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../../lib"
 				GenerateDebugInformation="true"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../lib;../../db-util/include"
+				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -136,7 +136,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="db-util.lib"
+				AdditionalDependencies="db-util.lib db-builder.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../../lib"
 				GenerateDebugInformation="true"
@@ -192,7 +192,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../lib;../../db-util/include"
+				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include;../../db-builder/projects"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -268,7 +268,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../lib;../../db-util/include"
+				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -287,7 +287,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib user32.lib db-util.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dsound.lib user32.lib db-util.lib db-builder.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../../lib"
 				GenerateDebugInformation="true"
@@ -322,6 +322,54 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="builder-lib"
+			>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\blurtexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\builder.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\cloudstexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\internaloperator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\meshfilters\megaextrudemeshfilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\pixelstexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\meshfilters\randomselectionmeshfilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\texttexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texture.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\meshfilters\torusmeshfilter.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\main.cpp"
 			>
