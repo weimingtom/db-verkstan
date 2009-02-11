@@ -4,7 +4,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	WindowInfo windowInfo = createD3DWindow(640, 480, false);
+	WindowInfo windowInfo = createD3DWindow(640, 480, true);
 
 	 do
     {

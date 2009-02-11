@@ -1,0 +1,105 @@
+<project>
+  <version>1</version>
+  <name>testdemo</name>
+  <page>
+    <operator type="Torus">
+      <name>
+      </name>
+      <dimension x="100" y="40" width="100" height="20" />
+      <properties>
+        <float value="0,3" />
+        <float value="0,7" />
+        <byte value="5" />
+        <byte value="10" />
+      </properties>
+    </operator>
+    <operator type="Random Selection">
+      <name>
+      </name>
+      <dimension x="100" y="60" width="100" height="20" />
+      <properties>
+        <byte value="68" />
+        <byte value="28" />
+      </properties>
+    </operator>
+    <operator type="Mega Extrude">
+      <name>
+      </name>
+      <dimension x="100" y="80" width="100" height="20" />
+      <properties>
+        <float value="0,2" />
+        <byte value="12" />
+        <vector x="1" y="1" z="1" />
+        <vector x="0" y="0" z="0" />
+      </properties>
+    </operator>
+    <operator type="Clouds">
+      <name>
+      </name>
+      <dimension x="400" y="20" width="100" height="20" />
+      <properties>
+        <color r="0" g="0" b="0" />
+        <color r="255" g="255" b="255" />
+        <enum value="1" />
+        <byte value="1" />
+      </properties>
+    </operator>
+    <operator type="Pixels">
+      <name>
+      </name>
+      <dimension x="400" y="40" width="100" height="20" />
+      <properties>
+        <color r="255" g="255" b="255" />
+        <color r="255" g="255" b="255" />
+        <byte value="32" />
+        <byte value="0" />
+      </properties>
+    </operator>
+    <operator type="Export">
+      <name>
+      </name>
+      <dimension x="400" y="60" width="100" height="20" />
+    </operator>
+    <operator type="Torus">
+      <name>
+      </name>
+      <dimension x="600" y="80" width="100" height="20" />
+      <properties>
+        <float value="0,3" />
+        <float value="0,7" />
+        <byte value="5" />
+        <byte value="10" />
+      </properties>
+    </operator>
+    <operator type="Export">
+      <name>
+      </name>
+      <dimension x="600" y="100" width="100" height="20" />
+    </operator>
+    <operator type="Random Selection">
+      <name>
+      </name>
+      <dimension x="100" y="100" width="100" height="20" />
+      <properties>
+        <byte value="29" />
+        <byte value="1" />
+      </properties>
+    </operator>
+    <operator type="Export">
+      <name>
+      </name>
+      <dimension x="100" y="140" width="100" height="20" />
+    </operator>
+    <operator type="Mega Extrude">
+      <name>
+      </name>
+      <dimension x="100" y="120" width="100" height="20" />
+      <properties>
+        <float value="0,2" />
+        <byte value="3" />
+        <vector x="0,37" y="1" z="1,42" />
+        <vector x="0" y="0" z="0" />
+      </properties>
+    </operator>
+  </page>
+</project>

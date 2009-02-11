@@ -55,6 +55,7 @@ namespace VerkstanEditor.Logic
             AddOperatorFilterType();
             AddOperatorProperties();
             AddOperatorConnections();
+            AddExports();
         }
         private void LocateAllExportOperators(Project project)
         {
@@ -215,10 +216,43 @@ namespace VerkstanEditor.Logic
         }
         private void AddExports()
         {
-            AddToData((ushort)exportOperators.Count);
+            List<ExportOperator> textureExports = new List<ExportOperator>();
+            List<ExportOperator> meshExports = new List<ExportOperator>();
+            List<ExportOperator> renderableExports = new List<ExportOperator>();
+
             foreach (ExportOperator exportOp in exportOperators)
             {
+                if (exportOp.BindedOperator.Type == Verkstan.Constants.OperatorTypes.Texture)
+                    textureExports.Add(exportOp);
+                else if (exportOp.BindedOperator.Type == Verkstan.Constants.OperatorTypes.Mesh)
+                    meshExports.Add(exportOp);
+                else
+                    renderableExports.Add(exportOp);
+            }
+
+            AddToData((ushort)textureExports.Count);
+            System.Console.WriteLine("Texture Exports=" + textureExports.Count);
+            AddToData((ushort)meshExports.Count);
+            System.Console.WriteLine("Mesh Exports=" + meshExports.Count);
+            AddToData((ushort)renderableExports.Count);
+            System.Console.WriteLine("Renderable Exports=" + renderableExports.Count);
+
+            foreach (ExportOperator exportOp in textureExports)
+            {
                 AddToData((ushort)oldIdToNewId[exportOp.BindedOperator.Id]);
+                System.Console.WriteLine("Texture id=" + oldIdToNewId[exportOp.BindedOperator.Id]);
+            }
+
+            foreach (ExportOperator exportOp in meshExports)
+            {
+                AddToData((ushort)oldIdToNewId[exportOp.BindedOperator.Id]);
+                System.Console.WriteLine("Mesh id=" + oldIdToNewId[exportOp.BindedOperator.Id]);
+            }
+
+            foreach (ExportOperator exportOp in renderableExports)
+            {
+                AddToData((ushort)oldIdToNewId[exportOp.BindedOperator.Id]);
+                System.Console.WriteLine("Renderable id=" + oldIdToNewId[exportOp.BindedOperator.Id]);
             }
         }
         private void AddToData(byte b)
