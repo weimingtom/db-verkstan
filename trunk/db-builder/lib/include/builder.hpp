@@ -21,4 +21,9 @@ public:
     Texture* getTexture(unsigned int id);
     Mesh* getMesh(unsigned int id);
     Renderable* getRenderable(unsigned int id);
+private:
+    Texture* textures[512];
+    Mesh* meshes[512];
+    Renderable* renderables[512];
+
 };

@@ -122,7 +122,7 @@ END_OP_FOR_EDITOR();
 #endif
 
 #if defined(DB_MEGAEXTRUDEMESHFILTER) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(MegaExtrudeMeshFilter, 1, 5, 
+DEF_OP_FOR_LOADER(MegaExtrudeMeshFilter, 1, 4, 
                   DB_FLOAT_PROP, 
                   DB_BYTE_PROP, 
                   DB_VECTOR_PROP, 

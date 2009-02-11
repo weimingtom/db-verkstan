@@ -66,7 +66,6 @@ public:
 		Box *boxes;
 	};
 
-	
 	// Creates a new mesh and allocates buffers of desired size
 	Mesh(int numVertices, int numTriangles, int numQuads, int numUVSets = 1, bool vertexColors = false);
     
