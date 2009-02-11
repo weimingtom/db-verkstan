@@ -1,0 +1,44 @@
+<project>
+  <version>1</version>
+  <name>project</name>
+  <page>
+    <operator type="Clouds">
+      <name>
+      </name>
+      <dimension x="200" y="60" width="100" height="20" />
+      <properties>
+        <color r="0" g="0" b="0" />
+        <color r="255" g="255" b="255" />
+        <enum value="1" />
+        <byte value="1" />
+      </properties>
+    </operator>
+    <operator type="Torus">
+      <name>
+      </name>
+      <dimension x="500" y="120" width="100" height="20" />
+      <properties>
+        <float value="0,3" />
+        <float value="0,7" />
+        <byte value="5" />
+        <byte value="10" />
+      </properties>
+    </operator>
+    <operator type="Torus">
+      <name>
+      </name>
+      <dimension x="600" y="220" width="100" height="20" />
+      <properties>
+        <float value="0,3" />
+        <float value="0,7" />
+        <byte value="5" />
+        <byte value="10" />
+      </properties>
+    </operator>
+    <operator type="Export">
+      <name>
+      </name>
+      <dimension x="600" y="240" width="100" height="20" />
+    </operator>
+  </page>
+</project>
