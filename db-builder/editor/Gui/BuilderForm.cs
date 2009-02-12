@@ -42,7 +42,9 @@ namespace VerkstanEditor
         #region Event Handlers
         private void builderRenderTimer_Tick(object sender, EventArgs e)
         {
-            builderWindow.Render();
+            if (operatorPageView1.ViewedOperator != null
+                && operatorPageView1.ViewedOperator.IsProcessable)
+                builderWindow.Render();
         }
         private void previewPanel_SizeChanged(object sender, EventArgs e)
         {

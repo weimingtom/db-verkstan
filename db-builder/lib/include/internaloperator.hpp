@@ -36,9 +36,6 @@ public:
     D3DXCOLOR getColorProperty(int index);
     D3DXVECTOR3 getVectorProperty(int index);
 
-    bool isDirty();
-    void setDirty(bool dirty);
-
     Mesh* mesh;
     Texture* texture;
 	Renderable *renderable;
@@ -62,6 +59,8 @@ public:
     unsigned int filterType;
 
 #ifdef DB_EDITOR
+    bool isDirty();
+    void setDirty(bool dirty);
     void deviceLost();
 #endif
 };

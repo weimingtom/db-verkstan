@@ -187,6 +187,14 @@ D3DXVECTOR3 InternalOperator::getVectorProperty(int index)
     return properties[index].vectorValue;
 }
 
+InternalOperator* InternalOperator::getInput(int index)
+{
+    if (inputs[index] == -1)
+        return 0;
+    return operators[inputs[index]];
+}
+
+#ifdef DB_EDITOR
 bool InternalOperator::isDirty()
 {
     return dirty;
@@ -200,14 +208,6 @@ void InternalOperator::setDirty(bool dirty)
     this->dirty = dirty;
 }
 
-InternalOperator* InternalOperator::getInput(int index)
-{
-    if (inputs[index] == -1)
-        return 0;
-    return operators[inputs[index]];
-}
-
-#ifdef DB_EDITOR
 void InternalOperator::deviceLost()
 {
     if (texture != 0)
