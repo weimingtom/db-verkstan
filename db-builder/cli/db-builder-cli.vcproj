@@ -21,7 +21,7 @@
 			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
-			CharacterSet="1"
+			CharacterSet="0"
 			ManagedExtensions="1"
 			>
 			<Tool
@@ -60,7 +60,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr.lib user32.lib  ../../lib/db-utild.lib"
+				AdditionalDependencies="d3d9.lib d3dx9.lib dxerr9.lib user32.lib  ../../lib/db-utild.lib"
 				OutputFile="$(OutDir)\$(ProjectName)d.dll"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
@@ -315,6 +315,10 @@
 				</File>
 				<File
 					RelativePath="..\lib\src\texturefilters\pixelstexturefilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\lib\src\texturefilters\rectangletexturefilter.cpp"
 					>
 				</File>
 				<File

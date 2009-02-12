@@ -77,11 +77,11 @@ void InternalOperator::process()
     switch (filterType)
     {
     case BlurTextureFilter:
-        texture = TextureFilters::blur(getInput(0)->texture, 
+        texture = TextureFilters::blur(inputTexture, 
                                        getByteProperty(0), 
+                                       getByteProperty(1),
                                        getByteProperty(2),
-                                       getByteProperty(3),
-                                       getByteProperty(1) + 1);
+                                       getByteProperty(3));
         break;
     case PixelsTextureFilter:
         {
@@ -109,6 +109,16 @@ void InternalOperator::process()
                                        getByteProperty(3),
                                        getStringProperty(4),
                                        getStringProperty(5));
+        break;
+    }
+    case RectangleTextureFilter:
+    {
+        texture = TextureFilters::rectangle(inputTexture,
+                                            getColorProperty(0), 
+                                            getByteProperty(1),
+                                            getByteProperty(2),
+                                            getByteProperty(3),
+                                            getByteProperty(4));
         break;
     }
     case TorusMeshFilter:

@@ -186,6 +186,7 @@ namespace Verkstan
         getOperator()->properties[index].colorValue.r = color->R / 255.0f;
         getOperator()->properties[index].colorValue.g = color->G / 255.0f;
         getOperator()->properties[index].colorValue.b = color->B / 255.0f;
+        getOperator()->properties[index].colorValue.a = 1.0f;
         getOperator()->setDirty(true);
     }
 

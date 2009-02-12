@@ -21,13 +21,15 @@ static DWORD pack(DWORD r, DWORD g, DWORD b, DWORD div, DWORD amp)
 
 Texture* TextureFilters::blur(Texture* texture, 
                               int passes,
+                              int direction,
                               int width,
-                              int amplify,
-                              int direction)
+                              int amplify)
 {
+    passes += 1;
+    direction += 1;
 	passes = max(1, passes);
 	width = max(1, width);
-    
+   
     Texture* in = texture->clone();   
     Texture* out = new Texture();
 
