@@ -268,7 +268,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include"
+				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include;../../db-builder/projects"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"

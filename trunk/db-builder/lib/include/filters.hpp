@@ -11,6 +11,7 @@ enum Filters
     PixelsTextureFilter,
     BlurTextureFilter,
     TextTextureFilter,
+    RectangleTextureFilter,
 
     // Torus filters
     TorusMeshFilter,
@@ -25,6 +26,7 @@ public:
     static Texture* pixels(Texture* texture, D3DXCOLOR color1, D3DXCOLOR color2, int count, int seed, bool inPlace = false);
     static Texture* blur(Texture* texture, int passes, int width, int amplify = 16, int direction = 3);
     static Texture* text(Texture* texture, D3DXCOLOR color, int height, int x, int y, const char *font, const char *text, bool inPlace = false);
+    static Texture* rectangle(Texture* texture, D3DXCOLOR color, int x, int y, int width, int height, bool inPlace = false);
 };
 
 class MeshFilters

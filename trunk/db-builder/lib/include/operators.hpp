@@ -2,6 +2,7 @@
 ADD_OP_TO_CAT("Clouds",          "Texture");
 ADD_OP_TO_CAT("Pixels",          "Texture");
 ADD_OP_TO_CAT("Text",            "Texture");
+ADD_OP_TO_CAT("Rectangle",       "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
 
 ADD_OP_TO_CAT("Torus",            "Mesh");
@@ -92,6 +93,23 @@ ADD_BYTE_PROP("X", 10);
 ADD_BYTE_PROP("Y", 5);
 ADD_STRING_PROP("Font", "");
 ADD_TEXT_PROP("Text", "Text!");
+ADD_OPTIONAL_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_RECTANGLETEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(RectangleTextureFilter, -1, 5, 
+                  DB_COLOR_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Rectangle", RectangleTextureFilter, Texture);
+ADD_COLOR_PROP("Color", 255, 255, 0);
+ADD_BYTE_PROP("X",      10);
+ADD_BYTE_PROP("Y",      10);
+ADD_BYTE_PROP("Width",  100);
+ADD_BYTE_PROP("Height", 100);
 ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
