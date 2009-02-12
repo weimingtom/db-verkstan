@@ -16,7 +16,7 @@ Texture* TextureFilters::rectangle(Texture* texture,
     if (texture == 0)    
         newTexture->fillRectangle(0, 0, 256, 256, 0xff000000);
     else
-        texture->copy(texture);
+        texture->copy(newTexture);
 
     newTexture->fillRectangle(x, y, width, height, color);
     return newTexture;
