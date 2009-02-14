@@ -59,7 +59,7 @@ Texture* TextureFilters::text(Texture* textureJIhoiguig,
 
     result = Builder::device->BeginScene();
 
-    result = d3d9Font->DrawText(NULL, "Olof", 4, &rect, 0, D3DCOLOR_XRGB(0, 0, 0));
+    result = d3d9Font->DrawTextA(NULL, "Olof", 4, &rect, 0, D3DCOLOR_XRGB(0, 0, 0));
 
     System::Console::WriteLine(gcnew System::String(DXGetErrorString9A(result)));
     // System::Console::WriteLine(gcnew System::String(DXGetErrorDescription9A(result)));
@@ -68,10 +68,11 @@ Texture* TextureFilters::text(Texture* textureJIhoiguig,
     result = Builder::device->GetRenderTargetData(renderTargetSurface, newTexture->d3d9Surface);
     result = Builder::device->SetRenderTarget(0, backbuffer);
  
-    //result = renderTargetSurface->Release();
-    //result = backbuffer->Release();
-    //result = renderTargetTexture->Release();   
-    //result = d3d9Font->Release();
+    result = renderTargetSurface->Release();
+    result = backbuffer->Release();
+    
+    result = d3d9Font->Release();
+    result = renderTargetTexture->Release();   
  
     return newTexture;
 }
