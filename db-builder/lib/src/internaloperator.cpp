@@ -121,6 +121,37 @@ void InternalOperator::process()
                                             getByteProperty(4));
         break;
     }
+    case CrackleTextureFilter:
+    {
+        texture = TextureFilters::crackle(getColorProperty(0),
+                                          getColorProperty(1),
+                                          getByteProperty(2),
+                                          getByteProperty(3),
+                                          getByteProperty(4));
+        break;
+    }
+    case FlatTextureFilter:
+    {
+        texture = TextureFilters::flat(getColorProperty(0));
+        break;
+    }
+    case GlowTextureFilter:
+    {
+        texture = TextureFilters::glow(inputTexture,
+                                       getColorProperty(0),
+                                       getByteProperty(1),
+                                       getByteProperty(2),
+                                       getByteProperty(3),
+                                       getByteProperty(4),
+                                       getByteProperty(5),
+                                       getByteProperty(6));
+        break;
+    }
+    case NormalMapTextureFilter:
+    {
+        texture = TextureFilters::normalMap(inputTexture, getByteProperty(0));
+        break;
+    }
     case TorusMeshFilter:
     {
         mesh = MeshFilters::torus(getFloatProperty(0), 

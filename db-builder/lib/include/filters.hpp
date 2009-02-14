@@ -12,6 +12,10 @@ enum Filters
     BlurTextureFilter,
     TextTextureFilter,
     RectangleTextureFilter,
+    CrackleTextureFilter,
+    FlatTextureFilter,
+    GlowTextureFilter,
+    NormalMapTextureFilter,
 
     // Torus filters
     TorusMeshFilter,
@@ -27,6 +31,10 @@ public:
     static Texture* blur(Texture* texture, int passes, int width, int amplify = 16, int direction = 3);
     static Texture* text(Texture* texture, D3DXCOLOR color, int height, int x, int y, const char *font, const char *text, bool inPlace = false);
     static Texture* rectangle(Texture* texture, D3DXCOLOR color, int x, int y, int width, int height, bool inPlace = false);
+    static Texture* crackle(D3DXCOLOR color1, D3DXCOLOR color2, int count, int randomness, int seed);
+    static Texture* flat(D3DXCOLOR color);
+    static Texture* glow(Texture* texture, D3DXCOLOR color, int centerX, int centerY, int radiusX, int radiusY, int gamma_, int alpha_, bool inPlace = false);
+    static Texture* normalMap(Texture* texture, int amplify, bool inPlace = false);
 };
 
 class MeshFilters
