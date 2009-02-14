@@ -18,6 +18,7 @@ enum Filters
     NormalMapTextureFilter,
     RotoZoomTextureFilter,
     MergeTextureFilter,
+    InvertTextureFilter,
 
     // Torus filters
     TorusMeshFilter,
@@ -39,6 +40,8 @@ public:
     static Texture* normalMap(Texture* texture, int amplify, bool inPlace = false);
     static Texture* rotoZoom(Texture* texture, int centerX, int centerY, int rotation, int zoom, bool inPlace = false);
     static Texture* merge(Texture* texture1, Texture* texture2, int mode, bool inPlace = false);
+    static Texture* invert(Texture* texture, bool inPlace = false);
+
 };
 
 class MeshFilters
