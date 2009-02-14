@@ -10,6 +10,7 @@ ADD_OP_TO_CAT("Blur",            "Texture");
 ADD_OP_TO_CAT("Normal Map",      "Texture");
 ADD_OP_TO_CAT("Roto Zoom",       "Texture");
 ADD_OP_TO_CAT("Merge Textures",  "Texture");
+ADD_OP_TO_CAT("Invert Texture",  "Texture");
 
 ADD_OP_TO_CAT("Torus",            "Mesh");
 ADD_OP_TO_CAT("Random Selection", "Mesh");
@@ -75,6 +76,13 @@ ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
 ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
 ADD_BYTE_PROP("Width", 1);
 ADD_BYTE_PROP("Amplify", 16);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_INVERTTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER_WITH_NO_PROPS(InvertTextureFilter, 1);
+DEF_OP_FOR_EDITOR("Invert Texture", InvertTextureFilter, Texture);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif

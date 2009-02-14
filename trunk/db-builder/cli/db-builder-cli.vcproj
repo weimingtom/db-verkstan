@@ -326,6 +326,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\lib\src\texturefilters\inverttexturefilter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\lib\src\texturefilters\mergetexturefilter.cpp"
 					>
 				</File>

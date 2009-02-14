@@ -175,6 +175,11 @@ void InternalOperator::process()
         texture = TextureFilters::normalMap(inputTexture, getByteProperty(0));
         break;
     }
+    case InvertTextureFilter:
+    {
+        texture = TextureFilters::invert(inputTexture);
+        break;
+    }
     case TorusMeshFilter:
     {
         mesh = MeshFilters::torus(getFloatProperty(0), 
