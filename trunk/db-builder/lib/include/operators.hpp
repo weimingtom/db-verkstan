@@ -1,9 +1,13 @@
 #ifdef OPERATOR_CATEGORY_DEFINES
+ADD_OP_TO_CAT("Flat",            "Texture");
 ADD_OP_TO_CAT("Clouds",          "Texture");
+ADD_OP_TO_CAT("Crackle",         "Texture");
 ADD_OP_TO_CAT("Pixels",          "Texture");
 ADD_OP_TO_CAT("Text",            "Texture");
 ADD_OP_TO_CAT("Rectangle",       "Texture");
+ADD_OP_TO_CAT("Glow",            "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
+ADD_OP_TO_CAT("Normal Map",      "Texture");
 
 ADD_OP_TO_CAT("Torus",            "Mesh");
 ADD_OP_TO_CAT("Random Selection", "Mesh");
@@ -46,6 +50,15 @@ ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_BYTE_PROP("Count", 32);
 ADD_BYTE_PROP("Seed",  0);
 ADD_OPTIONAL_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_NORMALMAPTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(NormalMapTextureFilter, 1, 1, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Normal Map", NormalMapTextureFilter, Texture);
+ADD_BYTE_PROP("Amplify", 16);
+ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 
@@ -114,6 +127,43 @@ ADD_OPTIONAL_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 
+#if defined(DB_CRACKLETEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(CrackleTextureFilter, 0, 5,
+                  DB_COLOR_PROP,
+				  DB_COLOR_PROP,
+				  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
+				  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Crackle", CrackleTextureFilter, Texture);
+ADD_COLOR_PROP("Color 1", 0, 0, 0);
+ADD_COLOR_PROP("Color 2", 255, 255, 255);
+ADD_BYTE_PROP("Count", 8);
+ADD_BYTE_PROP("Randomness", 128);
+ADD_BYTE_PROP("Seed", 1);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_GLOWTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(GlowTextureFilter, -1, 7, 
+                  DB_COLOR_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Glow", GlowTextureFilter, Texture);
+ADD_COLOR_PROP("Color", 255, 0, 0);
+ADD_BYTE_PROP("Center X", 128);
+ADD_BYTE_PROP("Center Y", 128);
+ADD_BYTE_PROP("Radius X", 128);
+ADD_BYTE_PROP("Radius Y", 128);
+ADD_BYTE_PROP("Gamma", 1);
+ADD_BYTE_PROP("Alpha", 255);
+ADD_OPTIONAL_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
 #if defined(DB_TORUSMESHFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(TorusMeshFilter, 0, 4, 
                   DB_FLOAT_PROP, 
@@ -151,6 +201,14 @@ ADD_BYTE_PROP("Count", 3);
 ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
 ADD_VECTOR_PROP("Rotation", 0.0f, 0.0f, 0.0f);
 ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_FLATTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(FlatTextureFilter, 0, 1, 
+                  DB_COLOR_PROP);
+DEF_OP_FOR_EDITOR("Flat", FlatTextureFilter, Texture);
+ADD_COLOR_PROP("Color", 255, 255, 255);
 END_OP_FOR_EDITOR();
 #endif
 

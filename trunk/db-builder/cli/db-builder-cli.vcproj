@@ -314,6 +314,22 @@
 					>
 				</File>
 				<File
+					RelativePath="..\lib\src\texturefilters\crackletexturefilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\lib\src\texturefilters\flattexturefilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\lib\src\texturefilters\glowtexturefilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\lib\src\texturefilters\normalmaptexturefilter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\lib\src\texturefilters\pixelstexturefilter.cpp"
 					>
 				</File>
