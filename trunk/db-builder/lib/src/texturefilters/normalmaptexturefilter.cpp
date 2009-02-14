@@ -12,7 +12,7 @@ Texture* TextureFilters::normalMap(Texture* texture, int amplify, bool inPlace)
                          NULL,
                          0,
                          D3DX_CHANNEL_RED,
-                         amplify);
+                         (float)amplify);
     LPDIRECT3DSURFACE9 surface;
     newTexture->getD3D9Texture()->GetSurfaceLevel(0, &surface);
     D3DXLoadSurfaceFromSurface(newTexture->d3d9Surface, 

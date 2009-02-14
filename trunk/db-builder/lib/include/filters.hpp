@@ -16,6 +16,8 @@ enum Filters
     FlatTextureFilter,
     GlowTextureFilter,
     NormalMapTextureFilter,
+    RotoZoomTextureFilter,
+    MergeTextureFilter,
 
     // Torus filters
     TorusMeshFilter,
@@ -35,6 +37,8 @@ public:
     static Texture* flat(D3DXCOLOR color);
     static Texture* glow(Texture* texture, D3DXCOLOR color, int centerX, int centerY, int radiusX, int radiusY, int gamma_, int alpha_, bool inPlace = false);
     static Texture* normalMap(Texture* texture, int amplify, bool inPlace = false);
+    static Texture* rotoZoom(Texture* texture, int centerX, int centerY, int rotation, int zoom, bool inPlace = false);
+    static Texture* merge(Texture* texture1, Texture* texture2, int mode, bool inPlace = false);
 };
 
 class MeshFilters

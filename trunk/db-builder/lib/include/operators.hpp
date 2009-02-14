@@ -8,6 +8,8 @@ ADD_OP_TO_CAT("Rectangle",       "Texture");
 ADD_OP_TO_CAT("Glow",            "Texture");
 ADD_OP_TO_CAT("Blur",            "Texture");
 ADD_OP_TO_CAT("Normal Map",      "Texture");
+ADD_OP_TO_CAT("Roto Zoom",       "Texture");
+ADD_OP_TO_CAT("Merge Textures",  "Texture");
 
 ADD_OP_TO_CAT("Torus",            "Mesh");
 ADD_OP_TO_CAT("Random Selection", "Mesh");
@@ -73,6 +75,32 @@ ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
 ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
 ADD_BYTE_PROP("Width", 1);
 ADD_BYTE_PROP("Amplify", 16);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_MERGETEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(MergeTextureFilter, -1, 1, 
+                  DB_ENUM_PROP);
+DEF_OP_FOR_EDITOR("Merge Textures", MergeTextureFilter, Texture);
+ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
+ADD_INPUT(Texture);
+ADD_INPUT(Texture);
+ADD_INFINITE_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_ROTOZOOMTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(RotoZoomTextureFilter, 1, 4, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Roto Zoom", RotoZoomTextureFilter, Texture);
+ADD_BYTE_PROP("Center X", 128);
+ADD_BYTE_PROP("Center Y", 128);
+ADD_BYTE_PROP("Rotation", 0);
+ADD_BYTE_PROP("Zoom",    128);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
