@@ -147,6 +147,29 @@ void InternalOperator::process()
                                        getByteProperty(6));
         break;
     }
+    case RotoZoomTextureFilter:
+    {
+        texture = TextureFilters::rotoZoom(inputTexture,
+                                           getByteProperty(0),
+                                           getByteProperty(1),
+                                           getByteProperty(2),
+                                           getByteProperty(3));
+        break;
+    }
+    case MergeTextureFilter:
+    {
+        texture = new Texture();
+        inputTexture->copy(texture);
+
+        for (int i = 1; i < numberOfInputs; i++)
+        {
+            TextureFilters::merge(texture,
+                                  getInput(i)->texture,
+                                  getByteProperty(0),
+                                  true);
+        }
+        break;
+    }
     case NormalMapTextureFilter:
     {
         texture = TextureFilters::normalMap(inputTexture, getByteProperty(0));

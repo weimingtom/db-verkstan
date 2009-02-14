@@ -326,6 +326,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\lib\src\texturefilters\mergetexturefilter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\lib\src\texturefilters\normalmaptexturefilter.cpp"
 					>
 				</File>
@@ -335,6 +339,10 @@
 				</File>
 				<File
 					RelativePath="..\lib\src\texturefilters\rectangletexturefilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\lib\src\texturefilters\rotozoomtexturefilter.cpp"
 					>
 				</File>
 				<File

@@ -265,7 +265,6 @@ namespace Verkstan
     {
         InternalOperator* op = getOperator();
         int opi = (int)op;
-        System::Console::WriteLine("setDirty = " + opi);
         op->setDirty(dirty);
     }
 
