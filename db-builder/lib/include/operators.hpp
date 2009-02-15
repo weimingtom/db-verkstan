@@ -11,9 +11,12 @@ ADD_OP_TO_CAT("Normal Map",      "Texture");
 ADD_OP_TO_CAT("Roto Zoom",       "Texture");
 ADD_OP_TO_CAT("Merge Textures",  "Texture");
 ADD_OP_TO_CAT("Invert Texture",  "Texture");
+ADD_OP_TO_CAT("Distort Texture", "Texture");
+ADD_OP_TO_CAT("Contrast",        "Texture");
+ADD_OP_TO_CAT("Colorize",        "Texture");
 
 ADD_OP_TO_CAT("Torus",            "Mesh");
-ADD_OP_TO_CAT("Random Selection", "Mesh");
+ADD_OP_TO_CAT("Random Select",    "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",     "Mesh");
 #endif
 
@@ -83,6 +86,27 @@ END_OP_FOR_EDITOR();
 #if defined(DB_INVERTTEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(InvertTextureFilter, 1);
 DEF_OP_FOR_EDITOR("Invert Texture", InvertTextureFilter, Texture);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_DISTORTIONTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(DistortionTextureFilter, 1, 2, 
+                  DB_ENUM_PROP,
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Distort Texture", DistortionTextureFilter, Texture);
+ADD_ENUM_PROP("Mode", "Green-Blue,Normal Map", "Green-Blue");
+ADD_BYTE_PROP("Amount", 0);
+ADD_INPUT(Texture);
+ADD_INPUT(Texture);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_CONTRASTTEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(ContrastTextureFilter, 1, 1, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Contrast", ContrastTextureFilter, Texture);
+ADD_BYTE_PROP("Contrast", 128);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
@@ -218,10 +242,23 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(RandomSelectionMeshFilter, 1, 2, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Random Selection", RandomSelectionMeshFilter, Mesh);
+DEF_OP_FOR_EDITOR("Random Select", RandomSelectionMeshFilter, Mesh);
 ADD_BYTE_PROP("Probablility", 128);
 ADD_BYTE_PROP("Seed", 1);
 ADD_INPUT(Mesh);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_COLORIZETEXTUREFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(ColorizeTextureFilter, 1, 3, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Colorize", ColorizeTextureFilter, Texture);
+ADD_BYTE_PROP("Hue", 0);
+ADD_BYTE_PROP("Saturation", 255);
+ADD_BYTE_PROP("Light", 128);
+ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
 

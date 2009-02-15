@@ -39,8 +39,8 @@ categories[category]->Add(name);
         return categories[category];
     }
 
-#define DEF_OP_FOR_LOADER(opNumber, opClass, numberOfConstantInputs, numberOfProps, ...) 
-#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opId, opClass, numberOfConstantInputs) 
+#define DEF_OP_FOR_LOADER(opFilterType, numberOfConstantInputs, numberOfProperties, ...)
+#define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opFilterType, numberOfConstantInputs) 
 #define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \

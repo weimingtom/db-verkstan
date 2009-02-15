@@ -60,6 +60,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
                            &Vec3(0.0f, 0.0f, 0.0f),
                            &Vec3(0.0f, 1.0f, 0.0f));
         D3DXMATRIX view = rotationX * rotationY * translation * lookat;
+        
         windowInfo.device->SetTransform(D3DTS_VIEW, &view);
 
         windowInfo.device->SetRenderState(D3DRS_LIGHTING, FALSE);
@@ -67,14 +68,40 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         windowInfo.device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
        
         windowInfo.device->BeginScene();
+
         spaceShipMesh->render();
 
         D3DXMatrixTranslation(&translation, 0.0f, 0.0f, -2.0f);
         view = rotationX * rotationY * translation;
         windowInfo.device->SetTransform(D3DTS_WORLD, &view);
         torusMesh->render();
-        windowInfo.device->EndScene();
 
+        LPD3DXFONT d3d9Font;
+        HRESULT result = D3DXCreateFont(windowInfo.device,
+                   100, 
+                   0, 
+                   FALSE, 
+                   0, 
+                   FALSE,
+                   DEFAULT_CHARSET, 
+                   OUT_DEFAULT_PRECIS, 
+                   DEFAULT_QUALITY, 
+                   DEFAULT_PITCH | FF_DONTCARE, 
+                   "Verdana", 
+                   &d3d9Font);
+
+    RECT rect;
+    rect.left = 0;
+    rect.right= 255;
+    rect.top = 0;
+    rect.bottom = 255;
+    
+
+    result = d3d9Font->DrawTextA(NULL, "Olof", 4, &rect, 0, D3DCOLOR_XRGB(255, 255, 255));
+
+    
+        windowInfo.device->EndScene();
+        d3d9Font->Release();
         windowInfo.device->Present(NULL, NULL, NULL, NULL);
       
     } while (!GetAsyncKeyState(VK_ESCAPE));// && coreOperators[0]->ticks > tick);

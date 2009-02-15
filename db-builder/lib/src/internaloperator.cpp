@@ -79,29 +79,31 @@ void InternalOperator::process()
     switch (filterType)
     {
     case BlurTextureFilter:
+    {
         texture = TextureFilters::blur(inputTexture, 
                                        getByteProperty(0), 
                                        getByteProperty(1),
                                        getByteProperty(2),
                                        getByteProperty(3));
         break;
+    }
     case PixelsTextureFilter:
-        {
+    {
         texture = TextureFilters::pixels(inputTexture, 
                                          getColorProperty(0), 
                                          getColorProperty(1),
                                          getByteProperty(2),
                                          getByteProperty(3));
         break;
-        }
+    }
     case CloudsTextureFilter:
-        {
-            texture = TextureFilters::clouds(getColorProperty(0), 
-                                             getColorProperty(1),
-                                             getByteProperty(2),
-                                             getByteProperty(3));
-            break;
-        }
+    {
+        texture = TextureFilters::clouds(getColorProperty(0), 
+                                         getColorProperty(1),
+                                         getByteProperty(2),
+                                         getByteProperty(3));
+        break;
+    }
     case TextTextureFilter:
     {
         texture = TextureFilters::text(inputTexture,
@@ -132,6 +134,14 @@ void InternalOperator::process()
                                           getByteProperty(4));
         break;
     }
+    case DistortionTextureFilter:
+    {
+        texture = TextureFilters::distortion(getInput(0)->texture,
+                                             getInput(1)->texture,
+                                             getByteProperty(0),
+                                             getByteProperty(1));
+        break;
+    }
     case FlatTextureFilter:
     {
         texture = TextureFilters::flat(getColorProperty(0));
@@ -147,6 +157,20 @@ void InternalOperator::process()
                                        getByteProperty(4),
                                        getByteProperty(5),
                                        getByteProperty(6));
+        break;
+    }
+    case ContrastTextureFilter:
+    {
+        texture = TextureFilters::contrast(inputTexture,
+                                           getByteProperty(0));
+        break;
+    }
+    case ColorizeTextureFilter:
+    {
+        texture = TextureFilters::colorize(inputTexture,
+                                           getByteProperty(0),
+                                           getByteProperty(1),
+                                           getByteProperty(2));
         break;
     }
     case RotoZoomTextureFilter:
