@@ -137,6 +137,10 @@ public:
 	// Get and set face selection
 	bool &faceSelected(int faceIndex);
 
+    bool &triangleSelected(int triangleIndex);
+
+    bool &quadSelected(int quadIndex);
+
 	// Get and set vertex selection 
 //	bool &vertexSelected(int vertexIndex);
 

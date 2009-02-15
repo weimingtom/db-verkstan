@@ -266,8 +266,9 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				Optimization="2"
+				Optimization="1"
 				EnableIntrinsicFunctions="true"
+				FavorSizeOrSpeed="2"
 				AdditionalIncludeDirectories="../lib;../../db-util/include;../../db-builder/lib/include;../../db-builder/projects"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
@@ -338,7 +339,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\colorizetexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\contrasttexturefilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\db-builder\lib\src\texturefilters\crackletexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\distortiontexturefilter.cpp"
 				>
 			</File>
 			<File

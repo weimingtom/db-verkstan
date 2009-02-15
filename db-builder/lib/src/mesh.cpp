@@ -360,6 +360,17 @@ bool &Mesh::faceSelected(int faceIndex)
 }
 
 
+bool &Mesh::triangleSelected(int triangleIndex)
+{
+    return faceSelection[triangleIndex];
+}
+
+bool &Mesh::quadSelected(int quadIndex)
+{
+    return faceSelection[quadIndex + getNumTriangles()];
+}
+
+
 //bool &Mesh::vertexSelected(int vertexIndex)
 //{
 //	return vertexSelection[vertexIndex];
