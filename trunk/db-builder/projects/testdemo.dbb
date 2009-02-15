@@ -56,8 +56,7 @@
       </properties>
     </operator>
     <operator type="Export">
-      <name>
-      </name>
+      <name>noise</name>
       <dimension x="400" y="60" width="100" height="20" />
     </operator>
     <operator type="Torus">
@@ -72,8 +71,7 @@
       </properties>
     </operator>
     <operator type="Export">
-      <name>
-      </name>
+      <name>torus</name>
       <dimension x="600" y="100" width="100" height="20" />
     </operator>
     <operator type="Random Selection">
@@ -86,8 +84,7 @@
       </properties>
     </operator>
     <operator type="Export">
-      <name>
-      </name>
+      <name>spaceship</name>
       <dimension x="100" y="140" width="100" height="20" />
     </operator>
     <operator type="Mega Extrude">
