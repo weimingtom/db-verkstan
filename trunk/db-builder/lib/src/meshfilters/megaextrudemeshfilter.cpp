@@ -131,14 +131,13 @@ Mesh* MeshFilters::megaExtrude(Mesh* mesh,
         if (n == 3)
         {
             newMesh->setTriangle(triangleIndex, lastIndices[0], lastIndices[1], lastIndices[2]);
-            newMesh->faceSelected(triangleIndex) = faceSelected;
-            triangleIndex++;
-            
+            newMesh->triangleSelected(triangleIndex) = faceSelected;
+            triangleIndex++;     
         }
         else
         {
             newMesh->setQuad(quadIndex, lastIndices[0], lastIndices[1], lastIndices[2],  lastIndices[3]);
-            newMesh->faceSelected(quadIndex + newMesh->getNumTriangles()) = faceSelected;
+            newMesh->quadSelected(quadIndex) = faceSelected;
             quadIndex++;         
         }
     }
