@@ -1,10 +1,9 @@
 #include "db-util.hpp"
-#include <dxerr9.h>
 #include "builder.hpp"
 #include "filters.hpp"
 #include "texture.hpp"
 
-Texture* TextureFilters::text(Texture* textureJIhoiguig, 
+Texture* TextureFilters::text(Texture* texture, 
                               D3DXCOLOR color, 
                               int height, 
                               int x,
@@ -18,14 +17,13 @@ Texture* TextureFilters::text(Texture* textureJIhoiguig,
     D3DXCreateTexture(Builder::device, 
                       256, 
                       256,
-                      0,
+                      1,
                       D3DUSAGE_RENDERTARGET,
                       D3DFMT_A8R8G8B8,
                       D3DPOOL_DEFAULT,
                       &renderTargetTexture);
     LPD3DXFONT d3d9Font;
-    HRESULT result;
-    result = D3DXCreateFont(Builder::device,
+    D3DXCreateFont(Builder::device,
                    100, 
                    0, 
                    FALSE, 
@@ -35,14 +33,14 @@ Texture* TextureFilters::text(Texture* textureJIhoiguig,
                    OUT_DEFAULT_PRECIS, 
                    DEFAULT_QUALITY, 
                    DEFAULT_PITCH | FF_DONTCARE, 
-                   "Verdana", 
+                   font, 
                    &d3d9Font);
 
     LPDIRECT3DSURFACE9 renderTargetSurface = 0;
     LPDIRECT3DSURFACE9 backbuffer = 0;
-    result = renderTargetTexture->GetSurfaceLevel(0, &renderTargetSurface);
-    result = Builder::device->GetRenderTarget(0, &backbuffer);
-    result = Builder::device->SetRenderTarget(0, renderTargetSurface);
+    renderTargetTexture->GetSurfaceLevel(0, &renderTargetSurface);
+    Builder::device->GetRenderTarget(0, &backbuffer);
+    Builder::device->SetRenderTarget(0, renderTargetSurface);
 
     RECT rect;
     rect.left = 0;
@@ -53,26 +51,21 @@ Texture* TextureFilters::text(Texture* textureJIhoiguig,
     Builder::device->Clear(0,
                            NULL,
                            D3DCLEAR_TARGET,
-                           color,
+                           D3DCOLOR_XRGB(0, 0, 0),
                            1.0f,
                            0);
 
-    result = Builder::device->BeginScene();
-
-    result = d3d9Font->DrawTextA(NULL, "Olof", 4, &rect, 0, D3DCOLOR_XRGB(0, 0, 0));
-
-    System::Console::WriteLine(gcnew System::String(DXGetErrorString9A(result)));
-    // System::Console::WriteLine(gcnew System::String(DXGetErrorDescription9A(result)));
+    Builder::device->BeginScene();
+    d3d9Font->DrawTextA(NULL, text, -1, &rect, 0, color);
     Builder::device->EndScene();
 
-    result = Builder::device->GetRenderTargetData(renderTargetSurface, newTexture->d3d9Surface);
-    result = Builder::device->SetRenderTarget(0, backbuffer);
+    Builder::device->GetRenderTargetData(renderTargetSurface, newTexture->d3d9Surface);
+    Builder::device->SetRenderTarget(0, backbuffer);
  
-    result = renderTargetSurface->Release();
-    result = backbuffer->Release();
-    
-    result = d3d9Font->Release();
-    result = renderTargetTexture->Release();   
+    renderTargetSurface->Release();
+    backbuffer->Release();
+    d3d9Font->Release();
+    renderTargetTexture->Release();   
  
     return newTexture;
 }
