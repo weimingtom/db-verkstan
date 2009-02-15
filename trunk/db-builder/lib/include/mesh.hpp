@@ -22,7 +22,6 @@ public:
 
 		int getIndexOf(int v1, int v2);
 
-	private:
 		int numEdges;
 		int *edges;
 	};
@@ -58,7 +57,6 @@ public:
 		inline int getNumBoxesY() { return numBoxesY; }
 		inline int getNumBoxesZ() { return numBoxesZ; }
 
-	private:
 		Mesh *mesh;
 		Vec3 minPos, maxPos, size;
 		int numBoxesX, numBoxesY, numBoxesZ, numBoxesTotal;
@@ -171,7 +169,6 @@ public:
 
 	void debugPrint();
 
-private:
 	void createD3DBuffers();
 	void destroyD3DBuffers();
 
