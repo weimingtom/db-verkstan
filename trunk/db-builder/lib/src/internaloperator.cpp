@@ -32,8 +32,10 @@ InternalOperator::~InternalOperator()
 
 void InternalOperator::cascadeProcess()
 {  
+#ifdef DB_EDITOR
     if (!isDirty())
         return;
+#endif
 
     for (int i = 0; i < numberOfInputs; i++)
         operators[inputs[i]]->cascadeProcess();
