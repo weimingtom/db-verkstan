@@ -172,7 +172,7 @@
 			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -246,7 +246,7 @@
 			OutputDirectory="..\..\bin"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="0"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -338,7 +338,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\crackletexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\flattexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\glowtexturefilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\db-builder\lib\src\internaloperator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\inverttexturefilter.cpp"
 				>
 			</File>
 			<File
@@ -346,7 +362,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\mergetexturefilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\db-builder\lib\src\mesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\normalmaptexturefilter.cpp"
 				>
 			</File>
 			<File
@@ -355,6 +379,14 @@
 			</File>
 			<File
 				RelativePath="..\..\db-builder\lib\src\meshfilters\randomselectionmeshfilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\rectangletexturefilter.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\db-builder\lib\src\texturefilters\rotozoomtexturefilter.cpp"
 				>
 			</File>
 			<File
