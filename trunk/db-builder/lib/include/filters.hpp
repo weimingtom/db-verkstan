@@ -19,8 +19,11 @@ enum Filters
     RotoZoomTextureFilter,
     MergeTextureFilter,
     InvertTextureFilter,
+    DistortionTextureFilter,
+    ContrastTextureFilter,
+    ColorizeTextureFilter,
 
-    // Torus filters
+    // Mesh filters
     TorusMeshFilter,
     RandomSelectionMeshFilter,
     MegaExtrudeMeshFilter,
@@ -41,7 +44,9 @@ public:
     static Texture* rotoZoom(Texture* texture, int centerX, int centerY, int rotation, int zoom, bool inPlace = false);
     static Texture* merge(Texture* texture1, Texture* texture2, int mode, bool inPlace = false);
     static Texture* invert(Texture* texture, bool inPlace = false);
-
+    static Texture* distortion(Texture* texture, Texture* map, int mode, int amount_, bool inPlace = false);
+    static Texture* contrast(Texture* texture, int amount, bool inPlace = false);
+    static Texture* colorize(Texture* texture, int hue_, int saturation_,int light_, bool inPlace = false);
 };
 
 class MeshFilters

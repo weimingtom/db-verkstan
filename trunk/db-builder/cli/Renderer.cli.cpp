@@ -192,7 +192,7 @@ namespace Verkstan
         Builder::device->SetRenderState(D3DRS_LIGHTING, FALSE);
         Builder::device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
         Builder::device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-        Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);     
+        Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
         Builder::device->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
         Builder::device->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
         Builder::device->SetRenderState(D3DRS_BLENDOP,D3DBLENDOP_ADD);
