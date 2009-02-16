@@ -4,6 +4,7 @@ namespace Verkstan
 {
     ref class OperatorBinding;
     ref class Renderer;
+    ref class OperatorRenderOptions;
     
 	public ref class Window
 	{
@@ -15,30 +16,9 @@ namespace Verkstan
             OperatorBinding^ get();
             void set(OperatorBinding^ viewedOperator);
         }
-        property int ClearColor
+        property OperatorRenderOptions^ RenderOptions
         {
-            int get();
-            void set(int clearColor);
-        }
-        property bool TextureTiling
-        {
-            bool get();
-            void set(bool tiling);
-        }
-        property bool TextureFiltering
-        {
-            bool get();
-            void set(bool filtering);
-        }
-        property bool MeshSolid
-        {
-            bool get();
-            void set(bool filtering);
-        }
-        property bool ModelLightning
-        {
-            bool get();
-            void set(bool lightning);
+            OperatorRenderOptions^ get();
         }
 
         void Boot(void* windowPtr);
@@ -57,5 +37,6 @@ namespace Verkstan
         Renderer^ renderer;
         LPDIRECT3D9 direct3d;
         HWND window;
+        OperatorRenderOptions^ renderOptions;
 	};
 }

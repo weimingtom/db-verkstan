@@ -1,5 +1,7 @@
 #pragma once
 
+#include "db-util.hpp"
+
 #define D3DCOLOR_A(c) (((c)&0xff000000)>>24)
 #define D3DCOLOR_R(c) (((c)&0x00ff0000)>>16)
 #define D3DCOLOR_G(c) (((c)&0x0000ff00)>>8)

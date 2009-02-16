@@ -26,7 +26,10 @@ namespace VerkstanEditor
             InitializeComponent();
 
             builderWindow = new Verkstan.Window();
-            builderWindow.ClearColor = Color.DarkCyan.ToArgb();
+            builderWindow.RenderOptions.ClearColor = Color.DarkCyan.ToArgb();
+            tileTextureToolStripMenuItem1.Checked = builderWindow.RenderOptions.TextureTiling;
+            filterTextureToolStripMenuItem1.Checked = builderWindow.RenderOptions.TextureFiltering;
+            shadedMeshToolStripMenuItem1.Checked = builderWindow.RenderOptions.MeshShaded;
             unsafe
             {
                 builderWindow.Boot(previewPanel.Handle.ToPointer());
@@ -193,6 +196,22 @@ namespace VerkstanEditor
         {
             Exporter exporter = new Exporter();
             exporter.ExportToFile(project, saveExportAsFileDialog1.FileName);
+        }
+        private void tileTextureToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            builderWindow.RenderOptions.TextureTiling = tileTextureToolStripMenuItem1.Checked;
+        }
+        private void filterTextureToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            builderWindow.RenderOptions.TextureFiltering = filterTextureToolStripMenuItem1.Checked;
+        }
+        private void resetCameraToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            builderWindow.ResetCamera();
+        }
+        private void shadedMeshToolStripMenuItem1_CheckedChanged(object sender, EventArgs e)
+        {
+            builderWindow.RenderOptions.MeshShaded = shadedMeshToolStripMenuItem1.Checked;
         }
         #endregion
     }

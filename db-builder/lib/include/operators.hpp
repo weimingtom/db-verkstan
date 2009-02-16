@@ -50,7 +50,7 @@ DEF_OP_FOR_LOADER(PixelsTextureFilter, -1, 4,
                   DB_COLOR_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Pixels", PixelsTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Pixels", PixelsTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color 1", 255, 255, 255);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_BYTE_PROP("Count", 32);
@@ -62,7 +62,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_NORMALMAPTEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(NormalMapTextureFilter, 1, 1, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Normal Map", NormalMapTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Normal Map", NormalMapTextureFilter, Texture, TextureOperatorRenderer);
 ADD_BYTE_PROP("Amplify", 16);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
@@ -74,7 +74,7 @@ DEF_OP_FOR_LOADER(BlurTextureFilter, 1, 4,
                   DB_ENUM_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Blur", BlurTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Blur", BlurTextureFilter, Texture, TextureOperatorRenderer);
 ADD_ENUM_PROP("Type", "Box,Triangle,Gaussien", "Box");
 ADD_ENUM_PROP("Direction", "X,Y,X and Y", "X and Y");
 ADD_BYTE_PROP("Width", 1);
@@ -85,7 +85,7 @@ END_OP_FOR_EDITOR();
 
 #if defined(DB_INVERTTEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER_WITH_NO_PROPS(InvertTextureFilter, 1);
-DEF_OP_FOR_EDITOR("Invert Texture", InvertTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Invert Texture", InvertTextureFilter, Texture, TextureOperatorRenderer);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
 #endif
@@ -94,7 +94,7 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(DistortionTextureFilter, 1, 2, 
                   DB_ENUM_PROP,
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Distort Texture", DistortionTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Distort Texture", DistortionTextureFilter, Texture, TextureOperatorRenderer);
 ADD_ENUM_PROP("Mode", "Green-Blue,Normal Map", "Green-Blue");
 ADD_BYTE_PROP("Amount", 0);
 ADD_INPUT(Texture);
@@ -105,7 +105,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_CONTRASTTEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(ContrastTextureFilter, 1, 1, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Contrast", ContrastTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Contrast", ContrastTextureFilter, Texture, TextureOperatorRenderer);
 ADD_BYTE_PROP("Contrast", 128);
 ADD_INPUT(Texture);
 END_OP_FOR_EDITOR();
@@ -114,7 +114,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_MERGETEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(MergeTextureFilter, -1, 1, 
                   DB_ENUM_PROP);
-DEF_OP_FOR_EDITOR("Merge Textures", MergeTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Merge Textures", MergeTextureFilter, Texture, TextureOperatorRenderer);
 ADD_ENUM_PROP("Mode", "Add Clamp,Add Wrap,Sub Clamp,Sub Wrap,Mult,Alpha", "Add Clamp");
 ADD_INPUT(Texture);
 ADD_INPUT(Texture);
@@ -128,7 +128,7 @@ DEF_OP_FOR_LOADER(RotoZoomTextureFilter, 1, 4,
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Roto Zoom", RotoZoomTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Roto Zoom", RotoZoomTextureFilter, Texture, TextureOperatorRenderer);
 ADD_BYTE_PROP("Center X", 128);
 ADD_BYTE_PROP("Center Y", 128);
 ADD_BYTE_PROP("Rotation", 0);
@@ -143,7 +143,7 @@ DEF_OP_FOR_LOADER(CloudsTextureFilter, 0, 4,
                   DB_COLOR_PROP, 
                   DB_ENUM_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Clouds", CloudsTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Clouds", CloudsTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color 1", 0, 0, 0);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_ENUM_PROP("Size", "1,2,4,8,16,32,64,128", "2");
@@ -159,7 +159,7 @@ DEF_OP_FOR_LOADER(TextTextureFilter, -1, 6,
                   DB_BYTE_PROP, 
                   DB_STRING_PROP, 
                   DB_TEXT_PROP);
-DEF_OP_FOR_EDITOR("Text", TextTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Text", TextTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color", 255, 255, 255);
 ADD_BYTE_PROP("Height", 30);
 ADD_BYTE_PROP("X", 10);
@@ -177,7 +177,7 @@ DEF_OP_FOR_LOADER(RectangleTextureFilter, -1, 5,
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP,
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Rectangle", RectangleTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Rectangle", RectangleTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color", 255, 255, 0);
 ADD_BYTE_PROP("X",      10);
 ADD_BYTE_PROP("Y",      10);
@@ -194,7 +194,7 @@ DEF_OP_FOR_LOADER(CrackleTextureFilter, 0, 5,
 				  DB_BYTE_PROP,
                   DB_BYTE_PROP,
 				  DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Crackle", CrackleTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Crackle", CrackleTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color 1", 0, 0, 0);
 ADD_COLOR_PROP("Color 2", 255, 255, 255);
 ADD_BYTE_PROP("Count", 8);
@@ -212,7 +212,7 @@ DEF_OP_FOR_LOADER(GlowTextureFilter, -1, 7,
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Glow", GlowTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Glow", GlowTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color", 255, 0, 0);
 ADD_BYTE_PROP("Center X", 128);
 ADD_BYTE_PROP("Center Y", 128);
@@ -230,7 +230,7 @@ DEF_OP_FOR_LOADER(TorusMeshFilter, 0, 4,
                   DB_FLOAT_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Torus", TorusMeshFilter, Mesh);
+DEF_OP_FOR_EDITOR("Torus", TorusMeshFilter, Mesh, MeshOperatorRenderer);
 ADD_FLOAT_PROP("Inner radius", 0.3f);
 ADD_FLOAT_PROP("Outer radius", 0.7f);
 ADD_BYTE_PROP("Sides",         5);
@@ -242,7 +242,7 @@ END_OP_FOR_EDITOR();
 DEF_OP_FOR_LOADER(RandomSelectionMeshFilter, 1, 2, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Random Select", RandomSelectionMeshFilter, Mesh);
+DEF_OP_FOR_EDITOR("Random Select", RandomSelectionMeshFilter, Mesh, MeshOperatorRenderer);
 ADD_BYTE_PROP("Probablility", 128);
 ADD_BYTE_PROP("Seed", 1);
 ADD_INPUT(Mesh);
@@ -254,7 +254,7 @@ DEF_OP_FOR_LOADER(ColorizeTextureFilter, 1, 3,
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Colorize", ColorizeTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Colorize", ColorizeTextureFilter, Texture, TextureOperatorRenderer);
 ADD_BYTE_PROP("Hue", 0);
 ADD_BYTE_PROP("Saturation", 255);
 ADD_BYTE_PROP("Light", 128);
@@ -268,7 +268,7 @@ DEF_OP_FOR_LOADER(MegaExtrudeMeshFilter, 1, 4,
                   DB_BYTE_PROP, 
                   DB_VECTOR_PROP, 
                   DB_VECTOR_PROP);
-DEF_OP_FOR_EDITOR("Mega Extrude", MegaExtrudeMeshFilter, Mesh);
+DEF_OP_FOR_EDITOR("Mega Extrude", MegaExtrudeMeshFilter, Mesh, MeshOperatorRenderer);
 ADD_FLOAT_PROP("Distance",   0.2f);
 ADD_BYTE_PROP("Count", 3);
 ADD_VECTOR_PROP("Scale", 1.0f, 1.0f, 1.0f);
@@ -280,7 +280,7 @@ END_OP_FOR_EDITOR();
 #if defined(DB_FLATTEXTUREFILTER) || defined(DB_EDITOR)
 DEF_OP_FOR_LOADER(FlatTextureFilter, 0, 1, 
                   DB_COLOR_PROP);
-DEF_OP_FOR_EDITOR("Flat", FlatTextureFilter, Texture);
+DEF_OP_FOR_EDITOR("Flat", FlatTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color", 255, 255, 255);
 END_OP_FOR_EDITOR();
 #endif

@@ -4,6 +4,7 @@
 #include "Builder.hpp"
 #include "Constants.hpp"
 #include "OperatorBinding.hpp"
+#include "OperatorRenderOptions.hpp"
 #include "Renderer.hpp"
 
 namespace Verkstan
@@ -15,6 +16,7 @@ namespace Verkstan
         direct3d = 0;
         resetDevice = false;
         renderer = gcnew Renderer();
+        renderOptions = gcnew OperatorRenderOptions();
     }
 
     void Window::Boot(void* windowPtr)
@@ -46,11 +48,13 @@ namespace Verkstan
                                &d3dPresentParameters,
                                &Builder::device);
 
+        /*
         Builder::device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
         Builder::device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+        */
 
         //D3DXCreateMatrixStack(0, &globalWorldMatrixStack);
 
@@ -100,11 +104,12 @@ namespace Verkstan
             throw gcnew Exception("Unable to reset the direct3d device!");
         }
 
+        /*
         Builder::device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
         Builder::device->SetSamplerState(0, D3DSAMP_ADDRESSU, D3DTADDRESS_CLAMP);
-        Builder::device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+        Builder::device->SetSamplerState(0, D3DSAMP_ADDRESSV, D3DTADDRESS_CLAMP);*/
 
         resetDevice = false;
     }
@@ -124,7 +129,7 @@ namespace Verkstan
         }
         else
         {
-            renderer->RenderOperator(viewedOperator);
+            renderer->RenderOperator(viewedOperator, renderOptions);
 
             HRESULT result = Builder::device->Present(NULL, NULL, NULL, NULL);
 
@@ -143,54 +148,9 @@ namespace Verkstan
         viewedOperator = op;
     }
 
-    int Window::ClearColor::get()
+    OperatorRenderOptions^ Window::RenderOptions::get()
     {
-        return renderer->ClearColor;
-    }
-
-    void Window::ClearColor::set(int color)
-    {
-        renderer->ClearColor = color;
-    }
-
-    void Window::TextureTiling::set(bool tiling)
-    {
-        renderer->TextureTiling = tiling;
-    }
-
-    bool Window::TextureTiling::get()
-    {
-        return renderer->TextureTiling;
-    }
-        
-    void Window::TextureFiltering::set(bool filtering)
-    {
-        renderer->TextureFiltering = filtering;
-    }
-
-    bool Window::TextureFiltering::get()
-    {
-        return renderer->TextureFiltering;
-    }
-
-    void Window::MeshSolid::set(bool solid)
-    {
-        renderer->MeshSolid = solid;
-    }
-
-    bool Window::MeshSolid::get()
-    {
-        return renderer->MeshSolid;
-    }
-
-    void Window::ModelLightning::set(bool lightning)
-    {
-        renderer->ModelLightning = lightning;
-    }
-
-    bool Window::ModelLightning::get()
-    {
-        return renderer->ModelLightning;
+        return renderOptions;
     }
 
     void Window::MouseDown(int button, int x, int y)

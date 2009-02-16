@@ -10,7 +10,8 @@ namespace Verkstan
     OperatorBinding::OperatorBinding(unsigned char filterType,
                                    String^ name,
                                    unsigned short operatorId,
-                                   Constants::OperatorTypes type)
+                                   Constants::OperatorTypes type,
+                                   OperatorRenderer^ renderer)
     {
         this->filterType = filterType;
         this->name = name;
@@ -18,6 +19,7 @@ namespace Verkstan
         this->type = type;
         this->properties = gcnew List<OperatorBindingProperty^>(); 
         this->inputs = gcnew List<OperatorBindingInput^>();
+        this->renderer = renderer;
     }
 
     OperatorBinding::~OperatorBinding()
@@ -39,6 +41,11 @@ namespace Verkstan
     String^ OperatorBinding::Name::get()
     {
         return name;
+    }
+
+    OperatorRenderer^ OperatorBinding::Renderer::get()
+    { 
+        return renderer;
     }
 
     short OperatorBinding::NumberOfConstantInputs::get()
