@@ -16,6 +16,7 @@ namespace Verkstan
         void MouseUp(int button, int x, int y);
         int WindowWidth;
         int WindowHeight;
+        
     private:
         float zoom;
         float xRotation;

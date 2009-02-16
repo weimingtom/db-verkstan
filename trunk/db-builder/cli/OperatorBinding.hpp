@@ -14,6 +14,7 @@ namespace Verkstan
     ref struct Vector;
     ref class OperatorBindingProperty;
     ref class OperatorBindingInput;
+    ref class OperatorRenderer;
     
 	public ref class OperatorBinding 
 	{
@@ -25,11 +26,13 @@ namespace Verkstan
         property short NumberOfConstantInputs { short get(); }
         property List<OperatorBindingProperty^>^ Properties { List<OperatorBindingProperty^>^ get(); }
         property List<OperatorBindingInput^>^ Inputs { List<OperatorBindingInput^>^ get(); }
+        property OperatorRenderer^ Renderer { OperatorRenderer^ get(); }
 
         OperatorBinding(unsigned char filterType, 
                         String^ name,
                         unsigned short operatorId,
-                        Constants::OperatorTypes type);
+                        Constants::OperatorTypes type,
+                        OperatorRenderer^ renderer);
         virtual ~OperatorBinding();
 
         unsigned char GetByteProperty(int index);
@@ -75,5 +78,6 @@ namespace Verkstan
         Constants::OperatorTypes type;
         List<OperatorBindingProperty^>^ properties;
         List<OperatorBindingInput^>^ inputs;
+        OperatorRenderer^ renderer;
 	};
 }

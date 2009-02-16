@@ -4,6 +4,8 @@
 #include "OperatorBindingFactory.hpp"
 #include "Color.hpp"
 #include "Vector.hpp"
+#include "MeshOperatorRenderer.hpp"
+#include "TextureOperatorRenderer.hpp"
 
 namespace Verkstan
 {
@@ -41,7 +43,7 @@ categories[category]->Add(name);
 
 #define DEF_OP_FOR_LOADER(opFilterType, numberOfConstantInputs, numberOfProperties, ...)
 #define DEF_OP_FOR_LOADER_WITH_NO_PROPS(opFilterType, numberOfConstantInputs) 
-#define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType)\
+#define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType, opRendererClass)\
     opName = gcnew String(opNameChars);             \
     if (name->ToLower() == opName->ToLower())   \
     {                                               \
@@ -58,7 +60,8 @@ categories[category]->Add(name);
         op = gcnew OperatorBinding(opFilterType,    \
                                    opName,             \
                                    id,                 \
-                                   Constants::OperatorTypes::##opType);
+                                   Constants::OperatorTypes::##opType, \
+                                   gcnew opRendererClass());
 #define ADD_BYTE_PROP(name, value) \
     op->AddProperty(name, Constants::OperatorPropertyTypes::Byte);  \
     op->SetByteProperty(op->Properties->Count - 1, value);

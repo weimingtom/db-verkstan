@@ -211,6 +211,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MeshOperatorRenderer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\MeshOperatorRenderer.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\OperatorBinding.cpp"
 				>
 			</File>
@@ -243,11 +251,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\OperatorRenderer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\OperatorRenderOptions.hpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Renderer.cli.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Renderer.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TextureOperatorRenderer.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\TextureOperatorRenderer.hpp"
 				>
 			</File>
 			<File

@@ -32,12 +32,6 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.previewPanel = new System.Windows.Forms.Panel();
-            this.builderRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.newProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,12 +43,24 @@
             this.exportAsFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tileTextureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.previewPanel = new System.Windows.Forms.Panel();
+            this.builderRenderTimer = new System.Windows.Forms.Timer(this.components);
             this.saveExportAsHeaderFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.saveProjectFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.openProjectFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveExportAsFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.filterTextureToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.resetCameraToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.operatorPageView1 = new VerkstanEditor.Gui.OperatorPageView();
             this.operatorPropertyGrid1 = new VerkstanEditor.Gui.OperatorPropertyGrid();
-            this.saveExportAsFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.shadedMeshToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -101,75 +107,6 @@
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // viewToolStripMenuItem
-            // 
-            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
-            this.viewToolStripMenuItem.Text = "View";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
-            this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.operatorPropertyGrid1);
-            this.splitContainer1.Size = new System.Drawing.Size(680, 227);
-            this.splitContainer1.SplitterDistance = 513;
-            this.splitContainer1.TabIndex = 2;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.BackColor = System.Drawing.SystemColors.ControlText;
-            this.splitContainer2.Panel1.Controls.Add(this.previewPanel);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.operatorPageView1);
-            this.splitContainer2.Size = new System.Drawing.Size(513, 227);
-            this.splitContainer2.SplitterDistance = 82;
-            this.splitContainer2.TabIndex = 0;
-            // 
-            // previewPanel
-            // 
-            this.previewPanel.BackColor = System.Drawing.Color.DarkCyan;
-            this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.previewPanel.Location = new System.Drawing.Point(0, 0);
-            this.previewPanel.Name = "previewPanel";
-            this.previewPanel.Size = new System.Drawing.Size(511, 80);
-            this.previewPanel.TabIndex = 0;
-            this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
-            this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
-            this.previewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseUp);
-            this.previewPanel.SizeChanged += new System.EventHandler(this.previewPanel_SizeChanged);
-            // 
-            // builderRenderTimer
-            // 
-            this.builderRenderTimer.Enabled = true;
-            this.builderRenderTimer.Interval = 10;
-            this.builderRenderTimer.Tick += new System.EventHandler(this.builderRenderTimer_Tick);
             // 
             // newProjectToolStripMenuItem
             // 
@@ -239,6 +176,90 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tileTextureToolStripMenuItem1,
+            this.filterTextureToolStripMenuItem1,
+            this.toolStripSeparator4,
+            this.shadedMeshToolStripMenuItem1,
+            this.toolStripSeparator5,
+            this.resetCameraToolStripMenuItem1});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // tileTextureToolStripMenuItem1
+            // 
+            this.tileTextureToolStripMenuItem1.CheckOnClick = true;
+            this.tileTextureToolStripMenuItem1.Name = "tileTextureToolStripMenuItem1";
+            this.tileTextureToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.tileTextureToolStripMenuItem1.Text = "Tile Texture";
+            this.tileTextureToolStripMenuItem1.CheckedChanged += new System.EventHandler(this.tileTextureToolStripMenuItem1_CheckedChanged);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.operatorPropertyGrid1);
+            this.splitContainer1.Size = new System.Drawing.Size(680, 227);
+            this.splitContainer1.SplitterDistance = 513;
+            this.splitContainer1.TabIndex = 2;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.BackColor = System.Drawing.SystemColors.ControlText;
+            this.splitContainer2.Panel1.Controls.Add(this.previewPanel);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.operatorPageView1);
+            this.splitContainer2.Size = new System.Drawing.Size(513, 227);
+            this.splitContainer2.SplitterDistance = 82;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // previewPanel
+            // 
+            this.previewPanel.BackColor = System.Drawing.Color.DarkCyan;
+            this.previewPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.previewPanel.Location = new System.Drawing.Point(0, 0);
+            this.previewPanel.Name = "previewPanel";
+            this.previewPanel.Size = new System.Drawing.Size(511, 80);
+            this.previewPanel.TabIndex = 0;
+            this.previewPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseMove);
+            this.previewPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseDown);
+            this.previewPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.previewPanel_MouseUp);
+            this.previewPanel.SizeChanged += new System.EventHandler(this.previewPanel_SizeChanged);
+            // 
+            // builderRenderTimer
+            // 
+            this.builderRenderTimer.Enabled = true;
+            this.builderRenderTimer.Interval = 10;
+            this.builderRenderTimer.Tick += new System.EventHandler(this.builderRenderTimer_Tick);
+            // 
             // saveExportAsHeaderFileDialog1
             // 
             this.saveExportAsHeaderFileDialog1.Filter = "C++ header files|*.hpp|All files|*.*";
@@ -253,6 +274,31 @@
             // 
             this.openProjectFileDialog1.FileName = "openFileDialog1";
             this.openProjectFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openProjectFileDialog1_FileOk);
+            // 
+            // saveExportAsFileDialog1
+            // 
+            this.saveExportAsFileDialog1.Filter = "Data files|*.dat|All files|*.*";
+            this.saveExportAsFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExportAsFileDialog1_FileOk);
+            // 
+            // filterTextureToolStripMenuItem1
+            // 
+            this.filterTextureToolStripMenuItem1.CheckOnClick = true;
+            this.filterTextureToolStripMenuItem1.Name = "filterTextureToolStripMenuItem1";
+            this.filterTextureToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.filterTextureToolStripMenuItem1.Text = "Filter Texture";
+            this.filterTextureToolStripMenuItem1.CheckedChanged += new System.EventHandler(this.filterTextureToolStripMenuItem1_CheckedChanged);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            // 
+            // resetCameraToolStripMenuItem1
+            // 
+            this.resetCameraToolStripMenuItem1.Name = "resetCameraToolStripMenuItem1";
+            this.resetCameraToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.resetCameraToolStripMenuItem1.Text = "Reset Camera";
+            this.resetCameraToolStripMenuItem1.Click += new System.EventHandler(this.resetCameraToolStripMenuItem1_Click);
             // 
             // operatorPageView1
             // 
@@ -279,10 +325,18 @@
             this.operatorPropertyGrid1.Size = new System.Drawing.Size(161, 225);
             this.operatorPropertyGrid1.TabIndex = 0;
             // 
-            // saveExportAsFileDialog1
+            // shadedMeshToolStripMenuItem1
             // 
-            this.saveExportAsFileDialog1.Filter = "Data files|*.dat|All files|*.*";
-            this.saveExportAsFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.saveExportAsFileDialog1_FileOk);
+            this.shadedMeshToolStripMenuItem1.CheckOnClick = true;
+            this.shadedMeshToolStripMenuItem1.Name = "shadedMeshToolStripMenuItem1";
+            this.shadedMeshToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.shadedMeshToolStripMenuItem1.Text = "Shaded Mesh";
+            this.shadedMeshToolStripMenuItem1.CheckedChanged += new System.EventHandler(this.shadedMeshToolStripMenuItem1_CheckedChanged);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // BuilderForm
             // 
@@ -338,6 +392,12 @@
         private System.Windows.Forms.SaveFileDialog saveProjectFileDialog1;
         private System.Windows.Forms.OpenFileDialog openProjectFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveExportAsFileDialog1;
+        private System.Windows.Forms.ToolStripMenuItem tileTextureToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem filterTextureToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem resetCameraToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem shadedMeshToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
     }
 }
 

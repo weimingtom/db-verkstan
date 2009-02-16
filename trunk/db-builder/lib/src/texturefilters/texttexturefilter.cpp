@@ -1,3 +1,12 @@
+#if defined(OPERATOR_CATEGORY_DEFINES)
+
+#elif defined(OPERATOR_DEFINES)
+
+#elif defined(OPERATOR_FILTER_CALL)
+
+#elif defined(OPERATOR_RENDERER_INCLUDE)
+
+#else
 #include "db-util.hpp"
 #include "builder.hpp"
 #include "filters.hpp"
@@ -69,3 +78,4 @@ Texture* TextureFilters::text(Texture* texture,
  
     return newTexture;
 }
+#endif

@@ -30,7 +30,7 @@ Renderable* Builder::getRenderable(unsigned int id)
 
 // We define a couple of macros we don't need (they are used
 // for the editor) to do nothing.
-#define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType)
+#define DEF_OP_FOR_EDITOR(opNameChars, opFilterType, opType, opRendererClass)
 #define ADD_BYTE_PROP(name, value)
 #define ADD_INT_PROP(name, value)
 #define ADD_FLOAT_PROP(name, value)
