@@ -73,6 +73,9 @@ public:
 	~Mesh();	
     
 	virtual void render(float time = 0.0f);
+#ifdef DB_EDITOR
+    void renderWireframe();
+#endif
 
 	// Position of a vertex
 	Vec3 &pos(int vertexIndex);
@@ -185,8 +188,12 @@ public:
 	int vertexStride;
 	int vertexColors;
 
+    EdgeInfo* edgeInfo;
 	DWORD fvf;
 	IDirect3DVertexBuffer9 *vertexBuffer;
 	IDirect3DIndexBuffer9 *indexBuffer;
+#ifdef DB_EDITOR
+    IDirect3DIndexBuffer9* wireframeIndexBuffer;
+#endif
 };
 

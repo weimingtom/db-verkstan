@@ -33,6 +33,8 @@ namespace VerkstanEditor.Logic
             else
             {
                 Verkstan.OperatorBinding opBinding = Verkstan.OperatorBindingFactory.Create(typeName);
+                if (opBinding == null)
+                    throw new Exception("Unable to find an operator with name '" + typeName + "'");
                 op = new CoreOperator(opBinding);
             }
 
