@@ -2,10 +2,10 @@
 #include "filters.hpp"
 #include "mesh.hpp"
 
-Mesh* MeshFilters::randomSelection(Mesh* mesh,
-                                   int probability, 
-                                   int seed,
-                                   bool inPlace)
+Mesh* MeshFilters::randomSelect(Mesh* mesh,
+                                int probability, 
+                                int seed,
+                                bool inPlace)
 {        
     Mesh* newMesh = mesh->clone();
 

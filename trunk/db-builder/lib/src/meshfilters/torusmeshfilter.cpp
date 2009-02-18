@@ -5,8 +5,7 @@
 Mesh* MeshFilters::torus(float innerRadius, 
                          float outerRadius, 
                          int sides,
-                         int rings,
-                         bool inPlace)
+                         int rings)
 {
 	int numVertices = (sides + 1) * (rings + 1);
 	int numTriangles = 0;
