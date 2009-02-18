@@ -13,6 +13,10 @@ Mesh::Mesh(int _numVertices, int _numTriangles, int _numQuads, int _numUVSets, b
 	fvf(0),
 	vertexBuffer(0),
 	indexBuffer(0),
+    edgeInfo(0),
+#ifdef DB_EDITOR
+    wireframeIndexBuffer(0),
+#endif
 	vertexColors(_vertexColors ? 1 : 0)
 {
 	vertexStride = 6 + 2 * numUVSets + vertexColors;
@@ -50,6 +54,10 @@ Mesh::Mesh(const Mesh& mesh) :
 	fvf(0),
 	vertexBuffer(0),
 	indexBuffer(0),
+    edgeInfo(0),
+#ifdef DB_EDITOR
+    wireframeIndexBuffer(0),
+#endif
 	vertexColors(mesh.vertexColors)
 {
 	vertexStride = 6 + 2 * numUVSets + vertexColors;
@@ -79,11 +87,35 @@ Mesh::Mesh(const Mesh& mesh) :
 Mesh::~Mesh()
 {
 	destroyD3DBuffers();
+
 	delete[] vertexData;
 	delete[] triangleData;
 	delete[] quadData;
 }
 
+#ifdef DB_EDITOR
+void Mesh::renderWireframe()
+{
+	if (!(indexBuffer && vertexBuffer))
+	{
+		createD3DBuffers();
+	}
+
+    Builder::device->SetFVF(fvf);
+    Builder::device->SetStreamSource(0, vertexBuffer, 0, vertexStride * sizeof(float));
+    Builder::device->SetIndices(wireframeIndexBuffer);
+
+    Builder::device->DrawIndexedPrimitive
+    (
+        D3DPT_LINELIST,			     		// Type
+        0,									// BaseVertexIndex
+        0,									// MinIndex
+        edgeInfo->getNumEdges()*2,			// NumVertices
+        0,									// StartIndex
+        edgeInfo->getNumEdges()  			// PrimitiveCount
+    );
+}
+#endif
 
 void Mesh::render(float time)
 {
@@ -112,7 +144,6 @@ Vec3 &Mesh::pos(int vertexIndex)
 {
 	return *((Vec3*)(vertexData + vertexIndex * vertexStride));
 }
-
 
 unsigned int &Mesh::color(int vertexIndex)
 {
@@ -143,7 +174,6 @@ int *Mesh::triangle(int triangleIndex)
 	return triangleData + triangleIndex * 3;
 }
 
-
 int *Mesh::quad(int quadIndex)
 {
 	return quadData + quadIndex * 4;
@@ -158,7 +188,6 @@ void Mesh::setTriangle(int triangleIndex, int v0, int v1, int v2)
 	o[2] = v2;
 }
 
-
 void Mesh::setQuad(int quadIndex, int v0, int v1, int v2, int v3)
 {
 	int *o = quad(quadIndex);
@@ -167,7 +196,6 @@ void Mesh::setQuad(int quadIndex, int v0, int v1, int v2, int v3)
 	o[2] = v2;
 	o[3] = v3;
 }
-
 
 void Mesh::setFace(int faceIndex, int *v)
 {
@@ -180,7 +208,6 @@ void Mesh::setFace(int faceIndex, int *v)
 		setQuad(faceIndex - numTriangles, v[0], v[1], v[2], v[3]);
 	}
 }
-
 
 int *Mesh::face(int faceIndex, int &outNumVertices)
 {
@@ -205,7 +232,6 @@ static int edgeComparator(const void *_e1, const void *_e2)
 	int r = e1[0] - e2[0];
 	return r == 0 ? e1[1] - e2[1] : r;
 }
-
 
 Mesh::EdgeInfo *Mesh::constructEdgeInfo()
 {
@@ -467,13 +493,46 @@ void Mesh::createD3DBuffers()
 		indexBuffer->Unlock();
 	}
 
+    if (!edgeInfo)
+    {
+        edgeInfo = constructEdgeInfo();
+    }
+
+#ifdef DB_EDITOR
+    int indexBytes = edgeInfo->getNumEdges()*2*sizeof(int);
+    Builder::device->CreateIndexBuffer(indexBytes, 
+                                       0, 
+                                       D3DFMT_INDEX32, 
+                                       D3DPOOL_DEFAULT,  
+                                       &wireframeIndexBuffer, 
+                                       NULL);
+    int *indexBufferData;
+    wireframeIndexBuffer->Lock(0, indexBytes, (void **)(&indexBufferData), 0);
+    memcpy(indexBufferData, edgeInfo->edges, indexBytes);
+    wireframeIndexBuffer->Unlock();
+#endif
 }
 
 
 void Mesh::destroyD3DBuffers()
 {
-	if (vertexBuffer) { vertexBuffer->Release(); vertexBuffer = 0; }
-	if (indexBuffer)  { indexBuffer->Release();  indexBuffer = 0;  }
+	if (vertexBuffer) 
+    {   
+        vertexBuffer->Release(); 
+        vertexBuffer = 0; 
+    }
+	if (indexBuffer)  
+    { 
+        indexBuffer->Release();  
+        indexBuffer = 0;  
+    }
+#ifdef DB_EDITOR
+    if (wireframeIndexBuffer)
+    {
+        wireframeIndexBuffer->Release();  
+        wireframeIndexBuffer = 0; 
+    }
+#endif
 }
 
 

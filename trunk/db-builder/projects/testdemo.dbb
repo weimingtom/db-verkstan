@@ -13,7 +13,7 @@
         <byte value="10" />
       </properties>
     </operator>
-    <operator type="Random Selection">
+    <operator type="Random Select">
       <name>
       </name>
       <dimension x="100" y="60" width="100" height="20" />
@@ -74,7 +74,7 @@
       <name>torus</name>
       <dimension x="600" y="100" width="100" height="20" />
     </operator>
-    <operator type="Random Selection">
+    <operator type="Random Select">
       <name>
       </name>
       <dimension x="100" y="100" width="100" height="20" />

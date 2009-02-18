@@ -174,10 +174,18 @@ namespace VerkstanEditor
                 project.Dispose();
             }
 
-            project = new Project();
-            project.Filename = filename;
-            project.FromXmlElement(rootElement);
-            operatorPageView1.Page = project.Pages.First();
+            try
+            {
+                project = new Project();
+                project.Filename = filename;
+                project.FromXmlElement(rootElement);
+                operatorPageView1.Page = project.Pages.First();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "An error occured while loading " + filename);
+                project = new Project();
+            }
         }
         private void openProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {

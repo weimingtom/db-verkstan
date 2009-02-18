@@ -19,7 +19,8 @@ Texture* TextureFilters::crackle(D3DXCOLOR color1,
 	{
 		int x = ((i % count) * 256) / count;
 		int y = ((i / count) * 256) / count;
-		pos[i] = Vec2(x + frand(0.0f, randomness / count), y + frand(0.0f, randomness / count));
+		pos[i] = Vec2(x + frand(0.0f, randomness / (float)count), 
+                      y + frand(0.0f, randomness / (float)count));
 	}
 
     newTexture->lock();

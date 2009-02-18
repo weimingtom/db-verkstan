@@ -87,44 +87,8 @@ namespace Verkstan
 
         if (!options->MeshShaded)
         {
-            if (!(mesh->indexBuffer && mesh->vertexBuffer))
-                mesh->createD3DBuffers();
-
             Builder::device->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-            Mesh::EdgeInfo* edgeInfo = mesh->constructEdgeInfo();
-
-            int indexBytes = edgeInfo->getNumEdges()*2*sizeof(int);
-
-            LPDIRECT3DINDEXBUFFER9 indexBuffer;
-            Builder::device->CreateIndexBuffer(indexBytes, 
-                                              0, 
-                                              D3DFMT_INDEX32, 
-                                              D3DPOOL_DEFAULT,  
-                                              &indexBuffer, 
-                                              NULL);
-            
-            int *indexBufferData;
-            indexBuffer->Lock(0, indexBytes, (void **)(&indexBufferData), 0);
-            memcpy(indexBufferData, edgeInfo->edges, indexBytes);
-            indexBuffer->Unlock();
-
-            Builder::device->SetFVF(mesh->fvf);
-	        Builder::device->SetStreamSource(0, mesh->vertexBuffer, 0, mesh->vertexStride * sizeof(float));
-	        Builder::device->SetIndices(indexBuffer);
-	        Builder::device->DrawIndexedPrimitive
-	        (
-		        D3DPT_LINELIST,			     		// Type
-		        0,									// BaseVertexIndex
-		        0,									// MinIndex
-		        edgeInfo->getNumEdges()*2,			// NumVertices
-		        0,									// StartIndex
-		        edgeInfo->getNumEdges()  			// PrimitiveCount
-	        );
-           
-            delete edgeInfo;
-            indexBuffer->Release();
-
+            mesh->renderWireframe();
             Builder::device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);     
             Builder::device->SetRenderState(D3DRS_SRCBLEND,D3DBLEND_SRCALPHA);
             Builder::device->SetRenderState(D3DRS_DESTBLEND,D3DBLEND_INVSRCALPHA);
