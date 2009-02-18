@@ -15,6 +15,7 @@ ADD_OP_TO_CAT("Distort Texture", "Texture");
 ADD_OP_TO_CAT("Contrast",        "Texture");
 ADD_OP_TO_CAT("Colorize",        "Texture");
 
+ADD_OP_TO_CAT("Box",              "Mesh");
 ADD_OP_TO_CAT("Torus",            "Mesh");
 ADD_OP_TO_CAT("Random Select",    "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",     "Mesh");
@@ -238,11 +239,11 @@ ADD_BYTE_PROP("Rings",         10);
 END_OP_FOR_EDITOR();
 #endif
 
-#if defined(DB_RANDOMSELECTIONMESHFILTER) || defined(DB_EDITOR)
-DEF_OP_FOR_LOADER(RandomSelectionMeshFilter, 1, 2, 
+#if defined(DB_RANDOMSELECTMESHFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(RandomSelectMeshFilter, 1, 2, 
                   DB_BYTE_PROP, 
                   DB_BYTE_PROP);
-DEF_OP_FOR_EDITOR("Random Select", RandomSelectionMeshFilter, Mesh, MeshOperatorRenderer);
+DEF_OP_FOR_EDITOR("Random Select", RandomSelectMeshFilter, Mesh, MeshOperatorRenderer);
 ADD_BYTE_PROP("Probablility", 128);
 ADD_BYTE_PROP("Seed", 1);
 ADD_INPUT(Mesh);
@@ -282,6 +283,24 @@ DEF_OP_FOR_LOADER(FlatTextureFilter, 0, 1,
                   DB_COLOR_PROP);
 DEF_OP_FOR_EDITOR("Flat", FlatTextureFilter, Texture, TextureOperatorRenderer);
 ADD_COLOR_PROP("Color", 255, 255, 255);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_BOXMESHFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(BoxMeshFilter, 0, 6, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP,
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Box", BoxMeshFilter, Mesh, MeshOperatorRenderer);
+ADD_FLOAT_PROP("Width",  1.0f);
+ADD_FLOAT_PROP("Height", 1.0f);
+ADD_FLOAT_PROP("Depth",  1.0f);
+ADD_BYTE_PROP("X Slices", 1);
+ADD_BYTE_PROP("Y Slices", 1);
+ADD_BYTE_PROP("Z Slices", 1);
 END_OP_FOR_EDITOR();
 #endif
 

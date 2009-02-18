@@ -151,11 +151,15 @@
 			Name="meshfilters"
 			>
 			<File
+				RelativePath=".\src\meshfilters\boxmeshfilter.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\meshfilters\megaextrudemeshfilter.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\meshfilters\randomselectionmeshfilter.cpp"
+				RelativePath=".\src\meshfilters\randomselectmeshfilter.cpp"
 				>
 			</File>
 			<File

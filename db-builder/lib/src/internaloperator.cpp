@@ -206,6 +206,16 @@ void InternalOperator::process()
         texture = TextureFilters::invert(inputTexture);
         break;
     }
+    case BoxMeshFilter:
+    {
+        mesh = MeshFilters::box(getFloatProperty(0), 
+                                getFloatProperty(1),
+                                getFloatProperty(2),
+                                getByteProperty(3),
+                                getByteProperty(4),
+                                getByteProperty(5));
+        break;
+    }
     case TorusMeshFilter:
     {
         mesh = MeshFilters::torus(getFloatProperty(0), 
@@ -214,11 +224,11 @@ void InternalOperator::process()
                                   getByteProperty(3));
         break;
     }
-    case RandomSelectionMeshFilter:
+    case RandomSelectMeshFilter:
     {
-        mesh = MeshFilters::randomSelection(inputMesh,
-                                            getByteProperty(0), 
-                                            getByteProperty(1));
+        mesh = MeshFilters::randomSelect(inputMesh,
+                                         getByteProperty(0), 
+                                         getByteProperty(1));
         break;
     }
     case MegaExtrudeMeshFilter:

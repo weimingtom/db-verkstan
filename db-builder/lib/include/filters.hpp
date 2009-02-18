@@ -24,8 +24,9 @@ enum Filters
     ColorizeTextureFilter,
 
     // Mesh filters
+    BoxMeshFilter,
     TorusMeshFilter,
-    RandomSelectionMeshFilter,
+    RandomSelectMeshFilter,
     MegaExtrudeMeshFilter,
 };
 
@@ -52,8 +53,9 @@ public:
 class MeshFilters
 {
 public:
-   static Mesh* torus(float innerRadius, float outerRadius, int sides, int rings, bool inPlace = false);
-   static Mesh* randomSelection(Mesh* mesh, int probability, int seed, bool inPlace = false);
+   static Mesh* box(float width, float height, float depth, int xSlices, int ySlices, int zSlices);
+   static Mesh* torus(float innerRadius, float outerRadius, int sides, int rings);
+   static Mesh* randomSelect(Mesh* mesh, int probability, int seed, bool inPlace = false);
    static Mesh* megaExtrude(Mesh* mesh, float distance, int count, D3DXVECTOR3 scaleVector, D3DXVECTOR3 rotationVector);
 };
 
