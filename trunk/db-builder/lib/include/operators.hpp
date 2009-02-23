@@ -17,6 +17,7 @@ ADD_OP_TO_CAT("Colorize",        "Texture");
 
 ADD_OP_TO_CAT("Box",              "Mesh");
 ADD_OP_TO_CAT("Torus",            "Mesh");
+ADD_OP_TO_CAT("Cylinder",         "Mesh");
 ADD_OP_TO_CAT("Random Select",    "Mesh");
 ADD_OP_TO_CAT("Mega Extrude",     "Mesh");
 #endif
@@ -236,6 +237,26 @@ ADD_FLOAT_PROP("Inner radius", 0.3f);
 ADD_FLOAT_PROP("Outer radius", 0.7f);
 ADD_BYTE_PROP("Sides",         5);
 ADD_BYTE_PROP("Rings",         10);
+END_OP_FOR_EDITOR();
+#endif
+
+#if defined(DB_CYLINDMESHFILTER) || defined(DB_EDITOR)
+DEF_OP_FOR_LOADER(CylinderMeshFilter, 0, 7, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_FLOAT_PROP, 
+                  DB_BYTE_PROP, 
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP,
+                  DB_BYTE_PROP);
+DEF_OP_FOR_EDITOR("Cylinder", CylinderMeshFilter, Mesh, MeshOperatorRenderer);
+ADD_FLOAT_PROP("Radius 1", 1.0f);
+ADD_FLOAT_PROP("Radius 2", 1.0f);
+ADD_FLOAT_PROP("Length",   1.0f);
+ADD_BYTE_PROP("Slices",    10);
+ADD_BYTE_PROP("Stacks",    1);
+ADD_BYTE_PROP("Bottom Rings",1);
+ADD_BYTE_PROP("Top Rings",1);
 END_OP_FOR_EDITOR();
 #endif
 
