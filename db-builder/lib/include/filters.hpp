@@ -26,6 +26,7 @@ enum Filters
     // Mesh filters
     BoxMeshFilter,
     TorusMeshFilter,
+    CylinderMeshFilter,
     RandomSelectMeshFilter,
     MegaExtrudeMeshFilter,
 };
@@ -57,6 +58,7 @@ public:
    static Mesh* torus(float innerRadius, float outerRadius, int sides, int rings);
    static Mesh* randomSelect(Mesh* mesh, int probability, int seed, bool inPlace = false);
    static Mesh* megaExtrude(Mesh* mesh, float distance, int count, D3DXVECTOR3 scaleVector, D3DXVECTOR3 rotationVector);
+   static Mesh* cylinder(float radius1, float radius2, float length, int slices, int stacks, int capCircles1, int capCircles2);
 };
 
 class RenderableFilters

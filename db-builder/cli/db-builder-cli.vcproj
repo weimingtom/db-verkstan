@@ -318,6 +318,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\lib\src\meshfilters\cylindermeshfilter.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\lib\src\meshfilters\megaextrudemeshfilter.cpp"
 					>
 				</File>

@@ -224,6 +224,17 @@ void InternalOperator::process()
                                   getByteProperty(3));
         break;
     }
+    case CylinderMeshFilter:
+    {
+        mesh = MeshFilters::cylinder(getFloatProperty(0), 
+                                     getFloatProperty(1),
+                                     getFloatProperty(2),
+                                     getByteProperty(3),
+                                     getByteProperty(4),
+                                     getByteProperty(5),
+                                     getByteProperty(6));
+        break;
+    }
     case RandomSelectMeshFilter:
     {
         mesh = MeshFilters::randomSelect(inputMesh,
